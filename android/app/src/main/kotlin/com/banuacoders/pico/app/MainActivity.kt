@@ -1,4 +1,4 @@
-package com.banuacoders.covid_app
+package com.banuacoders.pico.app
 
 import io.flutter.embedding.android.FlutterActivity
 
