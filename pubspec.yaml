@@ -32,7 +32,28 @@ dependencies:
   provider:
   intl:
   flutter_svg:
+  bubble_tab_indicator:
   get:
+  url_launcher:
+  syncfusion_flutter_charts:
+  onesignal_flutter:
+  shimmer:
+  flare_flutter:
+  syncfusion_flutter_maps:
+  flutter_launcher_icons:
+  flutter_native_splash:
+  introduction_screen:
+
+flutter_native_splash:
+  image: assets/images/logo.png
+  color: "ffffff"
+  android_disable_fullscreen: true
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/images/logo.png"
+  image_path_android: "assets/images/logo.png"
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +74,9 @@ flutter:
   assets:
     - assets/images/
     - assets/images/pico.png
+    - assets/images/detexi.png
     - assets/icons/
+    - assets/geojson/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
