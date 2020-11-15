@@ -203,7 +203,7 @@ class CovidChart extends StatelessWidget {
           name: 'Dirawat',
           dataSource: statController.locals,
           xValueMapper: (Local local, _) => local.date,
-          yValueMapper: (Local local, _) => local.newUnderTreatment,
+          yValueMapper: (Local local, _) => local.cumulativeUnderTreatment,
           color: Colors.blueAccent[700],
         )
       ];
