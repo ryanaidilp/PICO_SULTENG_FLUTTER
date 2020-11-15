@@ -1,16 +1,32 @@
-# covid_app
+﻿<p align="center">
+  <img src="https://banuacoders.com/app/pico/logo.png"  width="100" height="100" alt="PICO"/>
+</p>
 
-A new Flutter application.
+<h1 align="center"> PICO SulTeng Flutter </h1>
 
-## Getting Started
+![PICO](https://i.ibb.co/P4s0cXg/pico-banner.png)
 
-This project is a starting point for a Flutter application.
+PICO SulTeng (*Pusat Informasi COVID-19 Sulawesi Tengah*/COVID-19 Information Center of Central Sulawesi) is an android-based application developed to facilitate the people of Central Sulawesi in obtaining information about the current situation of COVID-19 in Central Sulawesi.
 
-A few resources to get you started if this is your first Flutter project:
+## General Information
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+* **Landing page PICO**  
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  Click the image below to visit the **landing page** of PICO SulTeng App.
+  
+  [![PICO SulTeng](https://i.ibb.co/jRtxp9Y/picobar.png)](https://banuacoders.com/app/pico)
+
+* **Data Source**
+
+  This application uses data from **PICO API**. To view the **PICO API** documentation, please click [here](https://github.com/ryanaidilp/PICO_SULTENG_API).
+* **Minimum OS version**
+
+  * **Android Lolipop (5.0)**
+
+* **To import into Android Studio :**
+  * Use the latest version of Android Studio - version 3.6.3
+  * RAM :  4 GB
+
+## Contact
+
+Created by [@ryanaidilp_](https://linkedin.com/in/ryanaidilp) - feel free to contact me!
