@@ -24,12 +24,12 @@ PICO SulTeng (*Pusat Informasi COVID-19 Sulawesi Tengah*/COVID-19 Information Ce
   
   [![PICO SulTeng](https://i.ibb.co/CzjGZ3J/image.png)](https://banuacoders.com/app/pico)
 
-## Packages
+* **Packages**
 
-* getx - Getx for state management
-* onesignal_flutter - OneSignal SDK for Flutter
-* syncfusion_flutter_maps - Flutter package to visualize data over a map
-* syncfusion_flutter_charts - Flutter package for data visualization
+  * getx - Getx for state management
+  * onesignal_flutter - OneSignal SDK for Flutter
+  * syncfusion_flutter_maps - Flutter package to visualize data over a map
+  * syncfusion_flutter_charts - Flutter package for data visualization
 
 * **Data Source**
 
