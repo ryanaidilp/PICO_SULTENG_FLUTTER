@@ -22,7 +22,7 @@ PICO SulTeng (*Pusat Informasi COVID-19 Sulawesi Tengah*/COVID-19 Information Ce
 
   Click the image below to visit the **landing page** of PICO SulTeng App.
   
-  [![PICO SulTeng](https://i.ibb.co/jRtxp9Y/picobar.png)](https://banuacoders.com/app/pico)
+  [![PICO SulTeng](https://i.ibb.co/CzjGZ3J/image.png)](https://banuacoders.com/app/pico)
 
 ## Packages
 
