@@ -13,7 +13,7 @@ class CovidChart extends StatelessWidget {
   final int type;
 
   final statController =
-  Get.find<StatisticController>(tag: 'StatisticController');
+      Get.find<StatisticController>(tag: 'StatisticController');
 
   Widget _buildBarChart(List<ColumnSeries<dynamic, String>> series,
       String location, String type) {
@@ -31,13 +31,17 @@ class CovidChart extends StatelessWidget {
     );
   }
 
-  Widget _buildLineChart(List<LineSeries<dynamic, String>> series,
-      String location, String type) {
+  Widget _buildLineChart(
+      List<LineSeries<dynamic, String>> series, String location, String type) {
     return Container(
       child: SfCartesianChart(
         title: ChartTitle(text: 'Kasus $type Harian $location'),
         tooltipBehavior: TooltipBehavior(enable: true),
         primaryXAxis: CategoryAxis(),
+        legend: Legend(
+            isVisible: true,
+            position: LegendPosition.bottom,
+            overflowMode: LegendItemOverflowMode.wrap),
         zoomPanBehavior: ZoomPanBehavior(
             enablePanning: true,
             enablePinching: true,
@@ -215,7 +219,8 @@ class CovidChart extends StatelessWidget {
         xAxisName: 'Tanggal',
         name: 'Positif',
         dataSource: statController.nationals,
-        xValueMapper: (National local, _) => DateFormat.yMMMd('id').format(local.date),
+        xValueMapper: (National local, _) =>
+            DateFormat.yMMMd('id').format(local.date),
         yValueMapper: (National local, _) => local.cumulativePositive,
         color: Colors.red[800],
       ),
@@ -223,7 +228,8 @@ class CovidChart extends StatelessWidget {
         xAxisName: 'Tanggal',
         name: 'Sembuh',
         dataSource: statController.nationals,
-        xValueMapper: (National local, _) => DateFormat.yMMMd('id').format(local.date),
+        xValueMapper: (National local, _) =>
+            DateFormat.yMMMd('id').format(local.date),
         yValueMapper: (National local, _) => local.cumulativeRecovered,
         color: Colors.green[800],
       ),
@@ -231,7 +237,8 @@ class CovidChart extends StatelessWidget {
         xAxisName: 'Tanggal',
         name: 'Meninggal',
         dataSource: statController.nationals,
-        xValueMapper: (National local, _) => DateFormat.yMMMd('id').format(local.date),
+        xValueMapper: (National local, _) =>
+            DateFormat.yMMMd('id').format(local.date),
         yValueMapper: (National local, _) => local.cumulativeDeceased,
         color: Colors.yellow[800],
       ),
@@ -239,7 +246,8 @@ class CovidChart extends StatelessWidget {
         xAxisName: 'Tanggal',
         name: 'Dirawat',
         dataSource: statController.nationals,
-        xValueMapper: (National local, _) => DateFormat.yMMMd('id').format(local.date),
+        xValueMapper: (National local, _) =>
+            DateFormat.yMMMd('id').format(local.date),
         yValueMapper: (National local, _) => local.cumulativeUnderTreatment,
         color: Colors.blueAccent[700],
       )
@@ -258,9 +266,9 @@ class CovidChart extends StatelessWidget {
         ),
       ),
     ];
-    if(type == 0) {
+    if (type == 0) {
       widgets.add(_buildDailyChart());
-    } else{
+    } else {
       widgets.add(_buildCumulativeChart());
     }
     return Column(
@@ -271,10 +279,7 @@ class CovidChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(

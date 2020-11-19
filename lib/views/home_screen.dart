@@ -20,9 +20,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String _location = 'Sulteng';
-  final _provinceController = Get.put(ProvinceController(), tag: 'ProvinceController');
-  final _districtController = Get.put(DistrictController(), tag: 'DistrictController');
-  final _statisticController = Get.put(StatisticController(), tag: 'StatisticController');
+  final _provinceController =
+      Get.put(ProvinceController(), tag: 'ProvinceController');
+  final _districtController =
+      Get.put(DistrictController(), tag: 'DistrictController');
+  final _statisticController =
+      Get.put(StatisticController(), tag: 'StatisticController');
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             borderRadius: BorderRadius.circular(20.0)),
         child: InkWell(
-          onTap: (){
+          onTap: () {
             launch('https://detexi.id');
           },
           child: Material(
@@ -95,8 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Text(
                           'Anda bergejala COVID-19? Ingin memeriksakan diri tapi takut keluar rumah? Kini kamu bisa memeriksakan diri dari rumah. Tekan banner ini untuk konsultasi.',
                           style: const TextStyle(
-                              color: Colors.white70,
-                              fontSize: 14.0),
+                              color: Colors.white70, fontSize: 14.0),
                         ),
                       )
                     ],
@@ -300,8 +302,16 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildLatestUpdateSection(DateTime lastUpdate) {
     return Row(
       children: <Widget>[
-        Text('Pembaruan terakhir : ', style: TextStyle(color: Colors.grey)),
-        Text('${DateFormat.yMMMMEEEEd('id').format(lastUpdate)}')
+        Text(
+          'Pembaruan terakhir : ',
+          style: TextStyle(color: Colors.grey, fontSize: 12.0),
+        ),
+        Text(
+          '${DateFormat.yMMMMEEEEd('id').format(lastUpdate)} ${lastUpdate.hour.toString().padLeft(2, '0')}:${lastUpdate.minute.toString().padLeft(2, '0')}',
+          style: TextStyle(
+            fontSize: 12.0
+          ),
+        )
       ],
     );
   }
@@ -338,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: <Widget>[
         Text(
           'Sulawesi Tengah',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12.0),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.0),
         ),
         Text(
           formatNumber(cumulative),
@@ -393,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: <Widget>[
         Text(
           'Indonesia',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12.0),
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 10.0),
         ),
         Text(
           formatNumber(cumulative),
@@ -487,8 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Text(
         'Daftar Kabupaten',
-        style:
-        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
       ),
     ));
     _widgets.addAll(_districtController.districts.map((district) {
@@ -560,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(color: Colors.yellow[800]),
                     ),
                     Text(
-                      '${district.recovered}',
+                      '${district.deceased}',
                       style: Styles.caseNumberTextStyle
                           .copyWith(color: Colors.yellow[800]),
                     )
@@ -585,8 +594,16 @@ class _HomeScreenState extends State<HomeScreen> {
     var _lastUpdate = _provinceController.provinces[0].updatedAt;
     _widgets.add(Row(
       children: <Widget>[
-        Text('Pembaruan terakhir : ', style: TextStyle(color: Colors.grey)),
-        Text('${DateFormat.yMMMMEEEEd('id').format(_lastUpdate)}')
+        Text(
+          'Pembaruan terakhir : ',
+          style: TextStyle(color: Colors.grey, fontSize: 12.0),
+        ),
+        Text(
+          '${DateFormat.yMMMMEEEEd('id').format(_lastUpdate)} ${_lastUpdate.hour.toString().padLeft(2, '0')}:${_lastUpdate.minute.toString().padLeft(2, '0')}',
+          style: TextStyle(
+            fontSize: 12.0
+          ),
+        )
       ],
     ));
     _widgets.add(SizedBox(height: 10.0));
@@ -596,8 +613,7 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: EdgeInsets.symmetric(vertical: 10.0),
       child: Text(
         'Daftar Provinsi',
-        style:
-        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
+        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w600),
       ),
     ));
     _widgets.addAll(_provinceController.provinces.map((province) {
