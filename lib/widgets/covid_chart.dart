@@ -129,7 +129,7 @@ class CovidChart extends StatelessWidget {
         dataSource: statController.nationals,
         xValueMapper: (National national, _) =>
             DateFormat.yMMMd('id').format(national.date),
-        yValueMapper: (National national, _) => national.newRecovered,
+        yValueMapper: (National national, _) => national.newDeceased,
         color: Colors.yellow[800],
       )
     ];
