@@ -143,6 +143,33 @@ class HomeView extends GetView<HomeController> {
       );
     }
 
+    if (controller.provinceVaccineError.value) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: SizedBox(
+            height: 160,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/lottie/error.json',
+                  height: 60.0,
+                ),
+                const Text('Terjadi kesalahan saat memuat data vaksin covid!'),
+                TextButton(
+                  onPressed: () {
+                    controller.loadProvinceVaccine();
+                  },
+                  child: const Text('Coba Lagi'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     final provinceVaccine = controller.provinceVaccine;
 
     return Column(
@@ -230,6 +257,33 @@ class HomeView extends GetView<HomeController> {
       );
     }
 
+    if (controller.provinceTestError.value) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: SizedBox(
+            height: 160,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/lottie/error.json',
+                  height: 60.0,
+                ),
+                const Text('Terjadi kesalahan saat memuat data test covid!'),
+                TextButton(
+                  onPressed: () {
+                    controller.loadProvinceTest();
+                  },
+                  child: const Text('Coba Lagi'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return TotalTestCard(
       total: controller.provinceTests
           .fold(0, (sum, element) => sum + element.total),
@@ -277,6 +331,33 @@ class HomeView extends GetView<HomeController> {
             ],
           )
         ],
+      );
+    }
+
+    if (controller.provinceError.value) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: SizedBox(
+            height: 160,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'assets/lottie/error.json',
+                  height: 60.0,
+                ),
+                const Text('Terjadi kesalahan saat memuat data covid!'),
+                TextButton(
+                  onPressed: () {
+                    controller.loadProvince();
+                  },
+                  child: const Text('Coba Lagi'),
+                ),
+              ],
+            ),
+          ),
+        ),
       );
     }
 
@@ -423,6 +504,31 @@ class HomeView extends GetView<HomeController> {
       );
     }
 
+    if (controller.bannerError.value) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: SizedBox(
+          height: 160,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Lottie.asset(
+                'assets/lottie/error.json',
+                height: 60.0,
+              ),
+              const Text('Terjadi kesalahan saat memuat banner!'),
+              TextButton(
+                onPressed: () {
+                  controller.loadBanners();
+                },
+                child: const Text('Coba Lagi'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return CarouselSlider(
       items: controller.banners
           .map(
@@ -490,6 +596,10 @@ class HomeView extends GetView<HomeController> {
         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: ShimmerWidget(width: 250.0, height: 20.0),
       );
+    }
+
+    if (controller.bannerError.value) {
+      return const SizedBox();
     }
 
     return Row(

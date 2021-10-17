@@ -40,9 +40,15 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   Future<void> loadProvince() async {
-    final value = await homeProvider.loadProvince();
-    province = value;
-    provinceLoaded.value = true;
+    provinceError.value = false;
+    try {
+      final value = await homeProvider.loadProvince();
+      province = value;
+      provinceLoaded.value = true;
+    } catch (e) {
+      provinceLoaded.value = false;
+      provinceError.value = true;
+    }
   }
 
   bool checkIfProvinceVaccinesLoaded() {
@@ -71,32 +77,50 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   Future<void> loadProvinceVaccine() async {
-    final value = await homeProvider.loadProvinceVaccine();
-    provinceVaccine = value;
-    provinceVaccineLoaded.value = true;
+    provinceVaccineError.value = false;
+    try {
+      final value = await homeProvider.loadProvinceVaccine();
+      provinceVaccine = value;
+      provinceVaccineLoaded.value = true;
+    } catch (e) {
+      provinceVaccineLoaded.value = false;
+      provinceVaccineError.value = true;
+    }
   }
 
   Future<void> loadProvinceTest() async {
-    if (provinceTests.isNotEmpty) {
-      provinceTests.clear();
-    }
+    provinceTestError.value = false;
+    try {
+      if (provinceTests.isNotEmpty) {
+        provinceTests.clear();
+      }
 
-    final value = await homeProvider.loadProvinceTest();
-    provinceTests.addAll(value);
-    provinceTestLoaded.value = true;
+      final value = await homeProvider.loadProvinceTest();
+      provinceTests.addAll(value);
+      provinceTestLoaded.value = true;
+    } catch (e) {
+      provinceTestLoaded.value = false;
+      provinceTestError.value = true;
+    }
   }
 
   Future<void> loadBanners() async {
-    if (banners.isNotEmpty) {
-      banners.clear();
-      images.clear();
-      activeCarousel.value = 0;
-    }
+    bannerError.value = false;
+    try {
+      if (banners.isNotEmpty) {
+        banners.clear();
+        images.clear();
+        activeCarousel.value = 0;
+      }
 
-    final value = await homeProvider.loadBanners();
-    banners.addAll(value);
-    images.addAll(value.map((banner) => banner.image).toList());
-    bannerLoaded.value = true;
+      final value = await homeProvider.loadBanners();
+      banners.addAll(value);
+      images.addAll(value.map((banner) => banner.image).toList());
+      bannerLoaded.value = true;
+    } catch (e) {
+      bannerLoaded.value = false;
+      bannerError.value = true;
+    }
   }
 
   Future<void> onRefresh() async {
