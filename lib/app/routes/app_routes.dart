@@ -8,6 +8,7 @@ abstract class Routes {
   static const dataDetail = _Paths.dataDetail;
   static const testDetail = _Paths.testDetail;
   static const vaccineDetail = _Paths.vaccineDetail;
+  static const noInternet = _Paths.noInternet;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const dataDetail = '/data-detail';
   static const testDetail = '/test-detail';
   static const vaccineDetail = '/vaccine-detail';
+  static const noInternet = '/no-internet';
 }

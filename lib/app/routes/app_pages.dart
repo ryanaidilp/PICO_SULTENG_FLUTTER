@@ -3,6 +3,8 @@ import 'package:pico_sulteng_flutter/app/modules/data_detail/bindings/data_detai
 import 'package:pico_sulteng_flutter/app/modules/data_detail/views/data_detail_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/home/views/home_view.dart';
+import 'package:pico_sulteng_flutter/app/modules/no_internet/bindings/no_internet_binding.dart';
+import 'package:pico_sulteng_flutter/app/modules/no_internet/views/no_internet_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/test_detail/bindings/test_detail_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/test_detail/views/test_detail_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/vaccine_detail/bindings/vaccine_detail_binding.dart';
@@ -35,6 +37,11 @@ class AppPages {
       name: _Paths.vaccineDetail,
       page: () => VaccineDetailView(),
       binding: VaccineDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.noInternet,
+      page: () => NoInternetView(),
+      binding: NoInternetBinding(),
     ),
   ];
 }
