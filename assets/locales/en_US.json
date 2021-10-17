@@ -1,0 +1,40 @@
+{
+  "app_name": "PICO SulTeng",
+  "app_desc": "COVID-19 Information Center of Central Sulawesi",
+  "buttons": {
+    "call_center": "Call Center",
+    "hotline": "Hotline",
+    "more": "More"
+  },
+  "tab_label": {
+    "sulteng_today": "SulTeng Today",
+    "covid_info": "COVID-19 Information"
+  },
+  "data_case_label": "Case Data of Central Sulawesi",
+  "card_case_label": {
+    "confirmed": "TOTAL CONFIRMED CASE",
+    "under_treatment": "Treated",
+    "recovered": "Recovered",
+    "deceased": "Deceased"
+  },
+  "success": {
+    "refresh": "Successfully refresh data!"
+  },
+  "vaccine_card": {
+    "dose_given": "Dose has been given",
+    "from": " from ",
+    "vaccinated": " has been vaccinated"
+  },
+  "vaccine_type" :{
+    "first": "Vaccine 1st Dose",
+    "second": "Vaccine 2nd Dose",
+    "health_worker": "Health Worker",
+    "public_worker": "Public Worker",
+    "elderly": "Elderly",
+    "public": "Public",
+    "teenager": "Teenager",
+    "target": "Vaccination Target"
+  },
+  "test_label": "COVID-19 Testing Total",
+  "vaccine_label": "Vaccine Data of SulTeng"
+}
