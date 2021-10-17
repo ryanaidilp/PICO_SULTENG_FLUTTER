@@ -10,6 +10,7 @@ import 'package:lottie/lottie.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_case.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_confirmed.dart';
+import 'package:pico_sulteng_flutter/app/global_widgets/error_placeholder_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/image_placeholder.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/shimmer_widget.dart';
@@ -144,29 +145,11 @@ class HomeView extends GetView<HomeController> {
     }
 
     if (controller.provinceVaccineError.value) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: SizedBox(
-            height: 160,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Lottie.asset(
-                  'assets/lottie/error.json',
-                  height: 60.0,
-                ),
-                const Text('Terjadi kesalahan saat memuat data vaksin covid!'),
-                TextButton(
-                  onPressed: () {
-                    controller.loadProvinceVaccine();
-                  },
-                  child: const Text('Coba Lagi'),
-                ),
-              ],
-            ),
-          ),
-        ),
+      return ErrorPlaceHolderWidget(
+        label: 'Terjadi kesalahan saat memuat data vaksin!',
+        onRetry: () {
+          controller.loadProvinceVaccine();
+        },
       );
     }
 
@@ -258,29 +241,11 @@ class HomeView extends GetView<HomeController> {
     }
 
     if (controller.provinceTestError.value) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: SizedBox(
-            height: 160,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Lottie.asset(
-                  'assets/lottie/error.json',
-                  height: 60.0,
-                ),
-                const Text('Terjadi kesalahan saat memuat data test covid!'),
-                TextButton(
-                  onPressed: () {
-                    controller.loadProvinceTest();
-                  },
-                  child: const Text('Coba Lagi'),
-                ),
-              ],
-            ),
-          ),
-        ),
+      return ErrorPlaceHolderWidget(
+        label: 'Terjadi kesalahan saat memuat data tes covid-19!',
+        onRetry: () {
+          controller.loadProvinceTest();
+        },
       );
     }
 
@@ -335,29 +300,11 @@ class HomeView extends GetView<HomeController> {
     }
 
     if (controller.provinceError.value) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: SizedBox(
-            height: 160,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Lottie.asset(
-                  'assets/lottie/error.json',
-                  height: 60.0,
-                ),
-                const Text('Terjadi kesalahan saat memuat data covid!'),
-                TextButton(
-                  onPressed: () {
-                    controller.loadProvince();
-                  },
-                  child: const Text('Coba Lagi'),
-                ),
-              ],
-            ),
-          ),
-        ),
+      return ErrorPlaceHolderWidget(
+        label: 'Terjadi kesalahan saat memuat data kasus covid!',
+        onRetry: () {
+          controller.loadProvince();
+        },
       );
     }
 
@@ -505,27 +452,11 @@ class HomeView extends GetView<HomeController> {
     }
 
     if (controller.bannerError.value) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: SizedBox(
-          height: 160,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Lottie.asset(
-                'assets/lottie/error.json',
-                height: 60.0,
-              ),
-              const Text('Terjadi kesalahan saat memuat banner!'),
-              TextButton(
-                onPressed: () {
-                  controller.loadBanners();
-                },
-                child: const Text('Coba Lagi'),
-              ),
-            ],
-          ),
-        ),
+      return ErrorPlaceHolderWidget(
+        label: 'Terjadi kesalahan saat memuat banner!',
+        onRetry: () {
+          controller.loadBanners();
+        },
       );
     }
 
