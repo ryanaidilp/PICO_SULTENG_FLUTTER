@@ -1,0 +1,40 @@
+{
+  "app_name": "PICO SulTeng",
+  "app_desc": "Pusat Informasi COVID-19 Sulawesi Tengah",
+  "buttons": {
+    "call_center": "Call Center",
+    "hotline": "Hotline",
+    "more": "Selengkapnya"
+  },
+  "tab_label": {
+    "sulteng_today": "SulTeng Hari Ini",
+    "covid_info": "Informasi COVID-19"
+  },
+  "data_case_label": "Data Kasus SulTeng",
+  "card_case_label": {
+    "confirmed": "TOTAL KASUS TERKONFIRMASI",
+    "under_treatment": "Dirawat",
+    "recovered": "Sembuh",
+    "deceased": "Meninggal"
+  },
+  "success": {
+    "refresh": "Berhasil memperbarui data!"
+  },
+  "vaccine_card": {
+    "dose_given": "Dosis telah diberikan",
+    "from": " dari ",
+    "vaccinated": " telah divaksin"
+  },
+  "vaccine_type" :{
+    "first": "Vaksin Dosis 1",
+    "second": "Vaksin Dosis 2",
+    "health_worker": "Tenaga Kesehatan",
+    "public_worker": "Petugas Publik",
+    "elderly": "Lansia",
+    "public": "Masyarakat Umum",
+    "teenager": "Remaja",
+    "target": "Target Vaksinasi"
+  },
+  "test_label": "Total Pemeriksaan COVID-19",
+  "vaccine_label": "Data Vaksin Sulteng"
+}
