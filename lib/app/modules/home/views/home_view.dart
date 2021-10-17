@@ -100,9 +100,11 @@ class HomeView extends GetView<HomeController> {
               ),
               TextButton(
                 onPressed: () {
-                  Get.toNamed(Routes.vaccineDetail, arguments: {
-                    'province_vaccine': controller.provinceVaccine,
-                  });
+                  if (controller.checkIfProvinceVaccinesLoaded()) {
+                    Get.toNamed(Routes.vaccineDetail, arguments: {
+                      'province_vaccine': controller.provinceVaccine,
+                    });
+                  }
                 },
                 child: Text(
                   LocaleKeys.buttons_more.tr,
@@ -186,18 +188,18 @@ class HomeView extends GetView<HomeController> {
               ),
               TextButton(
                 onPressed: () {
-                  if (!controller.provinceLoaded.value) {
-                    return;
+                  if (controller.checkIfProvinceDataLoaded() &&
+                      controller.checkIfProvinceTestLoaded() &&
+                      controller.checkIfProvinceVaccinesLoaded()) {
+                    final int totalTest = controller.provinceTests
+                        .fold(0, (sum, element) => sum + element.total);
+
+                    Get.toNamed(Routes.dataDetail, arguments: {
+                      'province_data': controller.province,
+                      'total_test': totalTest,
+                      'tests': controller.provinceTests
+                    });
                   }
-
-                  final int totalTest = controller.provinceTests
-                      .fold(0, (sum, element) => sum + element.total);
-
-                  Get.toNamed(Routes.dataDetail, arguments: {
-                    'province_data': controller.province,
-                    'total_test': totalTest,
-                    'tests': controller.provinceTests
-                  });
                 },
                 child: Text(
                   LocaleKeys.buttons_more.tr,
@@ -232,9 +234,11 @@ class HomeView extends GetView<HomeController> {
       total: controller.provinceTests
           .fold(0, (sum, element) => sum + element.total),
       onPressed: () {
-        Get.toNamed(Routes.testDetail, arguments: {
-          'tests': controller.provinceTests,
-        });
+        if (controller.checkIfProvinceTestLoaded()) {
+          Get.toNamed(Routes.testDetail, arguments: {
+            'tests': controller.provinceTests,
+          });
+        }
       },
     );
   }

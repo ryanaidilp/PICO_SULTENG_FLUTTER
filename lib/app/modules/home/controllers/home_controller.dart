@@ -24,6 +24,10 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   RxBool provinceLoaded = false.obs;
   RxBool provinceTestLoaded = false.obs;
   RxBool provinceVaccineLoaded = false.obs;
+  RxBool bannerError = false.obs;
+  RxBool provinceError = false.obs;
+  RxBool provinceTestError = false.obs;
+  RxBool provinceVaccineError = false.obs;
   RefreshController refreshController = RefreshController();
 
   @override
@@ -39,6 +43,26 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     final value = await homeProvider.loadProvince();
     province = value;
     provinceLoaded.value = true;
+  }
+
+  bool checkIfProvinceVaccinesLoaded() {
+    return provinceVaccineLoaded.value && !provinceVaccineError.value;
+  }
+
+  bool checkIfBannerLoaded() {
+    return bannerLoaded.value && !bannerError.value;
+  }
+
+  bool checkIfProvinceDataLoaded() {
+    return provinceLoaded.value && !provinceError.value;
+  }
+
+  bool checkIfProvinceTestLoaded() {
+    return provinceTestLoaded.value && !provinceTestError.value;
+  }
+
+  bool checkIfProvinceVaccineLoaded() {
+    return provinceVaccineLoaded.value && provinceVaccineError.value;
   }
 
   void onTabChange() {
