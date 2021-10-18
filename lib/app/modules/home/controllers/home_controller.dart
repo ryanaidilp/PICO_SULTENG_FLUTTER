@@ -8,6 +8,7 @@ import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
 import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
 import 'package:pico_sulteng_flutter/app/modules/home/providers/home_provider.dart';
+import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeController extends GetxController with SingleGetTickerProviderMixin {
@@ -175,6 +176,17 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
 
   void onPageChanged(int index, CarouselPageChangedReason reason) {
     activeCarousel.value = index;
+  }
+
+  void openLink(String title, String url) {
+    if (Get.isBottomSheetOpen!) Get.back();
+    Get.toNamed(
+      Routes.inAppWebPage,
+      arguments: {
+        'title': title,
+        'link': url,
+      },
+    );
   }
 
   @override

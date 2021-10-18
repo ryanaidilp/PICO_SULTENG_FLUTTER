@@ -482,13 +482,9 @@ class HomeView extends GetView<HomeController> {
                 iconColor: Colors.blueAccent,
                 icon: EvaIcons.barChart2Outline,
                 onTap: () {
-                  if (Get.isBottomSheetOpen!) Get.back();
-                  Get.toNamed(
-                    Routes.inAppWebPage,
-                    arguments: {
-                      'link': LocaleKeys.menu_data_url.tr,
-                      'title': LocaleKeys.menu_data_title.tr,
-                    },
+                  controller.openLink(
+                    LocaleKeys.menu_data_title.tr,
+                    LocaleKeys.menu_data_url.tr,
                   );
                 },
               ),
@@ -497,13 +493,9 @@ class HomeView extends GetView<HomeController> {
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.syringe,
                 onTap: () {
-                  if (Get.isBottomSheetOpen!) Get.back();
-                  Get.toNamed(
-                    Routes.inAppWebPage,
-                    arguments: {
-                      'link': LocaleKeys.menu_vaccine_url.tr,
-                      'title': LocaleKeys.menu_vaccine_title.tr
-                    },
+                  controller.openLink(
+                    LocaleKeys.menu_vaccine_url.tr,
+                    LocaleKeys.menu_vaccine_url.tr,
                   );
                 },
               ),
@@ -512,13 +504,9 @@ class HomeView extends GetView<HomeController> {
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.bed,
                 onTap: () {
-                  if (Get.isBottomSheetOpen!) Get.back();
-                  Get.toNamed(
-                    Routes.inAppWebPage,
-                    arguments: {
-                      'link': LocaleKeys.menu_bed_url.tr,
-                      'title': LocaleKeys.menu_bed_title.tr
-                    },
+                  controller.openLink(
+                    LocaleKeys.menu_bed_title.tr,
+                    LocaleKeys.menu_bed_url.tr,
                   );
                 },
               ),
@@ -526,20 +514,21 @@ class HomeView extends GetView<HomeController> {
                 label: LocaleKeys.menu_contact_title.tr,
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.book,
-                onTap: () {},
+                onTap: () {
+                  controller.openLink(
+                    LocaleKeys.menu_isolation_title.tr,
+                    'https://banuacoders.com/corona/kontak',
+                  );
+                },
               ),
               MenuButton(
                 label: LocaleKeys.menu_isolation_title.tr,
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.userShield,
                 onTap: () {
-                  if (Get.isBottomSheetOpen!) Get.back();
-                  Get.toNamed(
-                    Routes.inAppWebPage,
-                    arguments: {
-                      'link': LocaleKeys.menu_isolation_url.tr,
-                      'title': LocaleKeys.menu_isolation_title.tr
-                    },
+                  controller.openLink(
+                    LocaleKeys.menu_isolation_title.tr,
+                    LocaleKeys.menu_isolation_url.tr,
                   );
                 },
               ),
@@ -548,13 +537,9 @@ class HomeView extends GetView<HomeController> {
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.stethoscope,
                 onTap: () {
-                  if (Get.isBottomSheetOpen!) Get.back();
-                  Get.toNamed(
-                    Routes.inAppWebPage,
-                    arguments: {
-                      'link': LocaleKeys.menu_screening_url.tr,
-                      'title': LocaleKeys.menu_screening_title.tr
-                    },
+                  controller.openLink(
+                    LocaleKeys.menu_screening_title.tr,
+                    LocaleKeys.menu_screening_url.tr,
                   );
                 },
               ),
@@ -562,7 +547,34 @@ class HomeView extends GetView<HomeController> {
                 label: LocaleKeys.menu_donation_title.tr,
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.wallet,
-                onTap: () {},
+                onTap: () {
+                  controller.openLink(
+                    LocaleKeys.menu_donation_title.tr,
+                    'https://banuacoders.com/corona/isoman#donations',
+                  );
+                },
+              ),
+              MenuButton(
+                label: 'Telekonsultasi',
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.firstAid,
+                onTap: () {
+                  controller.openLink(
+                    'Telekonsultasi',
+                    'https://banuacoders.com/corona/isoman#telemedicine',
+                  );
+                },
+              ),
+              MenuButton(
+                label: 'Tanya Jawab',
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.questionCircle,
+                onTap: () {
+                  controller.openLink(
+                    'Tanya Jawab',
+                    'https://bit.ly/faqisoman',
+                  );
+                },
               ),
             ],
           )
