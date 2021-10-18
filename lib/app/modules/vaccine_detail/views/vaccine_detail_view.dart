@@ -2,6 +2,7 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
@@ -70,6 +71,15 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                 ),
                 const SizedBox(height: 6.0),
                 Text(buildUpdatedAtText(provinceVaccine.updatedAt)),
+                const SizedBox(height: 6.0),
+                const LineContainer(),
+                const SizedBox(height: 6.0),
+                Lottie.asset('assets/lottie/vaccinated.json'),
+                const SizedBox(height: 6.0),
+                const Text(
+                  'Vaksin membantu mencegah terjadinya penularan COVID-19. Dengan vaksin kita juga ikut berkontribusi dalam membentuk kekebalan kelompok di Indonesia. Ayo segera vaksin di fasilitas pelayanan kesehatan terdekat.',
+                  textAlign: TextAlign.justify,
+                ),
                 const SizedBox(height: 6.0),
                 const LineContainer(),
                 const SizedBox(height: 6.0),
