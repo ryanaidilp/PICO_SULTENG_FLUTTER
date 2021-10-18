@@ -83,10 +83,8 @@ class HomeView extends GetView<HomeController> {
               ),
               TextButton(
                 onPressed: () {
-                  if (controller.checkIfProvinceVaccinesLoaded()) {
-                    Get.toNamed(Routes.vaccineDetail, arguments: {
-                      'province_vaccine': controller.provinceVaccine,
-                    });
+                  if (controller.checkIfInfographicLoaded()) {
+                    //
                   }
                 },
                 child: Text(
@@ -150,7 +148,11 @@ class HomeView extends GetView<HomeController> {
             width: 160.0,
             child: InfographicMiniCard(
               infographic: infographic,
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(Routes.detailInfographic, arguments: {
+                  'infographic': infographic,
+                });
+              },
             ),
           );
         },

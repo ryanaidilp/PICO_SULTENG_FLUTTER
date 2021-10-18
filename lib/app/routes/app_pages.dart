@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/modules/data_detail/bindings/data_detail_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/data_detail/views/data_detail_view.dart';
+import 'package:pico_sulteng_flutter/app/modules/detail_infographic/bindings/detail_infographic_binding.dart';
+import 'package:pico_sulteng_flutter/app/modules/detail_infographic/views/detail_infographic_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/home/views/home_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/in_app_web_page/bindings/in_app_web_page_binding.dart';
@@ -49,6 +51,11 @@ class AppPages {
       name: _Paths.inAppWebPage,
       page: () => InAppWebPageView(),
       binding: InAppWebPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.detailInfographic,
+      page: () => DetailInfographicView(),
+      binding: DetailInfographicBinding(),
     ),
   ];
 }

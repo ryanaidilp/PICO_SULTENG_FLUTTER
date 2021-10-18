@@ -12,8 +12,12 @@ String percentageFormat(double number) {
   return formatter.format(number);
 }
 
-String dateWithDayFormat(DateTime date) {
-  return DateFormat('EEEE, dd MMMM yyyy').format(date);
+String dateWithDayFormat(DateTime date,
+    {String format = 'EEEE, dd MMMM yyyy', bool includeTimeZone = false}) {
+  final formattedDate = DateFormat(format).format(date);
+  final timezone = date.timeZoneName;
+  final buffer = StringBuffer()..writeAll([formattedDate, timezone], " ");
+  return includeTimeZone ? buffer.toString() : formattedDate;
 }
 
 String formatNewCase(int cases) {

@@ -42,14 +42,16 @@ class InfographicMiniCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4.0),
-              Text(
-                dateWithDayFormat(infographic.publishedAt),
-                maxLines: 2,
-                style: const TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.grey,
-                  fontSize: 12.0,
+              Expanded(
+                child: Text(
+                  dateWithDayFormat(infographic.publishedAt),
+                  maxLines: 2,
+                  style: const TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.grey,
+                    fontSize: 12.0,
+                  ),
                 ),
               )
             ],
