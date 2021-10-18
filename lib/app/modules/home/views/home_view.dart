@@ -1,11 +1,14 @@
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_case.dart';
@@ -13,6 +16,7 @@ import 'package:pico_sulteng_flutter/app/global_widgets/card_confirmed.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/error_placeholder_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/image_placeholder.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
+import 'package:pico_sulteng_flutter/app/global_widgets/menu_button.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/shimmer_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/total_test_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_card.dart';
@@ -364,24 +368,130 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
+  Widget buildMenuContent() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Center(
+            child: SizedBox(
+              width: Get.width * 0.1,
+              child: const Divider(thickness: 4.0),
+            ),
+          ),
+          Text(
+            LocaleKeys.menu_information_center.tr,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          GridView.count(
+            padding: EdgeInsets.zero,
+            crossAxisCount: 4,
+            shrinkWrap: true,
+            children: [
+              MenuButton(
+                label: LocaleKeys.menu_data_title.tr,
+                iconColor: Colors.blueAccent,
+                icon: EvaIcons.barChart2Outline,
+                onTap: () {
+                  if (Get.isBottomSheetOpen!) Get.back();
+                  Get.toNamed(
+                    Routes.inAppWebPage,
+                    arguments: {
+                      'link': LocaleKeys.menu_data_url.tr,
+                      'title': LocaleKeys.menu_data_title.tr,
+                    },
+                  );
+                },
+              ),
+              MenuButton(
+                label: LocaleKeys.menu_vaccine_title.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.syringe,
+                onTap: () {
+                  if (Get.isBottomSheetOpen!) Get.back();
+                  Get.toNamed(
+                    Routes.inAppWebPage,
+                    arguments: {
+                      'link': LocaleKeys.menu_vaccine_url.tr,
+                      'title': LocaleKeys.menu_vaccine_title.tr
+                    },
+                  );
+                },
+              ),
+              MenuButton(
+                label: LocaleKeys.menu_bed_title.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.bed,
+                onTap: () {
+                  if (Get.isBottomSheetOpen!) Get.back();
+                  Get.toNamed(
+                    Routes.inAppWebPage,
+                    arguments: {
+                      'link': LocaleKeys.menu_bed_url.tr,
+                      'title': LocaleKeys.menu_bed_title.tr
+                    },
+                  );
+                },
+              ),
+              MenuButton(
+                label: LocaleKeys.menu_contact_title.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.book,
+                onTap: () {},
+              ),
+              MenuButton(
+                label: LocaleKeys.menu_isolation_title.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.userShield,
+                onTap: () {
+                  if (Get.isBottomSheetOpen!) Get.back();
+                  Get.toNamed(
+                    Routes.inAppWebPage,
+                    arguments: {
+                      'link': LocaleKeys.menu_isolation_url.tr,
+                      'title': LocaleKeys.menu_isolation_title.tr
+                    },
+                  );
+                },
+              ),
+              MenuButton(
+                label: LocaleKeys.menu_screening_title.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.stethoscope,
+                onTap: () {
+                  if (Get.isBottomSheetOpen!) Get.back();
+                  Get.toNamed(
+                    Routes.inAppWebPage,
+                    arguments: {
+                      'link': LocaleKeys.menu_screening_url.tr,
+                      'title': LocaleKeys.menu_screening_title.tr
+                    },
+                  );
+                },
+              ),
+              MenuButton(
+                label: LocaleKeys.menu_donation_title.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.wallet,
+                onTap: () {},
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   PreferredSizeWidget buildTabBar() {
     return AppBar(
       actions: [
         IconButton(
           onPressed: () {
-            Get.snackbar(
-              LocaleKeys.coming_soon.tr,
-              LocaleKeys.menu_unavailable.tr,
-              backgroundColor: Colors.red,
-              icon: const Icon(
-                Iconsax.danger,
-                color: Colors.white,
-              ),
-              colorText: Colors.white,
-              snackPosition: SnackPosition.BOTTOM,
-              overlayBlur: 6.0,
-              shouldIconPulse: true,
-            );
+            showGetBottomSheet(buildMenuContent());
           },
           icon: const Icon(
             Iconsax.menu_14,

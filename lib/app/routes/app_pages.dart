@@ -3,6 +3,8 @@ import 'package:pico_sulteng_flutter/app/modules/data_detail/bindings/data_detai
 import 'package:pico_sulteng_flutter/app/modules/data_detail/views/data_detail_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/home/views/home_view.dart';
+import 'package:pico_sulteng_flutter/app/modules/in_app_web_page/bindings/in_app_web_page_binding.dart';
+import 'package:pico_sulteng_flutter/app/modules/in_app_web_page/views/in_app_web_page_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/no_internet/bindings/no_internet_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/no_internet/views/no_internet_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/test_detail/bindings/test_detail_binding.dart';
@@ -42,6 +44,11 @@ class AppPages {
       name: _Paths.noInternet,
       page: () => NoInternetView(),
       binding: NoInternetBinding(),
+    ),
+    GetPage(
+      name: _Paths.inAppWebPage,
+      page: () => InAppWebPageView(),
+      binding: InAppWebPageBinding(),
     ),
   ];
 }

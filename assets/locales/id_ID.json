@@ -41,6 +41,36 @@
   "success": {
     "refresh": "Berhasil memperbarui data!"
   },
+  "menu": {
+    "information_center": "Pusat Layanan & Informasi",
+    "data": {
+      "title": "Data COVID-19",
+       "url": "https://banuacoders.com/corona/data"
+    },
+    "vaccine": {
+      "title": "Informasi Vaksin",
+      "url": "https://banuacoders.com/corona/vaksin"
+    },
+    "bed": {
+      "title": "Ketersediaan Tempat Tidur",
+      "url": "https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota="
+    },
+    "contact": {
+      "title": "Nomor Darurat"
+    },
+    "isolation": {
+      "title": "Isolasi Mandiri",
+      "url": "https://banuacoders.com/corona/isoman"
+
+    },
+    "screening": {
+      "title": "Pemeriksaan Mandiri",
+      "url": "https://s.id/ChatbotCovid19"
+    },
+    "donation": {
+      "title": "Donasi COVID-19"
+    }
+  },
   "vaccine_card": {
     "dose_given": "Dosis telah diberikan",
     "from": " dari ",

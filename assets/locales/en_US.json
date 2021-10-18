@@ -41,6 +41,35 @@
   "success": {
     "refresh": "Successfully refresh data!"
   },
+  "menu": {
+    "information_center": "Service & Information Center",
+    "data": {
+      "title": "COVID-19 Data",
+      "url": "https://banuacoders.com/corona/data"
+    },
+    "vaccine": {
+      "title": "Vaccine Information",
+      "url": "https://banuacoders.com/corona/vaksin"
+    },
+    "bed": {
+      "title": "Bed (ICU) Availability",
+      "url": "https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota="
+    },
+    "contact": {
+      "title": "Emergency Number"
+    },
+    "isolation": {
+      "title": "Self Isolation",
+      "url": "https://banuacoders.com/corona/isoman"
+    },
+    "screening": {
+      "title": "Self Screening",
+      "url": "https://s.id/ChatbotCovid19"
+    },
+    "donation": {
+      "title": "COVID-19 Donation"
+    }
+  },
   "vaccine_card": {
     "dose_given": "Dose has been given",
     "from": " from ",

@@ -42,6 +42,19 @@ class LocaleKeys {
   static const card_case_label_process = 'card_case_label_process';
   static const updated_at = 'updated_at';
   static const success_refresh = 'success_refresh';
+  static const menu_information_center = 'menu_information_center';
+  static const menu_data_title = 'menu_data_title';
+  static const menu_data_url = 'menu_data_url';
+  static const menu_vaccine_title = 'menu_vaccine_title';
+  static const menu_vaccine_url = 'menu_vaccine_url';
+  static const menu_bed_title = 'menu_bed_title';
+  static const menu_bed_url = 'menu_bed_url';
+  static const menu_contact_title = 'menu_contact_title';
+  static const menu_isolation_title = 'menu_isolation_title';
+  static const menu_isolation_url = 'menu_isolation_url';
+  static const menu_screening_title = 'menu_screening_title';
+  static const menu_screening_url = 'menu_screening_url';
+  static const menu_donation_title = 'menu_donation_title';
   static const vaccine_card_dose_given = 'vaccine_card_dose_given';
   static const vaccine_card_from = 'vaccine_card_from';
   static const vaccine_card_vaccinated = 'vaccine_card_vaccinated';
@@ -100,6 +113,20 @@ class Locales {
     'card_case_label_process': 'Process in Lab',
     'updated_at': 'Updated at :',
     'success_refresh': 'Successfully refresh data!',
+    'menu_information_center': 'Service & Information Center',
+    'menu_data_title': 'COVID-19 Data',
+    'menu_data_url': 'https://banuacoders.com/corona/data',
+    'menu_vaccine_title': 'Vaccine Information',
+    'menu_vaccine_url': 'https://banuacoders.com/corona/vaksin',
+    'menu_bed_title': 'Bed (ICU) Availability',
+    'menu_bed_url':
+        'https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota=',
+    'menu_contact_title': 'Emergency Number',
+    'menu_isolation_title': 'Self Isolation',
+    'menu_isolation_url': 'https://banuacoders.com/corona/isoman',
+    'menu_screening_title': 'Self Screening',
+    'menu_screening_url': 'https://s.id/ChatbotCovid19',
+    'menu_donation_title': 'COVID-19 Donation',
     'vaccine_card_dose_given': 'Dose has been given',
     'vaccine_card_from': ' from ',
     'vaccine_card_vaccinated': ' has been vaccinated',
@@ -158,6 +185,20 @@ class Locales {
     'card_case_label_process': 'Proses Lab',
     'updated_at': 'Diperbarui :',
     'success_refresh': 'Berhasil memperbarui data!',
+    'menu_information_center': 'Pusat Layanan & Informasi',
+    'menu_data_title': 'Data COVID-19',
+    'menu_data_url': 'https://banuacoders.com/corona/data',
+    'menu_vaccine_title': 'Informasi Vaksin',
+    'menu_vaccine_url': 'https://banuacoders.com/corona/vaksin',
+    'menu_bed_title': 'Ketersediaan Tempat Tidur',
+    'menu_bed_url':
+        'https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota=',
+    'menu_contact_title': 'Nomor Darurat',
+    'menu_isolation_title': 'Isolasi Mandiri',
+    'menu_isolation_url': 'https://banuacoders.com/corona/isoman',
+    'menu_screening_title': 'Pemeriksaan Mandiri',
+    'menu_screening_url': 'https://s.id/ChatbotCovid19',
+    'menu_donation_title': 'Donasi COVID-19',
     'vaccine_card_dose_given': 'Dosis telah diberikan',
     'vaccine_card_from': ' dari ',
     'vaccine_card_vaccinated': ' telah divaksin',

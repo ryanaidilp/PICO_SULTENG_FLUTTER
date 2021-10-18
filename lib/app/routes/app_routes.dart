@@ -9,6 +9,7 @@ abstract class Routes {
   static const testDetail = _Paths.testDetail;
   static const vaccineDetail = _Paths.vaccineDetail;
   static const noInternet = _Paths.noInternet;
+  static const inAppWebPage = _Paths.inAppWebPage;
 }
 
 abstract class _Paths {
@@ -17,4 +18,5 @@ abstract class _Paths {
   static const testDetail = '/test-detail';
   static const vaccineDetail = '/vaccine-detail';
   static const noInternet = '/no-internet';
+  static const inAppWebPage = '/in-app-web-page';
 }
