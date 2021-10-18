@@ -132,7 +132,7 @@ class DataDetailView extends GetView<DataDetailController> {
                     height: 8.0,
                   ),
                   SuspectCaseCard(
-                    title: 'Total Orang Dalam Pemantauan',
+                    title: LocaleKeys.odp_label.tr,
                     total: province.totalObservation,
                     newCase: province.newObservation,
                     newFinishedCase: province.newFinishedObservation,
@@ -141,15 +141,15 @@ class DataDetailView extends GetView<DataDetailController> {
                     onTap: () {
                       showGetBottomSheet(
                         buildBottomSheet(
-                          'ODP (Orang Dalam Pemantauan)',
-                          'Orang dalam pemantauan (ODP) adalah seseorang yang mengalami demam (≥38°C) atau riwayat demam; atau gejala gangguan sistem pernapasan, seperti pilek/sakit tenggorokan/batuk DAN tidak ada penyebab lain berdasarkan gambaran klinis yang meyakinkan DAN pada 14 hari terakhir sebelum timbul gejala, memenuhi salah satu kriteria: “memiliki riwayat perjalanan atau tinggal di luar negeri yang melaporkan transmisi lokal” atau “memiliki riwayat perjalanan atau tinggal di area transmisi lokal di Indonesia”.',
+                          LocaleKeys.odp_title.tr,
+                          LocaleKeys.odp_description.tr,
                         ),
                       );
                     },
                   ),
                   const SizedBox(height: 8.0),
                   SuspectCaseCard(
-                    title: 'Total Pasien Dalam Pengawasan',
+                    title: LocaleKeys.pdp_label.tr,
                     total: province.totalSupervision,
                     newCase: province.newSupervision,
                     newFinishedCase: province.newFinishedSupervision,
@@ -158,8 +158,8 @@ class DataDetailView extends GetView<DataDetailController> {
                     onTap: () {
                       showGetBottomSheet(
                         buildBottomSheet(
-                          'PDP (Pasien Dalam Pengawasan)',
-                          'Pasien Dalam Pengawasan adalah seseorang dengan Infeksi Saluran Pernapasan Akut (ISPA) yaitu demam (≥38°C) atau riwayat demam; disertai salah satu gejala/tanda penyakit pernapasan seperti: batuk/sesak nafas/sakit tenggorokan/pilek/pneumonia ringan hingga berat DAN tidak ada penyebab lain berdasarkan gambaran klinis yang meyakinkan DAN pada 14 hari terakhir sebelum timbul gejala, memenuhi salah satu kriteria: "memiliki riwayat perjalanan atau tinggal di luar negeri yang melaporkan transmisi lokal" atau "memiliki riwayat perjalanan atau tinggal di area transmisi lokal di Indonesia.',
+                          LocaleKeys.pdp_title.tr,
+                          LocaleKeys.pdp_description.tr,
                         ),
                       );
                     },

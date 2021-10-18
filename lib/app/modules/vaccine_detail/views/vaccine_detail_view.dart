@@ -149,9 +149,9 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                 const SizedBox(height: 6.0),
                 const LineContainer(),
                 const SizedBox(height: 6.0),
-                const Text(
-                  'Progress Vaksinasi',
-                  style: TextStyle(
+                Text(
+                  LocaleKeys.vaccine_card_vaccine_progress.tr,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 18.0,
                   ),

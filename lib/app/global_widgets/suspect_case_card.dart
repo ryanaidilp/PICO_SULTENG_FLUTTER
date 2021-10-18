@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
+import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class SuspectCaseCard extends StatelessWidget {
   const SuspectCaseCard({
@@ -82,9 +83,9 @@ class SuspectCaseCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        'Aktif',
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.card_case_label_active.tr,
+                        style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           color: Colors.grey,
                         ),
@@ -121,9 +122,9 @@ class SuspectCaseCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        'Selesai',
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.card_case_label_finish.tr,
+                        style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           color: Colors.grey,
                         ),

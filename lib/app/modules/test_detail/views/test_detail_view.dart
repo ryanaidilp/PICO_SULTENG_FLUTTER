@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_test_case.dart';
+import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 import '../controllers/test_detail_controller.dart';
 
@@ -25,9 +26,9 @@ class TestDetailView extends GetView<TestDetailController> {
     }).toList();
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Total Pemeriksaan',
-          style: TextStyle(
+        title: Text(
+          LocaleKeys.card_case_label_total_test.tr,
+          style: const TextStyle(
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -64,9 +65,9 @@ class TestDetailView extends GetView<TestDetailController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Diperbarui :',
-                      style: TextStyle(
+                    Text(
+                      LocaleKeys.updated_at.tr,
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                       ),
@@ -125,16 +126,16 @@ class TestDetailView extends GetView<TestDetailController> {
                               ),
                               const SizedBox(height: 4.0),
                               Row(
-                                children: const [
-                                  Icon(
+                                children: [
+                                  const Icon(
                                     Icons.circle,
                                     color: Colors.white,
                                     size: 10.0,
                                   ),
-                                  SizedBox(width: 4.0),
+                                  const SizedBox(width: 4.0),
                                   Text(
-                                    'Sampel :',
-                                    style: TextStyle(
+                                    LocaleKeys.card_case_label_sample.tr,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -151,16 +152,16 @@ class TestDetailView extends GetView<TestDetailController> {
                               ),
                               const SizedBox(height: 4.0),
                               Row(
-                                children: const [
-                                  Icon(
+                                children: [
+                                  const Icon(
                                     Icons.circle,
                                     color: Colors.white,
                                     size: 10.0,
                                   ),
-                                  SizedBox(width: 4.0),
+                                  const SizedBox(width: 4.0),
                                   Text(
-                                    'Durasi   :',
-                                    style: TextStyle(
+                                    LocaleKeys.card_case_label_duration.tr,
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700,
                                     ),
@@ -194,9 +195,9 @@ class TestDetailView extends GetView<TestDetailController> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Jumlah tes yang telah dilakukan',
-                                style: TextStyle(
+                              Text(
+                                LocaleKeys.test_done.tr,
+                                style: const TextStyle(
                                   fontWeight: FontWeight.w700,
                                   color: Colors.black54,
                                 ),
@@ -220,7 +221,7 @@ class TestDetailView extends GetView<TestDetailController> {
                         SizedBox(
                           width: Get.width * 0.3,
                           child: CardTestCase(
-                            label: 'Reaktif',
+                            label: LocaleKeys.card_case_label_reactive.tr,
                             count: test.positive,
                             percentage: reactivePercentage,
                           ),
@@ -228,7 +229,7 @@ class TestDetailView extends GetView<TestDetailController> {
                         SizedBox(
                           width: Get.width * 0.3,
                           child: CardTestCase(
-                            label: 'Non-Reaktif',
+                            label: LocaleKeys.card_case_label_non_reactive.tr,
                             count: test.negative,
                             percentage: nonReactivePercentage,
                           ),
@@ -236,7 +237,7 @@ class TestDetailView extends GetView<TestDetailController> {
                         SizedBox(
                           width: Get.width * 0.3,
                           child: CardTestCase(
-                            label: 'Invalid',
+                            label: LocaleKeys.card_case_label_invalid.tr,
                             count: test.invalid,
                             percentage: invalidPercentage,
                             isInvalid: true,
@@ -245,7 +246,7 @@ class TestDetailView extends GetView<TestDetailController> {
                         SizedBox(
                           width: Get.width * 0.3,
                           child: CardTestCase(
-                            label: 'Proses Lab',
+                            label: LocaleKeys.card_case_label_process.tr,
                             count: test.process,
                             percentage: processPercentage,
                           ),

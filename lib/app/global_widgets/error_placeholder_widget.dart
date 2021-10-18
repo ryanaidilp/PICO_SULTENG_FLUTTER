@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class ErrorPlaceHolderWidget extends StatelessWidget {
   ErrorPlaceHolderWidget({
@@ -33,7 +35,7 @@ class ErrorPlaceHolderWidget extends StatelessWidget {
               Text(label),
               TextButton(
                 onPressed: onRetry,
-                child: const Text('Coba Lagi'),
+                child: Text(LocaleKeys.buttons_try_again.tr),
               ),
             ],
           ),

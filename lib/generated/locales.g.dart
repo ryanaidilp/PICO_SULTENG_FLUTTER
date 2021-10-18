@@ -16,6 +16,13 @@ class LocaleKeys {
   static const buttons_call_center = 'buttons_call_center';
   static const buttons_hotline = 'buttons_hotline';
   static const buttons_more = 'buttons_more';
+  static const buttons_try_again = 'buttons_try_again';
+  static const odp_title = 'odp_title';
+  static const odp_description = 'odp_description';
+  static const odp_label = 'odp_label';
+  static const pdp_title = 'pdp_title';
+  static const pdp_description = 'pdp_description';
+  static const pdp_label = 'pdp_label';
   static const tab_label_sulteng_today = 'tab_label_sulteng_today';
   static const tab_label_covid_info = 'tab_label_covid_info';
   static const data_case_label = 'data_case_label';
@@ -24,10 +31,21 @@ class LocaleKeys {
       'card_case_label_under_treatment';
   static const card_case_label_recovered = 'card_case_label_recovered';
   static const card_case_label_deceased = 'card_case_label_deceased';
+  static const card_case_label_active = 'card_case_label_active';
+  static const card_case_label_finish = 'card_case_label_finish';
+  static const card_case_label_total_test = 'card_case_label_total_test';
+  static const card_case_label_sample = 'card_case_label_sample';
+  static const card_case_label_duration = 'card_case_label_duration';
+  static const card_case_label_reactive = 'card_case_label_reactive';
+  static const card_case_label_non_reactive = 'card_case_label_non_reactive';
+  static const card_case_label_invalid = 'card_case_label_invalid';
+  static const card_case_label_process = 'card_case_label_process';
+  static const updated_at = 'updated_at';
   static const success_refresh = 'success_refresh';
   static const vaccine_card_dose_given = 'vaccine_card_dose_given';
   static const vaccine_card_from = 'vaccine_card_from';
   static const vaccine_card_vaccinated = 'vaccine_card_vaccinated';
+  static const vaccine_card_vaccine_progress = 'vaccine_card_vaccine_progress';
   static const vaccine_type_first = 'vaccine_type_first';
   static const vaccine_type_second = 'vaccine_type_second';
   static const vaccine_type_health_worker = 'vaccine_type_health_worker';
@@ -37,7 +55,15 @@ class LocaleKeys {
   static const vaccine_type_teenager = 'vaccine_type_teenager';
   static const vaccine_type_target = 'vaccine_type_target';
   static const test_label = 'test_label';
+  static const test_done = 'test_done';
   static const vaccine_label = 'vaccine_label';
+  static const error_vaccine = 'error_vaccine';
+  static const error_statistic = 'error_statistic';
+  static const error_test = 'error_test';
+  static const error_banner = 'error_banner';
+  static const error_no_internet = 'error_no_internet';
+  static const coming_soon = 'coming_soon';
+  static const menu_unavailable = 'menu_unavailable';
 }
 
 class Locales {
@@ -47,6 +73,15 @@ class Locales {
     'buttons_call_center': 'Call Center',
     'buttons_hotline': 'Hotline',
     'buttons_more': 'More',
+    'buttons_try_again': 'Try Again',
+    'odp_title': 'ODP (People Under Monitoring)',
+    'odp_description':
+        'A person under monitoring (ODP) is someone who has a fever (≥38°C) or a history of fever; or symptoms of respiratory system disorders, such as runny nose/sore throat/cough AND no other cause based on a convincing clinical picture AND in the last 14 days before the onset of symptoms, meets one of the following criteria: “have a history of traveling or living abroad reporting local transmission ” or “have a history of traveling or living in a local transmission area in Indonesia”.',
+    'odp_label': 'Total People Under Monitoring',
+    'pdp_title': 'PDP (Patient Under Supervision)',
+    'pdp_description':
+        'Patient Under Supervision is someone with an Acute Respiratory Infection (ARI), namely fever (≥38°C) or a history of fever; accompanied by one of the symptoms/signs of respiratory disease such as: cough/shortness of breath/sore throat/runny nose/pneumonia mild to severe AND no other cause based on a convincing clinical picture AND in the last 14 days before symptoms appear, meet one of the criteria: "have history of traveling or living abroad reporting local transmission" or "having a history of traveling or living in a local transmission area in Indonesia.',
+    'pdp_label': 'Total Patient Under Supervision',
     'tab_label_sulteng_today': 'SulTeng Today',
     'tab_label_covid_info': 'COVID-19 Information',
     'data_case_label': 'Case Data of Central Sulawesi',
@@ -54,10 +89,21 @@ class Locales {
     'card_case_label_under_treatment': 'Treated',
     'card_case_label_recovered': 'Recovered',
     'card_case_label_deceased': 'Deceased',
+    'card_case_label_active': 'Active',
+    'card_case_label_finish': 'Finished',
+    'card_case_label_total_test': 'Total Test',
+    'card_case_label_sample': 'Sample :',
+    'card_case_label_duration': 'Duration :',
+    'card_case_label_reactive': 'Reactive',
+    'card_case_label_non_reactive': 'Non-Reactive',
+    'card_case_label_invalid': 'Invalid',
+    'card_case_label_process': 'Process in Lab',
+    'updated_at': 'Updated at :',
     'success_refresh': 'Successfully refresh data!',
     'vaccine_card_dose_given': 'Dose has been given',
     'vaccine_card_from': ' from ',
     'vaccine_card_vaccinated': ' has been vaccinated',
+    'vaccine_card_vaccine_progress': 'Vaccination Progress',
     'vaccine_type_first': 'Vaccine 1st Dose',
     'vaccine_type_second': 'Vaccine 2nd Dose',
     'vaccine_type_health_worker': 'Health Worker',
@@ -67,7 +113,17 @@ class Locales {
     'vaccine_type_teenager': 'Teenager',
     'vaccine_type_target': 'Vaccination Target',
     'test_label': 'COVID-19 Testing Total',
+    'test_done': 'Number of tests that have been done',
     'vaccine_label': 'Vaccine Data of SulTeng',
+    'error_vaccine': 'An error occurred while loading vaccine data!',
+    'error_statistic':
+        'An error occurred while loading the data of covid cases!',
+    'error_test': 'An error occurred while loading the covid-19 test data!',
+    'error_banner': 'An error occurred while loading the banner!',
+    'error_no_internet':
+        'No internet connection! Make sure you have an active internet connection to use the app!',
+    'coming_soon': 'Coming Soon',
+    'menu_unavailable': 'Menu unavailable at the moment!',
   };
   static const id_ID = {
     'app_name': 'PICO SulTeng',
@@ -75,6 +131,15 @@ class Locales {
     'buttons_call_center': 'Call Center',
     'buttons_hotline': 'Hotline',
     'buttons_more': 'Selengkapnya',
+    'buttons_try_again': 'Coba Lagi',
+    'odp_title': 'ODP (Orang Dalam Pemantauan)',
+    'odp_description':
+        'Orang dalam pemantauan (ODP) adalah seseorang yang mengalami demam (≥38°C) atau riwayat demam; atau gejala gangguan sistem pernapasan, seperti pilek/sakit tenggorokan/batuk DAN tidak ada penyebab lain berdasarkan gambaran klinis yang meyakinkan DAN pada 14 hari terakhir sebelum timbul gejala, memenuhi salah satu kriteria: “memiliki riwayat perjalanan atau tinggal di luar negeri yang melaporkan transmisi lokal” atau “memiliki riwayat perjalanan atau tinggal di area transmisi lokal di Indonesia”.',
+    'odp_label': 'Total Orang Dalam Pemantauan',
+    'pdp_title': 'PDP (Pasien Dalam Pengawasan)',
+    'pdp_description':
+        'Pasien Dalam Pengawasan adalah seseorang dengan Infeksi Saluran Pernapasan Akut (ISPA) yaitu demam (≥38°C) atau riwayat demam; disertai salah satu gejala/tanda penyakit pernapasan seperti: batuk/sesak nafas/sakit tenggorokan/pilek/pneumonia ringan hingga berat DAN tidak ada penyebab lain berdasarkan gambaran klinis yang meyakinkan DAN pada 14 hari terakhir sebelum timbul gejala, memenuhi salah satu kriteria: "memiliki riwayat perjalanan atau tinggal di luar negeri yang melaporkan transmisi lokal" atau "memiliki riwayat perjalanan atau tinggal di area transmisi lokal di Indonesia.',
+    'pdp_label': 'Total Pasien Dalam Pengawasan',
     'tab_label_sulteng_today': 'SulTeng Hari Ini',
     'tab_label_covid_info': 'Informasi COVID-19',
     'data_case_label': 'Data Kasus SulTeng',
@@ -82,10 +147,21 @@ class Locales {
     'card_case_label_under_treatment': 'Dirawat',
     'card_case_label_recovered': 'Sembuh',
     'card_case_label_deceased': 'Meninggal',
+    'card_case_label_active': 'Aktif',
+    'card_case_label_finish': 'Selesai',
+    'card_case_label_total_test': 'Total Pemeriksaan',
+    'card_case_label_sample': 'Sampel :',
+    'card_case_label_duration': 'Durasi :',
+    'card_case_label_reactive': 'Reaktif',
+    'card_case_label_non_reactive': 'Non-Reaktif',
+    'card_case_label_invalid': 'Invalid',
+    'card_case_label_process': 'Proses Lab',
+    'updated_at': 'Diperbarui :',
     'success_refresh': 'Berhasil memperbarui data!',
     'vaccine_card_dose_given': 'Dosis telah diberikan',
     'vaccine_card_from': ' dari ',
     'vaccine_card_vaccinated': ' telah divaksin',
+    'vaccine_card_vaccine_progress': 'Progress Vaksinasi',
     'vaccine_type_first': 'Vaksin Dosis 1',
     'vaccine_type_second': 'Vaksin Dosis 2',
     'vaccine_type_health_worker': 'Tenaga Kesehatan',
@@ -95,6 +171,15 @@ class Locales {
     'vaccine_type_teenager': 'Remaja',
     'vaccine_type_target': 'Target Vaksinasi',
     'test_label': 'Total Pemeriksaan COVID-19',
+    'test_done': 'Jumlah tes yang telah dilakukan',
     'vaccine_label': 'Data Vaksin Sulteng',
+    'error_vaccine': 'Terjadi kesalahan saat memuat data vaksin!',
+    'error_statistic': 'Terjadi kesalahan saat memuat data kasus covid!',
+    'error_test': 'Terjadi kesalahan saat memuat data tes covid-19!',
+    'error_banner': 'Terjadi kesalahan saat memuat banner!',
+    'error_no_internet':
+        'Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!',
+    'coming_soon': 'Coming Soon',
+    'menu_unavailable': 'Menu belum tersedia untuk saat ini!',
   };
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 import '../controllers/no_internet_controller.dart';
 
@@ -21,11 +22,11 @@ class NoInternetView extends GetView<NoInternetController> {
                   fit: BoxFit.contain,
                 ),
                 const SizedBox(height: 10),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 32.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0),
                   child: Text(
-                    'Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!',
-                    style: TextStyle(
+                    LocaleKeys.error_no_internet.tr,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
                     textAlign: TextAlign.justify,

@@ -146,7 +146,7 @@ class HomeView extends GetView<HomeController> {
 
     if (controller.provinceVaccineError.value) {
       return ErrorPlaceHolderWidget(
-        label: 'Terjadi kesalahan saat memuat data vaksin!',
+        label: LocaleKeys.error_vaccine.tr,
         onRetry: () {
           controller.loadProvinceVaccine();
         },
@@ -242,7 +242,7 @@ class HomeView extends GetView<HomeController> {
 
     if (controller.provinceTestError.value) {
       return ErrorPlaceHolderWidget(
-        label: 'Terjadi kesalahan saat memuat data tes covid-19!',
+        label: LocaleKeys.error_test.tr,
         onRetry: () {
           controller.loadProvinceTest();
         },
@@ -301,7 +301,7 @@ class HomeView extends GetView<HomeController> {
 
     if (controller.provinceError.value) {
       return ErrorPlaceHolderWidget(
-        label: 'Terjadi kesalahan saat memuat data kasus covid!',
+        label: LocaleKeys.error_statistic.tr,
         onRetry: () {
           controller.loadProvince();
         },
@@ -370,8 +370,8 @@ class HomeView extends GetView<HomeController> {
         IconButton(
           onPressed: () {
             Get.snackbar(
-              'Coming Soon!',
-              'Menu belum tersedia untuk saat ini!',
+              LocaleKeys.coming_soon.tr,
+              LocaleKeys.menu_unavailable.tr,
               backgroundColor: Colors.red,
               icon: const Icon(
                 Iconsax.danger,
@@ -453,7 +453,7 @@ class HomeView extends GetView<HomeController> {
 
     if (controller.bannerError.value) {
       return ErrorPlaceHolderWidget(
-        label: 'Terjadi kesalahan saat memuat banner!',
+        label: LocaleKeys.error_banner.tr,
         onRetry: () {
           controller.loadBanners();
         },
