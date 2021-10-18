@@ -32,12 +32,20 @@ class MenuButton extends StatelessWidget {
               child: Icon(icon, color: iconColor),
             ),
           ),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontWeight: FontWeight.w700,
-              overflow: TextOverflow.clip,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Text(
+                label,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w700,
+                  overflow: TextOverflow.ellipsis,
+                  color: Colors.grey.shade700,
+                ),
+              ),
             ),
           ),
         ],

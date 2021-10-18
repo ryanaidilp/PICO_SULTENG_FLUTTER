@@ -473,6 +473,7 @@ class HomeView extends GetView<HomeController> {
             LocaleKeys.menu_information_center.tr,
             style: const TextStyle(
               fontWeight: FontWeight.w700,
+              fontSize: 22.0,
             ),
           ),
           GridView.count(

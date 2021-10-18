@@ -8,6 +8,7 @@ import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/carousel_with_indicator.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/image_placeholder.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/detail_infographic_controller.dart';
 
@@ -29,57 +30,39 @@ class DetailInfographicView extends GetView<DetailInfographicController> {
               flexibleSpace: CarouselWithIndicator(
                 items: infographic.images
                     .map(
-                      (image) => Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          ExtendedImage.network(
-                            image as String,
-                            clearMemoryCacheWhenDispose: true,
-                            fit: BoxFit.fill,
-                            width: double.infinity,
-                            loadStateChanged: (ExtendedImageState state) {
-                              switch (state.extendedImageLoadState) {
-                                case LoadState.loading:
-                                  return const ImagePlaceholder(
-                                    label: 'Loading',
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      child: SpinKitFadingCircle(
-                                          color: Colors.blueAccent),
-                                    ),
-                                  );
-                                case LoadState.failed:
-                                  return InkWell(
-                                    onTap: () {
-                                      state.reLoadImage();
-                                    },
-                                    child: const ImagePlaceholder(
-                                      label: 'Error',
-                                      child: Icon(
-                                        Icons.image_not_supported_rounded,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  );
-                                case LoadState.completed:
-                                  break;
-                              }
-                            },
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.white10,
-                                  Colors.black12,
-                                  Colors.black38,
-                                ],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                              ),
-                            ),
-                          ),
-                        ],
+                      (image) => ExtendedImage.network(
+                        image as String,
+                        clearMemoryCacheWhenDispose: true,
+                        fit: BoxFit.fill,
+                        width: double.infinity,
+                        loadStateChanged: (ExtendedImageState state) {
+                          switch (state.extendedImageLoadState) {
+                            case LoadState.loading:
+                              return const ImagePlaceholder(
+                                label: 'Loading',
+                                child: SizedBox(
+                                  width: 50.0,
+                                  child: SpinKitFadingCircle(
+                                      color: Colors.blueAccent),
+                                ),
+                              );
+                            case LoadState.failed:
+                              return InkWell(
+                                onTap: () {
+                                  state.reLoadImage();
+                                },
+                                child: const ImagePlaceholder(
+                                  label: 'Error',
+                                  child: Icon(
+                                    Icons.image_not_supported_rounded,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              );
+                            case LoadState.completed:
+                              break;
+                          }
+                        },
                       ),
                     )
                     .toList(),
@@ -138,7 +121,7 @@ class DetailInfographicView extends GetView<DetailInfographicController> {
                           ),
                         ),
                         onPressed: () {
-                          // launch(infographic.link);
+                          launch(infographic.link);
                         },
                       ),
                     )
