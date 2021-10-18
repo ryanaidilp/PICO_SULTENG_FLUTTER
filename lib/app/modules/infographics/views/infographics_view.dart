@@ -30,44 +30,50 @@ class InfographicsView extends GetView<InfographicsController> {
               ),
             ),
           ),
-          body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: SingleChildScrollView(
-              controller: controller.scrollController,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Info Praktikal',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
+          body: Scrollbar(
+            thickness: 6.0,
+            radius: const Radius.circular(10.0),
+            interactive: true,
+            controller: controller.scrollController,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: SingleChildScrollView(
+                controller: controller.scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Info Praktikal',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 18.0,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 6.0),
-                  const Text('Kumpulan infografis terkait covid-19!'),
-                  const SizedBox(height: 6.0),
-                  const LineContainer(),
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final infographic = infographics[index];
-                      return GestureDetector(
-                        child: InfographicCard(infographic: infographic),
-                        onTap: () {
-                          Get.toNamed(
-                            Routes.detailInfographic,
-                            arguments: {
-                              'infographic': infographic,
-                            },
-                          );
-                        },
-                      );
-                    },
-                    shrinkWrap: true,
-                    itemCount: infographics.length,
-                  ),
-                ],
+                    const SizedBox(height: 6.0),
+                    const Text('Kumpulan infografis terkait covid-19!'),
+                    const SizedBox(height: 6.0),
+                    const LineContainer(),
+                    ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final infographic = infographics[index];
+                        return GestureDetector(
+                          child: InfographicCard(infographic: infographic),
+                          onTap: () {
+                            Get.toNamed(
+                              Routes.detailInfographic,
+                              arguments: {
+                                'infographic': infographic,
+                              },
+                            );
+                          },
+                        );
+                      },
+                      shrinkWrap: true,
+                      itemCount: infographics.length,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

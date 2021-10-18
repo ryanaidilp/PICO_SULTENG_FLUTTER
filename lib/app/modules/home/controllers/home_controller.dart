@@ -34,15 +34,20 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   RxBool provinceTestError = false.obs;
   RxBool provinceVaccineError = false.obs;
   RxBool infographicError = false.obs;
-  RefreshController refreshController = RefreshController();
+  late RefreshController refreshController = RefreshController();
 
   @override
-  Future<void> onInit() async {
+  void onInit() {
     super.onInit();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(
+      length: 2,
+      vsync: this,
+    )..addListener(onTabChange);
     homeProvider = GetInstance().find<HomeProvider>();
-    tabController.addListener(onTabChange);
-    await onLoading();
+    loadBanners();
+    loadProvince();
+    loadProvinceTest();
+    loadProvinceVaccine();
   }
 
   Future<void> loadProvince() async {
@@ -84,6 +89,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   void onTabChange() {
     activeCarousel.value = tabController.index;
     if (tabController.index == 1 && infographics.isEmpty) {
+      infographicLoaded.value = false;
       loadInfographics();
     }
   }

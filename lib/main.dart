@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:pico_sulteng_flutter/app/modules/no_internet/bindings/no_internet_binding.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 import 'app/routes/app_pages.dart';
@@ -43,7 +42,7 @@ class MyApp extends StatelessWidget {
       initialRoute: AppPages.initial,
       debugShowCheckedModeBanner: false,
       translationsKeys: AppTranslation.translations,
-      initialBinding: NoInternetBinding(),
+      // initialBinding: NoInternetBinding(), TODO: There's an issue with smart refresher and tabbarview
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         textTheme: GoogleFonts.sourceSansProTextTheme(textTheme),

@@ -39,6 +39,7 @@ class HomeView extends GetView<HomeController> {
           children: [
             SmartRefresher(
               controller: controller.refreshController,
+              onLoading: controller.onLoading,
               header: WaterDropHeader(
                 waterDropColor: Colors.blue.shade200,
                 completeDuration: const Duration(seconds: 2),
@@ -496,7 +497,7 @@ class HomeView extends GetView<HomeController> {
                 icon: LineIcons.syringe,
                 onTap: () {
                   controller.openLink(
-                    LocaleKeys.menu_vaccine_url.tr,
+                    LocaleKeys.menu_vaccine_title.tr,
                     LocaleKeys.menu_vaccine_url.tr,
                   );
                 },
@@ -518,7 +519,7 @@ class HomeView extends GetView<HomeController> {
                 icon: LineIcons.book,
                 onTap: () {
                   controller.openLink(
-                    LocaleKeys.menu_isolation_title.tr,
+                    LocaleKeys.menu_contact_title.tr,
                     'https://banuacoders.com/corona/kontak',
                   );
                 },
