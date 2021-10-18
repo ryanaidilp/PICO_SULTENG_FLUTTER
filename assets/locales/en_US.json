@@ -5,7 +5,8 @@
     "call_center": "Call Center",
     "hotline": "Hotline",
     "more": "More",
-    "try_again": "Try Again"
+    "try_again": "Try Again",
+    "source": "VIEW SOURCE"
   },
   "odp": {
     "title": "ODP (People Under Monitoring)",
@@ -56,7 +57,8 @@
       "url": "https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota="
     },
     "contact": {
-      "title": "Emergency Number"
+      "title": "Emergency Number",
+      "url": "https://banuacoders.com/corona/kontak"
     },
     "isolation": {
       "title": "Self Isolation",
@@ -67,7 +69,16 @@
       "url": "https://s.id/ChatbotCovid19"
     },
     "donation": {
-      "title": "COVID-19 Donation"
+      "title": "COVID-19 Donation",
+      "url": "https://banuacoders.com/corona/isoman#donations"
+    },
+    "teleconsultation": {
+      "title": "Teleconsultation",
+      "url": "https://banuacoders.com/corona/isoman#telemedicine"
+    },
+    "faq": {
+      "title": "FAQ",
+      "url": "https://bit.ly/faqisoman"
     }
   },
   "vaccine_card": {
@@ -76,7 +87,7 @@
     "vaccinated": " has been vaccinated",
     "vaccine_progress": "Vaccination Progress"
   },
-  "vaccine_type" :{
+  "vaccine_type": {
     "first": "Vaccine 1st Dose",
     "second": "Vaccine 2nd Dose",
     "health_worker": "Health Worker",
@@ -89,13 +100,17 @@
   "test_label": "COVID-19 Testing Total",
   "test_done": "Number of tests that have been done",
   "vaccine_label": "Vaccine Data of SulTeng",
+  "vaccine_desc": "Vaccines help prevent the spread of COVID-19. With vaccines, we also contribute to forming herd immunity in Indonesia. Let's get vaccinated immediately at the nearest health service facility.",
   "error": {
     "vaccine": "An error occurred while loading vaccine data!",
     "statistic": "An error occurred while loading the data of covid cases!",
     "test": "An error occurred while loading the covid-19 test data!",
     "banner": "An error occurred while loading the banner!",
+    "infographic": "An error occured while loading the infographics!",
     "no_internet": "No internet connection! Make sure you have an active internet connection to use the app!"
   },
   "coming_soon": "Coming Soon",
-  "menu_unavailable": "Menu unavailable at the moment!"
+  "menu_unavailable": "Menu unavailable at the moment!",
+  "infographic_label": "Practical Information",
+  "infographic_subtitle": "Collection of infographics related to covid-19"
 }

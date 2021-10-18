@@ -75,9 +75,9 @@ class HomeView extends GetView<HomeController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Informasi Praktikal',
-                style: TextStyle(
+              Text(
+                LocaleKeys.infographic_label.tr,
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18.0,
                 ),
@@ -133,7 +133,7 @@ class HomeView extends GetView<HomeController> {
 
     if (controller.infographicError.value) {
       return ErrorPlaceHolderWidget(
-        label: 'Gagal memuat data infografis!',
+        label: LocaleKeys.error_infographic.tr,
         onRetry: () {
           controller.loadInfographics();
         },
@@ -141,7 +141,7 @@ class HomeView extends GetView<HomeController> {
     }
 
     return LimitedBox(
-      maxHeight: 250.0,
+      maxHeight: 210.0,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: 10,
@@ -520,7 +520,7 @@ class HomeView extends GetView<HomeController> {
                 onTap: () {
                   controller.openLink(
                     LocaleKeys.menu_contact_title.tr,
-                    'https://banuacoders.com/corona/kontak',
+                    LocaleKeys.menu_contact_url.tr,
                   );
                 },
               ),
@@ -553,29 +553,29 @@ class HomeView extends GetView<HomeController> {
                 onTap: () {
                   controller.openLink(
                     LocaleKeys.menu_donation_title.tr,
-                    'https://banuacoders.com/corona/isoman#donations',
+                    '',
                   );
                 },
               ),
               MenuButton(
-                label: 'Telekonsultasi',
+                label: LocaleKeys.menu_teleconsultation_title.tr,
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.firstAid,
                 onTap: () {
                   controller.openLink(
-                    'Telekonsultasi',
-                    'https://banuacoders.com/corona/isoman#telemedicine',
+                    LocaleKeys.menu_teleconsultation_title.tr,
+                    LocaleKeys.menu_teleconsultation_url.tr,
                   );
                 },
               ),
               MenuButton(
-                label: 'Tanya Jawab',
+                label: LocaleKeys.menu_faq_title.tr,
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.questionCircle,
                 onTap: () {
                   controller.openLink(
-                    'Tanya Jawab',
-                    'https://bit.ly/faqisoman',
+                    LocaleKeys.menu_faq_title.tr,
+                    LocaleKeys.menu_faq_url.tr,
                   );
                 },
               ),

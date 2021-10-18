@@ -24,6 +24,7 @@ class InfographicCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
               child: ExtendedImage.network(
                 infographic.images.first as String,
+                clearMemoryCacheWhenDispose: true,
                 fit: BoxFit.fill,
               ),
             ),
@@ -52,7 +53,6 @@ class InfographicCard extends StatelessWidget {
                     dateWithDayFormat(infographic.publishedAt),
                     style: const TextStyle(
                       color: Colors.white,
-                      fontSize: 16.0,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

@@ -37,6 +37,7 @@ class TestDetailView extends GetView<TestDetailController> {
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorColor: Colors.blueAccent,
           controller: controller.tabController,
+          isScrollable: true,
           labelStyle: const TextStyle(
             overflow: TextOverflow.ellipsis,
           ),
@@ -58,6 +59,8 @@ class TestDetailView extends GetView<TestDetailController> {
             final nonReactivePercentage = test.negative / test.total;
             final processPercentage = test.process / test.total;
             final invalidPercentage = test.invalid / test.total;
+            final description =
+                controller.testDescriptions[controller.currentTab.value];
 
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -117,8 +120,7 @@ class TestDetailView extends GetView<TestDetailController> {
                               ),
                               const SizedBox(height: 4.0),
                               Text(
-                                controller.testDescriptions[
-                                    controller.currentTab.value],
+                                description,
                                 textAlign: TextAlign.justify,
                                 style: const TextStyle(
                                   color: Colors.white,

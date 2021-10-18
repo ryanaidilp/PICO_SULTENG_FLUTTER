@@ -44,10 +44,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
       vsync: this,
     )..addListener(onTabChange);
     homeProvider = GetInstance().find<HomeProvider>();
-    loadBanners();
-    loadProvince();
-    loadProvinceTest();
-    loadProvinceVaccine();
+    onLoading();
   }
 
   Future<void> loadProvince() async {
@@ -162,11 +159,13 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     infographicLoaded.value = false;
     provinceTestLoaded.value = false;
     provinceVaccineLoaded.value = false;
-    await loadBanners();
-    await loadProvince();
-    await loadInfographics();
-    await loadProvinceTest();
-    await loadProvinceVaccine();
+    await Future.wait([
+      loadBanners(),
+      loadProvince(),
+      loadInfographics(),
+      loadProvinceTest(),
+      loadProvinceVaccine()
+    ]);
     refreshController.refreshCompleted();
   }
 
@@ -175,10 +174,12 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     provinceLoaded.value = false;
     provinceTestLoaded.value = false;
     provinceVaccineLoaded.value = false;
-    await loadBanners();
-    await loadProvince();
-    await loadProvinceTest();
-    await loadProvinceVaccine();
+    await Future.wait([
+      loadBanners(),
+      loadProvince(),
+      loadProvinceTest(),
+      loadProvinceVaccine()
+    ]);
     refreshController.loadComplete();
   }
 

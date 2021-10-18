@@ -81,8 +81,8 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                   const SizedBox(height: 6.0),
                   Lottie.asset('assets/lottie/vaccinated.json'),
                   const SizedBox(height: 6.0),
-                  const Text(
-                    'Vaksin membantu mencegah terjadinya penularan COVID-19. Dengan vaksin kita juga ikut berkontribusi dalam membentuk kekebalan kelompok di Indonesia. Ayo segera vaksin di fasilitas pelayanan kesehatan terdekat.',
+                  Text(
+                    LocaleKeys.vaccine_desc.tr,
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 6.0),

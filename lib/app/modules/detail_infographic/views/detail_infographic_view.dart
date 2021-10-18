@@ -7,7 +7,7 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/carousel_with_indicator.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/image_placeholder.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 import '../controllers/detail_infographic_controller.dart';
 
@@ -29,39 +29,57 @@ class DetailInfographicView extends GetView<DetailInfographicController> {
               flexibleSpace: CarouselWithIndicator(
                 items: infographic.images
                     .map(
-                      (image) => ExtendedImage.network(
-                        image as String,
-                        clearMemoryCacheWhenDispose: true,
-                        fit: BoxFit.fill,
-                        width: double.infinity,
-                        loadStateChanged: (ExtendedImageState state) {
-                          switch (state.extendedImageLoadState) {
-                            case LoadState.loading:
-                              return const ImagePlaceholder(
-                                label: 'Loading',
-                                child: SizedBox(
-                                  width: 50.0,
-                                  child: SpinKitFadingCircle(
-                                      color: Colors.blueAccent),
-                                ),
-                              );
-                            case LoadState.failed:
-                              return InkWell(
-                                onTap: () {
-                                  state.reLoadImage();
-                                },
-                                child: const ImagePlaceholder(
-                                  label: 'Error',
-                                  child: Icon(
-                                    Icons.image_not_supported_rounded,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              );
-                            case LoadState.completed:
-                              break;
-                          }
-                        },
+                      (image) => Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          ExtendedImage.network(
+                            image as String,
+                            clearMemoryCacheWhenDispose: true,
+                            fit: BoxFit.fill,
+                            width: double.infinity,
+                            loadStateChanged: (ExtendedImageState state) {
+                              switch (state.extendedImageLoadState) {
+                                case LoadState.loading:
+                                  return const ImagePlaceholder(
+                                    label: 'Loading',
+                                    child: SizedBox(
+                                      width: 50.0,
+                                      child: SpinKitFadingCircle(
+                                          color: Colors.blueAccent),
+                                    ),
+                                  );
+                                case LoadState.failed:
+                                  return InkWell(
+                                    onTap: () {
+                                      state.reLoadImage();
+                                    },
+                                    child: const ImagePlaceholder(
+                                      label: 'Error',
+                                      child: Icon(
+                                        Icons.image_not_supported_rounded,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  );
+                                case LoadState.completed:
+                                  break;
+                              }
+                            },
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.white10,
+                                  Colors.black12,
+                                  Colors.black38,
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     )
                     .toList(),
@@ -72,6 +90,7 @@ class DetailInfographicView extends GetView<DetailInfographicController> {
                   autoPlay: true,
                   height: 350,
                   viewportFraction: 1.0,
+                  autoPlayInterval: const Duration(seconds: 5),
                 ),
               ),
             ),
@@ -104,15 +123,22 @@ class DetailInfographicView extends GetView<DetailInfographicController> {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        child: const Text(
-                          'LIHAT SUMBER',
-                          style: TextStyle(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          elevation: 10.0,
+                          shadowColor: Colors.blue.shade100,
+                        ),
+                        child: Text(
+                          LocaleKeys.buttons_source.tr,
+                          style: const TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w700,
                           ),
                         ),
                         onPressed: () {
-                          launch(infographic.link);
+                          // launch(infographic.link);
                         },
                       ),
                     )

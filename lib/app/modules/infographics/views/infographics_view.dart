@@ -4,6 +4,7 @@ import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/infographic_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
 import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
+import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 import '../controllers/infographics_controller.dart';
 
@@ -18,11 +19,11 @@ class InfographicsView extends GetView<InfographicsController> {
         () => Scaffold(
           appBar: AppBar(
             title: AnimatedOpacity(
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(seconds: 1),
               opacity: controller.scrollOffset.value,
-              child: const Text(
-                'Info Praktikal',
-                style: TextStyle(
+              child: Text(
+                LocaleKeys.infographic_label.tr,
+                style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18.0,
                   overflow: TextOverflow.ellipsis,
@@ -42,15 +43,15 @@ class InfographicsView extends GetView<InfographicsController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Info Praktikal',
-                      style: TextStyle(
+                    Text(
+                      LocaleKeys.infographic_label.tr,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 18.0,
                       ),
                     ),
                     const SizedBox(height: 6.0),
-                    const Text('Kumpulan infografis terkait covid-19!'),
+                    Text(LocaleKeys.infographic_subtitle.tr),
                     const SizedBox(height: 6.0),
                     const LineContainer(),
                     ListView.builder(

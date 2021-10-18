@@ -25,33 +25,34 @@ class InfographicMiniCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(6.0),
                 child: ExtendedImage.network(
                   infographic.images.first as String,
-                ),
-              ),
-              const SizedBox(height: 4.0),
-              Text(
-                infographic.title,
-                maxLines: 2,
-                style: const TextStyle(
-                  overflow: TextOverflow.ellipsis,
-                  fontWeight: FontWeight.w700,
+                  clearMemoryCacheWhenDispose: true,
                 ),
               ),
               const SizedBox(height: 4.0),
               Expanded(
                 child: Text(
-                  dateWithDayFormat(infographic.publishedAt),
+                  infographic.title,
                   maxLines: 2,
                   style: const TextStyle(
                     overflow: TextOverflow.ellipsis,
                     fontWeight: FontWeight.w700,
-                    color: Colors.grey,
-                    fontSize: 12.0,
                   ),
+                ),
+              ),
+              Text(
+                dateWithDayFormat(infographic.publishedAt),
+                maxLines: 2,
+                style: const TextStyle(
+                  overflow: TextOverflow.ellipsis,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.grey,
+                  fontSize: 12.0,
                 ),
               )
             ],

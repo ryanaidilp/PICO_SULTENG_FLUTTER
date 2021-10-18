@@ -5,7 +5,8 @@
     "call_center": "Call Center",
     "hotline": "Hotline",
     "more": "Selengkapnya",
-    "try_again": "Coba Lagi"
+    "try_again": "Coba Lagi",
+    "source": "LIHAT SUMBER"
   },
   "odp": {
     "title": "ODP (Orang Dalam Pemantauan)",
@@ -56,7 +57,8 @@
       "url": "https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota="
     },
     "contact": {
-      "title": "Nomor Darurat"
+      "title": "Nomor Darurat",
+      "url": "https://banuacoders.com/corona/kontak"
     },
     "isolation": {
       "title": "Isolasi Mandiri",
@@ -68,7 +70,16 @@
       "url": "https://s.id/ChatbotCovid19"
     },
     "donation": {
-      "title": "Donasi COVID-19"
+      "title": "Donasi COVID-19",
+      "url": "https://banuacoders.com/corona/isoman#donations"
+    },
+    "teleconsultation": {
+      "title": "Telekonsultasi",
+      "url": "https://banuacoders.com/corona/isoman#telemedicine"
+    },
+    "faq": {
+      "title": "Tanya Jawab",
+      "url": "https://bit.ly/faqisoman"
     }
   },
   "vaccine_card": {
@@ -90,13 +101,17 @@
   "test_label": "Total Pemeriksaan COVID-19",
   "test_done": "Jumlah tes yang telah dilakukan",
   "vaccine_label": "Data Vaksin Sulteng",
+  "vaccine_desc": "Vaksin membantu mencegah terjadinya penularan COVID-19. Dengan vaksin kita juga ikut berkontribusi dalam membentuk kekebalan kelompok di Indonesia. Ayo segera vaksin di fasilitas pelayanan kesehatan terdekat.",
   "error": {
     "vaccine": "Terjadi kesalahan saat memuat data vaksin!",
     "statistic": "Terjadi kesalahan saat memuat data kasus covid!",
     "test": "Terjadi kesalahan saat memuat data tes covid-19!",
     "banner": "Terjadi kesalahan saat memuat banner!",
+    "infographic": "Gagal memuat data infografis!",
     "no_internet": "Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!"
   },
   "coming_soon": "Coming Soon",
-  "menu_unavailable": "Menu belum tersedia untuk saat ini!"
+  "menu_unavailable": "Menu belum tersedia untuk saat ini!",
+  "infographic_label": "Informasi Praktikal",
+  "infographic_subtitle": "Kumpulan infografis terkait covid-19!"
 }

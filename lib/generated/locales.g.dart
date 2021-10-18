@@ -17,6 +17,7 @@ class LocaleKeys {
   static const buttons_hotline = 'buttons_hotline';
   static const buttons_more = 'buttons_more';
   static const buttons_try_again = 'buttons_try_again';
+  static const buttons_source = 'buttons_source';
   static const odp_title = 'odp_title';
   static const odp_description = 'odp_description';
   static const odp_label = 'odp_label';
@@ -50,11 +51,17 @@ class LocaleKeys {
   static const menu_bed_title = 'menu_bed_title';
   static const menu_bed_url = 'menu_bed_url';
   static const menu_contact_title = 'menu_contact_title';
+  static const menu_contact_url = 'menu_contact_url';
   static const menu_isolation_title = 'menu_isolation_title';
   static const menu_isolation_url = 'menu_isolation_url';
   static const menu_screening_title = 'menu_screening_title';
   static const menu_screening_url = 'menu_screening_url';
   static const menu_donation_title = 'menu_donation_title';
+  static const menu_donation_url = 'menu_donation_url';
+  static const menu_teleconsultation_title = 'menu_teleconsultation_title';
+  static const menu_teleconsultation_url = 'menu_teleconsultation_url';
+  static const menu_faq_title = 'menu_faq_title';
+  static const menu_faq_url = 'menu_faq_url';
   static const vaccine_card_dose_given = 'vaccine_card_dose_given';
   static const vaccine_card_from = 'vaccine_card_from';
   static const vaccine_card_vaccinated = 'vaccine_card_vaccinated';
@@ -70,13 +77,17 @@ class LocaleKeys {
   static const test_label = 'test_label';
   static const test_done = 'test_done';
   static const vaccine_label = 'vaccine_label';
+  static const vaccine_desc = 'vaccine_desc';
   static const error_vaccine = 'error_vaccine';
   static const error_statistic = 'error_statistic';
   static const error_test = 'error_test';
   static const error_banner = 'error_banner';
+  static const error_infographic = 'error_infographic';
   static const error_no_internet = 'error_no_internet';
   static const coming_soon = 'coming_soon';
   static const menu_unavailable = 'menu_unavailable';
+  static const infographic_label = 'infographic_label';
+  static const infographic_subtitle = 'infographic_subtitle';
 }
 
 class Locales {
@@ -87,6 +98,7 @@ class Locales {
     'buttons_hotline': 'Hotline',
     'buttons_more': 'More',
     'buttons_try_again': 'Try Again',
+    'buttons_source': 'VIEW SOURCE',
     'odp_title': 'ODP (People Under Monitoring)',
     'odp_description':
         'A person under monitoring (ODP) is someone who has a fever (≥38°C) or a history of fever; or symptoms of respiratory system disorders, such as runny nose/sore throat/cough AND no other cause based on a convincing clinical picture AND in the last 14 days before the onset of symptoms, meets one of the following criteria: “have a history of traveling or living abroad reporting local transmission ” or “have a history of traveling or living in a local transmission area in Indonesia”.',
@@ -122,11 +134,18 @@ class Locales {
     'menu_bed_url':
         'https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota=',
     'menu_contact_title': 'Emergency Number',
+    'menu_contact_url': 'https://banuacoders.com/corona/kontak',
     'menu_isolation_title': 'Self Isolation',
     'menu_isolation_url': 'https://banuacoders.com/corona/isoman',
     'menu_screening_title': 'Self Screening',
     'menu_screening_url': 'https://s.id/ChatbotCovid19',
     'menu_donation_title': 'COVID-19 Donation',
+    'menu_donation_url': 'https://banuacoders.com/corona/isoman#donations',
+    'menu_teleconsultation_title': 'Teleconsultation',
+    'menu_teleconsultation_url':
+        'https://banuacoders.com/corona/isoman#telemedicine',
+    'menu_faq_title': 'FAQ',
+    'menu_faq_url': 'https://bit.ly/faqisoman',
     'vaccine_card_dose_given': 'Dose has been given',
     'vaccine_card_from': ' from ',
     'vaccine_card_vaccinated': ' has been vaccinated',
@@ -142,15 +161,20 @@ class Locales {
     'test_label': 'COVID-19 Testing Total',
     'test_done': 'Number of tests that have been done',
     'vaccine_label': 'Vaccine Data of SulTeng',
+    'vaccine_desc':
+        'Vaccines help prevent the spread of COVID-19. With vaccines, we also contribute to forming herd immunity in Indonesia. Let\'s get vaccinated immediately at the nearest health service facility.',
     'error_vaccine': 'An error occurred while loading vaccine data!',
     'error_statistic':
         'An error occurred while loading the data of covid cases!',
     'error_test': 'An error occurred while loading the covid-19 test data!',
     'error_banner': 'An error occurred while loading the banner!',
+    'error_infographic': 'An error occured while loading the infographics!',
     'error_no_internet':
         'No internet connection! Make sure you have an active internet connection to use the app!',
     'coming_soon': 'Coming Soon',
     'menu_unavailable': 'Menu unavailable at the moment!',
+    'infographic_label': 'Practical Information',
+    'infographic_subtitle': 'Collection of infographics related to covid-19',
   };
   static const id_ID = {
     'app_name': 'PICO SulTeng',
@@ -159,6 +183,7 @@ class Locales {
     'buttons_hotline': 'Hotline',
     'buttons_more': 'Selengkapnya',
     'buttons_try_again': 'Coba Lagi',
+    'buttons_source': 'LIHAT SUMBER',
     'odp_title': 'ODP (Orang Dalam Pemantauan)',
     'odp_description':
         'Orang dalam pemantauan (ODP) adalah seseorang yang mengalami demam (≥38°C) atau riwayat demam; atau gejala gangguan sistem pernapasan, seperti pilek/sakit tenggorokan/batuk DAN tidak ada penyebab lain berdasarkan gambaran klinis yang meyakinkan DAN pada 14 hari terakhir sebelum timbul gejala, memenuhi salah satu kriteria: “memiliki riwayat perjalanan atau tinggal di luar negeri yang melaporkan transmisi lokal” atau “memiliki riwayat perjalanan atau tinggal di area transmisi lokal di Indonesia”.',
@@ -194,11 +219,18 @@ class Locales {
     'menu_bed_url':
         'https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota=',
     'menu_contact_title': 'Nomor Darurat',
+    'menu_contact_url': 'https://banuacoders.com/corona/kontak',
     'menu_isolation_title': 'Isolasi Mandiri',
     'menu_isolation_url': 'https://banuacoders.com/corona/isoman',
     'menu_screening_title': 'Pemeriksaan Mandiri',
     'menu_screening_url': 'https://s.id/ChatbotCovid19',
     'menu_donation_title': 'Donasi COVID-19',
+    'menu_donation_url': 'https://banuacoders.com/corona/isoman#donations',
+    'menu_teleconsultation_title': 'Telekonsultasi',
+    'menu_teleconsultation_url':
+        'https://banuacoders.com/corona/isoman#telemedicine',
+    'menu_faq_title': 'Tanya Jawab',
+    'menu_faq_url': 'https://bit.ly/faqisoman',
     'vaccine_card_dose_given': 'Dosis telah diberikan',
     'vaccine_card_from': ' dari ',
     'vaccine_card_vaccinated': ' telah divaksin',
@@ -214,13 +246,18 @@ class Locales {
     'test_label': 'Total Pemeriksaan COVID-19',
     'test_done': 'Jumlah tes yang telah dilakukan',
     'vaccine_label': 'Data Vaksin Sulteng',
+    'vaccine_desc':
+        'Vaksin membantu mencegah terjadinya penularan COVID-19. Dengan vaksin kita juga ikut berkontribusi dalam membentuk kekebalan kelompok di Indonesia. Ayo segera vaksin di fasilitas pelayanan kesehatan terdekat.',
     'error_vaccine': 'Terjadi kesalahan saat memuat data vaksin!',
     'error_statistic': 'Terjadi kesalahan saat memuat data kasus covid!',
     'error_test': 'Terjadi kesalahan saat memuat data tes covid-19!',
     'error_banner': 'Terjadi kesalahan saat memuat banner!',
+    'error_infographic': 'Gagal memuat data infografis!',
     'error_no_internet':
         'Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!',
     'coming_soon': 'Coming Soon',
     'menu_unavailable': 'Menu belum tersedia untuk saat ini!',
+    'infographic_label': 'Informasi Praktikal',
+    'infographic_subtitle': 'Kumpulan infografis terkait covid-19!',
   };
 }
