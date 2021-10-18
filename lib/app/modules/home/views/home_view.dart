@@ -74,9 +74,9 @@ class HomeView extends GetView<HomeController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 'Informasi Praktikal',
-                style: const TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18.0,
                 ),
@@ -84,7 +84,9 @@ class HomeView extends GetView<HomeController> {
               TextButton(
                 onPressed: () {
                   if (controller.checkIfInfographicLoaded()) {
-                    //
+                    Get.toNamed(Routes.infographics, arguments: {
+                      'infographics': controller.infographics,
+                    });
                   }
                 },
                 child: Text(

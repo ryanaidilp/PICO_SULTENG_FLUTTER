@@ -11,6 +11,7 @@ abstract class Routes {
   static const noInternet = _Paths.noInternet;
   static const inAppWebPage = _Paths.inAppWebPage;
   static const detailInfographic = _Paths.detailInfographic;
+  static const infographics = _Paths.infographics;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const noInternet = '/no-internet';
   static const inAppWebPage = '/in-app-web-page';
   static const detailInfographic = '/detail-infographic';
+  static const infographics = '/infographics';
 }

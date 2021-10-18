@@ -153,10 +153,12 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   Future<void> onRefresh() async {
     bannerLoaded.value = false;
     provinceLoaded.value = false;
+    infographicLoaded.value = false;
     provinceTestLoaded.value = false;
     provinceVaccineLoaded.value = false;
     await loadBanners();
     await loadProvince();
+    await loadInfographics();
     await loadProvinceTest();
     await loadProvinceVaccine();
     refreshController.refreshCompleted();
