@@ -1,6 +1,7 @@
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
+import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
 import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
@@ -71,6 +72,25 @@ class HomeProvider extends GetConnect {
       final data = response.body['data'];
       return ProvinceVaccine.fromJson(data as Map<String, dynamic>);
     } catch (e) {
+      return Future.error(e.toString());
+    }
+  }
+
+  Future<List<Infographic>> loadInfographics() async {
+    try {
+      final response = await get('/infografis');
+
+      if (response.hasError) {
+        return Future.error(response.statusText.toString());
+      }
+
+      final data = response.body['data'] as List<dynamic>;
+
+      return data
+          .map((json) => Infographic.fromJson(json as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      print(e.toString());
       return Future.error(e.toString());
     }
   }

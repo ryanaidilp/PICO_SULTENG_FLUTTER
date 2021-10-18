@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
+import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
 import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
@@ -17,6 +18,8 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   late ProvinceVaccine provinceVaccine;
   RxList<ProvinceTest> provinceTests =
       List<ProvinceTest>.empty(growable: true).obs;
+  RxList<Infographic> infographics =
+      List<Infographic>.empty(growable: true).obs;
   RxList<String> images = List<String>.empty(growable: true).obs;
   final CarouselController carouselController = CarouselController();
   RxList<model.Banner> banners = List<model.Banner>.empty(growable: true).obs;
@@ -24,10 +27,12 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   RxBool provinceLoaded = false.obs;
   RxBool provinceTestLoaded = false.obs;
   RxBool provinceVaccineLoaded = false.obs;
+  RxBool infographicLoaded = false.obs;
   RxBool bannerError = false.obs;
   RxBool provinceError = false.obs;
   RxBool provinceTestError = false.obs;
   RxBool provinceVaccineError = false.obs;
+  RxBool infographicError = false.obs;
   RefreshController refreshController = RefreshController();
 
   @override
@@ -68,12 +73,18 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   bool checkIfProvinceVaccineLoaded() {
-    return provinceVaccineLoaded.value && provinceVaccineError.value;
+    return provinceVaccineLoaded.value && !provinceVaccineError.value;
+  }
+
+  bool checkIfInfographicLoaded() {
+    return infographicLoaded.value && !infographicError.value;
   }
 
   void onTabChange() {
     activeCarousel.value = tabController.index;
-    if (tabController.index == 1) {}
+    if (tabController.index == 1 && infographics.isEmpty) {
+      loadInfographics();
+    }
   }
 
   Future<void> loadProvinceVaccine() async {
@@ -85,6 +96,21 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     } catch (e) {
       provinceVaccineLoaded.value = false;
       provinceVaccineError.value = true;
+    }
+  }
+
+  Future<void> loadInfographics() async {
+    infographicError.value = false;
+    try {
+      if (infographics.isNotEmpty) {
+        infographics.clear();
+      }
+      final value = await homeProvider.loadInfographics();
+      infographics.addAll(value);
+      infographicLoaded.value = true;
+    } catch (e) {
+      infographicLoaded.value = false;
+      infographicError.value = true;
     }
   }
 

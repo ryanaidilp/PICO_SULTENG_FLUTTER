@@ -9,12 +9,13 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_case.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_confirmed.dart';
+import 'package:pico_sulteng_flutter/app/global_widgets/carousel_with_indicator.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/error_placeholder_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/image_placeholder.dart';
+import 'package:pico_sulteng_flutter/app/global_widgets/infographic_mini_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/menu_button.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/shimmer_widget.dart';
@@ -66,10 +67,93 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget buildCovidInfoTab() {
-    return Center(
-      child: Lottie.asset(
-        'assets/lottie/coming_soon.json',
-        width: Get.width * 0.6,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: ListView(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Informasi Praktikal',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.0,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  if (controller.checkIfProvinceVaccinesLoaded()) {
+                    Get.toNamed(Routes.vaccineDetail, arguments: {
+                      'province_vaccine': controller.provinceVaccine,
+                    });
+                  }
+                },
+                child: Text(
+                  LocaleKeys.buttons_more.tr,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              )
+            ],
+          ),
+          buildInfographicSlider(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildInfographicSlider() {
+    if (!controller.infographicLoaded.value) {
+      return LimitedBox(
+        maxHeight: 250.0,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  ShimmerWidget(width: 160.0, height: 160.0),
+                  SizedBox(height: 4.0),
+                  ShimmerWidget(width: 60.0, height: 10.0),
+                  SizedBox(height: 4.0),
+                  ShimmerWidget(width: 40.0, height: 10.0),
+                ],
+              ),
+            );
+          },
+          itemCount: 5,
+        ),
+      );
+    }
+
+    if (controller.infographicError.value) {
+      return ErrorPlaceHolderWidget(
+        label: 'Gagal memuat data infografis!',
+        onRetry: () {
+          controller.loadInfographics();
+        },
+      );
+    }
+
+    return LimitedBox(
+      maxHeight: 250.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          final infographic = controller.infographics[index];
+          return SizedBox(
+            width: 160.0,
+            child: InfographicMiniCard(
+              infographic: infographic,
+              onTap: () {},
+            ),
+          );
+        },
       ),
     );
   }
@@ -78,7 +162,6 @@ class HomeView extends GetView<HomeController> {
     return ListView(
       children: [
         buildCarouselSliders(),
-        buildCarouselIndicator(context),
         const LineContainer(),
         buildTodayCaseAndTestSection(),
         const LineContainer(),
@@ -552,12 +635,22 @@ class HomeView extends GetView<HomeController> {
 
   Widget buildCarouselSliders() {
     if (!controller.bannerLoaded.value) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: AspectRatio(
-          aspectRatio: 2.0,
-          child: ShimmerWidget(width: double.infinity, height: 1000.0),
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: AspectRatio(
+              aspectRatio: 2.0,
+              child: ShimmerWidget(width: double.infinity, height: 1000.0),
+            ),
+          ),
+          SizedBox(height: 6.0),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: ShimmerWidget(width: 150.0, height: 10.0),
+          )
+        ],
       );
     }
 
@@ -570,7 +663,7 @@ class HomeView extends GetView<HomeController> {
       );
     }
 
-    return CarouselSlider(
+    return CarouselWithIndicator(
       items: controller.banners
           .map(
             (banner) => Container(
@@ -622,52 +715,13 @@ class HomeView extends GetView<HomeController> {
             ),
           )
           .toList(),
-      carouselController: controller.carouselController,
       options: CarouselOptions(
           autoPlay: true,
           enlargeCenterPage: true,
           aspectRatio: 2.0,
           onPageChanged: controller.onPageChanged),
-    );
-  }
-
-  Widget buildCarouselIndicator(BuildContext context) {
-    if (!controller.bannerLoaded.value) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: ShimmerWidget(width: 250.0, height: 20.0),
-      );
-    }
-
-    if (controller.bannerError.value) {
-      return const SizedBox();
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: controller.images.asMap().entries.map((entry) {
-        return GestureDetector(
-          onTap: () => controller.carouselController.animateToPage(entry.key),
-          child: Container(
-            width: controller.activeCarousel.value == entry.key ? 26.0 : 10.0,
-            height: 8.0,
-            margin: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 4.0),
-            decoration: BoxDecoration(
-                borderRadius: controller.activeCarousel.value == entry.key
-                    ? BorderRadius.circular(8.0)
-                    : null,
-                shape: controller.activeCarousel.value == entry.key
-                    ? BoxShape.rectangle
-                    : BoxShape.circle,
-                color: (Theme.of(context).brightness == Brightness.dark
-                        ? Colors.blue.shade100
-                        : Colors.blueAccent)
-                    .withOpacity(controller.activeCarousel.value == entry.key
-                        ? 0.9
-                        : 0.3)),
-          ),
-        );
-      }).toList(),
+      controller: controller.carouselController,
+      currentIndex: controller.activeCarousel.value,
     );
   }
 }

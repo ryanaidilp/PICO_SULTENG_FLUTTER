@@ -12,6 +12,10 @@ String percentageFormat(double number) {
   return formatter.format(number);
 }
 
+String dateWithDayFormat(DateTime date) {
+  return DateFormat('EEEE, dd MMMM yyyy').format(date);
+}
+
 String formatNewCase(int cases) {
   final prefix = cases >= 0 ? '+' : '';
   final StringBuffer buffer = StringBuffer();
