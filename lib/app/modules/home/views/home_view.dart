@@ -554,7 +554,7 @@ class HomeView extends GetView<HomeController> {
                 onTap: () {
                   controller.openLink(
                     LocaleKeys.menu_donation_title.tr,
-                    '',
+                    LocaleKeys.menu_donation_url.tr,
                   );
                 },
               ),
