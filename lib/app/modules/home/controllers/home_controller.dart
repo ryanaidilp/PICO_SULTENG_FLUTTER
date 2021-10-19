@@ -54,6 +54,24 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
         (OSNotificationReceivedEvent event) {
       // Will be called whenever a notification is received in foreground
       // Display Notification, pass null param for not displaying the notification
+      Get.dialog(
+        SimpleDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          title: Text(
+            event.notification.title ?? '',
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          titlePadding: const EdgeInsets.all(4.0),
+          contentPadding: const EdgeInsets.all(8.0),
+          children: [
+            Text(event.notification.body ?? ''),
+          ],
+        ),
+      );
       loadProvince();
       event.complete(event.notification);
     });
