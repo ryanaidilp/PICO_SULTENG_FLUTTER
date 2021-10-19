@@ -164,13 +164,11 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
       }
       final value = await provider.loadArticles(1);
       if (value.length > 10) {
-        print('Masuk');
         articles.addAll(value.sublist(0, 10));
       } else {
         articles.addAll(value);
       }
     } catch (e) {
-      print(e.toString());
       articleError.value = true;
     } finally {
       articleLoading.value = false;

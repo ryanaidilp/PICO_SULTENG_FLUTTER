@@ -13,6 +13,8 @@ abstract class Routes {
   static const detailInfographic = _Paths.detailInfographic;
   static const infographics = _Paths.infographics;
   static const articles = _Paths.articles;
+  static const nationalDetail = _Paths.nationalDetail;
+  static const regencyDetail = _Paths.regencyDetail;
 }
 
 abstract class _Paths {
@@ -25,4 +27,6 @@ abstract class _Paths {
   static const detailInfographic = '/detail-infographic';
   static const infographics = '/infographics';
   static const articles = '/articles';
+  static const nationalDetail = '/national-detail';
+  static const regencyDetail = '/regency-detail';
 }

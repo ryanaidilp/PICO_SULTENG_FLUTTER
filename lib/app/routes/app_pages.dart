@@ -11,8 +11,12 @@ import 'package:pico_sulteng_flutter/app/modules/in_app_web_page/bindings/in_app
 import 'package:pico_sulteng_flutter/app/modules/in_app_web_page/views/in_app_web_page_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/infographics/bindings/infographics_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/infographics/views/infographics_view.dart';
+import 'package:pico_sulteng_flutter/app/modules/national_detail/bindings/national_detail_binding.dart';
+import 'package:pico_sulteng_flutter/app/modules/national_detail/views/national_detail_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/no_internet/bindings/no_internet_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/no_internet/views/no_internet_view.dart';
+import 'package:pico_sulteng_flutter/app/modules/regency_detail/bindings/regency_detail_binding.dart';
+import 'package:pico_sulteng_flutter/app/modules/regency_detail/views/regency_detail_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/test_detail/bindings/test_detail_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/test_detail/views/test_detail_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/vaccine_detail/bindings/vaccine_detail_binding.dart';
@@ -70,6 +74,16 @@ class AppPages {
       name: _Paths.articles,
       page: () => ArticlesView(),
       binding: ArticlesBinding(),
+    ),
+    GetPage(
+      name: _Paths.nationalDetail,
+      page: () => NationalDetailView(),
+      binding: NationalDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.regencyDetail,
+      page: () => RegencyDetailView(),
+      binding: RegencyDetailBinding(),
     ),
   ];
 }

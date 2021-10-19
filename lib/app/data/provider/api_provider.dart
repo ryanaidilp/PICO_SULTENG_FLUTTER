@@ -6,8 +6,10 @@ import 'package:http/http.dart' as http;
 import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
+import 'package:pico_sulteng_flutter/app/data/models/national_statistic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
+import 'package:pico_sulteng_flutter/app/data/models/regency_statistic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
 
 class ApiProvider extends GetConnect {
@@ -87,7 +89,6 @@ class ApiProvider extends GetConnect {
     final response = await http.get(Uri.parse(buffer.toString()));
 
     if (response.statusCode != 200) {
-      print(page);
       throw Exception(response.reasonPhrase);
     }
 
@@ -96,6 +97,32 @@ class ApiProvider extends GetConnect {
 
     return data
         .map((json) => Article.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<NationalStatistic> loadNationalStatistic() async {
+    final response = await get('/nasional/terkini');
+
+    if (response.hasError) {
+      throw Exception(response.statusText.toString());
+    }
+
+    final data = response.body['data'] as Map<String, dynamic>;
+
+    return NationalStatistic.fromJson(data);
+  }
+
+  Future<List<RegencyStatistic>> loadRegencyStatistic() async {
+    final response = await get('/provinsi/72/terkini');
+
+    if (response.hasError) {
+      throw Exception(response.statusText.toString());
+    }
+
+    final data = response.body['data'] as List<dynamic>;
+
+    return data
+        .map((json) => RegencyStatistic.fromJson(json as Map<String, dynamic>))
         .toList();
   }
 }

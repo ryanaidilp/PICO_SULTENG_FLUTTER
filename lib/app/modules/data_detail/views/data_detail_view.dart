@@ -171,7 +171,56 @@ class DataDetailView extends GetView<DataDetailController> {
                       Get.toNamed(Routes.testDetail,
                           arguments: {'tests': tests});
                     },
-                  )
+                  ),
+                  const SizedBox(height: 16.0),
+                  ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    tileColor: Colors.grey.shade50,
+                    leading: const Text(
+                      'Data Kasus Nasional',
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.nationalDetail);
+                      },
+                      icon: Icon(
+                        Iconsax.arrow_right_14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    tileColor: Colors.grey.shade50,
+                    leading: const Text(
+                      'Data Kasus Kabupaten',
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.regencyDetail);
+                      },
+                      icon: Icon(
+                        Iconsax.arrow_right_14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
                 ],
               ),
             ),
