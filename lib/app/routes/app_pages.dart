@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:pico_sulteng_flutter/app/modules/articles/bindings/articles_binding.dart';
+import 'package:pico_sulteng_flutter/app/modules/articles/views/articles_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/data_detail/bindings/data_detail_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/data_detail/views/data_detail_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/detail_infographic/bindings/detail_infographic_binding.dart';
@@ -63,6 +65,11 @@ class AppPages {
       name: _Paths.infographics,
       page: () => InfographicsView(),
       binding: InfographicsBinding(),
+    ),
+    GetPage(
+      name: _Paths.articles,
+      page: () => ArticlesView(),
+      binding: ArticlesBinding(),
     ),
   ];
 }

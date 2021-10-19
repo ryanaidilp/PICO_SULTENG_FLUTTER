@@ -12,6 +12,7 @@ abstract class Routes {
   static const inAppWebPage = _Paths.inAppWebPage;
   static const detailInfographic = _Paths.detailInfographic;
   static const infographics = _Paths.infographics;
+  static const articles = _Paths.articles;
 }
 
 abstract class _Paths {
@@ -23,4 +24,5 @@ abstract class _Paths {
   static const inAppWebPage = '/in-app-web-page';
   static const detailInfographic = '/detail-infographic';
   static const infographics = '/infographics';
+  static const articles = '/articles';
 }

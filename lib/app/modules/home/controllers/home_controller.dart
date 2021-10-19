@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
@@ -23,6 +24,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   RxList<Infographic> infographics =
       List<Infographic>.empty(growable: true).obs;
   RxList<String> images = List<String>.empty(growable: true).obs;
+  RxList<Article> articles = List<Article>.empty(growable: true).obs;
   final CarouselController carouselController = CarouselController();
   RxList<model.Banner> banners = List<model.Banner>.empty(growable: true).obs;
   RxBool bannerLoading = true.obs;
@@ -30,11 +32,13 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   RxBool provinceTestLoading = true.obs;
   RxBool provinceVaccineLoading = true.obs;
   RxBool infographicLoading = true.obs;
+  RxBool articleLoading = true.obs;
   RxBool bannerError = false.obs;
   RxBool provinceError = false.obs;
   RxBool provinceTestError = false.obs;
   RxBool provinceVaccineError = false.obs;
   RxBool infographicError = false.obs;
+  RxBool articleError = false.obs;
   late RefreshController refreshController = RefreshController();
 
   @override
@@ -92,11 +96,15 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     return !infographicLoading.value && !infographicError.value;
   }
 
+  bool checkIfArticleLoaded() {
+    return !articleLoading.value && !articleError.value;
+  }
+
   void onTabChange() {
     activeCarousel.value = tabController.index;
-    if (tabController.index == 1 && infographics.isEmpty) {
-      infographicLoading.value = false;
-      loadInfographics();
+    if (tabController.index == 1) {
+      if (articles.isEmpty) loadArticles();
+      if (infographics.isEmpty) loadInfographics();
     }
   }
 
@@ -126,6 +134,28 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
       infographicError.value = true;
     } finally {
       infographicLoading.value = false;
+    }
+  }
+
+  Future<void> loadArticles() async {
+    articleError.value = false;
+    articleLoading.value = true;
+    try {
+      if (articles.isNotEmpty) {
+        articles.clear();
+      }
+      final value = await provider.loadArticles(1);
+      if (value.length > 10) {
+        print('Masuk');
+        articles.addAll(value.sublist(0, 10));
+      } else {
+        articles.addAll(value);
+      }
+    } catch (e) {
+      print(e.toString());
+      articleError.value = true;
+    } finally {
+      articleLoading.value = false;
     }
   }
 
@@ -169,10 +199,11 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   Future<void> onRefresh() async {
     await Future.wait([
       loadBanners(),
+      loadArticles(),
       loadProvince(),
       loadInfographics(),
       loadProvinceTest(),
-      loadProvinceVaccine()
+      loadProvinceVaccine(),
     ]);
     refreshController.refreshCompleted();
   }

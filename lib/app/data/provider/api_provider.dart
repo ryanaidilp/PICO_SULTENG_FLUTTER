@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_config/flutter_config.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
@@ -71,6 +75,27 @@ class ApiProvider extends GetConnect {
 
     return data
         .map((json) => Infographic.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<List<Article>> loadArticles(int page) async {
+    const baseUrl =
+        'https://newsapi.org/v2/everything?q=covid&language=id&page=';
+    final String key = FlutterConfig.get('NEWSAPI_API_KEY').toString();
+    final StringBuffer buffer = StringBuffer();
+    buffer.writeAll([baseUrl, page, '&apiKey=', key]);
+    final response = await http.get(Uri.parse(buffer.toString()));
+
+    if (response.statusCode != 200) {
+      print(page);
+      throw Exception(response.reasonPhrase);
+    }
+
+    final dataResponse = jsonDecode(response.body);
+    final data = dataResponse['articles'] as List<dynamic>;
+
+    return data
+        .map((json) => Article.fromJson(json as Map<String, dynamic>))
         .toList();
   }
 }

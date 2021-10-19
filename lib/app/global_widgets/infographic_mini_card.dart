@@ -19,9 +19,10 @@ class InfographicMiniCard extends StatelessWidget {
       ),
       elevation: 0.0,
       child: InkWell(
+        borderRadius: BorderRadius.circular(6.0),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.only(right: 8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -32,6 +33,11 @@ class InfographicMiniCard extends StatelessWidget {
                 child: ExtendedImage.network(
                   infographic.images.first as String,
                   clearMemoryCacheWhenDispose: true,
+                  border: Border.all(
+                    color: Colors.grey.shade300,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(6.0),
                 ),
               ),
               const SizedBox(height: 4.0),

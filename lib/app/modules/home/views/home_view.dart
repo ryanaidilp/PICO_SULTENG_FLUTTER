@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
+import 'package:pico_sulteng_flutter/app/global_widgets/article_mini_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_case.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_confirmed.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/carousel_with_indicator.dart';
@@ -68,11 +69,11 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget buildCovidInfoTab() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: ListView(
-        children: [
-          Row(
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -95,29 +96,63 @@ class HomeView extends GetView<HomeController> {
               )
             ],
           ),
-          buildInfographicSlider(),
-        ],
-      ),
+        ),
+        buildInfographicSlider(),
+        const SizedBox(height: 10.0),
+        const LineContainer(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Artikel',
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18.0,
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.toNamed(Routes.articles);
+                },
+                child: Text(
+                  LocaleKeys.buttons_more.tr,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        buildArticleSlider(),
+      ],
     );
   }
 
   Widget buildInfographicSlider() {
     if (controller.infographicLoading.value) {
       return LimitedBox(
-        maxHeight: 250.0,
-        child: ListView.builder(
+        maxHeight: 210.0,
+        child: ListView.separated(
           scrollDirection: Axis.horizontal,
+          separatorBuilder: (_, index) {
+            return const SizedBox(width: 8.0);
+          },
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
+              padding: const EdgeInsets.only(left: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
-                  ShimmerWidget(width: 160.0, height: 160.0),
+                  ShimmerWidget(width: 130.0, height: 130.0),
+                  SizedBox(height: 4.0),
+                  ShimmerWidget(width: 100.0, height: 10.0),
+                  SizedBox(height: 4.0),
+                  ShimmerWidget(width: 80.0, height: 10.0),
                   SizedBox(height: 4.0),
                   ShimmerWidget(width: 60.0, height: 10.0),
-                  SizedBox(height: 4.0),
-                  ShimmerWidget(width: 40.0, height: 10.0),
                 ],
               ),
             );
@@ -151,6 +186,73 @@ class HomeView extends GetView<HomeController> {
                 Get.toNamed(Routes.detailInfographic, arguments: {
                   'infographic': infographic,
                 });
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildArticleSlider() {
+    if (controller.articleLoading.value) {
+      return LimitedBox(
+        maxHeight: 210.0,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          separatorBuilder: (_, index) {
+            return const SizedBox(width: 8.0);
+          },
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  ShimmerWidget(width: 130.0, height: 130.0),
+                  SizedBox(height: 4.0),
+                  ShimmerWidget(width: 100.0, height: 10.0),
+                  SizedBox(height: 4.0),
+                  ShimmerWidget(width: 80.0, height: 10.0),
+                  SizedBox(height: 4.0),
+                  ShimmerWidget(width: 60.0, height: 10.0),
+                ],
+              ),
+            );
+          },
+          itemCount: 5,
+        ),
+      );
+    }
+
+    if (controller.articleError.value) {
+      return ErrorPlaceHolderWidget(
+        label: 'Gagal memuat data artikel!',
+        onRetry: () {
+          controller.loadArticles();
+        },
+      );
+    }
+
+    return LimitedBox(
+      maxHeight: 210.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          final article = controller.articles[index];
+          return SizedBox(
+            width: 160.0,
+            child: ArticleMiniCard(
+              article: article,
+              onTap: () {
+                Get.toNamed(
+                  Routes.inAppWebPage,
+                  arguments: {
+                    'title': article.title,
+                    'link': article.url,
+                  },
+                );
               },
             ),
           );
@@ -730,10 +832,11 @@ class HomeView extends GetView<HomeController> {
           )
           .toList(),
       options: CarouselOptions(
-          autoPlay: true,
-          enlargeCenterPage: true,
-          aspectRatio: 2.0,
-          onPageChanged: controller.onPageChanged),
+        autoPlay: true,
+        aspectRatio: 2.0,
+        viewportFraction: 0.9,
+        onPageChanged: controller.onPageChanged,
+      ),
       controller: controller.carouselController,
       currentIndex: controller.activeCarousel.value,
     );
