@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
@@ -45,6 +46,13 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
     )..addListener(onTabChange);
     provider = GetInstance().find<ApiProvider>();
     onLoading();
+    OneSignal.shared.setNotificationWillShowInForegroundHandler(
+        (OSNotificationReceivedEvent event) {
+      // Will be called whenever a notification is received in foreground
+      // Display Notification, pass null param for not displaying the notification
+      loadProvince();
+      event.complete(event.notification);
+    });
   }
 
   Future<void> loadProvince() async {

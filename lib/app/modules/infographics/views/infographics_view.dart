@@ -93,7 +93,11 @@ class InfographicsView extends GetView<InfographicsController> {
                           );
                         },
                         firstPageProgressIndicatorBuilder: (_) {
-                          return const SpinKitFadingCircle(color: Colors.blue);
+                          return SizedBox(
+                            height: Get.height * 0.8,
+                            child: const Center(
+                                child: SpinKitFadingCircle(color: Colors.blue)),
+                          );
                         },
                         newPageProgressIndicatorBuilder: (_) {
                           return const SpinKitFadingCircle(color: Colors.blue);

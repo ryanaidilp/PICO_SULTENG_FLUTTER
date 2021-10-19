@@ -1,8 +1,8 @@
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/provider/api_provider.dart';
 
@@ -32,7 +32,8 @@ class InfographicsController extends GetxController
               curve: Curves.elasticIn);
         },
         elevation: 10.0,
-        child: const Icon(EvaIcons.arrowCircleUp),
+        backgroundColor: Colors.blueAccent,
+        child: const Icon(LineIcons.alternateLongArrowUp),
       );
     }
 
