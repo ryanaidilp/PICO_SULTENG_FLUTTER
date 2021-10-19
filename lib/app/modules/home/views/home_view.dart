@@ -84,11 +84,7 @@ class HomeView extends GetView<HomeController> {
               ),
               TextButton(
                 onPressed: () {
-                  if (controller.checkIfInfographicLoaded()) {
-                    Get.toNamed(Routes.infographics, arguments: {
-                      'infographics': controller.infographics,
-                    });
-                  }
+                  Get.toNamed(Routes.infographics);
                 },
                 child: Text(
                   LocaleKeys.buttons_more.tr,
@@ -106,7 +102,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget buildInfographicSlider() {
-    if (!controller.infographicLoaded.value) {
+    if (controller.infographicLoading.value) {
       return LimitedBox(
         maxHeight: 250.0,
         child: ListView.builder(
@@ -215,7 +211,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget buildFirstVaccineSection() {
-    if (!controller.provinceVaccineLoaded.value) {
+    if (controller.provinceVaccineLoading.value) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -321,7 +317,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget buildTotalTestSection() {
-    if (!controller.provinceTestLoaded.value) {
+    if (controller.provinceTestLoading.value) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: ShimmerWidget(
@@ -355,7 +351,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget buildProvinceSection() {
-    if (!controller.provinceLoaded.value) {
+    if (controller.provinceLoading.value) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -652,7 +648,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget buildCarouselSliders() {
-    if (!controller.bannerLoaded.value) {
+    if (controller.bannerLoading.value) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: const [

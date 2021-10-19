@@ -7,13 +7,13 @@ import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
 import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
-import 'package:pico_sulteng_flutter/app/modules/home/providers/home_provider.dart';
+import 'package:pico_sulteng_flutter/app/data/provider/api_provider.dart';
 import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeController extends GetxController with SingleGetTickerProviderMixin {
   RxInt activeCarousel = 0.obs;
-  late HomeProvider homeProvider;
+  late ApiProvider provider;
   late TabController tabController;
   late Statistic province;
   late ProvinceVaccine provinceVaccine;
@@ -24,11 +24,11 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   RxList<String> images = List<String>.empty(growable: true).obs;
   final CarouselController carouselController = CarouselController();
   RxList<model.Banner> banners = List<model.Banner>.empty(growable: true).obs;
-  RxBool bannerLoaded = false.obs;
-  RxBool provinceLoaded = false.obs;
-  RxBool provinceTestLoaded = false.obs;
-  RxBool provinceVaccineLoaded = false.obs;
-  RxBool infographicLoaded = false.obs;
+  RxBool bannerLoading = true.obs;
+  RxBool provinceLoading = true.obs;
+  RxBool provinceTestLoading = true.obs;
+  RxBool provinceVaccineLoading = true.obs;
+  RxBool infographicLoading = true.obs;
   RxBool bannerError = false.obs;
   RxBool provinceError = false.obs;
   RxBool provinceTestError = false.obs;
@@ -43,99 +43,104 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
       length: 2,
       vsync: this,
     )..addListener(onTabChange);
-    homeProvider = GetInstance().find<HomeProvider>();
+    provider = GetInstance().find<ApiProvider>();
     onLoading();
   }
 
   Future<void> loadProvince() async {
     provinceError.value = false;
+    provinceLoading.value = true;
     try {
-      final value = await homeProvider.loadProvince();
+      final value = await provider.loadProvince();
       province = value;
-      provinceLoaded.value = true;
     } catch (e) {
-      provinceLoaded.value = false;
       provinceError.value = true;
+    } finally {
+      provinceLoading.value = false;
     }
   }
 
   bool checkIfProvinceVaccinesLoaded() {
-    return provinceVaccineLoaded.value && !provinceVaccineError.value;
+    return !provinceVaccineLoading.value && !provinceVaccineError.value;
   }
 
   bool checkIfBannerLoaded() {
-    return bannerLoaded.value && !bannerError.value;
+    return !bannerLoading.value && !bannerError.value;
   }
 
   bool checkIfProvinceDataLoaded() {
-    return provinceLoaded.value && !provinceError.value;
+    return !provinceLoading.value && !provinceError.value;
   }
 
   bool checkIfProvinceTestLoaded() {
-    return provinceTestLoaded.value && !provinceTestError.value;
+    return !provinceTestLoading.value && !provinceTestError.value;
   }
 
   bool checkIfProvinceVaccineLoaded() {
-    return provinceVaccineLoaded.value && !provinceVaccineError.value;
+    return !provinceVaccineLoading.value && !provinceVaccineError.value;
   }
 
   bool checkIfInfographicLoaded() {
-    return infographicLoaded.value && !infographicError.value;
+    return !infographicLoading.value && !infographicError.value;
   }
 
   void onTabChange() {
     activeCarousel.value = tabController.index;
     if (tabController.index == 1 && infographics.isEmpty) {
-      infographicLoaded.value = false;
+      infographicLoading.value = false;
       loadInfographics();
     }
   }
 
   Future<void> loadProvinceVaccine() async {
     provinceVaccineError.value = false;
+    provinceVaccineLoading.value = true;
     try {
-      final value = await homeProvider.loadProvinceVaccine();
+      final value = await provider.loadProvinceVaccine();
       provinceVaccine = value;
-      provinceVaccineLoaded.value = true;
     } catch (e) {
-      provinceVaccineLoaded.value = false;
       provinceVaccineError.value = true;
+    } finally {
+      provinceVaccineLoading.value = false;
     }
   }
 
   Future<void> loadInfographics() async {
     infographicError.value = false;
+    infographicLoading.value = true;
     try {
       if (infographics.isNotEmpty) {
         infographics.clear();
       }
-      final value = await homeProvider.loadInfographics();
+      final value = await provider.loadInfographics(1);
       infographics.addAll(value);
-      infographicLoaded.value = true;
     } catch (e) {
-      infographicLoaded.value = false;
       infographicError.value = true;
+    } finally {
+      infographicLoading.value = false;
     }
   }
 
   Future<void> loadProvinceTest() async {
     provinceTestError.value = false;
+    provinceTestLoading.value = true;
     try {
       if (provinceTests.isNotEmpty) {
         provinceTests.clear();
       }
 
-      final value = await homeProvider.loadProvinceTest();
+      final value = await provider.loadProvinceTest();
       provinceTests.addAll(value);
-      provinceTestLoaded.value = true;
     } catch (e) {
-      provinceTestLoaded.value = false;
       provinceTestError.value = true;
+    } finally {
+      provinceTestLoading.value = false;
     }
   }
 
   Future<void> loadBanners() async {
     bannerError.value = false;
+    bannerLoading.value = true;
     try {
       if (banners.isNotEmpty) {
         banners.clear();
@@ -143,22 +148,17 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
         activeCarousel.value = 0;
       }
 
-      final value = await homeProvider.loadBanners();
+      final value = await provider.loadBanners();
       banners.addAll(value);
       images.addAll(value.map((banner) => banner.image).toList());
-      bannerLoaded.value = true;
     } catch (e) {
-      bannerLoaded.value = false;
       bannerError.value = true;
+    } finally {
+      bannerLoading.value = false;
     }
   }
 
   Future<void> onRefresh() async {
-    bannerLoaded.value = false;
-    provinceLoaded.value = false;
-    infographicLoaded.value = false;
-    provinceTestLoaded.value = false;
-    provinceVaccineLoaded.value = false;
     await Future.wait([
       loadBanners(),
       loadProvince(),
@@ -170,10 +170,6 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   }
 
   Future<void> onLoading() async {
-    bannerLoaded.value = false;
-    provinceLoaded.value = false;
-    provinceTestLoaded.value = false;
-    provinceVaccineLoaded.value = false;
     await Future.wait([
       loadBanners(),
       loadProvince(),
