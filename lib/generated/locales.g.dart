@@ -81,6 +81,7 @@ class LocaleKeys {
   static const test_label = 'test_label';
   static const test_done = 'test_done';
   static const vaccine_label = 'vaccine_label';
+  static const vaccine_label_national = 'vaccine_label_national';
   static const vaccine_desc = 'vaccine_desc';
   static const error_vaccine = 'error_vaccine';
   static const error_statistic = 'error_statistic';
@@ -170,6 +171,7 @@ class Locales {
     'test_label': 'COVID-19 Testing Total',
     'test_done': 'Number of tests that have been done',
     'vaccine_label': 'Vaccine Data of SulTeng',
+    'vaccine_label_national': 'National Vaccine Data',
     'vaccine_desc':
         'Vaccines help prevent the spread of COVID-19. With vaccines, we also contribute to forming herd immunity in Indonesia. Let\'s get vaccinated immediately at the nearest health service facility.',
     'error_vaccine': 'An error occurred while loading vaccine data!',
@@ -254,11 +256,12 @@ class Locales {
     'vaccine_type_public_worker': 'Petugas Publik',
     'vaccine_type_elderly': 'Lansia',
     'vaccine_type_public': 'Masyarakat Umum',
-    'vaccine_type_teenager': 'Remaja',
+    'vaccine_type_teenager': 'Usia 12 - 17 Tahun',
     'vaccine_type_target': 'Target Vaksinasi',
     'test_label': 'Total Pemeriksaan COVID-19',
     'test_done': 'Jumlah tes yang telah dilakukan',
     'vaccine_label': 'Data Vaksin Sulteng',
+    'vaccine_label_national': 'Data Vaksin Nasional',
     'vaccine_desc':
         'Vaksin membantu mencegah terjadinya penularan COVID-19. Dengan vaksin kita juga ikut berkontribusi dalam membentuk kekebalan kelompok di Indonesia. Ayo segera vaksin di fasilitas pelayanan kesehatan terdekat.',
     'error_vaccine': 'Terjadi kesalahan saat memuat data vaksin!',

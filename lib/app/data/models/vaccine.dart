@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-class ProvinceVaccine {
-  ProvinceVaccine({
+class Vaccine {
+  Vaccine({
     required this.day,
     required this.updatedAt,
     required this.totalTarget,
@@ -69,13 +69,12 @@ class ProvinceVaccine {
   int teenagerSecondNew;
   int teenagerSecondCumulative;
 
-  factory ProvinceVaccine.fromRawJson(String str) =>
-      ProvinceVaccine.fromJson(json.decode(str) as Map<String, dynamic>);
+  factory Vaccine.fromRawJson(String str) =>
+      Vaccine.fromJson(json.decode(str) as Map<String, dynamic>);
 
   String toRawJson() => jsonEncode(toJson());
 
-  factory ProvinceVaccine.fromJson(Map<String, dynamic> json) =>
-      ProvinceVaccine(
+  factory Vaccine.fromJson(Map<String, dynamic> json) => Vaccine(
         day: json['hari_ke'] as int,
         updatedAt: DateTime.parse(json['tanggal'].toString()).toLocal(),
         totalTarget: json['target_vaksin'] as int,

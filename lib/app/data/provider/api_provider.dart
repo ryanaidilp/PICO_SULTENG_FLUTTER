@@ -8,9 +8,9 @@ import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/national_statistic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
-import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
 import 'package:pico_sulteng_flutter/app/data/models/regency_statistic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
+import 'package:pico_sulteng_flutter/app/data/models/vaccine.dart';
 
 class ApiProvider extends GetConnect {
   @override
@@ -55,7 +55,7 @@ class ApiProvider extends GetConnect {
         .toList();
   }
 
-  Future<ProvinceVaccine> loadProvinceVaccine() async {
+  Future<Vaccine> loadProvinceVaccine() async {
     final response = await get('/vaksin/72/terkini');
 
     if (response.hasError) {
@@ -63,7 +63,18 @@ class ApiProvider extends GetConnect {
     }
 
     final data = response.body['data'];
-    return ProvinceVaccine.fromJson(data as Map<String, dynamic>);
+    return Vaccine.fromJson(data as Map<String, dynamic>);
+  }
+
+  Future<Vaccine> loadNationalVaccine() async {
+    final response = await get('/vaksin/terkini');
+
+    if (response.hasError) {
+      throw Exception(response.statusText.toString());
+    }
+
+    final data = response.body['data'];
+    return Vaccine.fromJson(data as Map<String, dynamic>);
   }
 
   Future<List<Infographic>> loadInfographics(int page) async {

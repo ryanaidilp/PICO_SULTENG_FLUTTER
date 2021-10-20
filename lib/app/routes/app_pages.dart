@@ -13,6 +13,8 @@ import 'package:pico_sulteng_flutter/app/modules/infographics/bindings/infograph
 import 'package:pico_sulteng_flutter/app/modules/infographics/views/infographics_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/national_detail/bindings/national_detail_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/national_detail/views/national_detail_view.dart';
+import 'package:pico_sulteng_flutter/app/modules/national_vaccine/bindings/national_vaccine_binding.dart';
+import 'package:pico_sulteng_flutter/app/modules/national_vaccine/views/national_vaccine_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/no_internet/bindings/no_internet_binding.dart';
 import 'package:pico_sulteng_flutter/app/modules/no_internet/views/no_internet_view.dart';
 import 'package:pico_sulteng_flutter/app/modules/regency_detail/bindings/regency_detail_binding.dart';
@@ -84,6 +86,11 @@ class AppPages {
       name: _Paths.regencyDetail,
       page: () => RegencyDetailView(),
       binding: RegencyDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.nationalVaccine,
+      page: () => NationalVaccineView(),
+      binding: NationalVaccineBinding(),
     ),
   ];
 }

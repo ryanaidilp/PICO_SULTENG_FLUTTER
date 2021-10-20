@@ -7,8 +7,8 @@ import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
-import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
 import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
+import 'package:pico_sulteng_flutter/app/data/models/vaccine.dart';
 import 'package:pico_sulteng_flutter/app/data/provider/api_provider.dart';
 import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -18,7 +18,7 @@ class HomeController extends GetxController with SingleGetTickerProviderMixin {
   late ApiProvider provider;
   late TabController tabController;
   late Statistic province;
-  late ProvinceVaccine provinceVaccine;
+  late Vaccine provinceVaccine;
   RxList<ProvinceTest> provinceTests =
       List<ProvinceTest>.empty(growable: true).obs;
   RxList<Infographic> infographics =

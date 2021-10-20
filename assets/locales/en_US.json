@@ -104,6 +104,7 @@
   "test_label": "COVID-19 Testing Total",
   "test_done": "Number of tests that have been done",
   "vaccine_label": "Vaccine Data of SulTeng",
+  "vaccine_label_national": "National Vaccine Data",
   "vaccine_desc": "Vaccines help prevent the spread of COVID-19. With vaccines, we also contribute to forming herd immunity in Indonesia. Let's get vaccinated immediately at the nearest health service facility.",
   "error": {
     "vaccine": "An error occurred while loading vaccine data!",

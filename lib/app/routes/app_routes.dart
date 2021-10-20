@@ -15,6 +15,7 @@ abstract class Routes {
   static const articles = _Paths.articles;
   static const nationalDetail = _Paths.nationalDetail;
   static const regencyDetail = _Paths.regencyDetail;
+  static const nationalVaccine = _Paths.nationalVaccine;
 }
 
 abstract class _Paths {
@@ -29,4 +30,5 @@ abstract class _Paths {
   static const articles = '/articles';
   static const nationalDetail = '/national-detail';
   static const regencyDetail = '/regency-detail';
+  static const nationalVaccine = '/national-vaccine';
 }

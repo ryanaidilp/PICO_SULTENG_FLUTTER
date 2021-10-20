@@ -99,12 +99,13 @@
     "public_worker": "Petugas Publik",
     "elderly": "Lansia",
     "public": "Masyarakat Umum",
-    "teenager": "Remaja",
+    "teenager": "Usia 12 - 17 Tahun",
     "target": "Target Vaksinasi"
   },
   "test_label": "Total Pemeriksaan COVID-19",
   "test_done": "Jumlah tes yang telah dilakukan",
   "vaccine_label": "Data Vaksin Sulteng",
+  "vaccine_label_national": "Data Vaksin Nasional",
   "vaccine_desc": "Vaksin membantu mencegah terjadinya penularan COVID-19. Dengan vaksin kita juga ikut berkontribusi dalam membentuk kekebalan kelompok di Indonesia. Ayo segera vaksin di fasilitas pelayanan kesehatan terdekat.",
   "error": {
     "vaccine": "Terjadi kesalahan saat memuat data vaksin!",

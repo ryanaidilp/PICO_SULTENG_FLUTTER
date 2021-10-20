@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: LocaleKeys.app_name.tr,
       locale: Get.deviceLocale,
+      fallbackLocale: const Locale('en', 'US'),
       getPages: AppPages.routes,
       initialRoute: AppPages.initial,
       debugShowCheckedModeBanner: false,

@@ -2,26 +2,21 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pico_sulteng_flutter/app/core/theme/color_theme.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
-import 'package:pico_sulteng_flutter/app/data/models/province_vaccine.dart';
+import 'package:pico_sulteng_flutter/app/data/models/vaccine.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_target_card.dart';
+import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 import '../controllers/vaccine_detail_controller.dart';
 
 class VaccineDetailView extends GetView<VaccineDetailController> {
-  final ProvinceVaccine provinceVaccine =
-      Get.arguments['province_vaccine'] as ProvinceVaccine;
-
-  final publicColor = Colors.pink.shade400;
-  final elderlyColor = Colors.blueAccent;
-  final teenagerColor = Colors.pinkAccent.shade100;
-  final allVaccineColor = Colors.green.shade700;
-  final publicWorkerColor = Colors.purple;
-  final healthWorkerColor = Colors.orange.shade700;
+  final Vaccine provinceVaccine = Get.arguments['province_vaccine'] as Vaccine;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +100,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                           child: VaccineTargetCard(
                             total: provinceVaccine.totalTarget,
                             label: LocaleKeys.vaccine_type_target.tr,
-                            color: allVaccineColor,
+                            color: kVaccineColorAll,
                           ),
                         ),
                         SizedBox(
@@ -114,7 +109,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             total: provinceVaccine.elderlyTarget,
                             label:
                                 '${LocaleKeys.vaccine_type_target.tr} ${LocaleKeys.vaccine_type_elderly.tr}',
-                            color: elderlyColor,
+                            color: kVaccineColorElderly,
                           ),
                         ),
                         SizedBox(
@@ -123,7 +118,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             total: provinceVaccine.publicWorkerTarget,
                             label:
                                 '${LocaleKeys.vaccine_type_target.tr} ${LocaleKeys.vaccine_type_public_worker.tr}',
-                            color: publicWorkerColor,
+                            color: kVaccineColorPublicWorker,
                           ),
                         ),
                         SizedBox(
@@ -132,7 +127,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             total: provinceVaccine.healthWorkerTarget,
                             label:
                                 '${LocaleKeys.vaccine_type_target.tr} ${LocaleKeys.vaccine_type_health_worker.tr}',
-                            color: healthWorkerColor,
+                            color: kVaccineColorHealthWorker,
                           ),
                         ),
                         SizedBox(
@@ -141,7 +136,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             total: provinceVaccine.publicTarget,
                             label:
                                 '${LocaleKeys.vaccine_type_target.tr} ${LocaleKeys.vaccine_type_public.tr}',
-                            color: publicColor,
+                            color: kVaccineColorPublic,
                           ),
                         ),
                         SizedBox(
@@ -150,7 +145,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             total: provinceVaccine.teenagerTarget,
                             label:
                                 '${LocaleKeys.vaccine_type_target.tr} ${LocaleKeys.vaccine_type_teenager.tr}',
-                            color: teenagerColor,
+                            color: kVaccineColorTeenager,
                           ),
                         ),
                       ],
@@ -201,7 +196,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                           children: [
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_first.tr,
-                              color: allVaccineColor,
+                              color: kVaccineColorAll,
                               progress: provinceVaccine.totalFirstCumulative,
                               total: provinceVaccine.totalTarget,
                               newCase: provinceVaccine.totalFirstNew,
@@ -209,7 +204,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_elderly.tr,
-                              color: elderlyColor,
+                              color: kVaccineColorElderly,
                               progress: provinceVaccine.elderlyFirstCumulative,
                               total: provinceVaccine.elderlyTarget,
                               newCase: provinceVaccine.elderlyFirstNew,
@@ -217,7 +212,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_public_worker.tr,
-                              color: publicWorkerColor,
+                              color: kVaccineColorPublicWorker,
                               progress:
                                   provinceVaccine.publicWorkerFirstCumulative,
                               total: provinceVaccine.publicWorkerTarget,
@@ -226,7 +221,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_health_worker.tr,
-                              color: healthWorkerColor,
+                              color: kVaccineColorHealthWorker,
                               progress:
                                   provinceVaccine.healthWorkerFirstCumulative,
                               total: provinceVaccine.healthWorkerTarget,
@@ -235,7 +230,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_public.tr,
-                              color: publicColor,
+                              color: kVaccineColorPublic,
                               progress: provinceVaccine.publicFirstCumulative,
                               total: provinceVaccine.publicTarget,
                               newCase: provinceVaccine.publicFirstNew,
@@ -243,7 +238,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_teenager.tr,
-                              color: teenagerColor,
+                              color: kVaccineColorTeenager,
                               progress: provinceVaccine.teenagerFirstCumulative,
                               total: provinceVaccine.teenagerTarget,
                               newCase: provinceVaccine.teenagerFirstNew,
@@ -254,7 +249,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                           children: [
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_second.tr,
-                              color: allVaccineColor,
+                              color: kVaccineColorAll,
                               progress: provinceVaccine.totalSecondCumulative,
                               total: provinceVaccine.totalTarget,
                               newCase: provinceVaccine.totalSecondNew,
@@ -262,7 +257,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_elderly.tr,
-                              color: elderlyColor,
+                              color: kVaccineColorElderly,
                               progress: provinceVaccine.elderlySecondCumulative,
                               total: provinceVaccine.elderlyTarget,
                               newCase: provinceVaccine.elderlySecondNew,
@@ -270,7 +265,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_public_worker.tr,
-                              color: publicWorkerColor,
+                              color: kVaccineColorPublicWorker,
                               progress:
                                   provinceVaccine.publicWorkerSecondCumulative,
                               total: provinceVaccine.publicWorkerTarget,
@@ -279,7 +274,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_health_worker.tr,
-                              color: healthWorkerColor,
+                              color: kVaccineColorHealthWorker,
                               progress:
                                   provinceVaccine.healthWorkerSecondCumulative,
                               total: provinceVaccine.healthWorkerTarget,
@@ -288,7 +283,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_public.tr,
-                              color: publicColor,
+                              color: kVaccineColorPublic,
                               progress: provinceVaccine.publicSecondCumulative,
                               total: provinceVaccine.publicTarget,
                               newCase: provinceVaccine.publicSecondNew,
@@ -296,7 +291,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             const SizedBox(height: 6.0),
                             VaccineCard(
                               title: LocaleKeys.vaccine_type_teenager.tr,
-                              color: teenagerColor,
+                              color: kVaccineColorTeenager,
                               progress:
                                   provinceVaccine.teenagerSecondCumulative,
                               total: provinceVaccine.teenagerTarget,
@@ -307,6 +302,30 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                       ],
                     ),
                   ),
+                  ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    tileColor: Colors.grey.shade50,
+                    leading: Text(
+                      LocaleKeys.vaccine_label_national.tr,
+                      style: const TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    trailing: IconButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.nationalVaccine.tr);
+                      },
+                      icon: Icon(
+                        Iconsax.arrow_right_14,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
                 ],
               ),
             ),
