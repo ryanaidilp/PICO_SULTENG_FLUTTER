@@ -17,14 +17,10 @@ class RegencyDetailView extends GetView<RegencyDetailController> {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: AnimatedOpacity(
-            duration: const Duration(milliseconds: 500),
-            opacity: controller.scrollOffset.value,
-            child: const Text(
-              'Data Kasus Kabupaten',
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-              ),
+          title: Text(
+            LocaleKeys.regency_case_label.tr,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
             ),
           ),
           bottom: buildTabBar(),
@@ -41,9 +37,27 @@ class RegencyDetailView extends GetView<RegencyDetailController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Data Kasus Kabupaten',
-              style: TextStyle(
+            LimitedBox(
+              maxHeight: 30.0,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: 8,
+                separatorBuilder: (_, __) {
+                  return const SizedBox(width: 8.0);
+                },
+                itemBuilder: (_, __) {
+                  return ShimmerWidget(
+                    width: 90,
+                    height: 25.0,
+                    highlightColor: Colors.blue.shade50,
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              LocaleKeys.updated_at.tr,
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 18.0,
               ),
@@ -107,9 +121,9 @@ class RegencyDetailView extends GetView<RegencyDetailController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Data Kasus Kabupaten',
-                  style: TextStyle(
+                Text(
+                  LocaleKeys.updated_at.tr,
+                  style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 18.0,
                   ),

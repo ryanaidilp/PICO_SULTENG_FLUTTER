@@ -27,6 +27,10 @@ class LocaleKeys {
   static const tab_label_sulteng_today = 'tab_label_sulteng_today';
   static const tab_label_covid_info = 'tab_label_covid_info';
   static const data_case_label = 'data_case_label';
+  static const regency_case_label = 'regency_case_label';
+  static const national_case_label = 'national_case_label';
+  static const article_subtitle = 'article_subtitle';
+  static const article = 'article';
   static const card_case_label_confirmed = 'card_case_label_confirmed';
   static const card_case_label_under_treatment =
       'card_case_label_under_treatment';
@@ -88,6 +92,7 @@ class LocaleKeys {
   static const menu_unavailable = 'menu_unavailable';
   static const infographic_label = 'infographic_label';
   static const infographic_subtitle = 'infographic_subtitle';
+  static const error_article = 'error_article';
 }
 
 class Locales {
@@ -110,6 +115,10 @@ class Locales {
     'tab_label_sulteng_today': 'SulTeng Today',
     'tab_label_covid_info': 'COVID-19 Information',
     'data_case_label': 'Case Data of Central Sulawesi',
+    'regency_case_label': 'Regency Case Data',
+    'national_case_label': 'National Case Data',
+    'article_subtitle': 'Collection of article related to COVID-19',
+    'article': 'Article',
     'card_case_label_confirmed': 'TOTAL CONFIRMED CASE',
     'card_case_label_under_treatment': 'Treated',
     'card_case_label_recovered': 'Recovered',
@@ -195,6 +204,10 @@ class Locales {
     'tab_label_sulteng_today': 'SulTeng Hari Ini',
     'tab_label_covid_info': 'Informasi COVID-19',
     'data_case_label': 'Data Kasus SulTeng',
+    'regency_case_label': 'Data Kasus Kabupaten',
+    'national_case_label': 'Data Kasus Nasional',
+    'article_subtitle': 'Kumpulan artikel terkait COVID-19',
+    'article': 'Artikel',
     'card_case_label_confirmed': 'TOTAL KASUS TERKONFIRMASI',
     'card_case_label_under_treatment': 'Dirawat',
     'card_case_label_recovered': 'Sembuh',
@@ -255,6 +268,8 @@ class Locales {
     'error_infographic': 'Gagal memuat data infografis!',
     'error_no_internet':
         'Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!',
+    'error_article':
+        'Terjadi kesalhan saat memuat data artikel! Harap coba lagi!',
     'coming_soon': 'Coming Soon',
     'menu_unavailable': 'Menu belum tersedia untuk saat ini!',
     'infographic_label': 'Informasi Praktikal',

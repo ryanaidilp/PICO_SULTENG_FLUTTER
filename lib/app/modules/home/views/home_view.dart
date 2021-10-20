@@ -106,7 +106,7 @@ class HomeView extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Artikel',
+                LocaleKeys.article.tr,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 18.0,
@@ -227,7 +227,7 @@ class HomeView extends GetView<HomeController> {
 
     if (controller.articleError.value) {
       return ErrorPlaceHolderWidget(
-        label: 'Gagal memuat data artikel!',
+        label: LocaleKeys.error_article.tr,
         onRetry: () {
           controller.loadArticles();
         },

@@ -23,6 +23,10 @@
     "covid_info": "COVID-19 Information"
   },
   "data_case_label": "Case Data of Central Sulawesi",
+  "regency_case_label": "Regency Case Data",
+  "national_case_label": "National Case Data",
+  "article_subtitle": "Collection of article related to COVID-19",
+  "article": "Article",
   "card_case_label": {
     "confirmed": "TOTAL CONFIRMED CASE",
     "under_treatment": "Treated",

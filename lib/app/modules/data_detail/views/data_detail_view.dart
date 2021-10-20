@@ -178,9 +178,9 @@ class DataDetailView extends GetView<DataDetailController> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     tileColor: Colors.grey.shade50,
-                    leading: const Text(
-                      'Data Kasus Nasional',
-                      style: TextStyle(
+                    leading: Text(
+                      LocaleKeys.national_case_label.tr,
+                      style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         fontSize: 18.0,
                         fontWeight: FontWeight.w700,
@@ -202,9 +202,9 @@ class DataDetailView extends GetView<DataDetailController> {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     tileColor: Colors.grey.shade50,
-                    leading: const Text(
-                      'Data Kasus Kabupaten',
-                      style: TextStyle(
+                    leading: Text(
+                      LocaleKeys.regency_case_label.tr,
+                      style: const TextStyle(
                         overflow: TextOverflow.ellipsis,
                         fontSize: 18.0,
                         fontWeight: FontWeight.w700,

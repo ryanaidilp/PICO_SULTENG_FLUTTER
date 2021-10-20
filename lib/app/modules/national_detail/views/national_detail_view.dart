@@ -19,9 +19,9 @@ class NationalDetailView extends GetView<NationalDetailController> {
           title: AnimatedOpacity(
             duration: const Duration(milliseconds: 500),
             opacity: controller.scrollOffset.value,
-            child: const Text(
-              'Data Kasus Nasional',
-              style: TextStyle(
+            child: Text(
+              LocaleKeys.national_case_label.tr,
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
               ),
             ),
@@ -39,9 +39,9 @@ class NationalDetailView extends GetView<NationalDetailController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Data Kasus Nasional',
-              style: TextStyle(
+            Text(
+              LocaleKeys.national_case_label.tr,
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 18.0,
               ),
@@ -103,9 +103,9 @@ class NationalDetailView extends GetView<NationalDetailController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Data Kasus Nasional',
-              style: TextStyle(
+            Text(
+              LocaleKeys.national_case_label.tr,
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 18.0,
               ),

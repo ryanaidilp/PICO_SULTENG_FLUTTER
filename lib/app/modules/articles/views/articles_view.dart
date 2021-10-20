@@ -6,6 +6,7 @@ import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/article_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/error_placeholder_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
+import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 import '../controllers/articles_controller.dart';
 
@@ -16,9 +17,9 @@ class ArticlesView extends GetView<ArticlesController> {
       () => SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'Artikel',
-              style: TextStyle(
+            title: Text(
+              LocaleKeys.article.tr,
+              style: const TextStyle(
                 fontWeight: FontWeight.w700,
                 fontSize: 18.0,
                 overflow: TextOverflow.ellipsis,
@@ -34,9 +35,9 @@ class ArticlesView extends GetView<ArticlesController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    Text('Kumpulan artikel terkait COVID-19'),
-                    SizedBox(height: 6.0),
+                  children: [
+                    Text(LocaleKeys.article_subtitle.tr),
+                    const SizedBox(height: 6.0),
                   ],
                 ),
               ),
@@ -63,8 +64,7 @@ class ArticlesView extends GetView<ArticlesController> {
                         },
                         firstPageErrorIndicatorBuilder: (_) {
                           return ErrorPlaceHolderWidget(
-                            label:
-                                'Terjadi kesalahan saat memuat data! Harap coba lagi!',
+                            label: LocaleKeys.error_article.tr,
                             onRetry: () {
                               controller.pagingController.refresh();
                             },
@@ -72,8 +72,7 @@ class ArticlesView extends GetView<ArticlesController> {
                         },
                         newPageErrorIndicatorBuilder: (_) {
                           return ErrorPlaceHolderWidget(
-                            label:
-                                'Terjadi kesalahan saat memuat data! Harap coba lagi!',
+                            label: LocaleKeys.error_article.tr,
                             onRetry: () {
                               controller.pagingController
                                   .retryLastFailedRequest();

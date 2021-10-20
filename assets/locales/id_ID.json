@@ -23,6 +23,10 @@
     "covid_info": "Informasi COVID-19"
   },
   "data_case_label": "Data Kasus SulTeng",
+  "regency_case_label": "Data Kasus Kabupaten",
+  "national_case_label": "Data Kasus Nasional",
+  "article_subtitle": "Kumpulan artikel terkait COVID-19",
+  "article": "Artikel",
   "card_case_label": {
     "confirmed": "TOTAL KASUS TERKONFIRMASI",
     "under_treatment": "Dirawat",
@@ -108,7 +112,8 @@
     "test": "Terjadi kesalahan saat memuat data tes covid-19!",
     "banner": "Terjadi kesalahan saat memuat banner!",
     "infographic": "Gagal memuat data infografis!",
-    "no_internet": "Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!"
+    "no_internet": "Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!",
+    "article": "Terjadi kesalhan saat memuat data artikel! Harap coba lagi!"
   },
   "coming_soon": "Coming Soon",
   "menu_unavailable": "Menu belum tersedia untuk saat ini!",
