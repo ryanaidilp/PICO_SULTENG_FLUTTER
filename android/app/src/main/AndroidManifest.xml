@@ -2,7 +2,7 @@
     package="com.banuacoders.pico.app">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="PICO Sulteng"
+        android:label="PICO SulTeng"
        android:name="androidx.multidex.MultiDexApplication"
         android:icon="@mipmap/ic_launcher">
         <activity

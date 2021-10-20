@@ -89,6 +89,8 @@ class ArticlesView extends GetView<ArticlesController> {
                         newPageProgressIndicatorBuilder: (_) {
                           return const SpinKitFadingCircle(color: Colors.blue);
                         },
+                        animateTransitions: true,
+                        transitionDuration: const Duration(milliseconds: 500),
                       ),
                       separatorBuilder: (_, index) {
                         return const SizedBox(height: 8.0);
