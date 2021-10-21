@@ -93,6 +93,8 @@ class LocaleKeys {
   static const menu_unavailable = 'menu_unavailable';
   static const infographic_label = 'infographic_label';
   static const infographic_subtitle = 'infographic_subtitle';
+  static const infographics = 'infographics';
+  static const news = 'news';
   static const error_article = 'error_article';
 }
 
@@ -138,9 +140,9 @@ class Locales {
     'menu_information_center': 'Service & Information Center',
     'menu_data_title': 'COVID-19 Data',
     'menu_data_url': 'https://banuacoders.com/corona/data',
-    'menu_vaccine_title': 'Vaccine Information',
+    'menu_vaccine_title': 'Vaccine',
     'menu_vaccine_url': 'https://banuacoders.com/corona/vaksin',
-    'menu_bed_title': 'Bed (ICU) Availability',
+    'menu_bed_title': 'ICU',
     'menu_bed_url':
         'https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota=',
     'menu_contact_title': 'Emergency Number',
@@ -149,7 +151,7 @@ class Locales {
     'menu_isolation_url': 'https://banuacoders.com/corona/isoman',
     'menu_screening_title': 'Self Screening',
     'menu_screening_url': 'https://s.id/ChatbotCovid19',
-    'menu_donation_title': 'COVID-19 Donation',
+    'menu_donation_title': 'Donations',
     'menu_donation_url': 'https://banuacoders.com/corona/isoman#donations',
     'menu_teleconsultation_title': 'Teleconsultation',
     'menu_teleconsultation_url':
@@ -186,6 +188,8 @@ class Locales {
     'menu_unavailable': 'Menu unavailable at the moment!',
     'infographic_label': 'Practical Information',
     'infographic_subtitle': 'Collection of infographics related to covid-19',
+    'infographics': 'Infographic',
+    'news': 'News',
   };
   static const id_ID = {
     'app_name': 'PICO SulTeng',
@@ -226,11 +230,11 @@ class Locales {
     'updated_at': 'Diperbarui :',
     'success_refresh': 'Berhasil memperbarui data!',
     'menu_information_center': 'Pusat Layanan & Informasi',
-    'menu_data_title': 'Data COVID-19',
+    'menu_data_title': 'Data',
     'menu_data_url': 'https://banuacoders.com/corona/data',
-    'menu_vaccine_title': 'Informasi Vaksin',
+    'menu_vaccine_title': 'Vaksin',
     'menu_vaccine_url': 'https://banuacoders.com/corona/vaksin',
-    'menu_bed_title': 'Ketersediaan Tempat Tidur',
+    'menu_bed_title': 'Info IGD',
     'menu_bed_url':
         'https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota=',
     'menu_contact_title': 'Nomor Darurat',
@@ -239,7 +243,7 @@ class Locales {
     'menu_isolation_url': 'https://banuacoders.com/corona/isoman',
     'menu_screening_title': 'Pemeriksaan Mandiri',
     'menu_screening_url': 'https://s.id/ChatbotCovid19',
-    'menu_donation_title': 'Donasi COVID-19',
+    'menu_donation_title': 'Donasi',
     'menu_donation_url': 'https://banuacoders.com/corona/isoman#donations',
     'menu_teleconsultation_title': 'Telekonsultasi',
     'menu_teleconsultation_url':
@@ -277,5 +281,7 @@ class Locales {
     'menu_unavailable': 'Menu belum tersedia untuk saat ini!',
     'infographic_label': 'Informasi Praktikal',
     'infographic_subtitle': 'Kumpulan infografis terkait covid-19!',
+    'infographics': 'Infografis',
+    'news': 'Berita',
   };
 }

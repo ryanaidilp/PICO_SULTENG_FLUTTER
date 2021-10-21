@@ -49,15 +49,15 @@
   "menu": {
     "information_center": "Pusat Layanan & Informasi",
     "data": {
-      "title": "Data COVID-19",
+      "title": "Data",
        "url": "https://banuacoders.com/corona/data"
     },
     "vaccine": {
-      "title": "Informasi Vaksin",
+      "title": "Vaksin",
       "url": "https://banuacoders.com/corona/vaksin"
     },
     "bed": {
-      "title": "Ketersediaan Tempat Tidur",
+      "title": "Info IGD",
       "url": "https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota="
     },
     "contact": {
@@ -74,7 +74,7 @@
       "url": "https://s.id/ChatbotCovid19"
     },
     "donation": {
-      "title": "Donasi COVID-19",
+      "title": "Donasi",
       "url": "https://banuacoders.com/corona/isoman#donations"
     },
     "teleconsultation": {
@@ -119,5 +119,7 @@
   "coming_soon": "Coming Soon",
   "menu_unavailable": "Menu belum tersedia untuk saat ini!",
   "infographic_label": "Informasi Praktikal",
-  "infographic_subtitle": "Kumpulan infografis terkait covid-19!"
+  "infographic_subtitle": "Kumpulan infografis terkait covid-19!",
+  "infographics": "Infografis",
+  "news": "Berita"
 }

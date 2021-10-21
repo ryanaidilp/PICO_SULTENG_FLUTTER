@@ -53,11 +53,11 @@
       "url": "https://banuacoders.com/corona/data"
     },
     "vaccine": {
-      "title": "Vaccine Information",
+      "title": "Vaccine",
       "url": "https://banuacoders.com/corona/vaksin"
     },
     "bed": {
-      "title": "Bed (ICU) Availability",
+      "title": "ICU",
       "url": "https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota="
     },
     "contact": {
@@ -73,7 +73,7 @@
       "url": "https://s.id/ChatbotCovid19"
     },
     "donation": {
-      "title": "COVID-19 Donation",
+      "title": "Donations",
       "url": "https://banuacoders.com/corona/isoman#donations"
     },
     "teleconsultation": {
@@ -117,5 +117,7 @@
   "coming_soon": "Coming Soon",
   "menu_unavailable": "Menu unavailable at the moment!",
   "infographic_label": "Practical Information",
-  "infographic_subtitle": "Collection of infographics related to covid-19"
+  "infographic_subtitle": "Collection of infographics related to covid-19",
+  "infographics": "Infographic",
+  "news": "News"
 }

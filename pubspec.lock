@@ -146,6 +146,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_app_name:
+    dependency: "direct main"
+    description:
+      name: flutter_app_name
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   flutter_config:
     dependency: "direct main"
     description:

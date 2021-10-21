@@ -102,6 +102,8 @@ class InfographicsView extends GetView<InfographicsController> {
                         newPageProgressIndicatorBuilder: (_) {
                           return const SpinKitFadingCircle(color: Colors.blue);
                         },
+                        animateTransitions: true,
+                        transitionDuration: const Duration(milliseconds: 500),
                       ),
                       separatorBuilder: (_, index) {
                         return const SizedBox(height: 10.0);
