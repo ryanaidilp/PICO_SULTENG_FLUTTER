@@ -22,11 +22,12 @@ class MenuButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Card(
-            color: Colors.grey.shade50,
+            color: Colors.grey.withOpacity(0.1),
+            shadowColor: Colors.grey.withOpacity(0.2),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
-            elevation: 0,
+            elevation: 8,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Icon(icon, color: iconColor),

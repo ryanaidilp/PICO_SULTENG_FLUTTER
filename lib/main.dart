@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
       getPages: AppPages.routes,
       initialRoute: AppPages.initial,
       debugShowCheckedModeBanner: false,
+      defaultTransition: Transition.native,
       translationsKeys: AppTranslation.translations,
       // initialBinding: NoInternetBinding(), TODO: There's an issue with smart refresher and tabbarview
       theme: ThemeData(

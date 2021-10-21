@@ -575,9 +575,10 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           GridView.count(
-            padding: EdgeInsets.zero,
+            // padding: EdgeInsets.zero,
             crossAxisCount: 4,
             shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               MenuButton(
                 label: LocaleKeys.menu_data_title.tr,
@@ -676,6 +677,22 @@ class HomeView extends GetView<HomeController> {
                     LocaleKeys.menu_faq_title.tr,
                     LocaleKeys.menu_faq_url.tr,
                   );
+                },
+              ),
+              MenuButton(
+                label: LocaleKeys.infographics.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.image,
+                onTap: () {
+                  Get.toNamed(Routes.infographics);
+                },
+              ),
+              MenuButton(
+                label: LocaleKeys.article.tr,
+                iconColor: Colors.blueAccent,
+                icon: LineIcons.newspaperAlt,
+                onTap: () {
+                  Get.toNamed(Routes.articles);
                 },
               ),
             ],
