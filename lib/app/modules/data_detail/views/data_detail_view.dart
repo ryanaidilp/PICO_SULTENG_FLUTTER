@@ -174,6 +174,9 @@ class DataDetailView extends GetView<DataDetailController> {
                   ),
                   const SizedBox(height: 16.0),
                   ListTile(
+                    onTap: () {
+                      Get.toNamed(Routes.nationalDetail);
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -198,6 +201,9 @@ class DataDetailView extends GetView<DataDetailController> {
                   ),
                   const SizedBox(height: 16.0),
                   ListTile(
+                    onTap: () {
+                      Get.toNamed(Routes.regencyDetail);
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),

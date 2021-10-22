@@ -684,6 +684,10 @@ class HomeView extends GetView<HomeController> {
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.image,
                 onTap: () {
+                  if (Get.isBottomSheetOpen!) {
+                    Get.back();
+                  }
+
                   Get.toNamed(Routes.infographics);
                 },
               ),
@@ -692,6 +696,10 @@ class HomeView extends GetView<HomeController> {
                 iconColor: Colors.blueAccent,
                 icon: LineIcons.newspaperAlt,
                 onTap: () {
+                  if (Get.isBottomSheetOpen!) {
+                    Get.back();
+                  }
+
                   Get.toNamed(Routes.articles);
                 },
               ),
@@ -813,6 +821,10 @@ class HomeView extends GetView<HomeController> {
                     banner.image,
                     clearMemoryCacheWhenDispose: true,
                     fit: BoxFit.fill,
+                    borderRadius: const BorderRadius.all(Radius.circular(8.0)),
+                    border: Border.all(
+                      color: Colors.grey.shade300,
+                    ),
                     width: double.infinity,
                     loadStateChanged: (ExtendedImageState state) {
                       switch (state.extendedImageLoadState) {
