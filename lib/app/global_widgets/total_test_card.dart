@@ -14,6 +14,7 @@ class TotalTestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onPressed,
       tileColor: Colors.grey.shade50,
       title: Text(
         LocaleKeys.test_label.tr,
