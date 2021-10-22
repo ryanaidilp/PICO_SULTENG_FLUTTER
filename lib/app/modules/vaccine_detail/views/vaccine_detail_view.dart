@@ -303,6 +303,9 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                     ),
                   ),
                   ListTile(
+                    onTap: () {
+                      Get.toNamed(Routes.nationalVaccine.tr);
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
