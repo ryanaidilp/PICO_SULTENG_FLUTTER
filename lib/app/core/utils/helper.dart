@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 String numberFormat(int number) {
-  final formatter = NumberFormat.decimalPattern('id_ID');
+  final formatter = NumberFormat.decimalPattern(Get.locale.toString());
   return formatter.format(number);
 }
 
 String percentageFormat(double number) {
-  final formatter = NumberFormat.percentPattern('id_ID');
+  final formatter = NumberFormat.percentPattern(Get.locale.toString());
   return formatter.format(number);
 }
 
