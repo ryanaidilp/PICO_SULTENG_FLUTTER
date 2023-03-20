@@ -34,62 +34,62 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.home,
-      page: () => HomeView(),
+      page: () => const HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
       name: _Paths.dataDetail,
-      page: () => DataDetailView(),
+      page: () => const DataDetailView(),
       binding: DataDetailBinding(),
     ),
     GetPage(
       name: _Paths.testDetail,
-      page: () => TestDetailView(),
+      page: () => const TestDetailView(),
       binding: TestDetailBinding(),
     ),
     GetPage(
       name: _Paths.vaccineDetail,
-      page: () => VaccineDetailView(),
+      page: () => const VaccineDetailView(),
       binding: VaccineDetailBinding(),
     ),
     GetPage(
       name: _Paths.noInternet,
-      page: () => NoInternetView(),
+      page: () => const NoInternetView(),
       binding: NoInternetBinding(),
     ),
     GetPage(
       name: _Paths.inAppWebPage,
-      page: () => InAppWebPageView(),
+      page: () => const InAppWebPageView(),
       binding: InAppWebPageBinding(),
     ),
     GetPage(
       name: _Paths.detailInfographic,
-      page: () => DetailInfographicView(),
+      page: () => const DetailInfographicView(),
       binding: DetailInfographicBinding(),
     ),
     GetPage(
       name: _Paths.infographics,
-      page: () => InfographicsView(),
+      page: () => const InfographicsView(),
       binding: InfographicsBinding(),
     ),
     GetPage(
       name: _Paths.articles,
-      page: () => ArticlesView(),
+      page: () => const ArticlesView(),
       binding: ArticlesBinding(),
     ),
     GetPage(
       name: _Paths.nationalDetail,
-      page: () => NationalDetailView(),
+      page: () => const NationalDetailView(),
       binding: NationalDetailBinding(),
     ),
     GetPage(
       name: _Paths.regencyDetail,
-      page: () => RegencyDetailView(),
+      page: () => const RegencyDetailView(),
       binding: RegencyDetailBinding(),
     ),
     GetPage(
       name: _Paths.nationalVaccine,
-      page: () => NationalVaccineView(),
+      page: () => const NationalVaccineView(),
       binding: NationalVaccineBinding(),
     ),
   ];

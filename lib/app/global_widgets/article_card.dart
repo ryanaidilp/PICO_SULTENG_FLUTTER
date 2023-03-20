@@ -7,9 +7,9 @@ import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard({
-    Key? key,
+    super.key,
     required this.article,
-  }) : super(key: key);
+  });
 
   final Article article;
 

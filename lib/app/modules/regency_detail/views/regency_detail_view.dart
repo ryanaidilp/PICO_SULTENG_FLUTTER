@@ -11,6 +11,8 @@ import 'package:pico_sulteng_flutter/app/modules/regency_detail/controllers/rege
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class RegencyDetailView extends GetView<RegencyDetailController> {
+  const RegencyDetailView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(

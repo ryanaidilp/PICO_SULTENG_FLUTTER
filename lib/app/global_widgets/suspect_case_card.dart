@@ -6,7 +6,7 @@ import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class SuspectCaseCard extends StatelessWidget {
   const SuspectCaseCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.total,
     required this.newCase,
@@ -14,7 +14,7 @@ class SuspectCaseCard extends StatelessWidget {
     required this.activeCase,
     required this.finishedCase,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final String title;
   final int total;

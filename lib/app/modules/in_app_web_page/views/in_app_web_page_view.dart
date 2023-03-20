@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/modules/in_app_web_page/controllers/in_app_web_page_controller.dart';
 
 class InAppWebPageView extends GetView<InAppWebPageController> {
+  const InAppWebPageView({super.key});
+
   @override
   Widget build(BuildContext context) {
     final String link = Get.arguments['link'] as String;

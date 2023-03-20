@@ -6,13 +6,13 @@ import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class VaccineCard extends StatelessWidget {
   const VaccineCard({
-    Key? key,
+    super.key,
     required this.title,
     required this.color,
     required this.progress,
     required this.total,
     required this.newCase,
-  }) : super(key: key);
+  });
 
   final String title;
   final Color color;

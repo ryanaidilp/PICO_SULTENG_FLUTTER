@@ -5,8 +5,7 @@ import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 
 class InfographicMiniCard extends StatelessWidget {
   const InfographicMiniCard(
-      {Key? key, required this.infographic, required this.onTap,})
-      : super(key: key);
+      {super.key, required this.infographic, required this.onTap,});
 
   final Infographic infographic;
   final GestureTapCallback onTap;

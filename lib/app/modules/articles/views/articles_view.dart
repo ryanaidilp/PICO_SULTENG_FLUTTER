@@ -10,6 +10,8 @@ import 'package:pico_sulteng_flutter/app/modules/articles/controllers/articles_c
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class ArticlesView extends GetView<ArticlesController> {
+  const ArticlesView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(

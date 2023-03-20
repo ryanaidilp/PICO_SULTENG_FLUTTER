@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ImagePlaceholder extends StatelessWidget {
-  const ImagePlaceholder({
+  const ImagePlaceholder({super.key, 
     required this.label,
     required this.child,
   });

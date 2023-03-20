@@ -5,8 +5,7 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 
 class InfographicCard extends StatelessWidget {
-  const InfographicCard({Key? key, required this.infographic})
-      : super(key: key);
+  const InfographicCard({super.key, required this.infographic});
 
   final Infographic infographic;
 

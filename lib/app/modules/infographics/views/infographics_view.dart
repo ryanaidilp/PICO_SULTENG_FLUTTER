@@ -11,6 +11,8 @@ import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class InfographicsView extends GetView<InfographicsController> {
+  const InfographicsView({super.key});
+
   // final List<Infographic> infographics =
   //     Get.arguments['infographics'] as List<Infographic>;
 

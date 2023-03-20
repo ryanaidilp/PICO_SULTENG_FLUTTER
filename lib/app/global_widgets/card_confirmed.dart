@@ -5,13 +5,13 @@ import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class CardConfirmed extends StatelessWidget {
   const CardConfirmed({
-    Key? key,
+    super.key,
     required this.total,
     required this.newCase,
     required this.startColor,
     required this.endColor,
     required this.shadowColor,
-  }) : super(key: key);
+  });
   final int total;
   final int newCase;
   final Color startColor;

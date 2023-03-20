@@ -5,6 +5,8 @@ import 'package:pico_sulteng_flutter/app/modules/no_internet/controllers/no_inte
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class NoInternetView extends GetView<NoInternetController> {
+  const NoInternetView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

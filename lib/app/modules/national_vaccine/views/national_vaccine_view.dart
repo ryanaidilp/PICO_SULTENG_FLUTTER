@@ -14,6 +14,8 @@ import 'package:pico_sulteng_flutter/app/modules/national_vaccine/controllers/na
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class NationalVaccineView extends GetView<NationalVaccineController> {
+  const NationalVaccineView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -143,7 +145,7 @@ class NationalVaccineView extends GetView<NationalVaccineController> {
     }
     final vaccine = controller.vaccine;
     return LimitedBox(
-      maxHeight: 1280,
+      maxHeight: Get.height * 1.75,
       child: TabBarView(
         controller: controller.tabController,
         children: [

@@ -3,12 +3,12 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 
 class CardTestCase extends StatelessWidget {
   const CardTestCase({
-    Key? key,
+    super.key,
     required this.label,
     required this.count,
     required this.percentage,
     this.isInvalid = false,
-  }) : super(key: key);
+  });
 
   final String label;
   final int count;

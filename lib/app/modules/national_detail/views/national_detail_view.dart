@@ -10,6 +10,8 @@ import 'package:pico_sulteng_flutter/app/modules/national_detail/controllers/nat
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class NationalDetailView extends GetView<NationalDetailController> {
+  const NationalDetailView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(
