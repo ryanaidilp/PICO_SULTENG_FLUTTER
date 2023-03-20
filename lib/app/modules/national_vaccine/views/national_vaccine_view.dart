@@ -10,9 +10,8 @@ import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/shimmer_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_target_card.dart';
+import 'package:pico_sulteng_flutter/app/modules/national_vaccine/controllers/national_vaccine_controller.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
-
-import '../controllers/national_vaccine_controller.dart';
 
 class NationalVaccineView extends GetView<NationalVaccineController> {
   @override

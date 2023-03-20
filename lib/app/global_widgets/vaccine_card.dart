@@ -74,40 +74,42 @@ class VaccineCard extends StatelessWidget {
             FAProgressBar(
               progressColor: color,
               backgroundColor: Colors.grey.shade300,
-              currentValue: calculatePercentage(progress, total).round(),
+              currentValue: calculatePercentage(progress, total),
               displayText: '%',
               animatedDuration: const Duration(seconds: 2),
             ),
             const SizedBox(height: 8.0),
             RichText(
               text: TextSpan(
-                  text: percentageFormat(
-                      calculatePercentage(progress, total) / 100),
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 12.0,
+                text: percentageFormat(
+                  calculatePercentage(progress, total) / 100,
+                ),
+                style: const TextStyle(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12.0,
+                ),
+                children: [
+                  TextSpan(
+                    text: LocaleKeys.vaccine_card_from.tr,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
-                  children: [
-                    TextSpan(
-                      text: LocaleKeys.vaccine_card_from.tr,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
+                  TextSpan(
+                    text: numberFormat(total),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
                     ),
-                    TextSpan(
-                      text: numberFormat(total),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                      ),
+                  ),
+                  TextSpan(
+                    text: LocaleKeys.vaccine_card_vaccinated.tr,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.normal,
                     ),
-                    TextSpan(
-                      text: LocaleKeys.vaccine_card_vaccinated.tr,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ]),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

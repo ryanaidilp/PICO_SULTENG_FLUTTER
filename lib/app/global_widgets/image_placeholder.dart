@@ -30,6 +30,6 @@ class ImagePlaceholder extends StatelessWidget {
               style: const TextStyle(color: Colors.grey),
             )
           ],
-        ));
+        ),);
   }
 }

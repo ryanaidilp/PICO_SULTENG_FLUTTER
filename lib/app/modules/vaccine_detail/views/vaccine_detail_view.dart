@@ -10,10 +10,9 @@ import 'package:pico_sulteng_flutter/app/data/models/vaccine.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_target_card.dart';
+import 'package:pico_sulteng_flutter/app/modules/vaccine_detail/controllers/vaccine_detail_controller.dart';
 import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
-
-import '../controllers/vaccine_detail_controller.dart';
 
 class VaccineDetailView extends GetView<VaccineDetailController> {
   final Vaccine provinceVaccine = Get.arguments['province_vaccine'] as Vaccine;
@@ -49,7 +48,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                       ),
                     ),
                   ],
-                )),
+                ),),
           ),
           body: Scrollbar(
             thickness: 6.0,

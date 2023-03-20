@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controllers/vaccine_detail_controller.dart';
+import 'package:pico_sulteng_flutter/app/modules/vaccine_detail/controllers/vaccine_detail_controller.dart';
 
 class VaccineDetailBinding extends Bindings {
   @override

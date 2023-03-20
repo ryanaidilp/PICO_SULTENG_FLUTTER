@@ -17,10 +17,6 @@ class TestDetailController extends GetxController
     tabController.addListener(onTabChanges);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   void onTabChanges() {
     currentTab.value = tabController.index;

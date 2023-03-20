@@ -40,6 +40,7 @@ class ArticlesController extends GetxController {
         child: const Icon(LineIcons.alternateLongArrowUp),
       );
     }
+    return null;
   }
 
   Future<void> loadArticles(int page) async {
@@ -65,10 +66,6 @@ class ArticlesController extends GetxController {
     }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

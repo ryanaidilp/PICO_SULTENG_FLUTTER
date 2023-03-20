@@ -7,19 +7,11 @@ class DetailInfographicController extends GetxController {
   RxInt activeCarousel = 0.obs;
 
   final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   void onPageChanged(int index, CarouselPageChangedReason reason) {
     activeCarousel.value = index;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {}

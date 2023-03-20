@@ -6,7 +6,7 @@ class ShimmerWidget extends StatelessWidget {
       {Key? key,
       required this.width,
       required this.height,
-      this.highlightColor})
+      this.highlightColor,})
       : super(key: key);
   final double width;
   final double height;

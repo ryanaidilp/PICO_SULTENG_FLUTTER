@@ -41,7 +41,7 @@ class CardConfirmed extends StatelessWidget {
               gradient: LinearGradient(colors: [
                 startColor,
                 endColor,
-              ]),
+              ],),
             ),
             child: Padding(
               padding: const EdgeInsets.all(16.0),

@@ -11,10 +11,6 @@ class DataDetailController extends GetxController {
     scrollController.addListener(checkIfScrolled);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   void checkIfScrolled() {
     if (scrollController.hasClients) {

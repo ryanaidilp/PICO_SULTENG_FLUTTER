@@ -28,7 +28,7 @@ class ArticleCard extends StatelessWidget {
             Get.toNamed(Routes.inAppWebPage, arguments: {
               'title': article.title,
               'link': article.url,
-            });
+            },);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -9,10 +8,9 @@ import 'package:pico_sulteng_flutter/app/global_widgets/card_case.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_confirmed.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/suspect_case_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/total_test_card.dart';
+import 'package:pico_sulteng_flutter/app/modules/data_detail/controllers/data_detail_controller.dart';
 import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
-
-import '../controllers/data_detail_controller.dart';
 
 class DataDetailView extends GetView<DataDetailController> {
   final Statistic province = Get.arguments['province_data'] as Statistic;
@@ -169,7 +167,7 @@ class DataDetailView extends GetView<DataDetailController> {
                     total: totalTests,
                     onPressed: () {
                       Get.toNamed(Routes.testDetail,
-                          arguments: {'tests': tests});
+                          arguments: {'tests': tests},);
                     },
                   ),
                   const SizedBox(height: 16.0),

@@ -50,7 +50,7 @@ class SuspectCaseCard extends StatelessWidget {
                   color: Colors.grey.shade600,
                 ),
               )
-            ]),
+            ],),
             const SizedBox(height: 6.0),
             Row(
               children: [

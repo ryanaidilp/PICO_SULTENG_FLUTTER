@@ -13,7 +13,7 @@ String percentageFormat(double number) {
 }
 
 String dateWithDayFormat(DateTime date,
-    {String format = 'EEEE, dd MMMM yyyy', bool includeTimeZone = false}) {
+    {String format = 'EEEE, dd MMMM yyyy', bool includeTimeZone = false,}) {
   final formattedDate = DateFormat(format).format(date);
   final timezone = date.timeZoneName;
   final buffer = StringBuffer()..writeAll([formattedDate, timezone], " ");

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/data/models/regency_statistic.dart';
@@ -65,10 +64,6 @@ class RegencyDetailController extends GetxController
     }
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
-import '../controllers/in_app_web_page_controller.dart';
+import 'package:pico_sulteng_flutter/app/modules/in_app_web_page/controllers/in_app_web_page_controller.dart';
 
 class InAppWebPageView extends GetView<InAppWebPageController> {
   @override

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/data/provider/api_provider.dart';
 
-import '../controllers/home_controller.dart';
+import 'package:pico_sulteng_flutter/app/modules/home/controllers/home_controller.dart';
 
 class HomeBinding extends Bindings {
   @override

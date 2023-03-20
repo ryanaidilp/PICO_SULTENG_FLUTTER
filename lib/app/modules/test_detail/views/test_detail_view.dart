@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_test_case.dart';
+import 'package:pico_sulteng_flutter/app/modules/test_detail/controllers/test_detail_controller.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
-
-import '../controllers/test_detail_controller.dart';
 
 class TestDetailView extends GetView<TestDetailController> {
   final List<ProvinceTest> tests = Get.arguments['tests'] as List<ProvinceTest>;

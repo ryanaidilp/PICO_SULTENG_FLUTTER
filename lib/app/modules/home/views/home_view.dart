@@ -2,9 +2,7 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -22,12 +20,11 @@ import 'package:pico_sulteng_flutter/app/global_widgets/menu_button.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/shimmer_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/total_test_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/vaccine_card.dart';
+import 'package:pico_sulteng_flutter/app/modules/home/controllers/home_controller.dart';
 import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   @override
@@ -185,7 +182,7 @@ class HomeView extends GetView<HomeController> {
               onTap: () {
                 Get.toNamed(Routes.detailInfographic, arguments: {
                   'infographic': infographic,
-                });
+                },);
               },
             ),
           );
@@ -294,7 +291,7 @@ class HomeView extends GetView<HomeController> {
                   if (controller.checkIfProvinceVaccinesLoaded()) {
                     Get.toNamed(Routes.vaccineDetail, arguments: {
                       'province_vaccine': controller.provinceVaccine,
-                    });
+                    },);
                   }
                 },
                 child: Text(
@@ -398,7 +395,7 @@ class HomeView extends GetView<HomeController> {
                       'province_data': controller.province,
                       'total_test': totalTest,
                       'tests': controller.provinceTests
-                    });
+                    },);
                   }
                 },
                 child: Text(
@@ -446,7 +443,7 @@ class HomeView extends GetView<HomeController> {
         if (controller.checkIfProvinceTestLoaded()) {
           Get.toNamed(Routes.testDetail, arguments: {
             'tests': controller.provinceTests,
-          });
+          },);
         }
       },
     );
@@ -853,6 +850,7 @@ class HomeView extends GetView<HomeController> {
                         case LoadState.completed:
                           break;
                       }
+                      return null;
                     },
                   ),
                 ),

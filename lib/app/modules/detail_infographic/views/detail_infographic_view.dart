@@ -7,10 +7,9 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/carousel_with_indicator.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/image_placeholder.dart';
+import 'package:pico_sulteng_flutter/app/modules/detail_infographic/controllers/detail_infographic_controller.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../controllers/detail_infographic_controller.dart';
 
 class DetailInfographicView extends GetView<DetailInfographicController> {
   final Infographic infographic = Get.arguments['infographic'] as Infographic;
@@ -43,7 +42,7 @@ class DetailInfographicView extends GetView<DetailInfographicController> {
                                 child: SizedBox(
                                   width: 50.0,
                                   child: SpinKitFadingCircle(
-                                      color: Colors.blueAccent),
+                                      color: Colors.blueAccent,),
                                 ),
                               );
                             case LoadState.failed:
@@ -62,6 +61,7 @@ class DetailInfographicView extends GetView<DetailInfographicController> {
                             case LoadState.completed:
                               break;
                           }
+                          return null;
                         },
                       ),
                     )

@@ -6,9 +6,8 @@ import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/article_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/error_placeholder_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
+import 'package:pico_sulteng_flutter/app/modules/articles/controllers/articles_controller.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
-
-import '../controllers/articles_controller.dart';
 
 class ArticlesView extends GetView<ArticlesController> {
   @override
@@ -83,7 +82,7 @@ class ArticlesView extends GetView<ArticlesController> {
                           return SizedBox(
                             height: Get.height * 0.8,
                             child: const Center(
-                                child: SpinKitFadingCircle(color: Colors.blue)),
+                                child: SpinKitFadingCircle(color: Colors.blue),),
                           );
                         },
                         newPageProgressIndicatorBuilder: (_) {
