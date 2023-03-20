@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../controllers/no_internet_controller.dart';
+import 'package:pico_sulteng_flutter/app/modules/no_internet/controllers/no_internet_controller.dart';
 
 class NoInternetBinding extends Bindings {
   @override

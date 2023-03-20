@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pico_sulteng_flutter/app/modules/no_internet/controllers/no_internet_controller.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
-import '../controllers/no_internet_controller.dart';
-
 class NoInternetView extends GetView<NoInternetController> {
+  const NoInternetView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter_config/flutter_config.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:pico_sulteng_flutter/app/config/env.dart';
 import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 import 'package:pico_sulteng_flutter/app/data/models/banner.dart' as model;
 import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
@@ -15,7 +15,7 @@ import 'package:pico_sulteng_flutter/app/data/models/vaccine.dart';
 class ApiProvider extends GetConnect {
   @override
   void onInit() {
-    httpClient.baseUrl = FlutterConfig.get('BASE_URL').toString();
+    httpClient.baseUrl = Env.baseUrl;
   }
 
   Future<List<model.Banner>> loadBanners() async {
@@ -94,7 +94,7 @@ class ApiProvider extends GetConnect {
   Future<List<Article>> loadArticles(int page) async {
     const baseUrl =
         'https://newsapi.org/v2/everything?q=covid&language=id&page=';
-    final String key = FlutterConfig.get('NEWSAPI_API_KEY').toString();
+    final String key = Env.newsapiApiKey;
     final StringBuffer buffer = StringBuffer();
     buffer.writeAll([baseUrl, page, '&apiKey=', key]);
     final response = await http.get(Uri.parse(buffer.toString()));

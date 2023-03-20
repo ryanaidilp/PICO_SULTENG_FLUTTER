@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 class CarouselWithIndicator extends StatelessWidget {
   const CarouselWithIndicator({
-    Key? key,
+    super.key,
     required this.items,
     required this.options,
     required this.controller,
     required this.currentIndex,
-  }) : super(key: key);
+  });
 
   final List<Widget> items;
   final CarouselOptions options;

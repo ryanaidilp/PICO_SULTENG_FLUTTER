@@ -7,9 +7,9 @@ import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard({
-    Key? key,
+    super.key,
     required this.article,
-  }) : super(key: key);
+  });
 
   final Article article;
 
@@ -28,7 +28,7 @@ class ArticleCard extends StatelessWidget {
             Get.toNamed(Routes.inAppWebPage, arguments: {
               'title': article.title,
               'link': article.url,
-            });
+            },);
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

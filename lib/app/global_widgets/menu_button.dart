@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class MenuButton extends StatelessWidget {
   const MenuButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.iconColor,
     required this.icon,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final String label;
   final Color iconColor;

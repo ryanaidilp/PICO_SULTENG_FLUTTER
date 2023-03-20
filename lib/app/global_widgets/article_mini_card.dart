@@ -4,8 +4,7 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/app/data/models/article.dart';
 
 class ArticleMiniCard extends StatelessWidget {
-  const ArticleMiniCard({Key? key, required this.article, required this.onTap})
-      : super(key: key);
+  const ArticleMiniCard({super.key, required this.article, required this.onTap});
 
   final Article article;
   final GestureTapCallback onTap;

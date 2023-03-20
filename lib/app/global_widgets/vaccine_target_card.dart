@@ -3,11 +3,11 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 
 class VaccineTargetCard extends StatelessWidget {
   const VaccineTargetCard({
-    Key? key,
+    super.key,
     required this.total,
     required this.label,
     required this.color,
-  }) : super(key: key);
+  });
 
   final int total;
   final String label;

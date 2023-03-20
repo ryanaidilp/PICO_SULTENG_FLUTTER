@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
 
 class TestDetailController extends GetxController
-    with SingleGetTickerProviderMixin {
+    with GetSingleTickerProviderStateMixin {
   late TabController tabController;
   RxInt currentTab = 0.obs;
   List<String> testDescriptions = <String>[
@@ -10,16 +11,26 @@ class TestDetailController extends GetxController
     'Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode SWAB/Polymerase Chain Reaction (PCR).'
   ];
 
+  late List<ProvinceTest> tests;
+  final StringBuffer buffer = StringBuffer();
+  late List<Tab> tabs;
+
   @override
   void onInit() {
     super.onInit();
+    tests = Get.arguments['tests'] as List<ProvinceTest>;
+    tabs = tests.map((test) {
+      final texts = test.name.split(' ');
+      final title = texts.map((e) => e.substring(0, 1)).toList();
+      buffer.writeAll(title);
+      final tabLabel = buffer.toString();
+      buffer.clear();
+      return Tab(
+        text: tabLabel,
+      );
+    }).toList();
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(onTabChanges);
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
   }
 
   void onTabChanges() {

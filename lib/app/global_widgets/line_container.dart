@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LineContainer extends StatelessWidget {
-  const LineContainer({Key? key, this.height = 8.0}) : super(key: key);
+  const LineContainer({super.key, this.height = 8.0});
 
   final double height;
 

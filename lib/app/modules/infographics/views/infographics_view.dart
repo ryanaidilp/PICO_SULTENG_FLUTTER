@@ -6,12 +6,13 @@ import 'package:pico_sulteng_flutter/app/data/models/infographic.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/error_placeholder_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/infographic_card.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/line_container.dart';
+import 'package:pico_sulteng_flutter/app/modules/infographics/controllers/infographics_controller.dart';
 import 'package:pico_sulteng_flutter/app/routes/app_pages.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
-import '../controllers/infographics_controller.dart';
-
 class InfographicsView extends GetView<InfographicsController> {
+  const InfographicsView({super.key});
+
   // final List<Infographic> infographics =
   //     Get.arguments['infographics'] as List<Infographic>;
 
@@ -67,10 +68,10 @@ class InfographicsView extends GetView<InfographicsController> {
                             onTap: () {
                               Get.toNamed(Routes.detailInfographic, arguments: {
                                 'infographic': infographic,
-                              });
+                              },);
                             },
                             child: InfographicCard(
-                                infographic: infographic! as Infographic),
+                                infographic: infographic! as Infographic,),
                           );
                         },
                         firstPageErrorIndicatorBuilder: (_) {
@@ -96,7 +97,7 @@ class InfographicsView extends GetView<InfographicsController> {
                           return SizedBox(
                             height: Get.height * 0.8,
                             child: const Center(
-                                child: SpinKitFadingCircle(color: Colors.blue)),
+                                child: SpinKitFadingCircle(color: Colors.blue),),
                           );
                         },
                         newPageProgressIndicatorBuilder: (_) {
