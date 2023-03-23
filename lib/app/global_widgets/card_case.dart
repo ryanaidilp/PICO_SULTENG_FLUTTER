@@ -3,7 +3,7 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 
 class CardCase extends StatelessWidget {
   const CardCase({
-    Key? key,
+    super.key,
     required this.bgColorIcon,
     required this.colorIcon,
     required this.icon,
@@ -11,7 +11,7 @@ class CardCase extends StatelessWidget {
     required this.total,
     required this.newCase,
     required this.label,
-  }) : super(key: key);
+  });
 
   final Color bgColorIcon;
   final Color colorIcon;

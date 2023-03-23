@@ -6,11 +6,12 @@ import 'package:pico_sulteng_flutter/app/global_widgets/card_case.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_confirmed.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/error_placeholder_widget.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/shimmer_widget.dart';
+import 'package:pico_sulteng_flutter/app/modules/national_detail/controllers/national_detail_controller.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
-import '../controllers/national_detail_controller.dart';
-
 class NationalDetailView extends GetView<NationalDetailController> {
+  const NationalDetailView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Obx(

@@ -1,60 +1,63 @@
 name: pico_sulteng_flutter
-version: 6.0.6+12
+version: 7.0.0+13
 publish_to: none
 description: Pusat Informasi Covid-19 Sulawesi Tengah
-environment: 
-  sdk: '>=2.12.0 <3.0.0'
+environment:
+  sdk: ">=2.18.2 <3.0.0"
 
-dependencies: 
-  cupertino_icons: ^1.0.2
-  flutter_config: 2.0.0
-  flutter_launcher_icons: 0.9.1
-  flutter_native_splash: 1.2.1
-  get: 4.3.6
-  google_fonts: 2.1.0
-  http: 0.13.3
-  intl: 0.17.0
-  lint: 1.5.3
-  onesignal_flutter: 3.2.0
-  shimmer: 2.0.0
-  url_launcher: 6.0.9
-  bubble_tab_indicator: 0.1.6
-  carousel_slider: 4.0.0
-  iconsax: 0.0.8
-  pull_to_refresh: 2.0.0
-  sleek_circular_slider: 2.0.1
-  flutter_animation_progress_bar: 2.0.1
-  lottie: 1.2.1
-  line_icons: 2.0.1
-  extended_image: 5.1.2
-  flutter_spinkit: 5.1.0
-  internet_connection_checker: 0.0.1+3
-  eva_icons_flutter: 3.0.2
-  flutter_inappwebview: 5.3.2
-  animate_icons: 2.0.0
-  infinite_scroll_pagination: 3.1.0
-  flutter_app_name: 0.1.1
-  flutter: 
+dependencies:
+  animate_icons: ^2.0.0
+  bubble_tab_indicator: ^0.1.6
+  carousel_slider: ^4.2.1
+  cupertino_icons: ^1.0.5
+  envied: ^0.3.0
+  eva_icons_flutter: ^3.1.0
+  extended_image: ^7.0.2
+  flutter:
+    sdk: flutter
+  flutter_animation_progress_bar: ^2.3.1
+  flutter_app_name: ^0.1.1
+  flutter_inappwebview: ^5.7.2+3
+  flutter_launcher_icons: ^0.11.0
+  flutter_native_splash: ^2.1.3+1
+  flutter_spinkit: ^5.1.0
+  get: ^4.6.5
+  google_fonts: ^4.0.3
+  http: ^0.13.5
+  iconsax: ^0.0.8
+  infinite_scroll_pagination: ^3.2.0
+  internet_connection_checker: ^1.0.0+1
+  intl: ^0.18.0
+  line_icons: ^2.0.1
+  lint: ^2.0.1
+  lottie: ^2.3.0
+  onesignal_flutter: ^3.5.1
+  pull_to_refresh: ^2.0.0
+  shimmer: ^2.0.0
+  sleek_circular_slider: ^2.0.1
+  url_launcher: ^6.1.10
+
+dev_dependencies:
+  build_runner: ^2.3.3
+  envied_generator: ^0.3.0
+  flutter_lints: ^2.0.1
+  flutter_test:
     sdk: flutter
 
-dev_dependencies: 
-  flutter_test: 
-    sdk: flutter
-
-flutter: 
-  assets: 
+flutter:
+  assets:
     - assets/images/
     - assets/icons/
     - assets/geojson/
     - assets/lottie/
   uses-material-design: true
 
-flutter_native_splash: 
+flutter_native_splash:
   image: assets/images/logo.png
   color: ffffff
   android_disable_fullscreen: true
 
-flutter_icons: 
+flutter_icons:
   image_path_ios: assets/images/logo.png
   image_path_android: assets/images/logo.png
   ios: true

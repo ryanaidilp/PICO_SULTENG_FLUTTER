@@ -5,11 +5,11 @@ import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class ErrorPlaceHolderWidget extends StatelessWidget {
   ErrorPlaceHolderWidget({
-    Key? key,
+    super.key,
     required this.label,
     this.child = const Placeholder(),
     required this.onRetry,
-  }) : super(key: key);
+  });
 
   final String label;
   Widget child;

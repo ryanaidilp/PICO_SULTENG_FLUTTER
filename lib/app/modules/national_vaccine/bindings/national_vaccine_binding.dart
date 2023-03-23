@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pico_sulteng_flutter/app/data/provider/api_provider.dart';
 
-import '../controllers/national_vaccine_controller.dart';
+import 'package:pico_sulteng_flutter/app/modules/national_vaccine/controllers/national_vaccine_controller.dart';
 
 class NationalVaccineBinding extends Bindings {
   @override

@@ -5,8 +5,7 @@ import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
 import 'package:pico_sulteng_flutter/generated/locales.g.dart';
 
 class TotalTestCard extends StatelessWidget {
-  const TotalTestCard({Key? key, required this.total, this.onPressed})
-      : super(key: key);
+  const TotalTestCard({super.key, required this.total, this.onPressed});
 
   final int total;
   final GestureTapCallback? onPressed;
