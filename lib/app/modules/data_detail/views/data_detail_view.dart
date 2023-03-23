@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pico_sulteng_flutter/app/core/utils/helper.dart';
-import 'package:pico_sulteng_flutter/app/data/models/province_test.dart';
-import 'package:pico_sulteng_flutter/app/data/models/statistic.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_case.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/card_confirmed.dart';
 import 'package:pico_sulteng_flutter/app/global_widgets/suspect_case_card.dart';
