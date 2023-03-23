@@ -82,6 +82,33 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                       textAlign: TextAlign.justify,
                     ),
                     const SizedBox(height: 6.0),
+                    ListTile(
+                      onTap: () {
+                        Get.toNamed(Routes.nationalVaccine.tr);
+                      },
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      tileColor: Colors.grey.shade50,
+                      leading: Text(
+                        LocaleKeys.vaccine_label_national.tr,
+                        style: const TextStyle(
+                          overflow: TextOverflow.ellipsis,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      trailing: IconButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.nationalVaccine.tr);
+                        },
+                        icon: Icon(
+                          Iconsax.arrow_right_14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 6.0),
                     const LineContainer(),
                     const SizedBox(height: 6.0),
                     Text(
@@ -92,8 +119,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                       ),
                     ),
                     const SizedBox(height: 6.0),
-                    LimitedBox(
-                      maxHeight: 120,
+                    Expanded(
                       child: CarouselSlider(
                         items: [
                           SizedBox(
@@ -154,6 +180,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                           autoPlay: true,
                           enableInfiniteScroll: false,
                           enlargeCenterPage: true,
+                          height: Get.height * 0.15,
                         ),
                       ),
                     ),
@@ -194,6 +221,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                         controller: controller.tabController,
                         children: [
                           Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               VaccineCard(
                                 title: LocaleKeys.vaccine_type_first.tr,
@@ -249,6 +277,7 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             ],
                           ),
                           Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
                               VaccineCard(
                                 title: LocaleKeys.vaccine_type_second.tr,
@@ -305,32 +334,6 @@ class VaccineDetailView extends GetView<VaccineDetailController> {
                             ],
                           ),
                         ],
-                      ),
-                    ),
-                    ListTile(
-                      onTap: () {
-                        Get.toNamed(Routes.nationalVaccine.tr);
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      tileColor: Colors.grey.shade50,
-                      leading: Text(
-                        LocaleKeys.vaccine_label_national.tr,
-                        style: const TextStyle(
-                          overflow: TextOverflow.ellipsis,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      trailing: IconButton(
-                        onPressed: () {
-                          Get.toNamed(Routes.nationalVaccine.tr);
-                        },
-                        icon: Icon(
-                          Iconsax.arrow_right_14,
-                          color: Colors.grey.shade600,
-                        ),
                       ),
                     ),
                     const SizedBox(height: 16.0),
