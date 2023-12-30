@@ -1,5 +1,6 @@
 part of 'pico_color_data.dart';
 
+@immutable
 class PicoSemanticColor with PicoMaterialColor {
   const PicoSemanticColor({
     required this.info,
@@ -38,4 +39,20 @@ class PicoSemanticColor with PicoMaterialColor {
         error: lerpMaterialColor(error, errorVariant, t),
         warning: lerpMaterialColor(warning, warningVariant, t),
       );
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is PicoSemanticColor &&
+        other.success == success &&
+        other.info == info &&
+        other.error == error &&
+        other.warning == warning;
+  }
+
+  @override
+  int get hashCode {
+    return success.hashCode ^ info.hashCode ^ error.hashCode ^ warning.hashCode;
+  }
 }
