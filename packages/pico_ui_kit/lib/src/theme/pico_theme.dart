@@ -25,6 +25,7 @@ class PicoTheme {
             color: PicoColors.bgMain,
             foregroundColor: PicoColors.textMain,
             elevation: 0,
+            scrolledUnderElevation: 0,
             centerTitle: false,
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
@@ -50,6 +51,7 @@ class PicoTheme {
             color: PicoColors.bgMainDark,
             foregroundColor: PicoColors.textMainDark,
             elevation: 0,
+            scrolledUnderElevation: 0,
             centerTitle: false,
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarColor: Colors.transparent,
