@@ -19,6 +19,8 @@ dependencies:
     sdk: flutter
   home:
     path: ../features/home
+  i10n:
+    path: ../shared/i10n
   logger: ^2.0.2+1
 
 dev_dependencies:
