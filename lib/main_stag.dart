@@ -7,7 +7,6 @@ import 'package:pico_sulteng_flutter/bootstrap.dart';
 void main() {
   bootstrap(
     () async {
-
       await Future.wait(
         [
           configureDependencies(),
