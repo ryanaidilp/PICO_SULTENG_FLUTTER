@@ -33,6 +33,9 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           error: PicoColors.error,
           success: PicoColors.success,
           warning: PicoColors.warning,
+          primary: PicoColors.primary,
+          secondary: PicoColors.secondary,
+          tertiary: PicoColors.tertiary,
         ),
         vaccine: PicoVaccineColor(
           public: PicoColors.vaccinePublic,
@@ -66,6 +69,9 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           error: PicoColors.error,
           success: PicoColors.success,
           warning: PicoColors.warning,
+          primary: PicoColors.primary,
+          secondary: PicoColors.secondary,
+          tertiary: PicoColors.tertiary,
         ),
         vaccine: PicoVaccineColor(
           public: PicoColors.vaccinePublicDark,
@@ -156,6 +162,9 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
         infoVariant: other.semantic.info,
         errorVariant: other.semantic.error,
         warningVariant: other.semantic.warning,
+        primaryVariant: other.semantic.primary,
+        secondaryVariant: other.semantic.secondary,
+        tertiaryVariant: other.semantic.tertiary,
       ),
       vaccine: vaccine.lerp(
         t: t,

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -94,7 +95,7 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
                                   ),
                                   8.verticalSpace,
                                   Text(
-                                    'Tap to retry',
+                                    context.i10n.buttons.try_again,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodySmall
@@ -134,7 +135,7 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
               activeIndex: activePage,
               onDotClicked: (index) => _carouselController.animateToPage(index),
               effect: ExpandingDotsEffect(
-                activeDotColor: context.picoColors.vaccine.elderly,
+                activeDotColor: context.picoColors.semantic.primary,
                 dotColor: context.picoColors.background.strong,
                 dotWidth: 8.w,
                 dotHeight: 8.h,
