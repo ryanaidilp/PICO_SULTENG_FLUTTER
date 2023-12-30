@@ -66,8 +66,8 @@ class PicoCaseCard extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: EdgeInsets.all(4.r),
-                      child: Icon(
-                        _type.data(context).iconData,
+                      child: PicoAsset.icon(
+                        icon: _type.data(context).iconData,
                         color: _type.data(context).iconColor,
                         size: 12.sp,
                       ),
@@ -81,7 +81,6 @@ class PicoCaseCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: PicoTextStyle.bodySm(
                         fontWeight: FontWeight.w600,
-                        color: context.picoColors.text.main,
                       ),
                     ),
                   ),
@@ -91,16 +90,14 @@ class PicoCaseCard extends StatelessWidget {
             16.verticalSpace,
             Text(
               NumberHelper.numberFormat(total),
-              style: PicoTextStyle.labelLg(
-                color: context.picoColors.text.main,
-              ),
+              style: PicoTextStyle.labelLg(),
             ),
             20.verticalSpace,
             Text(
               StringHelper.formatNewCase(newCase),
               style: PicoTextStyle.bodyXs(
                 fontWeight: FontWeight.w700,
-                color: context.picoColors.text.subtle,
+                color: context.picoColors.text.neutral.subtle,
               ),
             ),
             8.verticalSpace,

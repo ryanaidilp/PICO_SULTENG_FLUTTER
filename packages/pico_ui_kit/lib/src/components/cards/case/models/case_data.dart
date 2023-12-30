@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pico_ui_kit/pico_ui_kit.dart';
 
 @immutable
 class CaseData {
@@ -10,6 +11,6 @@ class CaseData {
   });
   final Color iconColor;
   final Color bgColor;
-  final IconData iconData;
+  final PicoIcons iconData;
   final String label;
 }

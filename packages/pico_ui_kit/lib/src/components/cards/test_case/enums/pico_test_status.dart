@@ -11,7 +11,7 @@ enum PicoTestStatus {
 
   Color textColor(BuildContext context) => switch (this) {
         invalid => PicoColors.error.shade400,
-        _ => context.picoColors.text.main,
+        _ => context.picoColors.text.neutral.main,
       };
 
   String label(BuildContext context) => switch (this) {

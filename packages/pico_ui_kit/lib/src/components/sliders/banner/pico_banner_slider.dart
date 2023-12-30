@@ -100,7 +100,7 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
                                         .textTheme
                                         .bodySmall
                                         ?.copyWith(
-                                          color: context.picoColors.text.strong,
+                                          color: context.picoColors.text.neutral.strong,
                                         ),
                                   ),
                                 ],
@@ -135,7 +135,7 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
               activeIndex: activePage,
               onDotClicked: (index) => _carouselController.animateToPage(index),
               effect: ExpandingDotsEffect(
-                activeDotColor: context.picoColors.semantic.primary,
+                activeDotColor: context.picoColors.icon.semantic.primary,
                 dotColor: context.picoColors.background.strong,
                 dotWidth: 8.w,
                 dotHeight: 8.h,

@@ -10,21 +10,24 @@ enum PicoCaseType {
 
   CaseData data(BuildContext context) => switch (this) {
         treatment => CaseData(
-            iconColor: context.picoColors.semantic.warning,
-            bgColor: context.picoColors.semantic.warning.shade100,
-            iconData: Icons.local_hospital_rounded,
+            iconColor: context.picoColors.icon.semantic.warning,
+            bgColor:
+                context.picoColors.semantic.warning.shade100.withOpacity(0.4),
+            iconData: PicoIcons.hospital,
             label: context.i10n.card_case_label.under_treatment,
           ),
         cured => CaseData(
-            iconColor: context.picoColors.semantic.success,
-            bgColor: context.picoColors.semantic.success.shade100,
-            iconData: Icons.check_rounded,
+            iconColor: context.picoColors.icon.semantic.success,
+            bgColor:
+                context.picoColors.semantic.success.shade100.withOpacity(0.4),
+            iconData: PicoIcons.check,
             label: context.i10n.card_case_label.recovered,
           ),
         death => CaseData(
-            iconColor: context.picoColors.semantic.error,
-            bgColor: context.picoColors.semantic.error.shade100,
-            iconData: Icons.close_rounded,
+            iconColor: context.picoColors.icon.semantic.error,
+            bgColor:
+                context.picoColors.semantic.error.shade100.withOpacity(0.4),
+            iconData: PicoIcons.close,
             label: context.i10n.card_case_label.deceased,
           ),
       };
