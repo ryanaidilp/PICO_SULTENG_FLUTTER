@@ -23,7 +23,8 @@ class PicoTotalConfirmedCase extends StatelessWidget {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: context.picoColors.semantic.info.shade100,
+                  color: context.picoColors.semantic.info.shade200
+                      .withOpacity(0.3),
                   blurRadius: 10.r,
                   spreadRadius: 5.r,
                   offset: Offset.fromDirection(-30, 5),
@@ -32,8 +33,8 @@ class PicoTotalConfirmedCase extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
               gradient: LinearGradient(
                 colors: [
-                  Colors.blueAccent,
-                  context.picoColors.semantic.info.shade200,
+                  context.picoColors.semantic.info,
+                  context.picoColors.semantic.info.shade100.withOpacity(0.5),
                 ],
               ),
             ),

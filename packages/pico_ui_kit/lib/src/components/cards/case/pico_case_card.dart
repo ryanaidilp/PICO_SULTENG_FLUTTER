@@ -81,6 +81,7 @@ class PicoCaseCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: PicoTextStyle.bodySm(
                         fontWeight: FontWeight.w600,
+                        color: context.picoColors.text.main,
                       ),
                     ),
                   ),
@@ -90,7 +91,9 @@ class PicoCaseCard extends StatelessWidget {
             16.verticalSpace,
             Text(
               NumberHelper.numberFormat(total),
-              style: PicoTextStyle.labelLg(),
+              style: PicoTextStyle.labelLg(
+                color: context.picoColors.text.main,
+              ),
             ),
             20.verticalSpace,
             Text(
