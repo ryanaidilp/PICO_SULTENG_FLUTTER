@@ -1,0 +1,36 @@
+{
+    "success": true,
+    "errors": [],
+    "data": [
+        {
+            "id": 1,
+            "title": "Panduan Isolasi Mandiri",
+            "url_type": "https://www.instagram.com/p/",
+            "url": "CR5q6ObHWJP",
+            "image": "https://banuacoders.com/corona/assets/banners/July2021/yjQD3jF6u7NWfKiq0lvS.png",
+            "status": 1,
+            "created_at": "2021-07-28T01:58:00.000000Z",
+            "updated_at": "2021-07-30T16:39:02.000000Z"
+        },
+        {
+            "id": 2,
+            "title": "Grup Relawan COVID-19 Kecamatan dari Pemerintah Kota Palu",
+            "url_type": "https://",
+            "url": "linktr.ee/palukota",
+            "image": "https://banuacoders.com/corona/assets/banners/July2021/gx8s3YxwR7Jb1RiPfWmJ.png",
+            "status": 1,
+            "created_at": "2021-07-30T16:24:00.000000Z",
+            "updated_at": "2021-07-30T16:28:47.000000Z"
+        },
+        {
+            "id": 8,
+            "title": "Ayo Ikuti Survei Vaksinasi COVID-19",
+            "url_type": "https://",
+            "url": "forms.gle/JvJtu5ZYATx7p9eZ7",
+            "image": "https://banuacoders.com/corona/assets/banners/October2021/BKxXPuJeW96bctsOwoRE.png",
+            "status": 1,
+            "created_at": "2021-10-18T10:26:16.000000Z",
+            "updated_at": "2021-10-18T10:26:16.000000Z"
+        }
+    ]
+}
