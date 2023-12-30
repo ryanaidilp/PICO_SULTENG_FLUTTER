@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:i10n/i10n.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -22,6 +23,7 @@ class AppBlocObserver extends BlocObserver {
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   WidgetsFlutterBinding.ensureInitialized();
+  LocaleSettings.useDeviceLocale();
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };

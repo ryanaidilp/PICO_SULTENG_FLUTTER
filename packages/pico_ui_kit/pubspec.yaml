@@ -9,12 +9,15 @@ environment:
 
 dependencies:
   carousel_slider: ^4.2.1
+  core:
+    path: ../../core
   extended_image: ^8.2.0
   flutter:
     sdk: flutter
   flutter_animation_progress_bar: ^2.3.1
   flutter_screenutil: ^5.9.0
   flutter_spinkit: ^5.2.0
+  flutter_staggered_grid_view: ^0.7.0
   flutter_svg: ^2.0.9
   google_fonts: ^6.1.0
   i10n:

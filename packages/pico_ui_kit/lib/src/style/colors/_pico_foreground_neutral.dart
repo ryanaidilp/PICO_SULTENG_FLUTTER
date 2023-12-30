@@ -1,7 +1,7 @@
 part of 'pico_color_data.dart';
 
-class PicoForegroundNeutral extends PicoNeutralColor {
-  const PicoForegroundNeutral({
+class PicoForegroundNeutralColor extends PicoNeutralColor {
+  const PicoForegroundNeutralColor({
     required super.main,
     required super.subtle,
     required super.strong,
@@ -16,7 +16,7 @@ class PicoForegroundNeutral extends PicoNeutralColor {
   final Color disabled;
   final Color inverse;
 
-  PicoForegroundNeutral lerp({
+  PicoForegroundNeutralColor lerp({
     required double t,
     required Color mainVariant,
     required Color subtleVariant,
@@ -26,7 +26,7 @@ class PicoForegroundNeutral extends PicoNeutralColor {
     required Color onImageStrongVariant,
     required Color onImageSubtleVariant,
   }) =>
-      PicoForegroundNeutral(
+      PicoForegroundNeutralColor(
         main: Color.lerp(main, mainVariant, t) ?? main,
         subtle: Color.lerp(subtle, subtleVariant, t) ?? subtle,
         strong: Color.lerp(strong, strongVariant, t) ?? strong,
@@ -38,7 +38,7 @@ class PicoForegroundNeutral extends PicoNeutralColor {
             Color.lerp(onImageSubtle, onImageSubtleVariant, t) ?? onImageSubtle,
       );
 
-  PicoForegroundNeutral copyWith({
+  PicoForegroundNeutralColor copyWith({
     Color? main,
     Color? subtle,
     Color? strong,
@@ -47,7 +47,7 @@ class PicoForegroundNeutral extends PicoNeutralColor {
     Color? disabled,
     Color? inverse,
   }) {
-    return PicoForegroundNeutral(
+    return PicoForegroundNeutralColor(
       main: main ?? this.main,
       strong: strong ?? this.strong,
       subtle: subtle ?? this.subtle,
@@ -57,17 +57,4 @@ class PicoForegroundNeutral extends PicoNeutralColor {
       inverse: inverse ?? this.inverse,
     );
   }
-}
-
-@immutable
-class PicoTextNeutral extends PicoForegroundNeutral {
-  const PicoTextNeutral({
-    required super.main,
-    required super.subtle,
-    required super.strong,
-    required super.disabled,
-    required super.inverse,
-    required super.onImageStrong,
-    required super.onImageSubtle,
-  });
 }

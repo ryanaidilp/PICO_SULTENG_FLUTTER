@@ -7,23 +7,35 @@ class PicoSemanticColor with PicoMaterialColor {
     required this.error,
     required this.success,
     required this.warning,
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
   });
   final MaterialColor success;
   final MaterialColor info;
   final MaterialColor error;
   final MaterialColor warning;
+  final MaterialColor primary;
+  final MaterialColor secondary;
+  final MaterialColor tertiary;
 
   PicoSemanticColor copyWith({
     MaterialColor? success,
     MaterialColor? info,
     MaterialColor? error,
     MaterialColor? warning,
+    MaterialColor? primary,
+    MaterialColor? secondary,
+    MaterialColor? tertiary,
   }) =>
       PicoSemanticColor(
         success: success ?? this.success,
         info: info ?? this.info,
         error: error ?? this.error,
         warning: warning ?? this.warning,
+        primary: primary ?? this.primary,
+        secondary: secondary ?? this.secondary,
+        tertiary: tertiary ?? this.tertiary,
       );
 
   PicoSemanticColor lerp({
@@ -32,12 +44,18 @@ class PicoSemanticColor with PicoMaterialColor {
     required MaterialColor infoVariant,
     required MaterialColor errorVariant,
     required MaterialColor warningVariant,
+    required MaterialColor primaryVariant,
+    required MaterialColor secondaryVariant,
+    required MaterialColor tertiaryVariant,
   }) =>
       PicoSemanticColor(
         success: lerpMaterialColor(success, successVariant, t),
         info: lerpMaterialColor(info, infoVariant, t),
         error: lerpMaterialColor(error, errorVariant, t),
         warning: lerpMaterialColor(warning, warningVariant, t),
+        primary: lerpMaterialColor(primary, primaryVariant, t),
+        secondary: lerpMaterialColor(secondary, secondaryVariant, t),
+        tertiary: lerpMaterialColor(tertiary, tertiaryVariant, t),
       );
 
   @override
@@ -48,11 +66,20 @@ class PicoSemanticColor with PicoMaterialColor {
         other.success == success &&
         other.info == info &&
         other.error == error &&
-        other.warning == warning;
+        other.warning == warning &&
+        other.primary == primary &&
+        other.secondary == secondary &&
+        other.tertiary == tertiary;
   }
 
   @override
   int get hashCode {
-    return success.hashCode ^ info.hashCode ^ error.hashCode ^ warning.hashCode;
+    return success.hashCode ^
+        info.hashCode ^
+        error.hashCode ^
+        warning.hashCode ^
+        primary.hashCode ^
+        secondary.hashCode ^
+        tertiary.hashCode;
   }
 }

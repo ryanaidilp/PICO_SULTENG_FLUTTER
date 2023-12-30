@@ -21,6 +21,53 @@ class PicoColors {
     },
   );
 
+  static const MaterialColor tertiary = MaterialColor(
+    0xFF72dfc9,
+    {
+      50: Color(0xFFf1fcf9),
+      100: Color(0xFFd0f7ed),
+      200: Color(0xFFa1eedc),
+      300: Color(0xFF72dfc9),
+      400: Color(0xFF3cc5ae),
+      500: Color(0xFF23a994),
+      600: Color(0xFF198879),
+      700: Color(0xFF186d62),
+      800: Color(0xFF185750),
+      900: Color(0xFF184943),
+    },
+  );
+
+  static const MaterialColor secondary = MaterialColor(
+    0xFF8f7de8,
+    {
+      50: Color(0xFFf5f4fe),
+      100: Color(0xFFecebfc),
+      200: Color(0xFFdcdafa),
+      300: Color(0xFFc1bdf5),
+      400: Color(0xFFa197ee),
+      500: Color(0xFF8f7de8),
+      600: Color(0xFF6e4ed9),
+      700: Color(0xFF5e3bc6),
+      800: Color(0xFF4f31a6),
+      900: Color(0xFF422a88),
+    },
+  );
+  static const MaterialColor primary = MaterialColor(
+    0xFF0b92d5,
+    {
+      50: Color(0xFFf1f9fe),
+      100: Color(0xFFe1f2fd),
+      200: Color(0xFFbde6fa),
+      300: Color(0xFF82d2f7),
+      400: Color(0xFF40bbf0),
+      500: Color(0xFF17a4e0),
+      600: Color(0xFF09689b),
+      700: Color(0xFF09689b),
+      800: Color(0xFF0c5880),
+      900: Color(0xFF104a6a),
+    },
+  );
+
   static const MaterialColor error = MaterialColor(
     0xFFF04438,
     {

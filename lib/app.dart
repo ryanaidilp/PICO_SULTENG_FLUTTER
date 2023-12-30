@@ -13,9 +13,9 @@ class App extends StatelessWidget {
         builder: (_) => MaterialApp.router(
           title: 'PICO SulTeng',
           routerConfig: PicoRouter().config(),
-          theme: PicoTheme.light(Theme.of(context)).themeData,
-          darkTheme: PicoTheme.dark(Theme.of(context)).themeData,
-          locale: TranslationProvider.of(context).flutterLocale,
+          theme: PicoTheme.light(ThemeData.light()).themeData,
+          darkTheme: PicoTheme.dark(ThemeData.dark()).themeData,
+          locale: LocaleSettings.currentLocale.flutterLocale,
           supportedLocales: AppLocaleUtils.supportedLocales,
           localizationsDelegates: GlobalMaterialLocalizations.delegates,
         ),
