@@ -13,9 +13,13 @@ command:
 scripts:
   generate-env:
     run: melos exec --depends-on="envied_generator" -- "dart run build_runner build -d"
+    description: "Run build_runner in all of the packages that depends on it."
   generate-locale:
     run: melos exec --depends-on="slang" -- "dart run slang"
     description: "Generate translation from arb."
+  generate-assets:
+    run: melos exec --scope="*pico_ui_kit*" -- "fluttergen"
+    description: "Generate asset for UI Kit Package"
   build:
     run: melos exec --depends-on="build_runner" -- "dart run build_runner build -d"
     description: "Run build runner in all packages that depend on it."
