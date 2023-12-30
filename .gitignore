@@ -5,11 +5,11 @@
 *.swp
 .DS_Store
 .fvm
-.env
 .atom/
 .buildlog/
 .history
 .svn/
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -46,3 +46,11 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Melos related
+pubspec_overrides.yaml
+
+# Generated File
+*.g.dart
+*.gr.dart
+*.config.dart
