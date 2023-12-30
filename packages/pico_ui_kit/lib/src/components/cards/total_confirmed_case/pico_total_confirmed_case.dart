@@ -46,7 +46,7 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                 Skeleton.keep(
                   child: Text(
                     context.i10n.card_case_label.confirmed,
-                    style: PicoTextStyle.labelLg(
+                    style: PicoTextStyle.labelSm(
                       color: Colors.white,
                     ),
                   ),
@@ -72,6 +72,7 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                     ),
                   ],
                 ),
+                8.verticalSpace,
               ],
             ),
           ),

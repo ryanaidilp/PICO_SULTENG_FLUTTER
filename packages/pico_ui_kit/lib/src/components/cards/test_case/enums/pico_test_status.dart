@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:pico_ui_kit/src/style/styles.dart';
 
 enum PicoTestStatus {
   reactive,
@@ -10,7 +9,7 @@ enum PicoTestStatus {
   onProcess;
 
   Color textColor(BuildContext context) => switch (this) {
-        invalid => PicoColors.error.shade400,
+        invalid => context.picoColors.text.semantic.error,
         _ => context.picoColors.text.neutral.main,
       };
 

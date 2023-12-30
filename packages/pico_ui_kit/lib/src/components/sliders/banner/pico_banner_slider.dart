@@ -100,7 +100,8 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
                                         .textTheme
                                         .bodySmall
                                         ?.copyWith(
-                                          color: context.picoColors.text.neutral.strong,
+                                          color: context
+                                              .picoColors.text.neutral.strong,
                                         ),
                                   ),
                                 ],
