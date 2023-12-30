@@ -7,26 +7,58 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
   const PicoColorTheme._({
     required this.background,
     required this.text,
+    required this.icon,
     required this.semantic,
     required this.vaccine,
   });
 
   factory PicoColorTheme.light() => PicoColorTheme._(
-        background: PicoBackgroundNeutral(
+        background: PicoBackgroundNeutralColor(
           main: PicoColors.bgMain,
           subtle: PicoColors.bgSubtle,
           strong: PicoColors.bgStrong,
           white: PicoColors.bgWhite,
           inverse: PicoColors.bgInverse,
         ),
-        text: PicoTextNeutral(
-          main: PicoColors.textMain,
-          subtle: PicoColors.textSubtle,
-          strong: PicoColors.textStrong,
-          disabled: PicoColors.textDisabled,
-          inverse: PicoColors.textInverse,
-          onImageStrong: PicoColors.textOnImageStrong,
-          onImageSubtle: PicoColors.textOnImageSubtle,
+        text: PicoTextColor(
+          neutral: PicoForegroundNeutralColor(
+            main: PicoColors.textMain,
+            subtle: PicoColors.textSubtle,
+            strong: PicoColors.textStrong,
+            disabled: PicoColors.textDisabled,
+            inverse: PicoColors.textInverse,
+            onImageStrong: PicoColors.textOnImageStrong,
+            onImageSubtle: PicoColors.textOnImageSubtle,
+          ),
+          semantic: PicoForegroundSemanticColor(
+            info: PicoColors.info.shade500,
+            error: PicoColors.error.shade500,
+            success: PicoColors.success.shade500,
+            warning: PicoColors.warning.shade500,
+            primary: PicoColors.primary.shade500,
+            secondary: PicoColors.secondary.shade600,
+            tertiary: PicoColors.tertiary.shade500,
+          ),
+        ),
+        icon: PicoIconColor(
+          neutral: PicoForegroundNeutralColor(
+            main: PicoColors.textMain,
+            subtle: PicoColors.textSubtle,
+            strong: PicoColors.textStrong,
+            disabled: PicoColors.textDisabled,
+            inverse: PicoColors.textInverse,
+            onImageStrong: PicoColors.textOnImageStrong,
+            onImageSubtle: PicoColors.textOnImageSubtle,
+          ),
+          semantic: PicoForegroundSemanticColor(
+            info: PicoColors.info.shade500,
+            error: PicoColors.error.shade500,
+            success: PicoColors.success.shade500,
+            warning: PicoColors.warning.shade500,
+            primary: PicoColors.primary.shade500,
+            secondary: PicoColors.secondary.shade600,
+            tertiary: PicoColors.tertiary.shade500,
+          ),
         ),
         semantic: const PicoSemanticColor(
           info: PicoColors.info,
@@ -48,21 +80,52 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
       );
 
   factory PicoColorTheme.dark() => PicoColorTheme._(
-        background: PicoBackgroundNeutral(
+        background: PicoBackgroundNeutralColor(
           main: PicoColors.bgMainDark,
           subtle: PicoColors.bgSubtleDark,
           strong: PicoColors.bgStrongDark,
           white: PicoColors.bgWhiteDark,
           inverse: PicoColors.bgInverseDark,
         ),
-        text: PicoTextNeutral(
-          main: PicoColors.textMainDark,
-          subtle: PicoColors.textSubtleDark,
-          strong: PicoColors.textStrongDark,
-          disabled: PicoColors.textDisabledDark,
-          inverse: PicoColors.textInverseDark,
-          onImageStrong: PicoColors.textOnImageStrongDark,
-          onImageSubtle: PicoColors.textOnImageSubtleDark,
+        text: PicoTextColor(
+          neutral: PicoForegroundNeutralColor(
+            main: PicoColors.textMainDark,
+            subtle: PicoColors.textSubtleDark,
+            strong: PicoColors.textStrongDark,
+            disabled: PicoColors.textDisabledDark,
+            inverse: PicoColors.textInverseDark,
+            onImageStrong: PicoColors.textOnImageStrongDark,
+            onImageSubtle: PicoColors.textOnImageSubtleDark,
+          ),
+          semantic: PicoForegroundSemanticColor(
+            info: PicoColors.info.shade300,
+            error: PicoColors.error.shade400,
+            success: PicoColors.success.shade400,
+            warning: PicoColors.warning.shade300,
+            primary: PicoColors.primary.shade400,
+            secondary: PicoColors.secondary.shade400,
+            tertiary: PicoColors.tertiary.shade400,
+          ),
+        ),
+        icon: PicoIconColor(
+          neutral: PicoForegroundNeutralColor(
+            main: PicoColors.textMainDark,
+            subtle: PicoColors.textSubtleDark,
+            strong: PicoColors.textStrongDark,
+            disabled: PicoColors.textDisabledDark,
+            inverse: PicoColors.textInverseDark,
+            onImageStrong: PicoColors.textOnImageStrongDark,
+            onImageSubtle: PicoColors.textOnImageSubtleDark,
+          ),
+          semantic: PicoForegroundSemanticColor(
+            info: PicoColors.info.shade300,
+            error: PicoColors.error.shade400,
+            success: PicoColors.success.shade400,
+            warning: PicoColors.warning.shade300,
+            primary: PicoColors.primary.shade400,
+            secondary: PicoColors.secondary.shade400,
+            tertiary: PicoColors.tertiary.shade400,
+          ),
         ),
         semantic: const PicoSemanticColor(
           info: PicoColors.info,
@@ -83,15 +146,17 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
         ),
       );
 
-  final PicoBackgroundNeutral background;
-  final PicoForegroundNeutral text;
+  final PicoBackgroundNeutralColor background;
+  final PicoTextColor text;
+  final PicoIconColor icon;
   final PicoSemanticColor semantic;
   final PicoVaccineColor vaccine;
 
   @override
   ThemeExtension<PicoColorTheme> copyWith({
-    PicoBackgroundNeutral? backgroundVariant,
-    PicoTextNeutral? foregroundVariant,
+    PicoBackgroundNeutralColor? backgroundVariant,
+    PicoTextColor? textVariant,
+    PicoIconColor? iconVariant,
     PicoSemanticColor? semanticVariant,
     PicoVaccineColor? vaccineVariant,
   }) =>
@@ -104,13 +169,12 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           white: backgroundVariant?.white,
         ),
         text: text.copyWith(
-          main: foregroundVariant?.main,
-          subtle: foregroundVariant?.subtle,
-          strong: foregroundVariant?.strong,
-          inverse: foregroundVariant?.inverse,
-          disabled: foregroundVariant?.disabled,
-          onImageStrong: foregroundVariant?.onImageStrong,
-          onImageSubtle: foregroundVariant?.onImageSubtle,
+          neutral: textVariant?.neutral,
+          semantic: textVariant?.semantic,
+        ),
+        icon: icon.copyWith(
+          neutral: iconVariant?.neutral,
+          semantic: iconVariant?.semantic,
         ),
         semantic: semantic.copyWith(
           info: semanticVariant?.info,
@@ -148,13 +212,13 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
       ),
       text: text.lerp(
         t: t,
-        mainVariant: other.text.main,
-        subtleVariant: other.text.subtle,
-        strongVariant: other.text.strong,
-        disabledVariant: other.text.disabled,
-        inverseVariant: other.text.inverse,
-        onImageStrongVariant: other.text.onImageStrong,
-        onImageSubtleVariant: other.text.onImageSubtle,
+        neutral: other.text.neutral,
+        semantic: other.text.semantic,
+      ),
+      icon: icon.lerp(
+        t: t,
+        neutral: other.icon.neutral,
+        semantic: other.icon.semantic,
       ),
       semantic: semantic.lerp(
         t: t,
