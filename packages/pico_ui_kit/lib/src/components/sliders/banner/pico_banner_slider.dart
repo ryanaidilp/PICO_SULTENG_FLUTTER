@@ -130,11 +130,11 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
           16.verticalSpace,
           ValueListenableBuilder(
             valueListenable: _activePageNotifier,
-            builder: (context, activePage, child) => AnimatedSmoothIndicator(
+            builder: (_, activePage, child) => AnimatedSmoothIndicator(
               activeIndex: activePage,
               onDotClicked: (index) => _carouselController.animateToPage(index),
               effect: ExpandingDotsEffect(
-                activeDotColor: Colors.blueAccent,
+                activeDotColor: context.picoColors.vaccine.elderly,
                 dotColor: context.picoColors.background.strong,
                 dotWidth: 8.w,
                 dotHeight: 8.h,
