@@ -15,8 +15,6 @@ abstract class BannerModel with _$BannerModel {
   }) = _BannerModel;
   factory BannerModel.fromJson(Map<String, dynamic> json) =>
       _$BannerModelFromJson(json);
-
-  
 }
 
 extension BannerModelX on BannerModel {

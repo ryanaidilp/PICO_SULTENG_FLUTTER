@@ -105,6 +105,12 @@ class PicoColors {
   static final vaccineAll = Colors.green.shade700;
   static const vaccinePublicWorker = Colors.purple;
   static final vaccineHealthWorker = Colors.orange.shade700;
+  static final vaccinePublicDark = Colors.pink.shade200;
+  static final vaccineElderlyDark = Colors.blueAccent.shade200;
+  static final vaccineTeenagerDark = Colors.pinkAccent.shade100;
+  static final vaccineAllDark = Colors.green.shade400;
+  static final vaccinePublicWorkerDark = Colors.purple.shade200;
+  static final vaccineHealthWorkerDark = Colors.orange.shade300;
   static final Color textStrong = gray.shade900;
   static final Color textMain = gray.shade700;
   static final Color textSubtle = gray.shade500;

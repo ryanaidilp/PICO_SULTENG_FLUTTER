@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/style/colors/pico_color_data.dart';
 import 'package:pico_ui_kit/src/style/pico_colors.dart';
 
+@immutable
 class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
-  PicoColorTheme._({
+  const PicoColorTheme._({
     required this.background,
     required this.text,
     required this.semantic,
+    required this.vaccine,
   });
 
   factory PicoColorTheme.light() => PicoColorTheme._(
@@ -31,6 +33,14 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           error: PicoColors.error,
           success: PicoColors.success,
           warning: PicoColors.warning,
+        ),
+        vaccine: PicoVaccineColor(
+          public: PicoColors.vaccinePublic,
+          elderly: PicoColors.vaccineElderly,
+          teenager: PicoColors.vaccineTeenager,
+          main: PicoColors.vaccineAll,
+          healthWorker: PicoColors.vaccineHealthWorker,
+          publicWorker: PicoColors.vaccinePublicWorker,
         ),
       );
 
@@ -57,17 +67,27 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           success: PicoColors.success,
           warning: PicoColors.warning,
         ),
+        vaccine: PicoVaccineColor(
+          public: PicoColors.vaccinePublicDark,
+          elderly: PicoColors.vaccineElderlyDark,
+          teenager: PicoColors.vaccineTeenagerDark,
+          main: PicoColors.vaccineAllDark,
+          healthWorker: PicoColors.vaccineHealthWorkerDark,
+          publicWorker: PicoColors.vaccinePublicWorkerDark,
+        ),
       );
 
   final PicoBackgroundNeutral background;
   final PicoForegroundNeutral text;
   final PicoSemanticColor semantic;
+  final PicoVaccineColor vaccine;
 
   @override
   ThemeExtension<PicoColorTheme> copyWith({
     PicoBackgroundNeutral? backgroundVariant,
     PicoTextNeutral? foregroundVariant,
     PicoSemanticColor? semanticVariant,
+    PicoVaccineColor? vaccineVariant,
   }) =>
       PicoColorTheme._(
         background: background.copyWith(
@@ -91,6 +111,14 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           error: semanticVariant?.error,
           success: semanticVariant?.success,
           warning: semanticVariant?.warning,
+        ),
+        vaccine: vaccine.copyWith(
+          main: vaccineVariant?.main,
+          public: vaccineVariant?.public,
+          elderly: vaccineVariant?.elderly,
+          teenager: vaccineVariant?.teenager,
+          healthWorker: vaccineVariant?.healthWorker,
+          publicWorker: vaccineVariant?.publicWorker,
         ),
       );
 
@@ -128,6 +156,15 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
         infoVariant: other.semantic.info,
         errorVariant: other.semantic.error,
         warningVariant: other.semantic.warning,
+      ),
+      vaccine: vaccine.lerp(
+        t: t,
+        mainVariant: other.vaccine.main,
+        publicVariant: other.vaccine.public,
+        elderlyVariant: other.vaccine.elderly,
+        teenagerVariant: other.vaccine.teenager,
+        healthWorkerVariant: other.vaccine.healthWorker,
+        publicWorkerVariant: other.vaccine.publicWorker,
       ),
     );
   }

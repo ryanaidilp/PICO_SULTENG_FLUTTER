@@ -59,6 +59,7 @@ class PicoForegroundNeutral extends PicoNeutralColor {
   }
 }
 
+@immutable
 class PicoTextNeutral extends PicoForegroundNeutral {
   const PicoTextNeutral({
     required super.main,

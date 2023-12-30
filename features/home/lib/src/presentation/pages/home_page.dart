@@ -1,5 +1,7 @@
+import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:home/src/domain/entities/banner.dart' as entity;
 import 'package:home/src/presentation/blocs/banner/banner_bloc.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
@@ -12,6 +14,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: PicoAsset.images(
+          image: PicoImages.pico,
+        ),
         title: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,48 +35,39 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(
-              EvaIcons.menu,
-              size: 24.sp,
-              color: context.picoColors.text.main,
+            icon: PicoAsset.icon(
+              icon: PicoIcons.menu,
+              size: 14.sp,
+              color: context.picoColors.text.strong,
             ),
           ),
         ],
       ),
-      body: BlocBuilder<BannerBloc, BannerState>(
-        builder: (_, state) {
-          if (state is BannerLoadingState) {
-            return Center(
-              child: SpinKitFadingCircle(
-                color: Colors.blueAccent,
-                size: 20.sp,
-              ),
-            );
-          } else if (state is BannerFailedState) {
-            return Center(
-              child: Text(state.failure.message),
-            );
-          } else if (state is BannerLoadedState) {
-            return ListView.builder(
-              itemCount: state.data.length,
-              itemBuilder: (context, index) => Text(
-                state.data[index].title,
-                style: TextStyle(
-                  color: context.picoColors.text.main,
-                ),
-              ),
-            );
-          }
-
-          return Center(
-            child: ElevatedButton(
-              onPressed: () => context.read<BannerBloc>().add(
-                    BannerEvent.load(),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          16.verticalSpace,
+          BlocBuilder<BannerBloc, BannerState>(
+            builder: (_, state) => AnimatedSwitcher(
+              duration: 300.milliseconds,
+              child: switch (state) {
+                BannerFailedState(failure: final failure) =>
+                  PicoErrorPlaceholder(
+                    label: failure.message,
+                    onRetry: () => context.read<BannerBloc>().add(
+                          BannerEvent.load(),
+                        ),
                   ),
-              child: const Text('Load Data'),
+                BannerLoadedState(data: final data) =>
+                  PicoBannerSlider<entity.Banner>(
+                    data: data,
+                    getImage: (item) => item.image,
+                  ),
+                _ => const PicoBannerSliderSkeleton(),
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
