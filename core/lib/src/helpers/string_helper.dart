@@ -1,5 +1,3 @@
-
-
 import 'package:core/src/helpers/number_helper.dart';
 
 class StringHelper {
