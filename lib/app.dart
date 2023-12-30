@@ -15,7 +15,7 @@ class App extends StatelessWidget {
           routerConfig: PicoRouter().config(),
           theme: PicoTheme.light(Theme.of(context)).themeData,
           darkTheme: PicoTheme.dark(Theme.of(context)).themeData,
-          locale: TranslationProvider.of(context).flutterLocale,
+          locale: LocaleSettings.currentLocale.flutterLocale,
           supportedLocales: AppLocaleUtils.supportedLocales,
           localizationsDelegates: GlobalMaterialLocalizations.delegates,
         ),
