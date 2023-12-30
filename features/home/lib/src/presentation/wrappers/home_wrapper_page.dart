@@ -10,7 +10,10 @@ class HomeWrapperPage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => BannerBloc(),
+            create: (context) => BannerBloc()
+              ..add(
+                BannerEvent.load(),
+              ),
           ),
         ],
         child: const AutoRouter(),
