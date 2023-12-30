@@ -1,0 +1,35 @@
+name: statistic
+description: Statistic related module of PICO SulTeng App.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  core:
+    path: ../../core
+  dependencies:
+    path: ../../shared/dependencies
+  flutter:
+    sdk: flutter
+  i10n:
+    path: ../../shared/i10n
+  pico_ui_kit:
+    path: ../../packages/pico_ui_kit
+
+dev_dependencies:
+  auto_route_generator: ^7.3.2
+  bloc_test: ^9.1.5
+  build_runner: ^2.4.7
+  flutter_test:
+    sdk: flutter
+  freezed: ^2.4.6
+  injectable_generator: ^2.4.1
+  json_serializable: ^6.7.1
+  mocktail: ^1.0.2
+  very_good_analysis: ^5.1.0
+
+flutter:
+  uses-material-design: true
