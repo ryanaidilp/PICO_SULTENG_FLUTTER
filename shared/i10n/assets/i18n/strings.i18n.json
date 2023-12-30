@@ -1,0 +1,124 @@
+{
+  "app_name": "PICO SulTeng",
+  "app_desc": "COVID-19 Information Center of Central Sulawesi",
+  "buttons": {
+    "call_center": "Call Center",
+    "hotline": "Hotline",
+    "more": "More",
+    "try_again": "Try Again",
+    "source": "VIEW SOURCE"
+  },
+  "odp": {
+    "title": "ODP (People Under Monitoring)",
+    "description": "A person under monitoring (ODP) is someone who has a fever (≥38°C) or a history of fever; or symptoms of respiratory system disorders, such as runny nose/sore throat/cough AND no other cause based on a convincing clinical picture AND in the last 14 days before the onset of symptoms, meets one of the following criteria: “have a history of traveling or living abroad reporting local transmission ” or “have a history of traveling or living in a local transmission area in Indonesia”.",
+    "label": "Total People Under Monitoring"
+  },
+  "pdp": {
+    "title": "PDP (Patient Under Supervision)",
+    "description": "Patient Under Supervision is someone with an Acute Respiratory Infection (ARI), namely fever (≥38°C) or a history of fever; accompanied by one of the symptoms/signs of respiratory disease such as: cough/shortness of breath/sore throat/runny nose/pneumonia mild to severe AND no other cause based on a convincing clinical picture AND in the last 14 days before symptoms appear, meet one of the criteria: \"have history of traveling or living abroad reporting local transmission\" or \"having a history of traveling or living in a local transmission area in Indonesia.",
+    "label": "Total Patient Under Supervision"
+  },
+  "tab_label": {
+    "sulteng_today": "SulTeng Today",
+    "covid_info": "COVID-19 Information"
+  },
+  "data_case_label": "Case Data of Central Sulawesi",
+  "regency_case_label": "Regency Case Data",
+  "national_case_label": "National Case Data",
+  "article_subtitle": "Collection of article related to COVID-19",
+  "article": "Article",
+  "card_case_label": {
+    "confirmed": "TOTAL CONFIRMED CASE",
+    "under_treatment": "Treated",
+    "recovered": "Recovered",
+    "deceased": "Deceased",
+    "active": "Active",
+    "finish": "Finished",
+    "total_test": "Total Test",
+    "sample": "Sample :",
+    "duration": "Duration :",
+    "reactive": "Reactive",
+    "non_reactive": "Non-Reactive",
+    "invalid": "Invalid",
+    "process": "Process in Lab"
+  },
+  "updated_at": "Updated at :",
+  "success": {
+    "refresh": "Successfully refresh data!"
+  },
+  "menu": {
+    "information_center": "Service & Information Center",
+    "data": {
+      "title": "COVID-19 Data",
+      "url": "https://banuacoders.com/corona/data"
+    },
+    "vaccine": {
+      "title": "Vaccine",
+      "url": "https://banuacoders.com/corona/vaksin"
+    },
+    "bed": {
+      "title": "ICU",
+      "url": "https://yankes.kemkes.go.id/app/siranap/rumah_sakit?jenis=1&propinsi=72prop&kabkota="
+    },
+    "contact": {
+      "title": "Emergency Number",
+      "url": "https://banuacoders.com/corona/kontak"
+    },
+    "isolation": {
+      "title": "Self Isolation",
+      "url": "https://banuacoders.com/corona/isoman"
+    },
+    "screening": {
+      "title": "Self Screening",
+      "url": "https://s.id/ChatbotCovid19"
+    },
+    "donation": {
+      "title": "Donations",
+      "url": "https://banuacoders.com/corona/isoman#donations"
+    },
+    "teleconsultation": {
+      "title": "Teleconsultation",
+      "url": "https://banuacoders.com/corona/isoman#telemedicine"
+    },
+    "faq": {
+      "title": "FAQ",
+      "url": "https://bit.ly/faqisoman"
+    }
+  },
+  "vaccine_card": {
+    "dose_given": "Dose has been given",
+    "from": " from ",
+    "vaccinated": " has been vaccinated",
+    "vaccine_progress": "Vaccination Progress"
+  },
+  "vaccine_type": {
+    "first": "Vaccine 1st Dose",
+    "second": "Vaccine 2nd Dose",
+    "health_worker": "Health Worker",
+    "public_worker": "Public Worker",
+    "elderly": "Elderly",
+    "public": "Public",
+    "teenager": "Teenager",
+    "target": "Vaccination Target"
+  },
+  "test_label": "COVID-19 Testing Total",
+  "test_done": "Number of tests that have been done",
+  "vaccine_label": "Vaccine Data of SulTeng",
+  "vaccine_label_national": "National Vaccine Data",
+  "vaccine_desc": "Vaccines help prevent the spread of COVID-19. With vaccines, we also contribute to forming herd immunity in Indonesia. Let's get vaccinated immediately at the nearest health service facility.",
+  "error": {
+    "vaccine": "An error occurred while loading vaccine data!",
+    "statistic": "An error occurred while loading the data of covid cases!",
+    "test": "An error occurred while loading the covid-19 test data!",
+    "banner": "An error occurred while loading the banner!",
+    "infographic": "An error occured while loading the infographics!",
+    "no_internet": "No internet connection! Make sure you have an active internet connection to use the app!",
+    "article": "An error occured while loading the articles!"
+  },
+  "coming_soon": "Coming Soon",
+  "menu_unavailable": "Menu unavailable at the moment!",
+  "infographic_label": "Practical Information",
+  "infographic_subtitle": "Collection of infographics related to covid-19",
+  "infographics": "Infographic",
+  "news": "News"
+}
