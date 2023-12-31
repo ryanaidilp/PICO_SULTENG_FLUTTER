@@ -7,8 +7,7 @@ import 'package:statistic/src/domain/repositories/statistic_repository.dart';
 class GetLatestStatistic
     implements UseCase<Statistic, NoParams, StatisticRepository> {
   @override
-  Future<Either<Failure, Statistic>> call(NoParams param) =>
-      repo.latest();
+  Future<Either<Failure, Statistic>> call(NoParams param) => repo.latest();
 
   @override
   StatisticRepository get repo => getIt<StatisticRepository>();

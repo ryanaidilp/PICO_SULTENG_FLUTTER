@@ -24,17 +24,17 @@ class App extends StatelessWidget {
             create: (context) => LatestCovidTestBloc(),
           ),
         ],
-    child: PCComponentInit(
-      builder: (_) => MaterialApp.router(
-        title: 'PICO SulTeng',
-        debugShowCheckedModeBanner: false,
-        routerConfig: PicoRouter().config(),
-        theme: PicoTheme.light(ThemeData.light()).themeData,
-        darkTheme: PicoTheme.dark(ThemeData.dark()).themeData,
-        locale: LocaleSettings.currentLocale.flutterLocale,
-        supportedLocales: AppLocaleUtils.supportedLocales,
-        localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      ),
-    ),
-  );
+        child: PCComponentInit(
+          builder: (_) => MaterialApp.router(
+            title: 'PICO SulTeng',
+            debugShowCheckedModeBanner: false,
+            routerConfig: PicoRouter().config(),
+            theme: PicoTheme.light(ThemeData.light()).themeData,
+            darkTheme: PicoTheme.dark(ThemeData.dark()).themeData,
+            locale: LocaleSettings.currentLocale.flutterLocale,
+            supportedLocales: AppLocaleUtils.supportedLocales,
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+          ),
+        ),
+      );
 }

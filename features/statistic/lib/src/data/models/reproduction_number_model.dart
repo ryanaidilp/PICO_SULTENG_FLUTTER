@@ -17,8 +17,8 @@ abstract class ReproductionNumberModel with _$ReproductionNumberModel {
 
 extension ReproductionNumberModelX on ReproductionNumberModel {
   ReproductionNumber toEntity() => ReproductionNumber(
-    value: value,
-    upperBound: upperBound,
-    lowerBound: lowerBound,
-  );
+        value: value,
+        upperBound: upperBound,
+        lowerBound: lowerBound,
+      );
 }

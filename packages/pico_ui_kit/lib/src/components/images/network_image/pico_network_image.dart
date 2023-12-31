@@ -27,9 +27,10 @@ class PicoNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ExtendedImage.network(
         url,
-        border: border ?? Border.all(
-          color: context.picoColors.background.strong,
-        ),
+        border: border ??
+            Border.all(
+              color: context.picoColors.background.strong,
+            ),
         height: height,
         width: width,
         fit: fit,

@@ -1,7 +1,7 @@
 part of 'latest_statistic_bloc.dart';
 
 @freezed
-abstract class LatestStatisticState with _$LatestStatisticState{
+abstract class LatestStatisticState with _$LatestStatisticState {
   factory LatestStatisticState.initial() = LatestStatisticInitialState;
   factory LatestStatisticState.loading() = LatestStatisticLoadingState;
   factory LatestStatisticState.empty() = LatestStatisticEmptyState;

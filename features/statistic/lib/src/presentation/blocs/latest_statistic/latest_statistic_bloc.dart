@@ -23,11 +23,10 @@ class LatestStatisticBloc
               LatestStatisticState.loaded(data: r),
             ),
           );
-        } 
+        }
       },
     );
   }
 
   final _usecase = getIt<GetLatestStatistic>();
-
 }
