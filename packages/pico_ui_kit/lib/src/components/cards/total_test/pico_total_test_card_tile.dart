@@ -48,7 +48,7 @@ class PicoTotalTestCardTile extends StatelessWidget {
                         maxLines: 1,
                         style: PicoTextStyle.headingLg(),
                       ),
-                      16.verticalSpace,
+                      10.verticalSpace,
                     ],
                   ),
                 ),

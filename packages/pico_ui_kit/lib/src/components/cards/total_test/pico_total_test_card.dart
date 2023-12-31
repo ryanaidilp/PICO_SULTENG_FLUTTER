@@ -38,7 +38,7 @@ class PicoTotalTestCard extends StatelessWidget {
               NumberHelper.numberFormat(total),
               style: PicoTextStyle.headingLg(),
             ),
-            16.verticalSpace,
+            10.verticalSpace,
           ],
         ),
       );

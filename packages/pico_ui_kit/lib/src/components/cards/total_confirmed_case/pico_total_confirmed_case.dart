@@ -38,7 +38,10 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                 ],
               ),
             ),
-            padding: EdgeInsets.all(16.r),
+            padding: EdgeInsets.symmetric(
+              vertical: 16.h,
+              horizontal: 8.w,
+            ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +75,6 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                     ),
                   ],
                 ),
-                8.verticalSpace,
               ],
             ),
           ),

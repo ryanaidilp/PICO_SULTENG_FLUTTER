@@ -80,7 +80,7 @@ class PicoCaseCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: PicoTextStyle.bodySm(
-                        fontWeight: FontWeight.w600,
+                        color: context.picoColors.text.neutral.subtle,
                       ),
                     ),
                   ),
