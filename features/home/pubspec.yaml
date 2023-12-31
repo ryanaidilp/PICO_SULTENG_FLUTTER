@@ -18,6 +18,8 @@ dependencies:
     path: ../../shared/i10n
   pico_ui_kit:
     path: ../../packages/pico_ui_kit
+  statistic:
+    path: ../statistic
 
 dev_dependencies:
   auto_route_generator: ^7.3.2
