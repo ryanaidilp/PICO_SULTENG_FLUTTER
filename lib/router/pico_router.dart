@@ -12,13 +12,18 @@ class PicoRouter extends _$PicoRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          page: HomeWrapperRoute.page,
-          path: '/',
+          page: HomeRoute.page,
+          path: '/home',
+          initial: true,
           children: [
             AutoRoute(
-              page: HomeRoute.page,
-              path: 'home',
+              page: LatestUpdateRoute.page,
+              path: 'latest-update',
               initial: true,
+            ),
+            AutoRoute(
+              page: InformationRoute.page,
+              path: 'information',
             ),
           ],
         ),
