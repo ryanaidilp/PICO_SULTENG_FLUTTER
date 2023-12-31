@@ -3,6 +3,7 @@
 /// {@endtemplate}
 library pico_ui_kit;
 
+export 'package:buttons_tabbar/buttons_tabbar.dart';
 export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:flutter_spinkit/flutter_spinkit.dart';
 export 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
