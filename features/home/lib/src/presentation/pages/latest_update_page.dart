@@ -19,6 +19,7 @@ class LatestUpdatePage extends StatefulWidget {
 class _LatestUpdatePageState extends State<LatestUpdatePage> {
   late final RefreshController _refreshController;
   int _refreshCounter = 0;
+  int _errorCounter = 3;
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
 
   void _onLoading() {
     _refreshCounter = 3;
+    _errorCounter = 0;
     context.read<BannerBloc>().add(BannerEvent.load());
     context.read<LatestStatisticBloc>().add(LatestStatisticEvent.load());
     context.read<LatestCovidTestBloc>().add(LatestCovidTestEvent.load());
@@ -42,6 +44,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
 
   void _onRefresh() {
     _refreshCounter = 3;
+    _errorCounter = 0;
     _refreshController.requestRefresh();
     context.read<BannerBloc>().add(BannerEvent.load());
     context.read<LatestStatisticBloc>().add(LatestStatisticEvent.load());
@@ -51,11 +54,23 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
   void _onBlocRefreshCompleted() {
     _refreshCounter--;
 
-    if (_refreshCounter == 0) {
+    if (_refreshCounter == 0 && _errorCounter == 0) {
       if (_refreshController.isRefresh) {
         _refreshController.refreshCompleted();
       } else {
         _refreshController.loadComplete();
+      }
+    }
+  }
+
+  void _onBlocError() {
+    _errorCounter++;
+
+    if (_errorCounter > 0 && _refreshCounter == 0) {
+      if (_refreshController.isRefresh) {
+        _refreshController.refreshFailed();
+      } else {
+        _refreshController.loadFailed();
       }
     }
   }
@@ -65,26 +80,30 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
         listeners: [
           BlocListener<BannerBloc, BannerState>(
             listener: (context, state) {
-              if (state is BannerLoadedState || state is BannerFailedState) {
+              if (state is BannerLoadedState) {
                 _onBlocRefreshCompleted();
+              } else if (state is BannerFailedState) {
+                _onBlocError();
               }
             },
           ),
           BlocListener<LatestStatisticBloc, LatestStatisticState>(
             listener: (context, state) {
               if (state is LatestStatisticLoadedState ||
-                  state is LatestStatisticFailedState ||
                   state is LatestStatisticEmptyState) {
                 _onBlocRefreshCompleted();
+              } else if (state is LatestStatisticFailedState) {
+                _onBlocError();
               }
             },
           ),
           BlocListener<LatestCovidTestBloc, LatestCovidTestState>(
             listener: (context, state) {
               if (state is LatestCovidTestLoadedState ||
-                  state is LatestCovidTestFailedState ||
                   state is LatestCovidTestEmptyState) {
                 _onBlocRefreshCompleted();
+              } else if (state is LatestCovidTestFailedState) {
+                _onBlocError();
               }
             },
           ),
@@ -95,6 +114,24 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
           onRefresh: _onRefresh,
           header: WaterDropHeader(
             waterDropColor: context.picoColors.text.semantic.primary,
+            failed: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                PicoAsset.icon(
+                  icon: PicoIcons.close,
+                  size: 16.sp,
+                  color: context.picoColors.icon.semantic.error,
+                ),
+                10.horizontalSpace,
+                Text(
+                  context.i10n.error.refresh,
+                ),
+              ],
+            ),
+            refresh: SpinKitFadingCircle(
+              color: context.picoColors.icon.semantic.primary,
+              size: 20.sp,
+            ),
             completeDuration: 1.seconds,
             complete: Row(
               mainAxisAlignment: MainAxisAlignment.center,
