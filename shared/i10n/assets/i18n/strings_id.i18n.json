@@ -114,7 +114,8 @@
     "banner": "Terjadi kesalahan saat memuat banner!",
     "infographic": "Gagal memuat data infografis!",
     "no_internet": "Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!",
-    "article": "Terjadi kesalhan saat memuat data artikel! Harap coba lagi!"
+    "article": "Terjadi kesalahan saat memuat data artikel! Harap coba lagi!",
+    "refresh": "Terjadi kesalahan saat memuat ulang!"
   },
   "coming_soon": "Coming Soon",
   "menu_unavailable": "Menu belum tersedia untuk saat ini!",

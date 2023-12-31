@@ -113,7 +113,8 @@
     "banner": "An error occurred while loading the banner!",
     "infographic": "An error occured while loading the infographics!",
     "no_internet": "No internet connection! Make sure you have an active internet connection to use the app!",
-    "article": "An error occured while loading the articles!"
+    "article": "An error occured while loading the articles!",
+    "refresh": "An error occured while trying to refresh!"
   },
   "coming_soon": "Coming Soon",
   "menu_unavailable": "Menu unavailable at the moment!",
