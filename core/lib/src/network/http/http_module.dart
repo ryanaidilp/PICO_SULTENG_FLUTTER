@@ -27,7 +27,6 @@ abstract class HttpModule {
 
     try {
       data = jsonDecode(response.toString()) as JSON;
-      log.console('Response: $data');
     } catch (e) {
       log
         ..console('Parse Error', type: LogType.fatal)
