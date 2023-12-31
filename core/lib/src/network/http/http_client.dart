@@ -8,11 +8,15 @@ import 'dart:math' as math;
 
 // Package imports:
 import 'package:config/config.dart';
+import 'package:core/core.dart';
 import 'package:core/src/network/http/http_setting.dart';
-import 'package:core/src/network/interceptors/logging_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class HttpClient extends DioMixin {
   HttpClient._(HttpSetting setting) {
@@ -25,6 +29,22 @@ class HttpClient extends DioMixin {
     );
 
     httpClientAdapter = IOHttpClientAdapter();
+
+    getTemporaryDirectory().then(
+      (value) {
+        final cacheInterceptor = DioCacheInterceptor(
+          options: CacheOptions(
+            store: HiveCacheStore(
+              value.path,
+            ),
+            maxStale: 1.days,
+            priority: CachePriority.high,
+          ),
+        );
+        interceptors.add(cacheInterceptor);
+      },
+    );
+
     final retryInterceptor = RetryInterceptor(
       dio: this,
       logPrint: dev.log,
@@ -54,6 +74,10 @@ class HttpClient extends DioMixin {
   }
 
   static List<Interceptor> defaultInterceptors = [
-    LoggingInterceptor(),
+    PrettyDioLogger(
+      maxWidth: 80,
+      requestHeader: true,
+      requestBody: true,
+    ),
   ];
 }
