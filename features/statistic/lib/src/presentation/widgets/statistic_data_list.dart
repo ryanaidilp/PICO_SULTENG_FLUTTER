@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:statistic/statistic.dart';
 
@@ -57,6 +58,16 @@ class StatisticDataList extends StatelessWidget {
               newFinishedCase: statistic.newCases.finishedSupervision,
               activeCase: statistic.cumulative.underSupervision,
               finishedCase: statistic.cumulative.finishedSupervision,
+              onTap: () {},
+            ),
+            16.verticalSpace,
+            PicoCardTile(
+              label: context.i10n.national_case_label,
+              onTap: () {},
+            ),
+            16.verticalSpace,
+            PicoCardTile(
+              label: context.i10n.regency_case_label,
               onTap: () {},
             ),
           ],
