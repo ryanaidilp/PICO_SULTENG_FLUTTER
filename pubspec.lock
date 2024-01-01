@@ -201,6 +201,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.1"
+  charts_painter:
+    dependency: transitive
+    description:
+      name: charts_painter
+      sha256: "5314ef91979b59b60a869df86caba09e7a3ce56da1fb18530ea7bbd2da77fa70"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   checked_yaml:
     dependency: transitive
     description:
