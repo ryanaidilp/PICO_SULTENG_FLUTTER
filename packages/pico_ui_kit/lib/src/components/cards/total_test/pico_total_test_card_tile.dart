@@ -6,7 +6,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoTotalTestCardTile extends StatelessWidget {
   const PicoTotalTestCardTile({
-    required this.total,
+    this.total = 0,
     super.key,
     this.onTap,
   });

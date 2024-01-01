@@ -81,6 +81,7 @@ class PicoSuspectCard extends StatelessWidget {
                   8.horizontalSpace,
                   InkWell(
                     onTap: onTap,
+                    customBorder: const CircleBorder(),
                     child: PicoAsset.icon(
                       icon: PicoIcons.questionCircle,
                       size: 14.sp,
