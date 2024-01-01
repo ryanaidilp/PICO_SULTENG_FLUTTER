@@ -1,6 +1,7 @@
 {
   "app_name": "PICO SulTeng",
   "app_desc": "Pusat Informasi COVID-19 Sulawesi Tengah",
+  "description": "Deskripsi",
   "buttons": {
     "call_center": "Call Center",
     "hotline": "Hotline",
@@ -21,6 +22,20 @@
   "tab_label": {
     "sulteng_today": "SulTeng Hari Ini",
     "covid_info": "Informasi COVID-19"
+  },
+  "chart": {
+    "title": "Grafik Data",
+    "odp_pdp": {
+      "title": "Grafik Pasien ODP & PDP",
+      "labels": {
+        "odp": "ODP",
+        "pdp": "PDP"
+      },
+      "description":{
+        "active": "Dalam Pemantauan/Pengawasan",
+        "finished": "Selesai Pemantauan/Pengawasan"
+      }
+    }
   },
   "data_case_label": "Data Kasus SulTeng",
   "regency_case_label": "Data Kasus Kabupaten",

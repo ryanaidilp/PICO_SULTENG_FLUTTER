@@ -1,6 +1,7 @@
 {
   "app_name": "PICO SulTeng",
   "app_desc": "COVID-19 Information Center of Central Sulawesi",
+  "description": "Description",
   "buttons": {
     "call_center": "Call Center",
     "hotline": "Hotline",
@@ -21,6 +22,20 @@
   "tab_label": {
     "sulteng_today": "SulTeng Today",
     "covid_info": "COVID-19 Information"
+  },
+  "chart": {
+    "title": "Data Graph",
+    "odp_pdp": {
+      "title": "Chart Supervised (PDP) & Observed (ODP) Patient",
+      "labels": {
+        "odp": "ODP (Observed)",
+        "pdp": "PDP (Supervised)"
+      },
+      "description": {
+        "active": "Under Observation/Supervision",
+        "finished": "Observation/Supervision Completed"
+      }
+    }
   },
   "data_case_label": "Case Data of Central Sulawesi",
   "regency_case_label": "Regency Case Data",
