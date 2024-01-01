@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:i10n/i10n.dart';
 
 class AppBlocObserver extends BlocObserver {
@@ -22,7 +23,8 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   LocaleSettings.useDeviceLocale();
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
