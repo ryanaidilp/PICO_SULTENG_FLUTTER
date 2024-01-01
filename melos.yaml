@@ -24,7 +24,7 @@ scripts:
     run: melos exec --depends-on="build_runner" -- "dart run build_runner build -d"
     description: "Run build runner in all packages that depend on it."
   format:
-    run: melos exec -- "dart format . --fix && dart fix --apply"
+    run: melos exec -- "dart format lib --fix && dart fix --apply"
     description: "Run dart format and dart fix for all packages"
   get:
     run: melos exec --depends-on="flutter" -- "flutter pub get"
