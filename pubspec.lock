@@ -17,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.0"
-  animate_icons:
-    dependency: transitive
-    description:
-      name: animate_icons
-      sha256: "3201c60f2051997cf3cbde4b2f07d269e01fa53a6a3a2986ef26f614419880fd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   ansi_styles:
     dependency: transitive
     description:
@@ -390,14 +382,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.5"
-  eva_icons_flutter:
-    dependency: transitive
-    description:
-      name: eva_icons_flutter
-      sha256: "6d48a10b93590ab83eb092bee5adacdeb14f3d83f527a4b9e4092c363d56e2a8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   extended_image:
     dependency: transitive
     description:
@@ -489,13 +473,13 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_native_splash:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: flutter_native_splash
-      sha256: "141b20f15a2c4fe6e33c49257ca1bc114fc5c500b04fcbc8d75016bb86af672f"
+      sha256: "9cdb5d9665dab5d098dc50feab74301c2c228cd02ca25c9b546ab572cebcd6af"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.8"
+    version: "2.3.9"
   flutter_screenutil:
     dependency: transitive
     description:
@@ -648,14 +632,6 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
-  iconsax:
-    dependency: transitive
-    description:
-      name: iconsax
-      sha256: fb0144c61f41f3f8a385fadc27783ea9f5359670be885ed7f35cef32565d5228
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.8"
   image:
     dependency: transitive
     description:
@@ -720,14 +696,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
-  line_icons:
-    dependency: transitive
-    description:
-      name: line_icons
-      sha256: "249d781d922f5437ac763d9c8f5a02cf5b499a6dc3f85e4b92e074cff0a932ab"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3"
   lints:
     dependency: transitive
     description:
@@ -832,6 +800,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  package_info_plus:
+    dependency: transitive
+    description:
+      name: package_info_plus
+      sha256: "88bc797f44a94814f2213db1c9bd5badebafdfb8290ca9f78d4b9ee2a3db4d79"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.1"
+  package_info_plus_platform_interface:
+    dependency: transitive
+    description:
+      name: package_info_plus_platform_interface
+      sha256: "9bc8ba46813a4cc42c66ab781470711781940780fd8beddd0c3da62506d3a6c6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   path:
     dependency: transitive
     description:
