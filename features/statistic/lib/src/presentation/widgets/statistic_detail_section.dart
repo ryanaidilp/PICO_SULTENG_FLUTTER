@@ -18,32 +18,6 @@ class StatisticDetailSection extends StatelessWidget {
               duration: 300.milliseconds,
               child: switch (state) {
                 LatestStatisticLoadedState(data: final data) =>
-                  PicoUpdatedAtPlaceholder(
-                    key: const Key('updated-at-loaded'),
-                    date: DateHelper.buildUpdatedAtText(
-                      data.updatedAt.toLocal(),
-                    ),
-                    label: context.i10n.data_case_label,
-                  ),
-                LatestStatisticFailedState() => PicoUpdatedAtPlaceholder(
-                    key: const Key('updated-at-failed'),
-                    date: '-',
-                    label: context.i10n.data_case_label,
-                  ),
-                _ => PicoUpdatedAtPlaceholder(
-                    key: const Key('updated-at-loading'),
-                    date: '12 December 2023 12.05 WITA',
-                    label: context.i10n.data_case_label,
-                  ).sekeletonize(),
-              },
-            ),
-          ),
-          24.verticalSpace,
-          BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
-            builder: (context, state) => AnimatedSwitcher(
-              duration: 300.milliseconds,
-              child: switch (state) {
-                LatestStatisticLoadedState(data: final data) =>
                   StatisticDataList(
                     key: const Key('statistic-loaded'),
                     statistic: data,
