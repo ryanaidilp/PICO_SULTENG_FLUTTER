@@ -24,4 +24,31 @@ class NumberHelper {
 
     return formatter.format(number);
   }
+
+  static int calculateStep({
+    required int maxValue,
+    int minValue = 0,
+    int numberOfSteps = 5,
+  }) {
+    if (numberOfSteps <= 0) {
+      throw ArgumentError('Number of steps must be greater than 0');
+    }
+
+    // Calculate the step size
+    final range = maxValue - minValue;
+    return (range / numberOfSteps).ceil();
+  }
+
+  static int ceilToNearest(int number) {
+    if (number < 100) {
+      // If the number is less than 100, return it as is.
+      return number;
+    } else if (number < 1000) {
+      // If the number is between 100 and 999, ceil to the nearest hundred.
+      return ((number + 99) ~/ 100) * 100;
+    } else {
+      // If the number is 1000 or more, ceil to the nearest thousand.
+      return ((number + 999) ~/ 1000) * 1000;
+    }
+  }
 }
