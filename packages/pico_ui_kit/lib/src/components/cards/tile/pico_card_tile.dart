@@ -19,7 +19,10 @@ class PicoCardTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.r),
           onTap: onTap,
           child: Padding(
-            padding: EdgeInsets.all(16.r),
+            padding: EdgeInsets.symmetric(
+              horizontal: 8.w,
+              vertical: 16.h,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
