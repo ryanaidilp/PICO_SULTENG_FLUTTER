@@ -3,13 +3,16 @@ import 'package:statistic/src/domain/entities/case.dart';
 import 'package:statistic/src/domain/entities/recap.dart';
 
 class Statistic extends Equatable {
-  const Statistic({
-    required this.day,
-    required this.updatedAt,
-    required this.cumulative,
-    required this.newCases,
-    required this.recap,
-  });
+  Statistic({
+    this.day = 0,
+    DateTime? updatedAt,
+    Case? cumulative,
+    Case? newCases,
+    Recap? recap,
+  })  : updatedAt = updatedAt ?? DateTime.now(),
+        cumulative = cumulative ?? const Case(),
+        newCases = newCases ?? const Case(),
+        recap = recap ?? const Recap();
   final int day;
   final DateTime updatedAt;
   final Case cumulative;

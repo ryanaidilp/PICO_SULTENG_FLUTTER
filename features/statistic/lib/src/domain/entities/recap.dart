@@ -4,9 +4,9 @@ import 'package:statistic/src/domain/entities/reproduction_number.dart';
 
 class Recap extends Equatable {
   const Recap({
-    required this.percentage,
+    Percentage? percentage,
     this.reproductionNumber,
-  });
+  }) : percentage = percentage ?? const Percentage();
   final Percentage percentage;
   final ReproductionNumber? reproductionNumber;
   @override

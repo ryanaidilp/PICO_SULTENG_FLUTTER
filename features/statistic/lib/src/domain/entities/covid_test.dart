@@ -1,18 +1,18 @@
 import 'package:dependencies/dependencies.dart';
 
 class CovidTest extends Equatable {
-  const CovidTest({
-    required this.day,
-    required this.updatedAt,
-    required this.name,
-    required this.sample,
-    required this.duration,
-    required this.positive,
-    required this.negative,
-    required this.process,
-    required this.invalid,
-    required this.total,
-  });
+  CovidTest({
+    this.day = 0,
+    DateTime? updatedAt,
+    this.name = '',
+    this.sample = '',
+    this.duration = '',
+    this.positive = 0,
+    this.negative = 0,
+    this.process = 0,
+    this.invalid = 0,
+    this.total = 0,
+  }) : updatedAt = updatedAt ?? DateTime.now();
   final int day;
   final DateTime updatedAt;
   final String name;

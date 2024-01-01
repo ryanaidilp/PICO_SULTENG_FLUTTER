@@ -2,9 +2,9 @@ import 'package:dependencies/dependencies.dart';
 
 class Percentage extends Equatable {
   const Percentage({
-    required this.underTreatment,
-    required this.deceased,
-    required this.recovered,
+    this.underTreatment = 0,
+    this.deceased = 0,
+    this.recovered = 0,
   });
   final double underTreatment;
   final double deceased;
