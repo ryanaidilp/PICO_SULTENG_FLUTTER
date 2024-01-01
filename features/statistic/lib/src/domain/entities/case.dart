@@ -2,16 +2,16 @@ import 'package:dependencies/dependencies.dart';
 
 class Case extends Equatable {
   const Case({
-    required this.positive,
-    required this.recovered,
-    required this.deceased,
-    required this.underTreatment,
-    required this.totalObserved,
-    required this.finishedObservation,
-    required this.underObservation,
-    required this.totalSupervised,
-    required this.finishedSupervision,
-    required this.underSupervision,
+    this.positive = 0,
+    this.recovered = 0,
+    this.deceased = 0,
+    this.underTreatment = 0,
+    this.totalObserved = 0,
+    this.finishedObservation = 0,
+    this.underObservation = 0,
+    this.totalSupervised = 0,
+    this.finishedSupervision = 0,
+    this.underSupervision = 0,
   });
   final int positive;
   final int recovered;
