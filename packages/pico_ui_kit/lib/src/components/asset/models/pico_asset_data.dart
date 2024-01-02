@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:pico_ui_kit/src/components/asset/enums/pico_asset_extension.dart';
 
 @immutable
-class PicoAssetData {
+class PicoAssetData<T> {
   const PicoAssetData({
-    required this.path,
+    required this.file,
+    required this.extension,
   });
-  final String path;
+  final T file;
+  final PicoAssetExtension extension;
 }
