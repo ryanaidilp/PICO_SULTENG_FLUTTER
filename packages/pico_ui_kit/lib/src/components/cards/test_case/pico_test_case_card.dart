@@ -56,40 +56,45 @@ class PicoTestCaseCard extends StatelessWidget {
   final PicoTestStatus status;
 
   @override
-  Widget build(BuildContext context) => Container(
+  Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
           color: context.picoColors.background.subtle,
+          border: Border.all(
+            color: context.picoColors.outline.neutral.main,
+          ),
         ),
-        padding: EdgeInsets.all(8.r),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            8.verticalSpace,
-            Skeleton.keep(
-              child: Text(
-                status.label(context),
+        child: Padding(
+          padding: EdgeInsets.all(8.r),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              8.verticalSpace,
+              Skeleton.keep(
+                child: Text(
+                  status.label(context),
+                  style: PicoTextStyle.body(),
+                ),
+              ),
+              24.verticalSpace,
+              Text(
+                NumberHelper.numberFormat(count),
+                style: PicoTextStyle.headingLg(
+                  color: status.textColor(context),
+                ),
+              ),
+              24.verticalSpace,
+              Text(
+                '(${NumberHelper.percentageFormat(percentage)})',
                 style: PicoTextStyle.body(),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            24.verticalSpace,
-            Text(
-              NumberHelper.numberFormat(count),
-              style: PicoTextStyle.headingLg(
-                color: status.textColor(context),
-              ),
-            ),
-            24.verticalSpace,
-            Text(
-              '(${NumberHelper.percentageFormat(percentage)})',
-              style: PicoTextStyle.body(),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-            8.verticalSpace,
-          ],
+              8.verticalSpace,
+            ],
+          ),
         ),
       );
 }

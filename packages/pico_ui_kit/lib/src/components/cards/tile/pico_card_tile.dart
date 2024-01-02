@@ -13,8 +13,13 @@ class PicoCardTile extends StatelessWidget {
   final GestureTapCallback? onTap;
   @override
   Widget build(BuildContext context) => Material(
-        borderRadius: BorderRadius.circular(10.r),
         color: context.picoColors.background.subtle,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          side: BorderSide(
+            color: context.picoColors.outline.neutral.main,
+          ),
+        ),
         child: InkWell(
           borderRadius: BorderRadius.circular(10.r),
           onTap: onTap,

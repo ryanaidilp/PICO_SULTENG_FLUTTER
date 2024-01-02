@@ -31,10 +31,13 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                 ),
               ],
               borderRadius: BorderRadius.circular(8.r),
+              border: Border.all(
+                color: context.picoColors.outline.semantic.primary,
+              ),
               gradient: LinearGradient(
                 colors: [
-                  context.picoColors.semantic.info,
-                  context.picoColors.semantic.info.shade100.withOpacity(0.5),
+                  context.picoColors.semantic.primary,
+                  context.picoColors.semantic.primary.shade200.withOpacity(0.5),
                 ],
               ),
             ),
