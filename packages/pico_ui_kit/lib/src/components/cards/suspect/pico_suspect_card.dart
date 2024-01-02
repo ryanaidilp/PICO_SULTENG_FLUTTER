@@ -57,7 +57,7 @@ class PicoSuspectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
-          color: context.picoColors.background.subtle,
+          color: context.picoColors.background.white,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
             color: context.picoColors.outline.neutral.main,
