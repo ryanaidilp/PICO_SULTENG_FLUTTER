@@ -56,8 +56,8 @@ class HomePage extends StatelessWidget {
             radius: 10.r,
             buttonMargin: EdgeInsets.all(8.r),
             borderWidth: 1.sp,
-            borderColor: context.picoColors.semantic.primary,
-            unselectedBorderColor: context.picoColors.text.neutral.subtle,
+            borderColor: context.picoColors.outline.semantic.primary,
+            unselectedBorderColor: context.picoColors.outline.neutral.strong,
             contentPadding: EdgeInsets.only(
               left: 8.w,
               right: 8.w,
