@@ -26,7 +26,7 @@
   "chart": {
     "title": "Grafik Data",
     "odp_pdp": {
-      "title": "Grafik Pasien ODP & PDP",
+      "title": "Pasien ODP & PDP",
       "labels": {
         "odp": "ODP",
         "pdp": "PDP"

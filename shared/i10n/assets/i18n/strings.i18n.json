@@ -26,14 +26,14 @@
   "chart": {
     "title": "Data Graph",
     "odp_pdp": {
-      "title": "Chart Supervised (PDP) & Observed (ODP) Patient",
+      "title": "Supervised (PDP) & Monitored (ODP) Patient",
       "labels": {
-        "odp": "ODP (Observed)",
+        "odp": "ODP (Monitored)",
         "pdp": "PDP (Supervised)"
       },
       "description": {
-        "active": "Under Observation/Supervision",
-        "finished": "Observation/Supervision Completed"
+        "active": "Under Monitoring/Supervision",
+        "finished": "Monitoring/Supervision Completed"
       }
     }
   },
