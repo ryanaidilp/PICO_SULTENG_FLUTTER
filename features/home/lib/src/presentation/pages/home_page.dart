@@ -33,7 +33,7 @@ class HomePage extends StatelessWidget {
                 context.i10n.app_name,
                 style: PicoTextStyle.headingLg(),
               ),
-              20.verticalSpace,
+              4.verticalSpace,
               Text(
                 context.i10n.app_desc,
                 style: PicoTextStyle.bodyXs(),
@@ -58,11 +58,6 @@ class HomePage extends StatelessWidget {
             borderWidth: 1.sp,
             borderColor: context.picoColors.outline.semantic.primary,
             unselectedBorderColor: context.picoColors.outline.neutral.strong,
-            contentPadding: EdgeInsets.only(
-              left: 8.w,
-              right: 8.w,
-              top: 8.h,
-            ),
             labelStyle: PicoTextStyle.body(
               color: Colors.white,
             ),
