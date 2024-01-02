@@ -101,7 +101,7 @@ class PicoSuspectCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        margin: EdgeInsets.symmetric(horizontal: 36.w),
+                        margin: EdgeInsets.symmetric(horizontal: 16.w),
                         padding: EdgeInsets.all(8.r),
                         showDuration: 10.seconds,
                         richMessage: WidgetSpan(
