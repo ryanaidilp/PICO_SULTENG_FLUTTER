@@ -49,7 +49,6 @@ class StatisticDataList extends StatelessWidget {
               newFinishedCase: statistic.newCases.finishedObservation,
               activeCase: statistic.cumulative.underObservation,
               finishedCase: statistic.cumulative.finishedObservation,
-              onTap: () {},
             ),
             16.verticalSpace,
             PicoSuspectCard.underSupervision(
@@ -58,7 +57,6 @@ class StatisticDataList extends StatelessWidget {
               newFinishedCase: statistic.newCases.finishedSupervision,
               activeCase: statistic.cumulative.underSupervision,
               finishedCase: statistic.cumulative.finishedSupervision,
-              onTap: () {},
             ),
             16.verticalSpace,
             PicoCardTile(
