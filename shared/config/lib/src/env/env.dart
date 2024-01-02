@@ -18,7 +18,6 @@ abstract class EnvProd {
   @EnviedField()
   static final String newsapiApiKey = _EnvProd.newsapiApiKey;
 
-   
   @EnviedField()
   static final String appName = _EnvProd.appName;
 }
@@ -38,11 +37,10 @@ abstract class EnvDev {
 
   @EnviedField()
   static final String newsapiApiKey = _EnvDev.newsapiApiKey;
-  
+
   @EnviedField()
   static final String appName = _EnvDev.appName;
 }
-
 
 @Envied(
   path: '.env.stg',
@@ -60,7 +58,6 @@ abstract class EnvStg {
   @EnviedField()
   static final String newsapiApiKey = _EnvStg.newsapiApiKey;
 
-   
   @EnviedField()
   static final String appName = _EnvStg.appName;
 }

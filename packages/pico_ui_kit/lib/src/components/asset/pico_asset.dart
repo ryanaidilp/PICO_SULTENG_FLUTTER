@@ -1,7 +1,4 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:pico_ui_kit/src/assets/assets.gen.dart';
 import 'package:pico_ui_kit/src/components/asset/enums/pico_asset_extension.dart';
