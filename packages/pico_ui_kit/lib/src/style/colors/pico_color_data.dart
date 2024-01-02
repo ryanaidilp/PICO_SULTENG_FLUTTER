@@ -9,3 +9,4 @@ part '_pico_semantic_color.dart';
 part '_pico_vaccine_color.dart';
 part '_pico_text_color.dart';
 part '_pico_icon_color.dart';
+part '_pico_outline_color.dart';

@@ -10,6 +10,7 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
     required this.icon,
     required this.semantic,
     required this.vaccine,
+    required this.outline,
   });
 
   factory PicoColorTheme.light() => PicoColorTheme._(
@@ -76,6 +77,22 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           main: PicoColors.vaccineAll,
           healthWorker: PicoColors.vaccineHealthWorker,
           publicWorker: PicoColors.vaccinePublicWorker,
+        ),
+        outline: PicoOutlineColor(
+          neutral: PicoOutlineNeutralColor(
+            main: Colors.black.withOpacity(0.1),
+            subtle: Colors.black.withOpacity(0.05),
+            strong: Colors.black.withOpacity(0.25),
+          ),
+          semantic: PicoOutlineSemanticColor(
+            info: PicoColors.info.withOpacity(0.25),
+            error: PicoColors.error.withOpacity(0.25),
+            success: PicoColors.success.withOpacity(0.25),
+            warning: PicoColors.warning.withOpacity(0.25),
+            primary: PicoColors.primary.withOpacity(0.25),
+            secondary: PicoColors.secondary.withOpacity(0.25),
+            tertiary: PicoColors.tertiary.withOpacity(0.25),
+          ),
         ),
       );
 
@@ -144,6 +161,22 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           healthWorker: PicoColors.vaccineHealthWorkerDark,
           publicWorker: PicoColors.vaccinePublicWorkerDark,
         ),
+        outline: PicoOutlineColor(
+          neutral: PicoOutlineNeutralColor(
+            main: Colors.white.withOpacity(0.1),
+            subtle: Colors.white.withOpacity(0.05),
+            strong: Colors.white.withOpacity(0.25),
+          ),
+          semantic: PicoOutlineSemanticColor(
+            info: PicoColors.info.shade300.withOpacity(0.25),
+            error: PicoColors.error.shade300.withOpacity(0.25),
+            success: PicoColors.success.shade300.withOpacity(0.25),
+            warning: PicoColors.warning.shade300.withOpacity(0.25),
+            primary: PicoColors.primary.shade300.withOpacity(0.25),
+            secondary: PicoColors.secondary.shade300.withOpacity(0.25),
+            tertiary: PicoColors.tertiary.shade300.withOpacity(0.25),
+          ),
+        ),
       );
 
   final PicoBackgroundNeutralColor background;
@@ -151,6 +184,7 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
   final PicoIconColor icon;
   final PicoSemanticColor semantic;
   final PicoVaccineColor vaccine;
+  final PicoOutlineColor outline;
 
   @override
   ThemeExtension<PicoColorTheme> copyWith({
@@ -159,6 +193,7 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
     PicoIconColor? iconVariant,
     PicoSemanticColor? semanticVariant,
     PicoVaccineColor? vaccineVariant,
+    PicoOutlineColor? outlineVariant,
   }) =>
       PicoColorTheme._(
         background: background.copyWith(
@@ -189,6 +224,10 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
           teenager: vaccineVariant?.teenager,
           healthWorker: vaccineVariant?.healthWorker,
           publicWorker: vaccineVariant?.publicWorker,
+        ),
+        outline: outline.copyWith(
+          neutral: outlineVariant?.neutral,
+          semantic: outlineVariant?.semantic,
         ),
       );
 
@@ -238,6 +277,11 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
         teenagerVariant: other.vaccine.teenager,
         healthWorkerVariant: other.vaccine.healthWorker,
         publicWorkerVariant: other.vaccine.publicWorker,
+      ),
+      outline: outline.lerp(
+        t: t,
+        neutralVariant: other.outline.neutral,
+        semanticVariant: other.outline.semantic,
       ),
     );
   }
