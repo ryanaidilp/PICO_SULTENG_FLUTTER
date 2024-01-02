@@ -9,15 +9,28 @@ class NumberHelper {
   }) =>
       value / total * 100;
 
-  static String numberFormat(int number, {String? locale}) {
-    final formatter = NumberFormat.decimalPattern(
-      locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
-    );
+  static String numberFormat(
+    int number, {
+    String? locale,
+    bool compact = false,
+    bool showExplicitSign = false,
+  }) {
+    final formatter = compact
+        ? NumberFormat.compact(
+            explicitSign: showExplicitSign,
+            locale: locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+          )
+        : NumberFormat.decimalPattern(
+            locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+          );
 
     return formatter.format(number);
   }
 
-  static String percentageFormat(int number, {String? locale}) {
+  static String percentageFormat(
+    int number, {
+    String? locale,
+  }) {
     final formatter = NumberFormat.percentPattern(
       locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
     );
