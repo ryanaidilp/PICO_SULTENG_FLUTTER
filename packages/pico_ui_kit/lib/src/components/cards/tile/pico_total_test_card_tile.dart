@@ -35,7 +35,6 @@ class PicoTotalTestCardTile extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      4.verticalSpace,
                       Skeleton.keep(
                         child: Text(
                           context.i10n.test_label,
@@ -46,14 +45,12 @@ class PicoTotalTestCardTile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      24.verticalSpace,
                       Text(
                         NumberHelper.numberFormat(total),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                         style: PicoTextStyle.headingLg(),
                       ),
-                      10.verticalSpace,
                     ],
                   ),
                 ),

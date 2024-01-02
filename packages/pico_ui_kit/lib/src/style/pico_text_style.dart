@@ -10,7 +10,6 @@ class PicoTextStyle {
     Color? color,
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration? decoration,
-    double? height,
     double? letterSpacing,
   }) =>
       GoogleFonts.sourceSans3(
@@ -18,7 +17,6 @@ class PicoTextStyle {
         color: color,
         fontWeight: fontWeight,
         decoration: decoration,
-        height: height,
         letterSpacing: letterSpacing,
       );
 
@@ -32,7 +30,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.02.h,
         letterSpacing: -1.60.w,
       );
 
@@ -46,7 +43,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.03.h,
         letterSpacing: -0.80.w,
       );
 
@@ -60,7 +56,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.04.h,
         letterSpacing: -0.80.w,
       );
 
@@ -74,7 +69,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.06.h,
         letterSpacing: -0.40.w,
       );
 
@@ -88,7 +82,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.07.h,
       );
 
   static TextStyle headingSm({
@@ -101,7 +94,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.08.h,
       );
 
   static TextStyle headingXs({
@@ -114,7 +106,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.09.h,
       );
   static TextStyle labelLg({
     Color? color,
@@ -126,7 +117,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.09.h,
       );
 
   static TextStyle label({
@@ -138,7 +128,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.10.h,
       );
   static TextStyle labelSm({
     Color? color,
@@ -150,7 +139,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.12.h,
       );
 
   static TextStyle bodyLg({
@@ -163,7 +151,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.09.h,
       );
 
   static TextStyle body({
@@ -175,7 +162,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.1.h,
       );
   static TextStyle bodySm({
     Color? color,
@@ -187,7 +173,6 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.12.h,
       );
   static TextStyle bodyXs({
     Color? color,
@@ -199,6 +184,5 @@ class PicoTextStyle {
         fontWeight: fontWeight,
         color: color,
         decoration: decoration,
-        height: 0.16.h,
       );
 }

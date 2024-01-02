@@ -71,28 +71,26 @@ class PicoTestCaseCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              8.verticalSpace,
               Skeleton.keep(
                 child: Text(
                   status.label(context),
                   style: PicoTextStyle.body(),
                 ),
               ),
-              24.verticalSpace,
+              4.verticalSpace,
               Text(
                 NumberHelper.numberFormat(count),
                 style: PicoTextStyle.headingLg(
                   color: status.textColor(context),
                 ),
               ),
-              24.verticalSpace,
+              4.verticalSpace,
               Text(
                 '(${NumberHelper.percentageFormat(percentage)})',
                 style: PicoTextStyle.body(),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              8.verticalSpace,
             ],
           ),
         ),

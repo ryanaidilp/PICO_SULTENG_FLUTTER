@@ -91,12 +91,12 @@ class PicoCaseCard extends StatelessWidget {
                   ],
                 ),
               ),
-              16.verticalSpace,
+              8.verticalSpace,
               Text(
                 NumberHelper.numberFormat(total),
                 style: PicoTextStyle.labelLg(),
               ),
-              20.verticalSpace,
+              8.verticalSpace,
               Text(
                 StringHelper.formatNewCase(newCase),
                 style: PicoTextStyle.bodyXs(
@@ -104,7 +104,6 @@ class PicoCaseCard extends StatelessWidget {
                   color: context.picoColors.text.neutral.subtle,
                 ),
               ),
-              8.verticalSpace,
             ],
           ),
         ),

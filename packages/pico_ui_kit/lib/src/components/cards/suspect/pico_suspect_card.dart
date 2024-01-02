@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
@@ -103,18 +105,23 @@ class PicoSuspectCard extends StatelessWidget {
                         padding: EdgeInsets.all(8.r),
                         showDuration: 10.seconds,
                         richMessage: WidgetSpan(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              8.verticalSpace,
-                              Text(
-                                type.title(context),
-                                style: PicoTextStyle.labelLg(),
-                              ),
-                              16.verticalSpace,
-                              Text(type.description(context)),
-                            ],
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                              sigmaX: 2,
+                              sigmaY: 2,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  type.title(context),
+                                  style: PicoTextStyle.labelLg(),
+                                ),
+                                8.verticalSpace,
+                                Text(type.description(context)),
+                              ],
+                            ),
                           ),
                         ),
                         triggerMode: TooltipTriggerMode.tap,
@@ -128,7 +135,7 @@ class PicoSuspectCard extends StatelessWidget {
                   ],
                 ),
               ),
-              24.verticalSpace,
+              4.verticalSpace,
               Row(
                 children: [
                   Text(
@@ -145,7 +152,6 @@ class PicoSuspectCard extends StatelessWidget {
                   ),
                 ],
               ),
-              16.verticalSpace,
               Divider(
                 color: context.picoColors.background.strong,
               ),
@@ -166,7 +172,6 @@ class PicoSuspectCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        24.verticalSpace,
                         Row(
                           children: [
                             Text(
@@ -185,7 +190,7 @@ class PicoSuspectCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        16.verticalSpace,
+                        4.verticalSpace,
                       ],
                     ),
                   ),
@@ -204,7 +209,6 @@ class PicoSuspectCard extends StatelessWidget {
                             ),
                           ),
                         ),
-                        24.verticalSpace,
                         Row(
                           children: [
                             Text(
@@ -221,7 +225,7 @@ class PicoSuspectCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                        16.verticalSpace,
+                        4.verticalSpace,
                       ],
                     ),
                   ),

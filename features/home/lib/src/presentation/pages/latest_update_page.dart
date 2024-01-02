@@ -178,6 +178,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: 16.w,
+                  vertical: 8.h,
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,

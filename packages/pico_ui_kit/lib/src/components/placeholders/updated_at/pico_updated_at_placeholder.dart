@@ -24,7 +24,7 @@ class PicoUpdatedAtPlaceholder extends StatelessWidget {
               style: PicoTextStyle.headingXs(),
             ),
           ),
-          24.verticalSpace,
+          4.verticalSpace,
           Row(
             children: [
               Skeleton.keep(

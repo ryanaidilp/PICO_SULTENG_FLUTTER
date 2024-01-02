@@ -17,8 +17,11 @@ class PicoTotalTestCard extends StatelessWidget {
         width: 1.sw,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: context.picoColors.background.subtle,
+            color: context.picoColors.background.white,
             borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(
+              color: context.picoColors.outline.neutral.main,
+            ),
           ),
           child: Padding(
             padding: EdgeInsets.all(8.r),
@@ -26,7 +29,6 @@ class PicoTotalTestCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                8.verticalSpace,
                 Skeleton.keep(
                   child: Text(
                     context.i10n.test_done,
@@ -35,12 +37,10 @@ class PicoTotalTestCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                24.verticalSpace,
                 Text(
                   NumberHelper.numberFormat(total),
                   style: PicoTextStyle.headingLg(),
                 ),
-                10.verticalSpace,
               ],
             ),
           ),
