@@ -81,14 +81,14 @@ class PicoSuspectCard extends StatelessWidget {
                       customBorder: const CircleBorder(),
                       child: Tooltip(
                         decoration: BoxDecoration(
-                          color: context.picoColors.background.strong,
+                          color: context.picoColors.background.white,
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
                             color: context.picoColors.outline.neutral.strong,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: context.picoColors.text.neutral.strong
+                              color: context.picoColors.background.inverse
                                   .withOpacity(0.1),
                               spreadRadius: 4.r,
                               blurRadius: 6.r,
@@ -101,7 +101,7 @@ class PicoSuspectCard extends StatelessWidget {
                         ),
                         margin: EdgeInsets.symmetric(horizontal: 36.w),
                         padding: EdgeInsets.all(8.r),
-                        showDuration: 5.seconds,
+                        showDuration: 10.seconds,
                         richMessage: WidgetSpan(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
