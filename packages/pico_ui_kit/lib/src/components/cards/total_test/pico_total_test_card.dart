@@ -37,9 +37,19 @@ class PicoTotalTestCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  NumberHelper.numberFormat(total),
-                  style: PicoTextStyle.headingLg(),
+                Skeleton.replace(
+                  replacement: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.r),
+                    child: Container(
+                      width: 80.w,
+                      height: 32.h,
+                      color: context.picoColors.semantic.info.shade100,
+                    ),
+                  ),
+                  child: Text(
+                    NumberHelper.numberFormat(total),
+                    style: PicoTextStyle.headingLg(),
+                  ),
                 ),
               ],
             ),

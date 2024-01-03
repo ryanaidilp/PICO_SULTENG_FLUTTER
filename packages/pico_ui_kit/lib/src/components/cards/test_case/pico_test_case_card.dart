@@ -78,10 +78,20 @@ class PicoTestCaseCard extends StatelessWidget {
                 ),
               ),
               4.verticalSpace,
-              Text(
-                NumberHelper.numberFormat(count),
-                style: PicoTextStyle.headingLg(
-                  color: status.textColor(context),
+              Skeleton.replace(
+                replacement: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: Container(
+                    width: 60.w,
+                    height: 30.h,
+                    color: context.picoColors.semantic.info.shade100,
+                  ),
+                ),
+                child: Text(
+                  NumberHelper.numberFormat(count),
+                  style: PicoTextStyle.headingLg(
+                    color: status.textColor(context),
+                  ),
                 ),
               ),
               4.verticalSpace,

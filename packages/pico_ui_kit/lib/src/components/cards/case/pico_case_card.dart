@@ -92,9 +92,19 @@ class PicoCaseCard extends StatelessWidget {
                 ),
               ),
               8.verticalSpace,
-              Text(
-                NumberHelper.numberFormat(total),
-                style: PicoTextStyle.labelLg(),
+              Skeleton.replace(
+                replacement: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: Container(
+                    width: 80.w,
+                    height: 20.h,
+                    color: context.picoColors.semantic.info.shade100,
+                  ),
+                ),
+                child: Text(
+                  NumberHelper.numberFormat(total),
+                  style: PicoTextStyle.labelLg(),
+                ),
               ),
               8.verticalSpace,
               Text(

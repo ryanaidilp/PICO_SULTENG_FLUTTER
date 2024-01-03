@@ -138,16 +138,36 @@ class PicoSuspectCard extends StatelessWidget {
               4.verticalSpace,
               Row(
                 children: [
-                  Text(
-                    NumberHelper.numberFormat(total),
-                    style: PicoTextStyle.headingXl(),
+                  Skeleton.replace(
+                    replacement: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.r),
+                      child: Container(
+                        width: 50.w,
+                        height: 36.h,
+                        color: context.picoColors.semantic.info.shade100,
+                      ),
+                    ),
+                    child: Text(
+                      NumberHelper.numberFormat(total),
+                      style: PicoTextStyle.headingXl(),
+                    ),
                   ),
                   4.horizontalSpace,
-                  Text(
-                    StringHelper.formatNewCase(newCase),
-                    style: PicoTextStyle.bodySm(
-                      fontWeight: FontWeight.w700,
-                      color: context.picoColors.text.neutral.subtle,
+                  Skeleton.replace(
+                    replacement: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.r),
+                      child: Container(
+                        width: 24.w,
+                        height: 12.h,
+                        color: context.picoColors.semantic.info.shade100,
+                      ),
+                    ),
+                    child: Text(
+                      StringHelper.formatNewCase(newCase),
+                      style: PicoTextStyle.bodySm(
+                        fontWeight: FontWeight.w700,
+                        color: context.picoColors.text.neutral.subtle,
+                      ),
                     ),
                   ),
                 ],
@@ -174,18 +194,40 @@ class PicoSuspectCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text(
-                              NumberHelper.numberFormat(activeCase),
-                              style: PicoTextStyle.headingXl(),
+                            Skeleton.replace(
+                              replacement: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.r),
+                                child: Container(
+                                  width: 50.w,
+                                  height: 36.h,
+                                  color:
+                                      context.picoColors.semantic.info.shade100,
+                                ),
+                              ),
+                              child: Text(
+                                NumberHelper.numberFormat(activeCase),
+                                style: PicoTextStyle.headingXl(),
+                              ),
                             ),
                             4.horizontalSpace,
-                            Text(
-                              StringHelper.formatNewCase(
-                                newCase - newFinishedCase,
+                            Skeleton.replace(
+                              replacement: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.r),
+                                child: Container(
+                                  width: 24.w,
+                                  height: 12.h,
+                                  color:
+                                      context.picoColors.semantic.info.shade100,
+                                ),
                               ),
-                              style: PicoTextStyle.bodySm(
-                                fontWeight: FontWeight.w700,
-                                color: context.picoColors.text.neutral.subtle,
+                              child: Text(
+                                StringHelper.formatNewCase(
+                                  newCase - newFinishedCase,
+                                ),
+                                style: PicoTextStyle.bodySm(
+                                  fontWeight: FontWeight.w700,
+                                  color: context.picoColors.text.neutral.subtle,
+                                ),
                               ),
                             ),
                           ],
@@ -211,16 +253,38 @@ class PicoSuspectCard extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Text(
-                              NumberHelper.numberFormat(finishedCase),
-                              style: PicoTextStyle.headingXl(),
+                            Skeleton.replace(
+                              replacement: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.r),
+                                child: Container(
+                                  width: 50.w,
+                                  height: 36.h,
+                                  color:
+                                      context.picoColors.semantic.info.shade100,
+                                ),
+                              ),
+                              child: Text(
+                                NumberHelper.numberFormat(finishedCase),
+                                style: PicoTextStyle.headingXl(),
+                              ),
                             ),
                             4.horizontalSpace,
-                            Text(
-                              StringHelper.formatNewCase(newFinishedCase),
-                              style: PicoTextStyle.bodySm(
-                                fontWeight: FontWeight.w700,
-                                color: context.picoColors.text.neutral.subtle,
+                            Skeleton.replace(
+                              replacement: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.r),
+                                child: Container(
+                                  width: 24.w,
+                                  height: 12.h,
+                                  color:
+                                      context.picoColors.semantic.info.shade100,
+                                ),
+                              ),
+                              child: Text(
+                                StringHelper.formatNewCase(newFinishedCase),
+                                style: PicoTextStyle.bodySm(
+                                  fontWeight: FontWeight.w700,
+                                  color: context.picoColors.text.neutral.subtle,
+                                ),
                               ),
                             ),
                           ],

@@ -58,18 +58,38 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.center,
                   children: [
-                    Text(
-                      NumberHelper.numberFormat(total),
-                      style: PicoTextStyle.headingXl(
-                        color: Colors.white,
+                    Skeleton.replace(
+                      replacement: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.r),
+                        child: Container(
+                          width: 80.w,
+                          height: 45.h,
+                          color: context.picoColors.semantic.info.shade100,
+                        ),
+                      ),
+                      child: Text(
+                        NumberHelper.numberFormat(total),
+                        style: PicoTextStyle.headingXl(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     8.horizontalSpace,
-                    Text(
-                      StringHelper.formatNewCase(newCase),
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontWeight: FontWeight.w700,
+                    Skeleton.replace(
+                      replacement: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.r),
+                        child: Container(
+                          width: 24.w,
+                          height: 16.h,
+                          color: context.picoColors.semantic.info.shade100,
+                        ),
+                      ),
+                      child: Text(
+                        StringHelper.formatNewCase(newCase),
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ],

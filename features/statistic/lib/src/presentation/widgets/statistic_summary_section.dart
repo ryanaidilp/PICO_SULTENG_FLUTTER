@@ -107,7 +107,6 @@ class StatisticSummarySection extends StatelessWidget {
                   ),
                 _ => const PicoTotalTestCardTile(
                     key: Key('total-test-loading'),
-                    total: 12600,
                   ).sekeletonize(),
               },
             ),
