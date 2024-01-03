@@ -1,3 +1,4 @@
+import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
@@ -61,7 +62,9 @@ class StatisticDataList extends StatelessWidget {
             16.verticalSpace,
             PicoCardTile(
               label: context.i10n.national_case_label,
-              onTap: () {},
+              onTap: () => context.router.push(
+                const NationalStatisticRoute(),
+              ),
             ),
             16.verticalSpace,
             PicoCardTile(
