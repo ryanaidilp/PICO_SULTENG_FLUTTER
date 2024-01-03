@@ -39,6 +39,10 @@ class PicoRouter extends _$PicoRouter {
               page: StatisticRoute.page,
               path: 'statistic',
             ),
+            AutoRoute(
+              page: NationalStatisticRoute.page,
+              path: 'national-statistic',
+            ),
           ],
         ),
       ];
