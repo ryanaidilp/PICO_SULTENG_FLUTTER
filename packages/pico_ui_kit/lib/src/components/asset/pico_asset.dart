@@ -7,7 +7,7 @@ import 'package:pico_ui_kit/src/components/asset/models/pico_asset_data.dart';
 
 class PicoAsset extends StatelessWidget {
   const PicoAsset._({
-    required PicoAssetType type,
+    required this.type,
     required this.data,
     this.repeat = false,
     this.borderRadius,
@@ -18,7 +18,7 @@ class PicoAsset extends StatelessWidget {
     this.height,
     this.color,
     this.border,
-  }) : type = type;
+  });
 
   factory PicoAsset.icon({
     required PicoIcons icon,

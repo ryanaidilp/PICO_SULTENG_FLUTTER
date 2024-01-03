@@ -9,8 +9,8 @@ class BarChartWidget extends StatelessWidget {
     required this.title,
     required this.datasets,
     required this.datasetColors,
-    required this.datasetColorDescriptions,
     required this.datasetVerticalLabels,
+    List<String>? datasetColorDescriptions,
     this.backgroundDecorations,
     this.foregroundDecorations,
     super.key,
@@ -25,15 +25,16 @@ class BarChartWidget extends StatelessWidget {
         ),
         assert(
           datasets.first.length == datasetColors.length &&
-              datasets.first.length == datasetColorDescriptions.length &&
-              datasetColors.length == datasetColorDescriptions.length,
+              datasets.first.length == datasetColorDescriptions?.length &&
+              datasetColors.length == datasetColorDescriptions?.length,
           'Dataset colors & color description length must match '
           'dataset`s data length!',
         ),
         assert(
           datasets.every((element) => element.length == datasets.first.length),
           'Every sub data sets must have the same length!',
-        );
+        ),
+        datasetColorDescriptions = datasetColorDescriptions ?? [];
 
   final bool stacked;
   final String title;
@@ -88,38 +89,40 @@ class BarChartWidget extends StatelessWidget {
                 duration: duration ?? 300.milliseconds,
                 state: _chartStates(context)[stacked ? 0 : 1],
               ),
-              16.verticalSpace,
-              Text(
-                '${context.i10n.description} :',
-              ),
-              8.verticalSpace,
-              Wrap(
-                spacing: 8.w,
-                runSpacing: 8.h,
-                children: List.generate(
-                  datasetColorDescriptions.length,
-                  (index) => Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 16.w,
-                        height: 16.h,
-                        decoration: BoxDecoration(
-                          color: datasetColors[index],
-                          borderRadius: BorderRadius.circular(4.r),
+              if (datasetColorDescriptions.isNotEmpty) ...[
+                16.verticalSpace,
+                Text(
+                  '${context.i10n.description} :',
+                ),
+                8.verticalSpace,
+                Wrap(
+                  spacing: 8.w,
+                  runSpacing: 8.h,
+                  children: List.generate(
+                    datasetColorDescriptions.length,
+                    (index) => Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 16.w,
+                          height: 16.h,
+                          decoration: BoxDecoration(
+                            color: datasetColors[index],
+                            borderRadius: BorderRadius.circular(4.r),
+                          ),
                         ),
-                      ),
-                      4.horizontalSpace,
-                      Text(
-                        datasetColorDescriptions[index],
-                        style: PicoTextStyle.body(
-                          fontWeight: FontWeight.w600,
+                        4.horizontalSpace,
+                        Text(
+                          datasetColorDescriptions[index],
+                          style: PicoTextStyle.body(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
+              ],
             ],
           ),
         ),
