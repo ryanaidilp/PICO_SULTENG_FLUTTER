@@ -10,12 +10,6 @@ class Env {
     FlavorStatus.PRODUCTION => EnvProd.baseUrl,
     _ => EnvDev.baseUrl,
   };
-  static String appName = switch (Flavor.flavor) {
-    FlavorStatus.DEVELOPMENT => EnvDev.appName,
-    FlavorStatus.STAGING => EnvStg.appName,
-    FlavorStatus.PRODUCTION => EnvProd.appName,
-    _ => EnvDev.appName,
-  };
   static String onesignalAppID = switch (Flavor.flavor) {
     FlavorStatus.DEVELOPMENT => EnvDev.onesignalAppId,
     FlavorStatus.STAGING => EnvStg.onesignalAppId,
