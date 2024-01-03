@@ -4,6 +4,7 @@ import 'package:statistic/src/data/models/statistic_model.dart';
 
 abstract class StatisticRemoteDataSource {
   Future<ApiResponseModel<StatisticModel>> latest();
+  Future<ApiResponseModel<StatisticModel>> latestNational();
 }
 
 @LazySingleton(as: StatisticRemoteDataSource)
@@ -13,6 +14,18 @@ class StatisticRemoteDataSourceImpl implements StatisticRemoteDataSource {
   @override
   Future<ApiResponseModel<StatisticModel>> latest() async {
     final response = await _httpModule.get(ApiEndpoint.latestProvince());
+
+    final result = ApiResponseModel<StatisticModel>.fromJson(
+      response,
+      (json) => StatisticModel.fromJson(json! as JSON),
+    );
+
+    return result;
+  }
+
+  @override
+  Future<ApiResponseModel<StatisticModel>> latestNational() async {
+    final response = await _httpModule.get(ApiEndpoint.latest());
 
     final result = ApiResponseModel<StatisticModel>.fromJson(
       response,
