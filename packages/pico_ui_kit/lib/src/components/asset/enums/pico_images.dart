@@ -16,7 +16,7 @@ enum PicoImages {
   washHands,
   wearMask;
 
-  PicoAssetData<AssetGenImage> get data => switch (this) {
+  PicoAssetData<dynamic> get data => switch (this) {
         caugh => PicoAssetData<AssetGenImage>(
             file: Assets.images.caugh,
             extension: PicoAssetExtension.png,
@@ -41,9 +41,9 @@ enum PicoImages {
             file: Assets.images.headache,
             extension: PicoAssetExtension.png,
           ),
-        pico => PicoAssetData<AssetGenImage>(
+        pico => PicoAssetData<SvgGenImage>(
             file: Assets.images.pico,
-            extension: PicoAssetExtension.png,
+            extension: PicoAssetExtension.svg,
           ),
         picoWhite => PicoAssetData<AssetGenImage>(
             file: Assets.images.picoWhite,
