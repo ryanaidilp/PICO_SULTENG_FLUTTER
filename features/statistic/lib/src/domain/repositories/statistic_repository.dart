@@ -4,4 +4,5 @@ import 'package:statistic/src/domain/entities/statistic.dart';
 
 abstract class StatisticRepository {
   Future<Either<Failure, Statistic>> latest();
+  Future<Either<Failure, Statistic>> latestNational();
 }
