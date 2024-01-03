@@ -93,6 +93,17 @@ root/
 
 ## Getting Started
 
+> [!IMPORTANT]
+> Notes on Environment Configuration:
+>
+> **BASE_UR**L: By default, this is set to the PICO SulTeng API endpoint. If you wish to use your own API, replace this endpoint and ensure you update the corresponding endpoints in >core/network/api_endpoint.dart to match your API's structure.
+>
+> **ONESIGNAL_APP_ID**: This ID is necessary for enabling push notifications within the app. Make sure to replace it with your own OneSignal App ID.
+>
+> **NEWSAPI_API_KEY**: This key is used to fetch articles related to COVID-19 from the News API service. Use your own API key to ensure that the news feature operates without interruption.
+>
+> After configuring the environment variables as per your requirements, you can proceed with building and running the app.
+
 To set up and run the PICO SulTeng Flutter project, follow these steps:
 
 1. **Clone the Repository**:
@@ -135,6 +146,7 @@ To set up and run the PICO SulTeng Flutter project, follow these steps:
 
 6. **Running the App**:
    Now, you should be able to run the app on your device or emulator.
+
    ```sh
    flutter run
    ```
