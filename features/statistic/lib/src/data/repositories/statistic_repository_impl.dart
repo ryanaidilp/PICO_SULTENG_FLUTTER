@@ -28,4 +28,23 @@ class StatisticRepositoryImpl implements StatisticRepository {
       return Left(StatisticFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, Statistic>> latestNational() async {
+    try {
+      final result = await _httpDataSource.latestNational();
+
+      if (!result.success) {
+        return Left(
+          StatisticFailure(
+            message: result.errors?.first.message ?? 'Error',
+          ),
+        );
+      }
+
+      return Right(result.data.toEntity());
+    } catch (e) {
+      return Left(StatisticFailure(message: e.toString()));
+    }
+  }
 }
