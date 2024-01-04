@@ -9,26 +9,89 @@ packages:
 command:
   version:
     branch: master
+  bootstrap:
+    environment:
+      sdk: ">=3.2.3 <4.0.0"
+    dev_dependencies:
+      build_runner: ^2.4.7
+      mocktail: ^1.0.2
+      very_good_analysis: ^5.1.0
 
 scripts:
   generate-env:
-    run: melos exec --depends-on="envied_generator" -- "dart run build_runner build -d"
+    run: melos exec -- "dart run build_runner build -d"
     description: "Run build_runner in all of the packages that depends on it."
+    packageFilters:
+      dependsOn:
+        - "envied_generator"
+
   generate-locale:
-    run: melos exec --depends-on="slang" -- "dart run slang"
-    description: "Generate translation from arb."
+    run: melos exec -- "dart run slang"
+    description: "Generate translation from json file."
+    packageFilters:
+      dependsOn:
+        - "slang"
+        - "slang_flutter"
+
   generate-assets:
-    run: melos exec --scope="*pico_ui_kit*" -- "fluttergen"
+    run: melos exec -- "fluttergen"
     description: "Generate asset for UI Kit Package"
+    packageFilters:
+      scope: "*pico_ui_kit*"
+
   build:
-    run: melos exec --depends-on="build_runner" -- "dart run build_runner build -d"
+    run: melos exec -- "dart run build_runner build -d"
     description: "Run build runner in all packages that depend on it."
+    packageFilters:
+      dependsOn:
+        - "build_runner"
+
   format:
-    run: melos exec -- "dart format lib --fix && dart fix --apply"
+    run: melos exec -- "dart format . --fix && dart fix --apply"
     description: "Run dart format and dart fix for all packages"
+  format-check:
+    run: melos exec -- "dart format . --set-exit-if-changed"
+
+  get:select:
+    run: melos exec -- "flutter pub get"
+    description: "Run `flutter pub get` in selected package."
+    packageFilters:
+      dependsOn: flutter
   get:
-    run: melos exec --depends-on="flutter" -- "flutter pub get"
-    description: "Run `flutter pub get` in every packages."
+    run: melos run get:select --no-select
+    description: "Run `flutter pub get` in all packages that depends on Flutter."
+
+  upgrade:select:
+    run: melos exec -- "flutter pub upgrade"
+    description: "Run `flutter pub upgrade` in selected package."
+    packageFilters:
+      dependsOn: "flutter"
   upgrade:
-    run: melos exec --depends-on="flutter" -- "flutter pub upgrade"
-    description: "Run `flutter pub upgrade` in every packages."
+    run: melos run upgrade:select --no-select
+    description: "Run `flutter pub upgrade` in all packages."
+
+  test:select:
+    run: melos exec -- "very_good test"
+    description: "Run `flutter test` for selected package."
+    packageFilters:
+      dirExists: test
+  test:
+    run: melos run test:select --no-select
+    description: "run all flutter test in this project."
+  coverage:select:
+    run: melos exec -- very_good test --coverage
+    packageFilters:
+      dirExists: test
+    description: "Generate coverage for the selected package."
+  coverage:
+    run: melos run coverage:select --no-select
+    description: "Generate test coverage for all packages."
+
+  update-goldens:select:
+    run: melos exec -- "very_good test --update-goldens"
+    packageFilters:
+      dirExists: test
+    description: "Re-generate golden test files for selected package."
+  update-goldens:
+    run: melos run update-goldens:select --no-select
+    description: "Re-generate all golden test files."
