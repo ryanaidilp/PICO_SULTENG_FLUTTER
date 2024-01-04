@@ -26,7 +26,7 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   lottie: ^2.7.0
   nil: ^1.1.1
-  pull_to_refresh: ^2.0.0
+  pull_to_refresh_flutter3: ^2.0.2
   skeletonizer: ^0.8.0
   smooth_page_indicator: ^1.1.0
 
