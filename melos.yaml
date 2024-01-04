@@ -18,7 +18,7 @@ command:
       very_good_analysis: ^5.1.0
   clean:
     hooks:
-      post: melos exec --flutter --concurency=3 -- "flultter clean"
+      post: melos exec --flutter --concurrency=3 -- "flultter clean"
 
 scripts:
   generate-env:
