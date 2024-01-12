@@ -18,6 +18,32 @@ jobs:
       modified_files_only: false
 
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
-    with:
-      flutter_channel: stable
+    runs-on: "ubuntu-latest"
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
+      - name: 🤫 Set SSH Key
+        env:
+          ssh_key: ${{secrets.ssh_key}}
+        if: env.ssh_key != null
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{secrets.ssh_key}}
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate very_good_cli
+          flutter pub global activate melos
+          melos get
+      - name: ✨ Check Formatting
+        run: melos format-check
+      - name: 🧪 Run Tests
+        run: very_good test -j 4 false '--optimization' --coverage --test-randomize-ordering-seed
