@@ -1,0 +1,27 @@
+targets:
+  $default:
+    builders:
+      auto_route_generator:auto_route_generator:
+        generate_for:
+          include:
+            - lib/src/presentation/pages/**.dart
+      auto_route_generator:auto_router_generator:
+        generate_for:
+          include:
+            - lib/src/router/**.dart
+      json_serializable:
+        options:
+          field_rename: snake
+      freezed:freezed:
+        generate_for:
+          include:
+            - lib/src/presentation/blocs/**/**.dart
+            - lib/src/presentation/cubits/**/**.dart
+            - lib/src/data/models/**.dart
+      injectable_generator|injectable_config_builder:
+        enabled: true
+        generate_for:
+          include:
+            - lib/src/di/**.dart
+            - lib/src/data/datasources/**.dart
+            - lib/src/data/repositories/**.dart
