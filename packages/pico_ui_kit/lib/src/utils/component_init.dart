@@ -3,7 +3,7 @@ import 'package:nil/nil.dart';
 
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 
-/// A wrapper widget that initializes components within the Lontara UI Kit.
+/// A wrapper widget that initializes components within the PICO UI Kit.
 ///
 /// The `PCComponentInit` widget provides a mechanism for initializing \
 /// components with specific configurations before they are rendered on the
