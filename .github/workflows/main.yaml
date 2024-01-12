@@ -42,7 +42,7 @@ jobs:
         run: |
           flutter pub global activate very_good_cli
           flutter pub global activate melos
-          flutter pub global activate fluttergen
+          flutter pub global activate flutter_gen
           melos get
       - name: 📦 Prepare .env
         run: |
