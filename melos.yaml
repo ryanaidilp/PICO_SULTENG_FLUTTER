@@ -42,12 +42,23 @@ scripts:
     packageFilters:
       scope: "*pico_ui_kit*"
 
-  build:
+  build:select:
     run: melos exec -- "dart run build_runner build -d"
-    description: "Run build runner in all packages that depend on it."
+    description: "Run build runner in selected package that depends on build_runner."
     packageFilters:
       dependsOn:
         - "build_runner"
+
+  build:all:
+    run: melos exec --concurrency=3 -- "dart run build_runner build -d"
+    description: "Run build runner in selected package that depends on build_runner."
+    packageFilters:
+      dependsOn:
+        - "build_runner"
+
+  build:
+    run: melos run build:all --no-select
+    description: "Run build runner in all packages that depend on it."
 
   format:
     run: melos exec -- "dart format . --fix && dart fix --apply"
