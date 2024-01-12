@@ -51,6 +51,8 @@ jobs:
           cp .env.example .env.stg
       - name: 📦 Run build_runner
         run: melos build
+      - name: ✨ Fix Formatting
+        run: melos format
       - name: ✨ Check Formatting
         run: melos format-check
       - name: 🕵️ Analyze
