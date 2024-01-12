@@ -21,6 +21,18 @@ command:
       post: melos exec --flutter --concurrency=3 -- "flutter clean"
 
 scripts:
+  analyze:select:
+    run: melos exec -- "flutter analyze lib test"
+    description: "Run flutter analyze in selected package that depends on it."
+    packageFilters:
+      dependsOn:
+        - "flutter"
+      dirExists: test
+
+  analyze:
+    run: melos run analyze:select --no-select
+    description: "Run flutter analyze in all of packages that depends on it."
+
   generate-env:
     run: melos exec -- "dart run build_runner build -d"
     description: "Run build_runner in all of the packages that depends on it."
@@ -85,7 +97,7 @@ scripts:
     description: "Run `flutter pub upgrade` in all packages."
 
   test:select:
-    run: melos exec -- "very_good test"
+    run: melos exec -- "very_good test -j 4 --optimization --coverage --test-randomize-ordering-seed random"
     description: "Run `flutter test` for selected package."
     packageFilters:
       dirExists: test
@@ -102,7 +114,7 @@ scripts:
     description: "Generate test coverage for all packages."
 
   update-goldens:select:
-    run: melos exec -- "very_good test --update-goldens"
+    run: melos exec -- "very_good test --concurrency=4 --update-goldens"
     packageFilters:
       dirExists: test
     description: "Re-generate golden test files for selected package."
