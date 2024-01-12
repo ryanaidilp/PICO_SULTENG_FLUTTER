@@ -46,4 +46,4 @@ jobs:
       - name: ✨ Check Formatting
         run: melos format-check
       - name: 🧪 Run Tests
-        run: very_good test -j 4 false '--optimization' --coverage --test-randomize-ordering-seed
+        run: melos test
