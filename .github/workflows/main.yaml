@@ -42,6 +42,7 @@ jobs:
         run: |
           flutter pub global activate very_good_cli
           flutter pub global activate melos
+          flutter pub global activate fluttergen
           melos get
       - name: 📦 Prepare .env
         run: |
@@ -51,6 +52,8 @@ jobs:
           cp .env.example .env.stg
       - name: 📦 Run build_runner
         run: melos build
+      - name: 📦 Synchronize Dependencies
+        run: melos get
       - name: ✨ Fix Formatting
         run: melos format
       - name: ✨ Check Formatting
