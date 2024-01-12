@@ -6,8 +6,6 @@ concurrency:
 
 on:
   pull_request:
-    branches:
-      - main
 
 jobs:
   semantic_pull_request:
