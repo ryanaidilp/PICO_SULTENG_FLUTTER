@@ -136,5 +136,13 @@
   "infographic_label": "Practical Information",
   "infographic_subtitle": "Collection of infographics related to covid-19",
   "infographics": "Infographic",
-  "news": "News"
+  "news": "News",
+  "test": {
+    "pcr": {
+      "description": "Polymerase Chain Reaction or PCR is considered the most accurate diagnostic test to confirm whether someone has COVID-19 or not. The displayed number of PCR tests is processed from data published by the Central Sulawesi Health Office."
+    },
+    "rdt": {
+      "description": "Rapid Diagnostic Test (RDT) or rapid diagnostic test is used as an initial medical screening to detect COVID-19. In case of a reactive RDT result, further confirmation will be conducted using the SWAB/Polymerase Chain Reaction (PCR) method."
+    }
+  }
 }
