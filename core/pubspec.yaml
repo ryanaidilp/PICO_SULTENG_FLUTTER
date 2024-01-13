@@ -30,6 +30,7 @@ dependencies:
     path: ../features/statistic
 
 dev_dependencies:
+  auto_route_generator: ^7.3.2
   build_runner: ^2.4.7
   flutter_test:
     sdk: flutter
