@@ -18,7 +18,9 @@ command:
       very_good_analysis: ^5.1.0
   clean:
     hooks:
-      post: melos exec --flutter --concurrency=3 -- "flutter clean"
+      post: |
+        melos exec --flutter --concurrency=3 -- "flutter clean"
+        melos run build:clean
 
 scripts:
   analyze:select:
@@ -61,9 +63,20 @@ scripts:
       dependsOn:
         - "build_runner"
 
+  build:clean:select:
+    run: melos exec -- "dart run build_runner clean"
+    description: "Run build runner clean in selected package that depends on build_runner."
+    packageFilters:
+      dependsOn:
+        - "build_runner"
+
   build:
     run: melos run build:select --no-select
     description: "Run build runner in all packages that depend on it."
+
+  build:clean:
+    run: melos run build:clean:select --no-select
+    description: "Run build runner clean in all packages that depend on it."
 
   format:
     run: melos exec -- "dart format . --fix && dart fix --apply"
