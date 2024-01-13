@@ -1,13 +1,18 @@
 name: ci
 
+permissions: write-all
+
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 on:
   pull_request:
-    branches:
-      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   semantic_pull_request:
@@ -19,7 +24,6 @@ jobs:
       includes: "**/*.md"
       modified_files_only: false
 
-  build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
-    with:
-      flutter_channel: stable
+  test_with_coverage:
+    uses: ./.github/workflows/_test_with_coverage.yaml
+    secrets: inherit

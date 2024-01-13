@@ -13,7 +13,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.reactive({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -23,7 +23,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.nonReactive({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -33,7 +33,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.invalid({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -43,7 +43,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.process({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -52,7 +52,7 @@ class PicoTestCaseCard extends StatelessWidget {
       );
 
   final int count;
-  final int percentage;
+  final double percentage;
   final PicoTestStatus status;
 
   @override

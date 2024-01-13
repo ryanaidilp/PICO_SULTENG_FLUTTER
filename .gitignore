@@ -54,3 +54,13 @@ pubspec_overrides.yaml
 *.g.dart
 *.gr.dart
 *.config.dart
+
+coverage/*
+coverage_report/*
+junit_test_reports/*
+test_reports/*
+
+!coverage/.gitkeep
+!coverage_report/.gitkeep
+!junit_test_reports/.gitkeep
+!test_reports/.gitkeep

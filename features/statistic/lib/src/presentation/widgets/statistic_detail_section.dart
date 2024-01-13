@@ -54,7 +54,7 @@ class StatisticDetailSection extends StatelessWidget {
                   PicoTotalTestCardTile(
                     key: const Key('total-test-loaded'),
                     total: total,
-                    onTap: () {},
+                    onTap: () => context.router.push(const TestDetailRoute()),
                   ),
                 LatestCovidTestEmptyState() => PicoTotalTestCardTile(
                     key: const Key('total-test-empty'),

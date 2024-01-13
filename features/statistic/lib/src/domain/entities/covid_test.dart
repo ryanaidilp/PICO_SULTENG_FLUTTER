@@ -23,6 +23,19 @@ class CovidTest extends Equatable {
   final int process;
   final int invalid;
   final int total;
+
+  double get reactivePercentage => positive / total;
+  double get nonReactivePercentage => negative / total;
+  double get inProcessPercentage => process / total;
+  double get invalidPercentage => invalid / total;
+  String get nameAbbreviation {
+    final buffer = StringBuffer();
+    final texts = name.split(' ');
+    final title = texts.map((e) => e.substring(0, 1)).toList();
+    buffer.writeAll(title);
+    return buffer.toString();
+  }
+
   @override
   List<Object> get props {
     return [

@@ -156,3 +156,7 @@ After these steps, the PICO SulTeng Flutter app should be up and running on your
 ## Contact
 
 Created by [@ryanaidilp\_](https://linkedin.com/in/ryanaidilp) - feel free to contact me!
+
+## Activities
+
+![Alt](https://repobeats.axiom.co/api/embed/65970a0cf11692500a081f76b821ffd81dd45c89.svg "Repobeats analytics image")

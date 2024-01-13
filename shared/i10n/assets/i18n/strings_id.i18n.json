@@ -31,7 +31,7 @@
         "odp": "ODP",
         "pdp": "PDP"
       },
-      "description":{
+      "description": {
         "active": "Dalam Pemantauan/Pengawasan",
         "finished": "Selesai Pemantauan/Pengawasan"
       }
@@ -65,7 +65,7 @@
     "information_center": "Pusat Layanan & Informasi",
     "data": {
       "title": "Data",
-       "url": "https://banuacoders.com/corona/data"
+      "url": "https://banuacoders.com/corona/data"
     },
     "vaccine": {
       "title": "Vaksin",
@@ -82,7 +82,6 @@
     "isolation": {
       "title": "Isolasi Mandiri",
       "url": "https://banuacoders.com/corona/isoman"
-
     },
     "screening": {
       "title": "Pemeriksaan Mandiri",
@@ -107,7 +106,7 @@
     "vaccinated": " telah divaksin",
     "vaccine_progress": "Progress Vaksinasi"
   },
-  "vaccine_type" :{
+  "vaccine_type": {
     "first": "Vaksin Dosis 1",
     "second": "Vaksin Dosis 2",
     "health_worker": "Tenaga Kesehatan",
@@ -137,5 +136,13 @@
   "infographic_label": "Informasi Praktikal",
   "infographic_subtitle": "Kumpulan infografis terkait covid-19!",
   "infographics": "Infografis",
-  "news": "Berita"
+  "news": "Berita",
+  "test": {
+    "pcr": {
+      "description": "Polymerase Chain Reaction atau PCR merupakan pemeriksaan diagnostik yang dianggap paling akurat untuk memastikan apakah seseorang menderita COVID-19 atau tidak. Jumlah tes PCR yang ditampilkan diolah dari data yang dipublikasikan Dinas Kesehatan Sulawesi Tengah"
+    },
+    "rdt": {
+      "description": "Rapid Diagnostic Test (RDT) atau test diagnostik cepat merupakan test yang digunakan sebagai skrining medis awal untuk mendeteksi COVID-19. Pada hasil RDT yang Reaktif akan dilakukan pemeriksaan konfirmasi lebih lanjut dengan metode SWAB/Polymerase Chain Reaction (PCR)."
+    }
+  }
 }

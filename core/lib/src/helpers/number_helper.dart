@@ -4,13 +4,13 @@ import 'package:i10n/i10n.dart';
 class NumberHelper {
   NumberHelper._();
   static double calculatePercentage({
-    required int value,
-    required int total,
+    required num value,
+    required num total,
   }) =>
       value / total * 100;
 
   static String numberFormat(
-    int number, {
+    num number, {
     String? locale,
     bool compact = false,
     bool showExplicitSign = false,
@@ -28,7 +28,7 @@ class NumberHelper {
   }
 
   static String percentageFormat(
-    int number, {
+    num number, {
     String? locale,
   }) {
     final formatter = NumberFormat.percentPattern(
