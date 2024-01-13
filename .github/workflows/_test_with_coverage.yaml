@@ -27,13 +27,16 @@ jobs:
         run: flutter pub global activate flutter_gen
       - name: ✨ Check Formatting
         run: melos format-check
-
       - name: 📦 Prepare .env
         run: |
           cd shared/config
           cp .env.example .env.dev
           cp .env.example .env
           cp .env.example .env.stg
+      - name: 📦 Generate Translation
+        run: melos generate-locale
+      - name: 📦 Generate Env
+        run: melos generate-env
       - name: 📦 Run build_runner
         run: melos build
       - name: 🕵️ Analyze
