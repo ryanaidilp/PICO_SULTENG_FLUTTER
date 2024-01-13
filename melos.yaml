@@ -104,6 +104,7 @@ scripts:
   test:
     run: melos run test:select --no-select
     description: "run all flutter test in this project."
+
   coverage:select:
     run: melos exec -- very_good test --coverage
     packageFilters:
@@ -112,6 +113,63 @@ scripts:
   coverage:
     run: melos run coverage:select --no-select
     description: "Generate test coverage for all packages."
+
+  test:with-lcov-coverage:select:
+    run: MELOS_ROOT_PATH/scripts/test-with-coverage.sh MELOS_ROOT_PATH MELOS_PACKAGE_PATH MELOS_PACKAGE_NAME
+    exec:
+      concurrency: 6
+    packageFilters:
+      dirExists: test
+    description: Run Flutter tests and publish local lcov coverage for a specific package
+
+  test:with-lcov-coverage:
+    run: |
+      melos run test:with-lcov-coverage:select --no-select && \
+      melos run test:combine-coverage
+    description: Run Flutter tests for all packages and generate a combined lcov coverage report
+
+  test:with-html-coverage:select:
+    run: |
+      MELOS_ROOT_PATH/scripts/test-with-coverage.sh MELOS_ROOT_PATH MELOS_PACKAGE_PATH MELOS_PACKAGE_NAME && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+    exec:
+      concurrency: 6
+    packageFilters:
+      dirExists: test
+    description: Run Flutter tests for a specific package and updates global HTML coverage report
+
+  test:with-html-coverage:
+    run: |
+      melos run test:with-lcov-coverage:select --no-select && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+      echo "🧪📊 You can find coverage report in the following folder: MELOS_ROOT_PATH/coverage_report/index.html\n\n💡To open it just run: open MELOS_ROOT_PATH/coverage_report/index.html"
+    description: Run Flutter tests for all packages and generate a combined HTML coverage report
+
+  test:with-html-coverage:all:auto-open:
+    run: |
+      melos run test:with-lcov-coverage --no-select && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+      open MELOS_ROOT_PATH/coverage_report/index.html
+    description: Run Flutter tests for all packages and generate a combined HTML coverage report
+
+  test:combine-coverage:
+    run: MELOS_ROOT_PATH/scripts/combine-coverage.sh MELOS_ROOT_PATH
+    description: Combine individual lcov coverage into a single lcov coverage file
+    select-package:
+      dir-exists:
+        - test
+        - coverage
+
+  test:generate-html-coverage:
+    run: MELOS_ROOT_PATH/scripts/generate-html-coverage.sh MELOS_ROOT_PATH
+    description: Take combined lcov file and generate a human-readable HTML report
+    select-package:
+      dir-exists:
+        - test
+        - coverage
 
   update-goldens:select:
     run: melos exec -- "very_good test --concurrency=4 --update-goldens"
