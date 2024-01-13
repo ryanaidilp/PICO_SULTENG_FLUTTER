@@ -1,0 +1,70 @@
+name: 🧪 Test with coverage 📊
+
+on:
+  workflow_call:
+
+jobs:
+  coverage:
+    name: 🧪 Test
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+      - name: 🐦 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: ⚙️ Install lcov
+        uses: hrishikesh-kadam/setup-lcov@v1
+      - name: ⚙️ Setup Melos
+        uses: bluefireteam/melos-action@v2
+      - name: 📦 Install Dependencies
+        run: |
+          flutter pub global activate flutter_gen
+          melos get
+      - name: 📦 Prepare .env
+        run: |
+          cd shared/config
+          cp .env.example .env.dev
+          cp .env.example .env
+          cp .env.example .env.stg
+      - name: 📦 Run build_runner
+        run: melos build
+      - name: 📦 Synchronize Dependencies
+        run: melos get
+      - name: ✨ Fix Formatting
+        run: melos format
+      - name: ✨ Check Formatting
+        run: melos format-check
+      - name: 🕵️ Analyze
+        run: melos analyze
+      - name: 🧪 Run tests with coverage
+        run: melos test:with-lcov-coverage
+      - name: 🧪✅❌ Publish test results
+        id: compute_test_results
+        uses: dorny/test-reporter@v1.6.0
+        with:
+          name: "🧪📊 Unit tests report"
+          path: test_reports/*_test_report.json
+          reporter: "flutter-json"
+          max-annotations: "50"
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: 🧪📊 Publish coverage report
+        if: github.event_name == 'pull_request'
+        uses: romeovs/lcov-reporter-action@v0.3.1
+        with:
+          lcov-file: coverage_report/cleaned_combined_lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Coverage Report"
+      - name: 🥤 Extract test coverage percentage
+        run: |
+          melos run test:generate-html-coverage
+          grep -o '.*headerCovTableEntryLo.*' coverage_report/index.html | sed -E  's/.*>(.*) %<.*/\1/' > coverage_percentage.txt
+          percentage=$(cat coverage_percentage.txt)
+          echo "Coverage percentage: $percentage"
+          echo "coverage_percentage=$percentage" >> $GITHUB_ENV
