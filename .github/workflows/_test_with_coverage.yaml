@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 30
     defaults:
       run:
-        working-directory: .
+        working-directory: ${{ github.workspace }}
     steps:
       - name: 📚 Git Checkout
         uses: actions/checkout@v4
