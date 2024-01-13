@@ -1,13 +1,29 @@
 part of 'pico_color_data.dart';
 
 class PicoBackgroundNeutralColor extends PicoNeutralColor {
-  const PicoBackgroundNeutralColor({
+  const PicoBackgroundNeutralColor._({
     required super.main,
     required super.subtle,
     required super.strong,
     required this.white,
     required this.inverse,
   });
+
+  factory PicoBackgroundNeutralColor.light() => PicoBackgroundNeutralColor._(
+        main: PicoColors.bgMain,
+        subtle: PicoColors.bgSubtle,
+        strong: PicoColors.bgStrong,
+        white: PicoColors.bgWhite,
+        inverse: PicoColors.bgInverse,
+      );
+
+  factory PicoBackgroundNeutralColor.dark() => PicoBackgroundNeutralColor._(
+       main: PicoColors.bgMainDark,
+        subtle: PicoColors.bgSubtleDark,
+        strong: PicoColors.bgStrongDark,
+        white: PicoColors.bgWhiteDark,
+        inverse: PicoColors.bgInverseDark,
+      );
 
   final Color white;
   final Color inverse;
@@ -20,7 +36,7 @@ class PicoBackgroundNeutralColor extends PicoNeutralColor {
     required Color whiteVariant,
     required Color inverseVariant,
   }) =>
-      PicoBackgroundNeutralColor(
+      PicoBackgroundNeutralColor._(
         main: Color.lerp(main, mainVariant, t) ?? main,
         subtle: Color.lerp(subtle, subtleVariant, t) ?? subtle,
         strong: Color.lerp(strong, strongVariant, t) ?? strong,
@@ -34,13 +50,11 @@ class PicoBackgroundNeutralColor extends PicoNeutralColor {
     Color? strong,
     Color? white,
     Color? inverse,
-  }) {
-    return PicoBackgroundNeutralColor(
+  }) => PicoBackgroundNeutralColor._(
       main: main ?? this.main,
       subtle: subtle ?? this.subtle,
       strong: strong ?? this.strong,
       white: white ?? this.white,
       inverse: inverse ?? this.inverse,
     );
-  }
 }
