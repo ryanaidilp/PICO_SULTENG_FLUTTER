@@ -3,7 +3,7 @@ packages:
   - packages/*
   - features/*
   - shared/*
-  - core/*
+  - core
   - .
 
 command:
