@@ -205,6 +205,4 @@ scripts:
       melos run generate-assets
       melos run generate-core
       melos run build
-    exec:
-      failFast: true
     description: Initialize PICO Sulteng Flutter.
