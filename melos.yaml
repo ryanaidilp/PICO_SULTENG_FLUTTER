@@ -137,6 +137,9 @@ scripts:
     exec:
       concurrency: 6
     packageFilters:
+      ignore:
+        - "*i10n*"
+        - "*config*"
       dirExists: test
     description: Run Flutter tests and publish local lcov coverage for a specific package
 
@@ -154,6 +157,9 @@ scripts:
     exec:
       concurrency: 6
     packageFilters:
+      ignore:
+        - "*i10n*"
+        - "*config*"
       dirExists: test
     description: Run Flutter tests for a specific package and updates global HTML coverage report
 
