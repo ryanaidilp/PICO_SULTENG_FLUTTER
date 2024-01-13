@@ -1,11 +1,18 @@
 name: ci
 
+permissions: write-all
+
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.head_ref }}
   cancel-in-progress: true
 
 on:
   pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   semantic_pull_request:
@@ -17,48 +24,6 @@ jobs:
       includes: "**/*.md"
       modified_files_only: false
 
-  build:
-    runs-on: "ubuntu-latest"
-    defaults:
-      run:
-        working-directory: .
-    steps:
-      - name: 📚 Git Checkout
-        uses: actions/checkout@v4
-      - name: 🐦 Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
-          cache-key: flutter-:os:-:channel:-:version:-:arch:-:hash:-${{ hashFiles('**/pubspec.lock') }}
-      - name: 🤫 Set SSH Key
-        env:
-          ssh_key: ${{secrets.ssh_key}}
-        if: env.ssh_key != null
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{secrets.ssh_key}}
-      - name: 📦 Install Dependencies
-        run: |
-          flutter pub global activate very_good_cli
-          flutter pub global activate melos
-          flutter pub global activate flutter_gen
-          melos get
-      - name: 📦 Prepare .env
-        run: |
-          cd shared/config
-          cp .env.example .env.dev
-          cp .env.example .env
-          cp .env.example .env.stg
-      - name: 📦 Run build_runner
-        run: melos build
-      - name: 📦 Synchronize Dependencies
-        run: melos get
-      - name: ✨ Fix Formatting
-        run: melos format
-      - name: ✨ Check Formatting
-        run: melos format-check
-      - name: 🕵️ Analyze
-        run: melos analyze
-      - name: 🧪 Run Tests
-        run: melos test
+  test_with_coverage:
+    uses: ./.github/workflows/_test_with_coverage.yaml
+    secrets: inherit
