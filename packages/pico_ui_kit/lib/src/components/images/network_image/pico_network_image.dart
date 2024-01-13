@@ -29,7 +29,7 @@ class PicoNetworkImage extends StatelessWidget {
         url,
         border: border ??
             Border.all(
-              color: context.picoColors.background.strong,
+              color: context.picoColors.background.neutral.strong,
             ),
         height: height,
         width: width,
@@ -40,7 +40,7 @@ class PicoNetworkImage extends StatelessWidget {
               child: Container(
                 width: width,
                 height: height,
-                color: context.picoColors.background.white,
+                color: context.picoColors.background.neutral.white,
               ).sekeletonize(),
             ),
           LoadState.failed => Container(
@@ -48,7 +48,7 @@ class PicoNetworkImage extends StatelessWidget {
               height: height,
               decoration: BoxDecoration(
                 borderRadius: borderRadius,
-                color: context.picoColors.background.subtle,
+                color: context.picoColors.background.neutral.subtle,
               ),
               child: Material(
                 borderRadius: borderRadius,
@@ -62,7 +62,7 @@ class PicoNetworkImage extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.image_not_supported_rounded,
-                          color: context.picoColors.background.strong,
+                          color: context.picoColors.icon.neutral.strong,
                         ),
                         8.verticalSpace,
                         Text(

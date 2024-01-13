@@ -20,7 +20,7 @@ class StatisticPage extends StatelessWidget {
           SliverAppBar.large(
             expandedHeight: 128.h,
             scrolledUnderElevation: 10.h,
-            surfaceTintColor: context.picoColors.background.main,
+            surfaceTintColor: context.picoColors.background.neutral.main,
             shadowColor: context.picoColors.text.neutral.main.withOpacity(0.1),
             title: BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
               builder: (context, state) => AnimatedSwitcher(
@@ -53,7 +53,7 @@ class StatisticPage extends StatelessWidget {
                   child: const StatisticDetailSection(),
                 ),
                 Divider(
-                  color: context.picoColors.background.subtle,
+                  color: context.picoColors.background.neutral.subtle,
                   thickness: 8.h,
                 ),
                 Padding(

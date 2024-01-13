@@ -17,7 +17,7 @@ class PicoTotalTestCard extends StatelessWidget {
         width: 1.sw,
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: context.picoColors.background.white,
+            color: context.picoColors.background.card.main,
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(
               color: context.picoColors.outline.neutral.main,

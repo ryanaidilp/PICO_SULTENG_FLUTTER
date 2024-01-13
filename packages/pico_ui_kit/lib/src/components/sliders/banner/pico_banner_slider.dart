@@ -80,7 +80,7 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
               onDotClicked: (index) => _carouselController.animateToPage(index),
               effect: ExpandingDotsEffect(
                 activeDotColor: context.picoColors.icon.semantic.primary,
-                dotColor: context.picoColors.background.strong,
+                dotColor: context.picoColors.background.neutral.strong,
                 dotWidth: 8.w,
                 dotHeight: 8.h,
                 spacing: 4.w,

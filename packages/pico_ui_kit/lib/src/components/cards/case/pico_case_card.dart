@@ -48,7 +48,7 @@ class PicoCaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
-          color: context.picoColors.background.white,
+          color: context.picoColors.background.card.main,
           borderRadius: BorderRadius.circular(8.r),
           border: Border.all(
             color: context.picoColors.outline.neutral.main,

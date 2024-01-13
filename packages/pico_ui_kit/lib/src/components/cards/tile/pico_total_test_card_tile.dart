@@ -21,7 +21,7 @@ class PicoTotalTestCardTile extends StatelessWidget {
             color: context.picoColors.outline.neutral.main,
           ),
         ),
-        color: context.picoColors.background.white,
+        color: context.picoColors.background.card.main,
         child: InkWell(
           borderRadius: BorderRadius.circular(10.r),
           onTap: onTap,
