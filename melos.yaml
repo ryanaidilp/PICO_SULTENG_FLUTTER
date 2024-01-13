@@ -203,6 +203,6 @@ scripts:
       melos run generate-env
       melos run generate-locale
       melos run generate-assets
-      melos run generate-core
       melos run build
+      melos run generate-core
     description: Initialize PICO Sulteng Flutter.
