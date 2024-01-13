@@ -16,10 +16,3 @@ targets:
         generate_for:
           include:
             - lib/src/models/**.dart
-      injectable_generator|injectable_config_builder:
-        enabled: true
-        generate_for:
-          include:
-            - lib/src/di/**.dart
-            - lib/src/log/**.dart
-            - lib/src/network/**.dart
