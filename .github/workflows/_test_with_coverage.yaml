@@ -37,6 +37,10 @@ jobs:
         run: melos generate-locale
       - name: 📦 Generate Env
         run: melos generate-env
+      - name: 📦 Generate Assets
+        run: melos generate-assets
+      - name: 📦 Generate Core
+        run: melos generate-core
       - name: 📦 Run build_runner
         run: melos build
       - name: 🕵️ Analyze
