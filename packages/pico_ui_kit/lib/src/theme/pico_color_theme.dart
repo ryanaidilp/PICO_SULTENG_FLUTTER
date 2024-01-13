@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/style/colors/pico_color_data.dart';
-import 'package:pico_ui_kit/src/style/pico_colors.dart';
 
 @immutable
 class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
@@ -14,172 +13,24 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
   });
 
   factory PicoColorTheme.light() => PicoColorTheme._(
-        background: PicoBackgroundNeutralColor(
-          main: PicoColors.bgMain,
-          subtle: PicoColors.bgSubtle,
-          strong: PicoColors.bgStrong,
-          white: PicoColors.bgWhite,
-          inverse: PicoColors.bgInverse,
-        ),
-        text: PicoTextColor(
-          neutral: PicoForegroundNeutralColor(
-            main: PicoColors.textMain,
-            subtle: PicoColors.textSubtle,
-            strong: PicoColors.textStrong,
-            disabled: PicoColors.textDisabled,
-            inverse: PicoColors.textInverse,
-            onImageStrong: PicoColors.textOnImageStrong,
-            onImageSubtle: PicoColors.textOnImageSubtle,
-          ),
-          semantic: PicoForegroundSemanticColor(
-            info: PicoColors.info,
-            error: PicoColors.error,
-            success: PicoColors.success,
-            warning: PicoColors.warning,
-            primary: PicoColors.primary.shade500,
-            secondary: PicoColors.secondary.shade600,
-            tertiary: PicoColors.tertiary.shade500,
-          ),
-        ),
-        icon: PicoIconColor(
-          neutral: PicoForegroundNeutralColor(
-            main: PicoColors.textMain,
-            subtle: PicoColors.textSubtle,
-            strong: PicoColors.textStrong,
-            disabled: PicoColors.textDisabled,
-            inverse: PicoColors.textInverse,
-            onImageStrong: PicoColors.textOnImageStrong,
-            onImageSubtle: PicoColors.textOnImageSubtle,
-          ),
-          semantic: PicoForegroundSemanticColor(
-            info: PicoColors.info,
-            error: PicoColors.error,
-            success: PicoColors.success,
-            warning: PicoColors.warning,
-            primary: PicoColors.primary.shade500,
-            secondary: PicoColors.secondary.shade600,
-            tertiary: PicoColors.tertiary.shade500,
-          ),
-        ),
-        semantic: const PicoSemanticColor(
-          info: PicoColors.info,
-          error: PicoColors.error,
-          success: PicoColors.success,
-          warning: PicoColors.warning,
-          primary: PicoColors.primary,
-          secondary: PicoColors.secondary,
-          tertiary: PicoColors.tertiary,
-        ),
-        vaccine: PicoVaccineColor(
-          public: PicoColors.vaccinePublic,
-          elderly: PicoColors.vaccineElderly,
-          teenager: PicoColors.vaccineTeenager,
-          main: PicoColors.vaccineAll,
-          healthWorker: PicoColors.vaccineHealthWorker,
-          publicWorker: PicoColors.vaccinePublicWorker,
-        ),
-        outline: PicoOutlineColor(
-          neutral: PicoOutlineNeutralColor(
-            main: Colors.black.withOpacity(0.1),
-            subtle: Colors.black.withOpacity(0.05),
-            strong: Colors.black.withOpacity(0.25),
-          ),
-          semantic: PicoOutlineSemanticColor(
-            info: PicoColors.info.withOpacity(0.25),
-            error: PicoColors.error.withOpacity(0.25),
-            success: PicoColors.success.withOpacity(0.25),
-            warning: PicoColors.warning.withOpacity(0.25),
-            primary: PicoColors.primary.withOpacity(0.25),
-            secondary: PicoColors.secondary.withOpacity(0.25),
-            tertiary: PicoColors.tertiary.withOpacity(0.25),
-          ),
-        ),
+        background: PicoBackgroundColor.light(),
+        text: PicoTextColor.light(),
+        icon: PicoIconColor.light(),
+        semantic: PicoSemanticColor.light(),
+        vaccine: PicoVaccineColor.light(),
+        outline: PicoOutlineColor.light(),
       );
 
   factory PicoColorTheme.dark() => PicoColorTheme._(
-        background: PicoBackgroundNeutralColor(
-          main: PicoColors.bgMainDark,
-          subtle: PicoColors.bgSubtleDark,
-          strong: PicoColors.bgStrongDark,
-          white: PicoColors.bgWhiteDark,
-          inverse: PicoColors.bgInverseDark,
-        ),
-        text: PicoTextColor(
-          neutral: PicoForegroundNeutralColor(
-            main: PicoColors.textMainDark,
-            subtle: PicoColors.textSubtleDark,
-            strong: PicoColors.textStrongDark,
-            disabled: PicoColors.textDisabledDark,
-            inverse: PicoColors.textInverseDark,
-            onImageStrong: PicoColors.textOnImageStrongDark,
-            onImageSubtle: PicoColors.textOnImageSubtleDark,
-          ),
-          semantic: PicoForegroundSemanticColor(
-            info: PicoColors.info.shade300,
-            error: PicoColors.error.shade400,
-            success: PicoColors.success.shade400,
-            warning: PicoColors.warning.shade300,
-            primary: PicoColors.primary.shade400,
-            secondary: PicoColors.secondary.shade400,
-            tertiary: PicoColors.tertiary.shade400,
-          ),
-        ),
-        icon: PicoIconColor(
-          neutral: PicoForegroundNeutralColor(
-            main: PicoColors.textMainDark,
-            subtle: PicoColors.textSubtleDark,
-            strong: PicoColors.textStrongDark,
-            disabled: PicoColors.textDisabledDark,
-            inverse: PicoColors.textInverseDark,
-            onImageStrong: PicoColors.textOnImageStrongDark,
-            onImageSubtle: PicoColors.textOnImageSubtleDark,
-          ),
-          semantic: PicoForegroundSemanticColor(
-            info: PicoColors.info.shade300,
-            error: PicoColors.error.shade400,
-            success: PicoColors.success.shade400,
-            warning: PicoColors.warning.shade300,
-            primary: PicoColors.primary.shade400,
-            secondary: PicoColors.secondary.shade400,
-            tertiary: PicoColors.tertiary.shade400,
-          ),
-        ),
-        semantic: const PicoSemanticColor(
-          info: PicoColors.info,
-          error: PicoColors.error,
-          success: PicoColors.success,
-          warning: PicoColors.warning,
-          primary: PicoColors.primary,
-          secondary: PicoColors.secondary,
-          tertiary: PicoColors.tertiary,
-        ),
-        vaccine: PicoVaccineColor(
-          public: PicoColors.vaccinePublicDark,
-          elderly: PicoColors.vaccineElderlyDark,
-          teenager: PicoColors.vaccineTeenagerDark,
-          main: PicoColors.vaccineAllDark,
-          healthWorker: PicoColors.vaccineHealthWorkerDark,
-          publicWorker: PicoColors.vaccinePublicWorkerDark,
-        ),
-        outline: PicoOutlineColor(
-          neutral: PicoOutlineNeutralColor(
-            main: Colors.white.withOpacity(0.1),
-            subtle: Colors.white.withOpacity(0.05),
-            strong: Colors.white.withOpacity(0.25),
-          ),
-          semantic: PicoOutlineSemanticColor(
-            info: PicoColors.info.shade300.withOpacity(0.25),
-            error: PicoColors.error.shade300.withOpacity(0.25),
-            success: PicoColors.success.shade300.withOpacity(0.25),
-            warning: PicoColors.warning.shade300.withOpacity(0.25),
-            primary: PicoColors.primary.shade300.withOpacity(0.25),
-            secondary: PicoColors.secondary.shade300.withOpacity(0.25),
-            tertiary: PicoColors.tertiary.shade300.withOpacity(0.25),
-          ),
-        ),
+        background: PicoBackgroundColor.dark(),
+        text: PicoTextColor.dark(),
+        icon: PicoIconColor.dark(),
+        semantic: PicoSemanticColor.dark(),
+        vaccine: PicoVaccineColor.dark(),
+        outline: PicoOutlineColor.dark(),
       );
 
-  final PicoBackgroundNeutralColor background;
+  final PicoBackgroundColor background;
   final PicoTextColor text;
   final PicoIconColor icon;
   final PicoSemanticColor semantic;
@@ -188,7 +39,7 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
 
   @override
   ThemeExtension<PicoColorTheme> copyWith({
-    PicoBackgroundNeutralColor? backgroundVariant,
+    PicoBackgroundColor? backgroundVariant,
     PicoTextColor? textVariant,
     PicoIconColor? iconVariant,
     PicoSemanticColor? semanticVariant,
@@ -197,11 +48,8 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
   }) =>
       PicoColorTheme._(
         background: background.copyWith(
-          main: backgroundVariant?.main,
-          inverse: backgroundVariant?.inverse,
-          strong: backgroundVariant?.strong,
-          subtle: backgroundVariant?.subtle,
-          white: backgroundVariant?.white,
+          card: backgroundVariant?.card,
+          neutral: backgroundVariant?.neutral,
         ),
         text: text.copyWith(
           neutral: textVariant?.neutral,
@@ -243,11 +91,8 @@ class PicoColorTheme extends ThemeExtension<PicoColorTheme> {
     return PicoColorTheme._(
       background: background.lerp(
         t: t,
-        mainVariant: other.background.main,
-        subtleVariant: other.background.subtle,
-        strongVariant: other.background.strong,
-        whiteVariant: other.background.white,
-        inverseVariant: other.background.inverse,
+        cardVariant: other.background.card,
+        neutralVariant: other.background.neutral,
       ),
       text: text.lerp(
         t: t,
