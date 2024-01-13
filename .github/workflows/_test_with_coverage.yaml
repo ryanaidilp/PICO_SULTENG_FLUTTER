@@ -27,6 +27,10 @@ jobs:
         run: |
           flutter pub global activate flutter_gen
           melos get
+      - name: ✨ Check Formatting
+        run: melos format-check
+      - name: 🕵️ Analyze
+        run: melos analyze
       - name: 📦 Prepare .env
         run: |
           cd shared/config
@@ -37,12 +41,6 @@ jobs:
         run: melos build
       - name: 📦 Synchronize Dependencies
         run: melos get
-      - name: ✨ Fix Formatting
-        run: melos format
-      - name: ✨ Check Formatting
-        run: melos format-check
-      - name: 🕵️ Analyze
-        run: melos analyze
       - name: 🧪 Run tests with coverage
         run: melos test:with-lcov-coverage
       - name: 🧪✅❌ Publish test results
