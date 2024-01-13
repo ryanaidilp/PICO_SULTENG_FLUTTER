@@ -172,7 +172,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
               ),
               8.verticalSpace,
               Divider(
-                color: context.picoColors.background.subtle,
+                color: context.picoColors.background.neutral.subtle,
                 thickness: 8.h,
               ),
               Padding(

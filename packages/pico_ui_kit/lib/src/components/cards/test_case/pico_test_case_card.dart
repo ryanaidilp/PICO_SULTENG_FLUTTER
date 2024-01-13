@@ -59,7 +59,7 @@ class PicoTestCaseCard extends StatelessWidget {
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.r),
-          color: context.picoColors.background.white,
+          color: context.picoColors.background.card.main,
           border: Border.all(
             color: context.picoColors.outline.neutral.main,
           ),

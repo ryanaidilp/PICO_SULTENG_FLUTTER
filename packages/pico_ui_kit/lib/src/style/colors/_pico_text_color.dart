@@ -2,10 +2,21 @@ part of 'pico_color_data.dart';
 
 @immutable
 class PicoTextColor {
-  const PicoTextColor({
+  const PicoTextColor._({
     required this.neutral,
     required this.semantic,
   });
+
+  factory PicoTextColor.light() => PicoTextColor._(
+        neutral: PicoForegroundNeutralColor.light(),
+        semantic: PicoForegroundSemanticColor.light(),
+      );
+      
+  factory PicoTextColor.dark() => PicoTextColor._(
+        neutral: PicoForegroundNeutralColor.dark(),
+        semantic: PicoForegroundSemanticColor.dark(),
+      );
+
   final PicoForegroundNeutralColor neutral;
   final PicoForegroundSemanticColor semantic;
 
@@ -14,7 +25,7 @@ class PicoTextColor {
     required PicoForegroundSemanticColor semantic,
     required double t,
   }) =>
-      PicoTextColor(
+      PicoTextColor._(
         neutral: this.neutral.lerp(
               t: t,
               mainVariant: neutral.main,
@@ -53,7 +64,7 @@ class PicoTextColor {
     PicoForegroundNeutralColor? neutral,
     PicoForegroundSemanticColor? semantic,
   }) =>
-      PicoTextColor(
+      PicoTextColor._(
         neutral: neutral ?? this.neutral,
         semantic: semantic ?? this.semantic,
       );

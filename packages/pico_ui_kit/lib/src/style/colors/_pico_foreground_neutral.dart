@@ -1,7 +1,7 @@
 part of 'pico_color_data.dart';
 
 class PicoForegroundNeutralColor extends PicoNeutralColor {
-  const PicoForegroundNeutralColor({
+  const PicoForegroundNeutralColor._({
     required super.main,
     required super.subtle,
     required super.strong,
@@ -10,6 +10,26 @@ class PicoForegroundNeutralColor extends PicoNeutralColor {
     required this.onImageStrong,
     required this.onImageSubtle,
   });
+
+  factory PicoForegroundNeutralColor.light() => PicoForegroundNeutralColor._(
+        main: PicoColors.textMain,
+        subtle: PicoColors.textSubtle,
+        strong: PicoColors.textStrong,
+        disabled: PicoColors.textDisabled,
+        inverse: PicoColors.textInverse,
+        onImageStrong: PicoColors.textOnImageStrong,
+        onImageSubtle: PicoColors.textOnImageSubtle,
+      );
+
+  factory PicoForegroundNeutralColor.dark() => PicoForegroundNeutralColor._(
+        main: PicoColors.textMainDark,
+        subtle: PicoColors.textSubtleDark,
+        strong: PicoColors.textStrongDark,
+        disabled: PicoColors.textDisabledDark,
+        inverse: PicoColors.textInverseDark,
+        onImageStrong: PicoColors.textOnImageStrongDark,
+        onImageSubtle: PicoColors.textOnImageSubtleDark,
+      );
 
   final Color onImageStrong;
   final Color onImageSubtle;
@@ -26,7 +46,7 @@ class PicoForegroundNeutralColor extends PicoNeutralColor {
     required Color onImageStrongVariant,
     required Color onImageSubtleVariant,
   }) =>
-      PicoForegroundNeutralColor(
+      PicoForegroundNeutralColor._(
         main: Color.lerp(main, mainVariant, t) ?? main,
         subtle: Color.lerp(subtle, subtleVariant, t) ?? subtle,
         strong: Color.lerp(strong, strongVariant, t) ?? strong,
@@ -47,7 +67,7 @@ class PicoForegroundNeutralColor extends PicoNeutralColor {
     Color? disabled,
     Color? inverse,
   }) {
-    return PicoForegroundNeutralColor(
+    return PicoForegroundNeutralColor._(
       main: main ?? this.main,
       strong: strong ?? this.strong,
       subtle: subtle ?? this.subtle,

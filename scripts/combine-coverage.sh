@@ -25,6 +25,8 @@ lcov --remove $PROJECT_ROOT_PATH/coverage_report/combined_lcov.info \
   "*.theme_extension.dart" \
   "**/register_module.dart" \
   "**/env.dart" \
+  "**/*_page.dart" \
+  "*/widgets/*" \
   "**/*_log_*.dart" \
    "**/*_serializer.dart" \
   -o $PROJECT_ROOT_PATH/coverage_report/cleaned_combined_lcov.info \

@@ -52,7 +52,7 @@ class BarChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
-          color: context.picoColors.background.white,
+          color: context.picoColors.background.card.main,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             color: context.picoColors.outline.neutral.main,
@@ -201,7 +201,7 @@ class BarChartWidget extends StatelessWidget {
                       top: Radius.circular(12.r),
                     ),
                 color: [
-                  context.picoColors.background.strong,
+                  context.picoColors.background.neutral.strong,
                   ...datasetColors,
                 ][data.listIndex],
               );

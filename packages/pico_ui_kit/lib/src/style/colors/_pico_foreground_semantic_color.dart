@@ -2,7 +2,7 @@ part of 'pico_color_data.dart';
 
 @immutable
 class PicoForegroundSemanticColor {
-  const PicoForegroundSemanticColor({
+  const PicoForegroundSemanticColor._({
     required this.success,
     required this.info,
     required this.error,
@@ -11,6 +11,49 @@ class PicoForegroundSemanticColor {
     required this.secondary,
     required this.tertiary,
   });
+
+  factory PicoForegroundSemanticColor.light() => PicoForegroundSemanticColor._(
+        info: PicoColors.info,
+        error: PicoColors.error,
+        success: PicoColors.success,
+        warning: PicoColors.warning,
+        primary: PicoColors.primary.shade500,
+        secondary: PicoColors.secondary.shade600,
+        tertiary: PicoColors.tertiary.shade500,
+      );
+
+  factory PicoForegroundSemanticColor.dark() => PicoForegroundSemanticColor._(
+        info: PicoColors.info.shade300,
+        error: PicoColors.error.shade400,
+        success: PicoColors.success.shade400,
+        warning: PicoColors.warning.shade300,
+        primary: PicoColors.primary.shade400,
+        secondary: PicoColors.secondary.shade400,
+        tertiary: PicoColors.tertiary.shade400,
+      );
+
+  factory PicoForegroundSemanticColor.lightOutline() =>
+      PicoForegroundSemanticColor._(
+        info: PicoColors.info.withOpacity(0.25),
+        error: PicoColors.error.withOpacity(0.25),
+        success: PicoColors.success.withOpacity(0.25),
+        warning: PicoColors.warning.withOpacity(0.25),
+        primary: PicoColors.primary.withOpacity(0.25),
+        secondary: PicoColors.secondary.withOpacity(0.25),
+        tertiary: PicoColors.tertiary.withOpacity(0.25),
+      );
+
+  factory PicoForegroundSemanticColor.darkOutline() =>
+      PicoForegroundSemanticColor._(
+        info: PicoColors.info.shade300.withOpacity(0.25),
+        error: PicoColors.error.shade300.withOpacity(0.25),
+        success: PicoColors.success.shade300.withOpacity(0.25),
+        warning: PicoColors.warning.shade300.withOpacity(0.25),
+        primary: PicoColors.primary.shade300.withOpacity(0.25),
+        secondary: PicoColors.secondary.shade300.withOpacity(0.25),
+        tertiary: PicoColors.tertiary.shade300.withOpacity(0.25),
+      );
+
   final Color success;
   final Color info;
   final Color error;
@@ -29,7 +72,7 @@ class PicoForegroundSemanticColor {
     required Color secondaryVariant,
     required Color tertiaryVariant,
   }) =>
-      PicoForegroundSemanticColor(
+      PicoForegroundSemanticColor._(
         success: Color.lerp(success, successVariant, t) ?? success,
         info: Color.lerp(info, infoVariant, t) ?? info,
         error: Color.lerp(error, errorVariant, t) ?? error,
@@ -73,7 +116,7 @@ class PicoForegroundSemanticColor {
     Color? secondary,
     Color? tertiary,
   }) =>
-      PicoForegroundSemanticColor(
+      PicoForegroundSemanticColor._(
         success: success ?? this.success,
         info: info ?? this.info,
         error: error ?? this.error,

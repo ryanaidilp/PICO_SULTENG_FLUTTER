@@ -59,7 +59,7 @@ class PicoSuspectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
         decoration: BoxDecoration(
-          color: context.picoColors.background.white,
+          color: context.picoColors.background.card.main,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
             color: context.picoColors.outline.neutral.main,
@@ -83,14 +83,15 @@ class PicoSuspectCard extends StatelessWidget {
                       customBorder: const CircleBorder(),
                       child: Tooltip(
                         decoration: BoxDecoration(
-                          color: context.picoColors.background.white,
+                          color: context.picoColors.background.neutral.white,
                           borderRadius: BorderRadius.circular(12.r),
                           border: Border.all(
                             color: context.picoColors.outline.neutral.strong,
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: context.picoColors.background.inverse
+                              color: context
+                                  .picoColors.background.neutral.inverse
                                   .withOpacity(0.1),
                               spreadRadius: 4.r,
                               blurRadius: 6.r,
@@ -173,7 +174,7 @@ class PicoSuspectCard extends StatelessWidget {
                 ],
               ),
               Divider(
-                color: context.picoColors.background.strong,
+                color: context.picoColors.background.neutral.strong,
               ),
               8.verticalSpace,
               Row(

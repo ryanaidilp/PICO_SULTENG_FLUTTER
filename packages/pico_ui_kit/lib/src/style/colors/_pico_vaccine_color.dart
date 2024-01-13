@@ -2,7 +2,7 @@ part of 'pico_color_data.dart';
 
 @immutable
 class PicoVaccineColor {
-  const PicoVaccineColor({
+  const PicoVaccineColor._({
     required this.public,
     required this.elderly,
     required this.teenager,
@@ -10,6 +10,25 @@ class PicoVaccineColor {
     required this.healthWorker,
     required this.publicWorker,
   });
+
+  factory PicoVaccineColor.light() => PicoVaccineColor._(
+         public: PicoColors.vaccinePublic,
+        elderly: PicoColors.vaccineElderly,
+        teenager: PicoColors.vaccineTeenager,
+        main: PicoColors.vaccineAll,
+        healthWorker: PicoColors.vaccineHealthWorker,
+        publicWorker: PicoColors.vaccinePublicWorker,
+      );
+  factory PicoVaccineColor.dark() => PicoVaccineColor._(
+       public: PicoColors.vaccinePublicDark,
+        elderly: PicoColors.vaccineElderlyDark,
+        teenager: PicoColors.vaccineTeenagerDark,
+        main: PicoColors.vaccineAllDark,
+        healthWorker: PicoColors.vaccineHealthWorkerDark,
+        publicWorker: PicoColors.vaccinePublicWorkerDark,
+      );
+
+
   final Color public;
   final Color elderly;
   final Color teenager;
@@ -25,7 +44,7 @@ class PicoVaccineColor {
     Color? healthWorker,
     Color? publicWorker,
   }) {
-    return PicoVaccineColor(
+    return PicoVaccineColor._(
       public: public ?? this.public,
       elderly: elderly ?? this.elderly,
       teenager: teenager ?? this.teenager,
@@ -44,7 +63,7 @@ class PicoVaccineColor {
     required Color healthWorkerVariant,
     required Color publicWorkerVariant,
   }) =>
-      PicoVaccineColor(
+      PicoVaccineColor._(
         public: Color.lerp(public, publicVariant, t) ?? public,
         elderly: Color.lerp(elderly, elderlyVariant, t) ?? elderly,
         teenager: Color.lerp(teenager, teenagerVariant, t) ?? teenager,
