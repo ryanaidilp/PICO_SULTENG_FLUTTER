@@ -31,3 +31,5 @@ lcov --remove $PROJECT_ROOT_PATH/coverage_report/combined_lcov.info \
    "**/*_serializer.dart" \
   -o $PROJECT_ROOT_PATH/coverage_report/cleaned_combined_lcov.info \
   --ignore-errors unused,unused
+
+cp $PROJECT_ROOT_PATH/coverage_report/cleaned_combined_lcov.info $PROJECT_ROOT_PATH/coverage/lcov.info
