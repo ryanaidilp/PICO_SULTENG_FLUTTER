@@ -14,11 +14,10 @@ class PicoOutlineNeutralColor extends PicoNeutralColor {
         strong: Colors.black.withOpacity(0.25),
       );
   factory PicoOutlineNeutralColor.dark() => PicoOutlineNeutralColor._(
-         main: Colors.white.withOpacity(0.1),
+        main: Colors.white.withOpacity(0.1),
         subtle: Colors.white.withOpacity(0.05),
         strong: Colors.white.withOpacity(0.25),
       );
-
 
   PicoOutlineNeutralColor? copyWith({
     Color? main,

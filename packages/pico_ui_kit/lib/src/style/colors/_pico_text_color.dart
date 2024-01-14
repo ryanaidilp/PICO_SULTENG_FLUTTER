@@ -11,7 +11,7 @@ class PicoTextColor {
         neutral: PicoForegroundNeutralColor.light(),
         semantic: PicoForegroundSemanticColor.light(),
       );
-      
+
   factory PicoTextColor.dark() => PicoTextColor._(
         neutral: PicoForegroundNeutralColor.dark(),
         semantic: PicoForegroundSemanticColor.dark(),

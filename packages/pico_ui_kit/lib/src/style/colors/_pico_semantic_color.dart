@@ -21,7 +21,7 @@ class PicoSemanticColor with PicoMaterialColor {
         secondary: PicoColors.secondary,
         tertiary: PicoColors.tertiary,
       );
-      
+
   factory PicoSemanticColor.dark() => const PicoSemanticColor._(
         info: PicoColors.info,
         error: PicoColors.error,

@@ -16,7 +16,7 @@ class PicoIconColor {
         neutral: PicoForegroundNeutralColor.dark(),
         semantic: PicoForegroundSemanticColor.dark(),
       );
-      
+
   final PicoForegroundNeutralColor neutral;
   final PicoForegroundSemanticColor semantic;
 

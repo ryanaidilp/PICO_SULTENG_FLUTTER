@@ -12,7 +12,7 @@ class PicoVaccineColor {
   });
 
   factory PicoVaccineColor.light() => PicoVaccineColor._(
-         public: PicoColors.vaccinePublic,
+        public: PicoColors.vaccinePublic,
         elderly: PicoColors.vaccineElderly,
         teenager: PicoColors.vaccineTeenager,
         main: PicoColors.vaccineAll,
@@ -20,14 +20,13 @@ class PicoVaccineColor {
         publicWorker: PicoColors.vaccinePublicWorker,
       );
   factory PicoVaccineColor.dark() => PicoVaccineColor._(
-       public: PicoColors.vaccinePublicDark,
+        public: PicoColors.vaccinePublicDark,
         elderly: PicoColors.vaccineElderlyDark,
         teenager: PicoColors.vaccineTeenagerDark,
         main: PicoColors.vaccineAllDark,
         healthWorker: PicoColors.vaccineHealthWorkerDark,
         publicWorker: PicoColors.vaccinePublicWorkerDark,
       );
-
 
   final Color public;
   final Color elderly;

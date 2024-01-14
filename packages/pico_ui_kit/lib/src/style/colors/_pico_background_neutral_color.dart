@@ -18,7 +18,7 @@ class PicoBackgroundNeutralColor extends PicoNeutralColor {
       );
 
   factory PicoBackgroundNeutralColor.dark() => PicoBackgroundNeutralColor._(
-       main: PicoColors.bgMainDark,
+        main: PicoColors.bgMainDark,
         subtle: PicoColors.bgSubtleDark,
         strong: PicoColors.bgStrongDark,
         white: PicoColors.bgWhiteDark,
@@ -50,11 +50,12 @@ class PicoBackgroundNeutralColor extends PicoNeutralColor {
     Color? strong,
     Color? white,
     Color? inverse,
-  }) => PicoBackgroundNeutralColor._(
-      main: main ?? this.main,
-      subtle: subtle ?? this.subtle,
-      strong: strong ?? this.strong,
-      white: white ?? this.white,
-      inverse: inverse ?? this.inverse,
-    );
+  }) =>
+      PicoBackgroundNeutralColor._(
+        main: main ?? this.main,
+        subtle: subtle ?? this.subtle,
+        strong: strong ?? this.strong,
+        white: white ?? this.white,
+        inverse: inverse ?? this.inverse,
+      );
 }
