@@ -1,0 +1,42 @@
+{
+    "success": true,
+    "errors": [],
+    "data": {
+        "hari_ke": 799,
+        "tanggal": "2022-05-08T09:38:06.000000Z",
+        "kasus_baru": {
+            "positif": 2,
+            "sembuh": 1,
+            "meninggal": 0,
+            "dalam_perawatan": 1,
+            "ODP": 0,
+            "selesai_ODP": 0,
+            "PDP": 0,
+            "selesai_PDP": 0
+        },
+        "kumulatif": {
+            "positif": 60779,
+            "sembuh": 59032,
+            "meninggal": 1722,
+            "dalam_perawatan": 25,
+            "ODP": 1377,
+            "dalam_ODP": 124,
+            "selesai_ODP": 1253,
+            "PDP": 296,
+            "selesai_PDP": 281,
+            "dalam_PDP": 15
+        },
+        "rekap": {
+            "persentase": {
+                "dalam_perawatan": 0.04,
+                "meninggal": 2.83,
+                "sembuh": 97.13
+            },
+            "angka_reproduksi": {
+                "rt": null,
+                "rt_upper": null,
+                "rt_lower": null
+            }
+        }
+    }
+}

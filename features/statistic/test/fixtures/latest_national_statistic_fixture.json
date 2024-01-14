@@ -1,0 +1,27 @@
+{
+    "success": true,
+    "errors": [],
+    "data": {
+        "hari_ke": 883,
+        "tanggal": "2022-12-18T09:37:54.000000Z",
+        "kasus_baru": {
+            "positif": 860,
+            "sembuh": 2035,
+            "meninggal": 14,
+            "dalam_perawatan": -1189
+        },
+        "kumulatif": {
+            "positif": 6295729,
+            "sembuh": 6126860,
+            "meninggal": 157730,
+            "dalam_perawatan": 11139
+        },
+        "rekap": {
+            "persentase": {
+                "dalam_perawatan": 0.18,
+                "meninggal": 2.51,
+                "sembuh": 97.32
+            }
+        }
+    }
+}

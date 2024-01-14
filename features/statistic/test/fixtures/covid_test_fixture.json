@@ -1,0 +1,30 @@
+{
+    "success": true,
+    "errors": [],
+    "data": [
+        {
+            "hari_ke": 520,
+            "tanggal": "2020-07-11",
+            "nama": "Polymerase Chain Reaction",
+            "sampel": "Spesimen saluran pernapasan (swab hidung, tenggorokan, dahak, dsb), tinja",
+            "durasi": "Tergantung banyak antrian sampel",
+            "positif": 193,
+            "negatif": 1406,
+            "proses": 174,
+            "invalid": 0,
+            "total": 1773
+        },
+        {
+            "hari_ke": 520,
+            "tanggal": "2020-05-26",
+            "nama": "Rapid Diagnostic Test",
+            "sampel": "Tergantung tes (Antibodi atau Antigen)",
+            "durasi": "Tergantung tes (Antibodi atau Antigen)",
+            "positif": 187,
+            "negatif": 3247,
+            "proses": 3316,
+            "invalid": 0,
+            "total": 6750
+        }
+    ]
+}
