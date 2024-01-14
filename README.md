@@ -111,6 +111,8 @@ To set up and run the PICO SulTeng Flutter project, follow these steps:
 
    ```sh
    git clone https://github.com/ryanaidilp/PICO_SULTENG_FLUTTER.git
+
+   cd PICO_SULTENG_FLUTTER
    ```
 
 2. **Activate Melos**:
@@ -120,15 +122,7 @@ To set up and run the PICO SulTeng Flutter project, follow these steps:
    dart pub global activate melos
    ```
 
-3. **Bootstrap the Project with Melos**:
-   Change into the project directory and use Melos to bootstrap and fetch dependencies:
-
-   ```sh
-   cd PICO_SULTENG_FLUTTER
-   melos bootstrap && melos get
-   ```
-
-4. **Environment Configuration**:
+3. **Environment Configuration**:
    Inside the `shared/config` directory, duplicate the `.env.example` file to create environment-specific configurations:
 
    - For production, create a `.env` file.
@@ -137,14 +131,14 @@ To set up and run the PICO SulTeng Flutter project, follow these steps:
 
    Make sure to configure the necessary variables within these files.
 
-5. **Build the Project**:
-   Execute the Melos build command to generate all required files:
+4. **Bootstrap the Project with Melos**:
+   Use Melos to bootstrap and fetch dependencies:
 
    ```sh
-   melos build
+   melos bootstrap
    ```
 
-6. **Running the App**:
+5. **Running the App**:
    Now, you should be able to run the app on your device or emulator.
 
    ```sh
