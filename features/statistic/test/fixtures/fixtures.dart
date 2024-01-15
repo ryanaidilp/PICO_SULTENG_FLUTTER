@@ -1,5 +1,6 @@
 class StatisticFixture {
   const StatisticFixture._();
+  static const String failed = 'failed_fixture.json';
   static const String covidTest = 'covid_test_fixture.json';
   static const String latestStatistic = 'latest_statistic_fixture.json';
   static const String latestNationalStatistic =
