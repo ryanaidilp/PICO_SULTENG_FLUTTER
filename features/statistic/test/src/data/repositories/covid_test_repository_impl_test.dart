@@ -38,6 +38,7 @@ void main() {
         'latest()',
         () {
           late ApiResponseModel<List<CovidTestModel>> response;
+          late ApiResponseModel<List<CovidTestModel>> failedResponse;
           late List<CovidTest> data;
 
           setUp(
@@ -56,6 +57,21 @@ void main() {
                 },
               );
               data = response.data.map((e) => e.toEntity()).toList();
+              final failedJson = Fixture.jsonFromFixture(
+                StatisticFixture.failed,
+              );
+              failedResponse = ApiResponseModel<List<CovidTestModel>>.fromJson(
+                failedJson,
+                (json) {
+                  if (json == null || json is! List) {
+                    return [];
+                  }
+
+                  return json
+                      .map((e) => CovidTestModel.fromJson(e as JSON))
+                      .toList();
+                },
+              );
             },
           );
 
@@ -77,6 +93,31 @@ void main() {
                   (item) => item.value,
                   'data',
                   data,
+                ),
+              );
+              verify(
+                () => mockRemoteDataSource.latest(),
+              ).called(1);
+            },
+          );
+
+          test(
+            'should return failure when response not success',
+            () async {
+              /// arrange
+              const errorMessage = 'There is something wrong!';
+              when(
+                () => mockRemoteDataSource.latest(),
+              ).thenAnswer((_) async => failedResponse);
+
+              /// act
+              final result = await repository.latest();
+
+              /// assert
+              expect(
+                result,
+                const Left<Failure, List<CovidTest>>(
+                  CovidTestFailure(message: errorMessage),
                 ),
               );
               verify(
