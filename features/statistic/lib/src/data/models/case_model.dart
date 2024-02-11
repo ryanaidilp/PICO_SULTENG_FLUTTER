@@ -44,6 +44,19 @@ abstract class CaseModel with _$CaseModel {
   }) = _CaseModel;
   factory CaseModel.fromJson(Map<String, dynamic> json) =>
       _$CaseModelFromJson(json);
+
+  factory CaseModel.fromEntity(Case entity) => CaseModel(
+        positive: entity.positive,
+        recovered: entity.recovered,
+        deceased: entity.deceased,
+        underTreatment: entity.underTreatment,
+        totalObserved: entity.totalObserved,
+        finishedObservation: entity.finishedObservation,
+        underObservation: entity.underObservation,
+        totalSupervised: entity.totalSupervised,
+        finishedSupervision: entity.finishedSupervision,
+        underSupervision: entity.underSupervision,
+      );
 }
 
 extension CaseModelX on CaseModel {

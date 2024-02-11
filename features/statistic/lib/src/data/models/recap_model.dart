@@ -15,6 +15,14 @@ abstract class RecapModel with _$RecapModel {
   }) = _RecapModel;
   factory RecapModel.fromJson(Map<String, dynamic> json) =>
       _$RecapModelFromJson(json);
+  factory RecapModel.fromEntity(Recap entity) => RecapModel(
+        percentage: PercentageModel.fromEntity(
+          entity.percentage,
+        ),
+        reproductionNumber: ReproductionNumberModel.fromEntity(
+          entity.reproductionNumber,
+        ),
+      );
 }
 
 extension RecapModelX on RecapModel {
