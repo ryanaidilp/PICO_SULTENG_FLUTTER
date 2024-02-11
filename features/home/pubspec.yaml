@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   core:
-    path: ../../core
+    path: ../../packages/core
   dependencies:
     path: ../../shared/dependencies
   flutter:
