@@ -13,8 +13,8 @@ void main() {
   }
 
   if (Platform.isAndroid || Platform.isIOS) {
-    return runApp(const WidgetbookApp());
+    return runApp(const App());
   }
 
-  return runApp(const App());
+  return runApp(const WidgetbookApp());
 }
