@@ -24,6 +24,13 @@
       "type": "dart",
       "program": "app/pico/lib/main.dart",
       "args": ["--flavor", "production", "--target", "lib/main.dart"]
+    },
+    {
+      "name": "widgetbook",
+      "request": "launch",
+      "type": "dart",
+      "program": "app/pico_widgetbook/lib/main.dart",
+      "args": ["--target", "lib/main.dart"]
     }
   ]
 }
