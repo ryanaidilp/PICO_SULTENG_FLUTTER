@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:pico_widgetbook/presentation/widgets/theme_switcher_button.dart';
+import 'package:pico_widgetbook/pico_widgetbook.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
