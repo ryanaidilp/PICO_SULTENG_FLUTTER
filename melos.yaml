@@ -1,10 +1,9 @@
 name: pico_sulteng_flutter
 packages:
+  - app/*
   - packages/*
   - features/*
   - shared/*
-  - core
-  - .
 
 command:
   version:
