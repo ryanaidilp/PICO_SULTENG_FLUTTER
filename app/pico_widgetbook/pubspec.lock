@@ -578,7 +578,7 @@ packages:
     source: hosted
     version: "4.0.2"
   i10n:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "../../shared/i10n"
       relative: true

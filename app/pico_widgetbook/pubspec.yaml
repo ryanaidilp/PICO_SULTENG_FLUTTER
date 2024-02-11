@@ -10,9 +10,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-  provider: ^6.1.1
+  i10n:
+    path: ../../shared/i10n
   pico_ui_kit:
     path: ../../packages/pico_ui_kit
+  provider: ^6.1.1
   widgetbook: ^3.4.1
   widgetbook_annotation: ^3.1.0
 
