@@ -1,0 +1,30 @@
+name: pico_widgetbook
+description: "An example app to showcasing Smart Design System."
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+version: 0.0.1
+
+environment:
+  sdk: ">=3.2.3 <4.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  flutter:
+    sdk: flutter
+  provider: ^6.1.1
+  pico_ui_kit:
+    path: ../../packages/pico_ui_kit
+  widgetbook: ^3.4.1
+  widgetbook_annotation: ^3.1.0
+
+dev_dependencies:
+  build_runner: ^2.4.7
+  change_app_package_name: ^1.1.0
+  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^2.0.0
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^5.1.0
+  widgetbook_generator: ^3.3.0
+
+flutter:
+  uses-material-design: true
