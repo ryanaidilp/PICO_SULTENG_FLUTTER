@@ -18,6 +18,7 @@ class StatisticPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
+            leading: const AutoLeadingButton(),
             expandedHeight: 128.h,
             scrolledUnderElevation: 10.h,
             surfaceTintColor: context.picoColors.background.neutral.main,

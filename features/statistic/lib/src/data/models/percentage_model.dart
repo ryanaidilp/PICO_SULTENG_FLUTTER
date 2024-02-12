@@ -13,6 +13,11 @@ abstract class PercentageModel with _$PercentageModel {
   }) = _PercentageModel;
   factory PercentageModel.fromJson(Map<String, dynamic> json) =>
       _$PercentageModelFromJson(json);
+  factory PercentageModel.fromEntity(Percentage entity) => PercentageModel(
+        underTreatment: entity.underTreatment,
+        recovered: entity.recovered,
+        deceased: entity.deceased,
+      );
 }
 
 extension PercentageModelX on PercentageModel {

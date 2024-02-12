@@ -47,4 +47,46 @@ class StatisticRepositoryImpl implements StatisticRepository {
       return Left(StatisticFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Statistic>>> all() async {
+    try {
+      final result = await _httpDataSource.all();
+
+      if (!result.success) {
+        return Left(
+          StatisticFailure(
+            message: result.errors?.first.message ?? 'Error',
+          ),
+        );
+      }
+
+      final data = result.data.map((e) => e.toEntity()).toList();
+
+      return Right(data);
+    } catch (e) {
+      return Left(StatisticFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Statistic>>> allNational() async {
+    try {
+      final result = await _httpDataSource.allNational();
+
+      if (!result.success) {
+        return Left(
+          StatisticFailure(
+            message: result.errors?.first.message ?? 'Error',
+          ),
+        );
+      }
+
+      final data = result.data.map((e) => e.toEntity()).toList();
+
+      return Right(data);
+    } catch (e) {
+      return Left(StatisticFailure(message: e.toString()));
+    }
+  }
 }

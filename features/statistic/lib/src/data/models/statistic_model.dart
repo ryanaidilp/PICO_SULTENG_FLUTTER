@@ -17,6 +17,14 @@ abstract class StatisticModel with _$StatisticModel {
   }) = _StatisticModel;
   factory StatisticModel.fromJson(Map<String, dynamic> json) =>
       _$StatisticModelFromJson(json);
+
+  factory StatisticModel.fromEntity(Statistic entity) => StatisticModel(
+        day: entity.day,
+        cumulative: CaseModel.fromEntity(entity.cumulative),
+        newCases: CaseModel.fromEntity(entity.newCases),
+        recap: RecapModel.fromEntity(entity.recap),
+        updatedAt: entity.updatedAt,
+      );
 }
 
 extension StatisticModelX on StatisticModel {

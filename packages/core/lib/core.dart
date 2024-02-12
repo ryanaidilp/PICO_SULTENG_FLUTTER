@@ -3,6 +3,8 @@
 /// {@endtemplate}
 library core;
 
+export 'package:path_provider/path_provider.dart';
+
 export 'src/di/service_locator.dart';
 export 'src/exceptions/exceptions.dart';
 export 'src/extensions/extensions.dart';

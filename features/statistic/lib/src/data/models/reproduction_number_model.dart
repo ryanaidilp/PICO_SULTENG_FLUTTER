@@ -13,6 +13,13 @@ abstract class ReproductionNumberModel with _$ReproductionNumberModel {
   }) = _ReproductionNumberModel;
   factory ReproductionNumberModel.fromJson(Map<String, dynamic> json) =>
       _$ReproductionNumberModelFromJson(json);
+
+  factory ReproductionNumberModel.fromEntity(ReproductionNumber? entity) =>
+      ReproductionNumberModel(
+        value: entity?.value,
+        lowerBound: entity?.lowerBound,
+        upperBound: entity?.upperBound,
+      );
 }
 
 extension ReproductionNumberModelX on ReproductionNumberModel {
