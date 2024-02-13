@@ -1,5 +1,5 @@
 flutter_native_splash:
-  image: splash/logo.png
+  image: splash/launcher_icon.png
   color: ffffff
   color_dark: 24221F
   branding: "splash/branding.png"
