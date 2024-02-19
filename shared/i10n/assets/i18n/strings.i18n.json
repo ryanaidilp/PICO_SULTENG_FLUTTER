@@ -35,6 +35,27 @@
         "active": "Under Monitoring/Supervision",
         "finished": "Monitoring/Supervision Completed"
       }
+    },
+    "line_chart": {
+      "title": "Daily $name cases",
+      "patient_label": {
+        "zero": "patient",
+        "one": "patient",
+        "other": "patients"
+      },
+      "filter_label": {
+        "cumulative": "Cumulative",
+        "positive": "Positive",
+        "recovered": "Recovered",
+        "deceased": "Deceased",
+        "active": "Active",
+        "all": "All",
+        "timeframe": {
+          "one_month": "1M",
+          "three_month": "3M",
+          "six_month": "6M"
+        }
+      }
     }
   },
   "data_case_label": "Case Data of Central Sulawesi",
