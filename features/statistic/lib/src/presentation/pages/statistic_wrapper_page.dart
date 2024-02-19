@@ -12,8 +12,8 @@ class StatisticWrapperPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
-          BlocProvider<AllStatisticsBloc>(
-            create: (_) => AllStatisticsBloc()..add(AllStatisticsEvent.fetch()),
+          BlocProvider<AllStatisticsCubit>(
+            create: (_) => AllStatisticsCubit()..fetch(),
           ),
           BlocProvider<AllNationalStatisticsCubit>(
             create: (_) => AllNationalStatisticsCubit()..fetch(),

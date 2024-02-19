@@ -1,4 +1,4 @@
-part of 'all_statistics_bloc.dart';
+part of 'all_statistics_cubit.dart';
 
 @freezed
 abstract class AllStatisticsState with _$AllStatisticsState {

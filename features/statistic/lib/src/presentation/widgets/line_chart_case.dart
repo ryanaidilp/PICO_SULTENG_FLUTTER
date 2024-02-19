@@ -75,7 +75,7 @@ class _LineChartCaseState extends State<LineChartCase> {
   Widget build(BuildContext context) =>
       BlocListener<LineChartFilterCubit, LineChartFilterState>(
         listener: (context, state) {
-          final dataState = context.read<AllStatisticsBloc>().state;
+          final dataState = context.read<AllStatisticsCubit>().state;
 
           if (state.isUpdating) {
             _chartController.updateState(PCChartState.loading);
@@ -167,7 +167,7 @@ class _LineChartCaseState extends State<LineChartCase> {
                         BlocBuilder<LineChartFilterCubit, LineChartFilterState>(
                           builder: (context, state) {
                             final dataState =
-                                context.watch<AllStatisticsBloc>().state;
+                                context.watch<AllStatisticsCubit>().state;
                             var data = <Statistic>[];
 
                             if (dataState is AllStatisticsLoaded) {
@@ -269,7 +269,7 @@ class _LineChartCaseState extends State<LineChartCase> {
               Expanded(
                 child: Builder(
                   builder: (context) {
-                    final dataState = context.watch<AllStatisticsBloc>().state;
+                    final dataState = context.watch<AllStatisticsCubit>().state;
                     final lineChartFilterState =
                         context.watch<LineChartFilterCubit>().state;
 
