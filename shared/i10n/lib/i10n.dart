@@ -8,3 +8,4 @@ export 'package:slang_flutter/slang_flutter.dart';
 
 export 'src/generated/translations.g.dart';
 export 'src/utils/extensions.dart';
+export 'src/utils/resolver.dart';
