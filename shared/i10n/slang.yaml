@@ -14,8 +14,8 @@ class_name: Translations
 translation_class_visibility: private
 key_case: snake
 key_map_case: camel
-param_case: pascal
-string_interpolation: double_braces
+param_case: camel
+string_interpolation: dart
 flat_map: false
 translation_overrides: false
 timestamp: true
