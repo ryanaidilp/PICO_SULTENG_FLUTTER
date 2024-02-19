@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
+  animated_digit:
+    dependency: transitive
+    description:
+      name: animated_digit
+      sha256: "22300a550b83e08ac4a0ef9c6fc7e800bbebc34978d997e6346da03d69fbb7a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.3"
   archive:
     dependency: transitive
     description:
@@ -279,6 +287,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.1"
+  decimal:
+    dependency: transitive
+    description:
+      name: decimal
+      sha256: "24a261d5d5c87e86c7651c417a5dbdf8bcd7080dd592533910e8d0505a279f21"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.3"
   dependencies:
     dependency: "direct overridden"
     description:
@@ -326,6 +342,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
+  dropdown_button2:
+    dependency: transitive
+    description:
+      name: dropdown_button2
+      sha256: b0fe8d49a030315e9eef6c7ac84ca964250155a6224d491c1365061bc974a9e1
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.9"
   envied:
     dependency: transitive
     description:
@@ -472,6 +496,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.9"
+  flutter_switch:
+    dependency: transitive
+    description:
+      name: flutter_switch
+      sha256: b91477f926bba135d2d203d7b24367492662d8d9c3aa6adb960b14c1087d3c41
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -943,6 +975,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  rational:
+    dependency: transitive
+    description:
+      name: rational
+      sha256: ba58e9e18df9abde280e8b10051e4bce85091e41e8e7e411b6cde2e738d357cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.2"
   resizable_widget:
     dependency: transitive
     description:
