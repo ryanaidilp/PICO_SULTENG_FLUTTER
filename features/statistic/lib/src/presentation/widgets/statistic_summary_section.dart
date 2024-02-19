@@ -81,15 +81,13 @@ class StatisticSummarySection extends StatelessWidget {
             ),
           ),
           16.verticalSpace,
-          BlocBuilder<LatestCovidTestBloc, LatestCovidTestState>(
+          BlocBuilder<LatestCovidTestCubit, LatestCovidTestState>(
             builder: (context, state) => AnimatedSwitcher(
               duration: 300.milliseconds,
               child: switch (state) {
                 LatestCovidTestFailedState() => PicoErrorPlaceholder(
                     label: context.i10n.error.test,
-                    onRetry: () => context.read<LatestCovidTestBloc>().add(
-                          LatestCovidTestEvent.load(),
-                        ),
+                    onRetry: () => context.read<LatestCovidTestCubit>().fetch(),
                   ),
                 LatestCovidTestLoadedState(
                   total: final total,

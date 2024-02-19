@@ -38,7 +38,7 @@ void main() {
   const errorMessage = 'There is something wrong!';
 
   group(
-    'LatestNationalStatisticBloc',
+    'LatestNationalStatisticCubit',
     () {
       blocTest<LatestNationalStatisticCubit, LatestNationalStatisticState>(
         'should emit nothing when initialize',

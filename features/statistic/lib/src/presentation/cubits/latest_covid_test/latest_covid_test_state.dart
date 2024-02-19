@@ -1,4 +1,4 @@
-part of 'latest_covid_test_bloc.dart';
+part of 'latest_covid_test_cubit.dart';
 
 @freezed
 abstract class LatestCovidTestState with _$LatestCovidTestState {

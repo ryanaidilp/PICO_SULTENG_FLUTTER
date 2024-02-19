@@ -41,21 +41,21 @@ void main() {
   const errorMessage = 'There is something wrong!';
 
   group(
-    'LatestCovidTestBloc',
+    'LatestCovidTestCubit',
     () {
-      blocTest<LatestCovidTestBloc, LatestCovidTestState>(
+      blocTest<LatestCovidTestCubit, LatestCovidTestState>(
         'should emit nothing when initialize',
-        build: LatestCovidTestBloc.new,
+        build: LatestCovidTestCubit.new,
         expect: () => <LatestCovidTestState>[],
       );
 
-      blocTest<LatestCovidTestBloc, LatestCovidTestState>(
+      blocTest<LatestCovidTestCubit, LatestCovidTestState>(
         'should emit [Loading,Loaded] states when success',
-        build: LatestCovidTestBloc.new,
+        build: LatestCovidTestCubit.new,
         setUp: () => when(() => mockUseCase.call(NoParams())).thenAnswer(
           (_) async => Right(data),
         ),
-        act: (bloc) => bloc.add(LatestCovidTestEvent.load()),
+        act: (cubit) => cubit.fetch(),
         expect: () => <LatestCovidTestState>[
           LatestCovidTestState.loading(),
           LatestCovidTestState.loaded(data: data, total: total),
@@ -63,13 +63,13 @@ void main() {
         verify: (_) => verify(() => mockUseCase.call(NoParams())),
       );
 
-      blocTest<LatestCovidTestBloc, LatestCovidTestState>(
+      blocTest<LatestCovidTestCubit, LatestCovidTestState>(
         'should emit [Loading,Empty] states when success and data empty',
-        build: LatestCovidTestBloc.new,
+        build: LatestCovidTestCubit.new,
         setUp: () => when(() => mockUseCase.call(NoParams())).thenAnswer(
           (_) async => const Right([]),
         ),
-        act: (bloc) => bloc.add(LatestCovidTestEvent.load()),
+        act: (cubit) => cubit.fetch(),
         expect: () => <LatestCovidTestState>[
           LatestCovidTestState.loading(),
           LatestCovidTestState.empty(),
@@ -77,13 +77,13 @@ void main() {
         verify: (_) => verify(() => mockUseCase.call(NoParams())),
       );
 
-      blocTest<LatestCovidTestBloc, LatestCovidTestState>(
+      blocTest<LatestCovidTestCubit, LatestCovidTestState>(
         'should emit [Loading,Failed] states when failed',
-        build: LatestCovidTestBloc.new,
+        build: LatestCovidTestCubit.new,
         setUp: () => when(() => mockUseCase.call(NoParams())).thenAnswer(
           (_) async => const Left(StatisticFailure(message: errorMessage)),
         ),
-        act: (bloc) => bloc.add(LatestCovidTestEvent.load()),
+        act: (cubit) => cubit.fetch(),
         expect: () => <LatestCovidTestState>[
           LatestCovidTestState.loading(),
           LatestCovidTestState.failed(
