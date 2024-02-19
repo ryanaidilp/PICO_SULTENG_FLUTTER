@@ -45,76 +45,70 @@ class PicoCaseCard extends StatelessWidget {
   final int newCase;
 
   @override
-  Widget build(BuildContext context) => DecoratedBox(
-        decoration: BoxDecoration(
-          color: context.picoColors.background.card.main,
-          borderRadius: BorderRadius.circular(8.r),
-          border: Border.all(
-            color: context.picoColors.outline.neutral.main,
-          ),
+  Widget build(BuildContext context) => PicoCard(
+        padding: EdgeInsets.all(
+          PCSpacing.s8.r,
         ),
-        child: Padding(
-          padding: EdgeInsets.all(8.r),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Skeleton.keep(
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _type.data(context).bgColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(4.r),
-                        child: PicoAsset.icon(
-                          icon: _type.data(context).iconData,
-                          color: _type.data(context).iconColor,
-                          size: 12.sp,
-                        ),
+        borderRadius: PCRadius.sm.r,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Skeleton.keep(
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _type.data(context).bgColor,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.all(PCSpacing.s4.r),
+                      child: PicoAsset.icon(
+                        icon: _type.data(context).iconData,
+                        color: _type.data(context).iconColor,
+                        size: 12.sp,
                       ),
                     ),
-                    4.horizontalSpace,
-                    Expanded(
-                      child: Text(
-                        _type.data(context).label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: PicoTextStyle.bodySm(
-                          color: context.picoColors.text.neutral.subtle,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              8.verticalSpace,
-              Skeleton.replace(
-                replacement: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.r),
-                  child: Container(
-                    width: 80.w,
-                    height: 20.h,
-                    color: context.picoColors.semantic.info.shade100,
                   ),
-                ),
-                child: Text(
-                  NumberHelper.numberFormat(total),
-                  style: PicoTextStyle.labelLg(),
+                  PCSpacing.s4.w.horizontalSpace,
+                  Expanded(
+                    child: Text(
+                      _type.data(context).label,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: PicoTextStyle.bodySm(
+                        color: context.picoColors.text.neutral.subtle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PCSpacing.s8.h.verticalSpace,
+            Skeleton.replace(
+              replacement: ClipRRect(
+                borderRadius: BorderRadius.circular(PCSpacing.s8.r),
+                child: Container(
+                  width: 80.w,
+                  height: 20.h,
+                  color: context.picoColors.semantic.info.shade100,
                 ),
               ),
-              8.verticalSpace,
-              Text(
-                StringHelper.formatNewCase(newCase),
-                style: PicoTextStyle.bodyXs(
-                  fontWeight: FontWeight.w700,
-                  color: context.picoColors.text.neutral.subtle,
-                ),
+              child: Text(
+                NumberHelper.numberFormat(total),
+                style: PicoTextStyle.labelLg(),
               ),
-            ],
-          ),
+            ),
+            PCSpacing.s8.verticalSpace,
+            Text(
+              StringHelper.formatNewCase(newCase),
+              style: PicoTextStyle.bodyXs(
+                fontWeight: FontWeight.w700,
+                color: context.picoColors.text.neutral.subtle,
+              ),
+            ),
+          ],
         ),
       );
 }

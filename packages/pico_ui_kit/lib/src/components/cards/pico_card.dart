@@ -14,6 +14,7 @@ class PicoCard extends StatelessWidget {
     this.bgColor,
     this.width,
     this.height,
+    this.shadow,
   }) : assert(
           (gradient == null && bgColor != null) ||
               (bgColor == null && gradient != null) ||
@@ -30,6 +31,7 @@ class PicoCard extends StatelessWidget {
   final double? height;
   final Gradient? gradient;
   final Color? bgColor;
+  final List<BoxShadow>? shadow;
 
   @override
   Widget build(BuildContext context) => AnimatedContainer(
@@ -41,6 +43,7 @@ class PicoCard extends StatelessWidget {
               PCSpacing.s16.r,
             ),
         decoration: BoxDecoration(
+          boxShadow: shadow,
           color: bgColor == null && gradient == null
               ? context.picoColors.background.card.main
               : bgColor,
