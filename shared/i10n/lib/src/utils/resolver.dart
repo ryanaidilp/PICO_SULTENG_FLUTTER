@@ -2,8 +2,6 @@ import 'package:i10n/i10n.dart';
 
 /// Set pluralization for [AppLocale.id].
 void setPluralizationResolverForID() {
-  // add this before you call the pluralization strings. Otherwise an exception will be thrown.
-// you don't need to specify both
   LocaleSettings.setPluralResolver(
     locale: AppLocale.id,
     cardinalResolver: (n, {zero, one, two, few, many, other}) {
