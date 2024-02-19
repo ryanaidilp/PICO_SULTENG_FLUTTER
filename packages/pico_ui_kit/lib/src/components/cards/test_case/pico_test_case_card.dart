@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:pico_ui_kit/src/components/cards/test_case/enums/pico_test_status.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoTestCaseCard extends StatelessWidget {
   const PicoTestCaseCard._({

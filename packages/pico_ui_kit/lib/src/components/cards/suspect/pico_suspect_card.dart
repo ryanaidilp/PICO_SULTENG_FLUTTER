@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:pico_ui_kit/src/components/cards/suspect/enums/pico_suspect_type.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoSuspectCard extends StatelessWidget {
   const PicoSuspectCard._({

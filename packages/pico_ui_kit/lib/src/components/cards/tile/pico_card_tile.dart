@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoCardTile extends StatelessWidget {
   const PicoCardTile({

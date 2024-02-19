@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:pico_ui_kit/src/components/cards/case/enums/pico_case_type.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoCaseCard extends StatelessWidget {
   const PicoCaseCard._({

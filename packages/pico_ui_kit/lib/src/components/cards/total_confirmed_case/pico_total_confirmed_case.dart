@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoTotalConfirmedCase extends StatelessWidget {
   const PicoTotalConfirmedCase({

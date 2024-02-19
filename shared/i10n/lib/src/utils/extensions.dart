@@ -6,7 +6,7 @@ import 'package:i10n/i10n.dart';
 extension TranslationExtension on BuildContext {
   Translations get i10n => Translations.of(this);
   String get thousandSeparator => switch (LocaleSettings.currentLocale) {
-    AppLocale.en => ',',
-    AppLocale.id => '.',
-  };
+        AppLocale.en => ',',
+        AppLocale.id => '.',
+      };
 }
