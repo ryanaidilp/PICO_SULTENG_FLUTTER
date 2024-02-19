@@ -15,7 +15,7 @@ class StatisticDetailSection extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const AllStatisticChartSection(),
-          PCSpacing.s16.verticalSpace,
+          PCSpacing.s16.h.verticalSpace,
           BlocBuilder<LatestStatisticCubit, LatestStatisticState>(
             builder: (context, state) => AnimatedSwitcher(
               duration: 300.milliseconds,
