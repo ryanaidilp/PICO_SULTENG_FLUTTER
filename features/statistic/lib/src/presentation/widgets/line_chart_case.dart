@@ -102,17 +102,7 @@ class _LineChartCaseState extends State<LineChartCase> {
               ..updateState(PCChartState.success);
           }
         },
-        child: Container(
-          decoration: BoxDecoration(
-            color: context.picoColors.background.card.main,
-            borderRadius: BorderRadius.circular(PCRadius.md),
-            border: Border.all(
-              color: context.picoColors.outline.neutral.main,
-            ),
-          ),
-          padding: EdgeInsets.all(
-            PCSpacing.s16.r,
-          ),
+        child: PicoCard(
           height: 500.h,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
