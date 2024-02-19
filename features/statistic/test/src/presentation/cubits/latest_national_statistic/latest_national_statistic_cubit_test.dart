@@ -40,19 +40,19 @@ void main() {
   group(
     'LatestNationalStatisticBloc',
     () {
-      blocTest<LatestNationalStatisticBloc, LatestNationalStatisticState>(
+      blocTest<LatestNationalStatisticCubit, LatestNationalStatisticState>(
         'should emit nothing when initialize',
-        build: LatestNationalStatisticBloc.new,
+        build: LatestNationalStatisticCubit.new,
         expect: () => <LatestNationalStatisticState>[],
       );
 
-      blocTest<LatestNationalStatisticBloc, LatestNationalStatisticState>(
+      blocTest<LatestNationalStatisticCubit, LatestNationalStatisticState>(
         'should emit [Loading,Loaded] states when success',
-        build: LatestNationalStatisticBloc.new,
+        build: LatestNationalStatisticCubit.new,
         setUp: () => when(() => mockUseCase.call(NoParams())).thenAnswer(
           (_) async => Right(data),
         ),
-        act: (bloc) => bloc.add(LatestNationalStatisticEvent.load()),
+        act: (cubit) => cubit.fetch(),
         expect: () => <LatestNationalStatisticState>[
           LatestNationalStatisticState.loading(),
           LatestNationalStatisticState.loaded(data: data),
@@ -60,13 +60,13 @@ void main() {
         verify: (_) => verify(() => mockUseCase.call(NoParams())),
       );
 
-      blocTest<LatestNationalStatisticBloc, LatestNationalStatisticState>(
+      blocTest<LatestNationalStatisticCubit, LatestNationalStatisticState>(
         'should emit [Loading,Failed] states when failed',
-        build: LatestNationalStatisticBloc.new,
+        build: LatestNationalStatisticCubit.new,
         setUp: () => when(() => mockUseCase.call(NoParams())).thenAnswer(
           (_) async => const Left(StatisticFailure(message: errorMessage)),
         ),
-        act: (bloc) => bloc.add(LatestNationalStatisticEvent.load()),
+        act: (cubit) => cubit.fetch(),
         expect: () => <LatestNationalStatisticState>[
           LatestNationalStatisticState.loading(),
           LatestNationalStatisticState.failed(

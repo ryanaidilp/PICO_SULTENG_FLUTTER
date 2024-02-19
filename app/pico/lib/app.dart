@@ -23,10 +23,7 @@ class App extends StatelessWidget {
             create: (context) => LatestStatisticCubit(),
           ),
           BlocProvider(
-            create: (context) => LatestNationalStatisticBloc()
-              ..add(
-                LatestNationalStatisticEvent.load(),
-              ),
+            create: (context) => LatestNationalStatisticCubit()..fetch(),
           ),
           BlocProvider(
             create: (context) => LatestCovidTestBloc(),
