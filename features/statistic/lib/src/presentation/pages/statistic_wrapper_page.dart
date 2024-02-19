@@ -18,6 +18,12 @@ class StatisticWrapperPage extends StatelessWidget implements AutoRouteWrapper {
           BlocProvider<AllNationalStatisticsCubit>(
             create: (_) => AllNationalStatisticsCubit()..fetch(),
           ),
+          BlocProvider(
+            create: (_) => AllStatisticFilterCubit(),
+          ),
+          BlocProvider(
+            create: (_) => LineChartFilterCubit(),
+          ),
         ],
         child: const AutoRouter(),
       );
