@@ -3,6 +3,7 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
+import 'package:statistic/src/presentation/widgets/line_chart_case.dart';
 import 'package:statistic/src/presentation/widgets/statistic_data_list.dart';
 import 'package:statistic/statistic.dart';
 
@@ -13,6 +14,8 @@ class StatisticDetailSection extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          const LineChartCase(),
+          PCSpacing.s16.verticalSpace,
           BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
             builder: (context, state) => AnimatedSwitcher(
               duration: 300.milliseconds,
