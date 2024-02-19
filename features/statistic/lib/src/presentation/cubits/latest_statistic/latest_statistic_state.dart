@@ -1,4 +1,4 @@
-part of 'latest_statistic_bloc.dart';
+part of 'latest_statistic_cubit.dart';
 
 @freezed
 abstract class LatestStatisticState with _$LatestStatisticState {

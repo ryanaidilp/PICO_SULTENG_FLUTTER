@@ -16,7 +16,7 @@ class StatisticDetailSection extends StatelessWidget {
         children: [
           const LineChartCase(),
           PCSpacing.s16.verticalSpace,
-          BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
+          BlocBuilder<LatestStatisticCubit, LatestStatisticState>(
             builder: (context, state) => AnimatedSwitcher(
               duration: 300.milliseconds,
               child: switch (state) {
@@ -27,9 +27,7 @@ class StatisticDetailSection extends StatelessWidget {
                   ),
                 LatestStatisticFailedState() => PicoErrorPlaceholder(
                     label: context.i10n.error.statistic,
-                    onRetry: () => context.read<LatestStatisticBloc>().add(
-                          LatestStatisticEvent.load(),
-                        ),
+                    onRetry: () => context.read<LatestStatisticCubit>().fetch(),
                   ),
                 LatestStatisticEmptyState() => StatisticDataList(
                     key: const Key('statistic-empty'),

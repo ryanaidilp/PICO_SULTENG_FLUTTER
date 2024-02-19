@@ -17,7 +17,7 @@ class StatisticSummarySection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Expanded(
-                child: BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
+                child: BlocBuilder<LatestStatisticCubit, LatestStatisticState>(
                   builder: (context, state) => AnimatedSwitcher(
                     duration: 300.milliseconds,
                     child: switch (state) {
@@ -55,7 +55,7 @@ class StatisticSummarySection extends StatelessWidget {
             ],
           ),
           24.verticalSpace,
-          BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
+          BlocBuilder<LatestStatisticCubit, LatestStatisticState>(
             builder: (context, state) => AnimatedSwitcher(
               duration: 300.milliseconds,
               child: switch (state) {
@@ -67,9 +67,7 @@ class StatisticSummarySection extends StatelessWidget {
                   ),
                 LatestStatisticFailedState() => PicoErrorPlaceholder(
                     label: context.i10n.error.statistic,
-                    onRetry: () => context.read<LatestStatisticBloc>().add(
-                          LatestStatisticEvent.load(),
-                        ),
+                    onRetry: () => context.read<LatestStatisticCubit>().fetch(),
                   ),
                 LatestStatisticEmptyState() => StatisticDataList(
                     key: const Key('statistic-empty'),

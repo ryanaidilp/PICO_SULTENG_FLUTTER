@@ -20,7 +20,7 @@ class App extends StatelessWidget {
             create: (context) => BannerBloc(),
           ),
           BlocProvider(
-            create: (context) => LatestStatisticBloc(),
+            create: (context) => LatestStatisticCubit(),
           ),
           BlocProvider(
             create: (context) => LatestNationalStatisticBloc()

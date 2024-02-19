@@ -37,21 +37,21 @@ void main() {
   const errorMessage = 'There is something wrong!';
 
   group(
-    'LatestStatisticBloc',
+    'LatestStatisticCubit',
     () {
-      blocTest<LatestStatisticBloc, LatestStatisticState>(
+      blocTest<LatestStatisticCubit, LatestStatisticState>(
         'should emit nothing when initialize',
-        build: LatestStatisticBloc.new,
+        build: LatestStatisticCubit.new,
         expect: () => <LatestStatisticState>[],
       );
 
-      blocTest<LatestStatisticBloc, LatestStatisticState>(
+      blocTest<LatestStatisticCubit, LatestStatisticState>(
         'should emit [Loading,Loaded] states when success',
-        build: LatestStatisticBloc.new,
+        build: LatestStatisticCubit.new,
         setUp: () => when(() => mockUseCase.call(NoParams())).thenAnswer(
           (_) async => Right(data),
         ),
-        act: (bloc) => bloc.add(LatestStatisticEvent.load()),
+        act: (cubit) => cubit.fetch(),
         expect: () => <LatestStatisticState>[
           LatestStatisticState.loading(),
           LatestStatisticState.loaded(data: data),
@@ -59,13 +59,13 @@ void main() {
         verify: (_) => verify(() => mockUseCase.call(NoParams())),
       );
 
-      blocTest<LatestStatisticBloc, LatestStatisticState>(
+      blocTest<LatestStatisticCubit, LatestStatisticState>(
         'should emit [Loading,Failed] states when failed',
-        build: LatestStatisticBloc.new,
+        build: LatestStatisticCubit.new,
         setUp: () => when(() => mockUseCase.call(NoParams())).thenAnswer(
           (_) async => const Left(StatisticFailure(message: errorMessage)),
         ),
-        act: (bloc) => bloc.add(LatestStatisticEvent.load()),
+        act: (cubit) => cubit.fetch(),
         expect: () => <LatestStatisticState>[
           LatestStatisticState.loading(),
           LatestStatisticState.failed(
