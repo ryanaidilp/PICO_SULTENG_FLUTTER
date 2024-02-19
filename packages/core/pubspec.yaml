@@ -10,6 +10,7 @@ environment:
 dependencies:
   config:
     path: ../../shared/config
+  decimal: ^2.3.3
   dependencies:
     path: ../../shared/dependencies
   dio: ^5.4.0

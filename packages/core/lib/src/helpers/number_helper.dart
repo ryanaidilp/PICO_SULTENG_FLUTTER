@@ -1,3 +1,5 @@
+import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:dependencies/dependencies.dart';
 import 'package:i10n/i10n.dart';
 
@@ -14,6 +16,33 @@ class NumberHelper {
     String? locale,
     bool compact = false,
     bool showExplicitSign = false,
+    int decimals = 2,
+    bool showSign = false,
+  }) {
+    final formatter = compact
+        ? NumberFormat.compact(
+            explicitSign: showExplicitSign,
+            locale: locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+          )
+        : NumberFormat.decimalPattern(
+            locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+          );
+    final decimal = Decimal.parse(
+      number.toStringAsFixed(decimals),
+    );
+
+    return formatter.format(
+      DecimalIntl(decimal),
+    );
+  }
+
+  static String percentageFormat(
+    num number, {
+    String? locale,
+    bool compact = false,
+    bool showExplicitSign = false,
+    int decimals = 2,
+    bool showSign = false,
   }) {
     final formatter = compact
         ? NumberFormat.compact(
@@ -24,18 +53,13 @@ class NumberHelper {
             locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
           );
 
-    return formatter.format(number);
-  }
-
-  static String percentageFormat(
-    num number, {
-    String? locale,
-  }) {
-    final formatter = NumberFormat.percentPattern(
-      locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+    final decimal = Decimal.parse(
+      number.toStringAsFixed(decimals),
     );
 
-    return formatter.format(number);
+    return '${formatter.format(
+      DecimalIntl(decimal),
+    )}%';
   }
 
   static int calculateStep({
