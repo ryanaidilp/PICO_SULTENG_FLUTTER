@@ -4,10 +4,11 @@ import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
 import 'package:statistic/src/domain/enums/enums.dart';
 
-part 'line_chart_filter_state.dart';
+part 'line_chart_local_statistic_filter_state.dart';
 
-class LineChartFilterCubit extends Cubit<LineChartFilterState> {
-  LineChartFilterCubit() : super(LineChartFilterState());
+class LineChartLocalStatisticFilter
+    extends Cubit<LineChartLocalStatisticState> {
+  LineChartLocalStatisticFilter() : super(LineChartLocalStatisticState());
 
   void updateStatus({required bool status}) => emit(
         state.copyWith(

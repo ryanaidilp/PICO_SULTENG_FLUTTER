@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
 import 'package:dependencies/dependencies.dart';
@@ -27,8 +28,17 @@ class NumberHelper {
         : NumberFormat.decimalPattern(
             locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
           );
+    final preciseValue =
+        number.toStringAsPrecision(number.toDouble().precision);
+    final customDecimalValue = number.toStringAsFixed(decimals);
+    final preciseDouble = double.parse(preciseValue);
+    final customDecimalDouble = double.parse(customDecimalValue);
+    final isStartWithZero = number.abs().toString().startsWith('0');
+
     final decimal = Decimal.parse(
-      number.toStringAsFixed(decimals),
+      preciseDouble == customDecimalDouble || !isStartWithZero
+          ? customDecimalValue
+          : preciseValue,
     );
 
     return formatter.format(
@@ -53,8 +63,16 @@ class NumberHelper {
             locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
           );
 
+    final preciseValue = number.toStringAsFixed(number.toDouble().precision);
+    final customDecimalValue = number.toStringAsFixed(decimals);
+    final preciseDouble = double.parse(preciseValue);
+    final customDecimalDouble = double.parse(customDecimalValue);
+    final isStartWithZero = number.abs().toString().startsWith('0');
+
     final decimal = Decimal.parse(
-      number.toStringAsFixed(decimals),
+      preciseDouble == customDecimalDouble || !isStartWithZero
+          ? customDecimalValue
+          : preciseValue,
     );
 
     return '${formatter.format(

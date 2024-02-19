@@ -4,4 +4,4 @@ export 'all_statistics/all_statistics_cubit.dart';
 export 'latest_covid_test/latest_covid_test_cubit.dart';
 export 'latest_national_statistic/latest_national_statistic_cubit.dart';
 export 'latest_statistic/latest_statistic_cubit.dart';
-export 'line_chart_filter/line_chart_filter_cubit.dart';
+export 'line_chart_local_statistic_filter/line_chart_local_statistic_filter_cubit.dart';

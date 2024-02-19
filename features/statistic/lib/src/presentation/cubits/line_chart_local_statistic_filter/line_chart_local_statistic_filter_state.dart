@@ -1,8 +1,8 @@
-part of 'line_chart_filter_cubit.dart';
+part of 'line_chart_local_statistic_filter_cubit.dart';
 
 @immutable
-class LineChartFilterState extends Equatable {
-  LineChartFilterState({
+class LineChartLocalStatisticState extends Equatable {
+  LineChartLocalStatisticState({
     Set<int>? availableYear,
     this.type = CaseType.underTreatment,
     this.timeFrame = DataTimeFrame.all,
@@ -28,7 +28,7 @@ class LineChartFilterState extends Equatable {
         showCumulative,
       ];
 
-  LineChartFilterState copyWith({
+  LineChartLocalStatisticState copyWith({
     int? selectedYear,
     Set<int>? availableYear,
     CaseType? type,
@@ -36,7 +36,7 @@ class LineChartFilterState extends Equatable {
     bool? isUpdating,
     bool? showCumulative,
   }) =>
-      LineChartFilterState(
+      LineChartLocalStatisticState(
         availableYear: availableYear ?? this.availableYear,
         isUpdating: isUpdating ?? this.isUpdating,
         type: type ?? this.type,

@@ -7,6 +7,11 @@ enum DataTimeFrame {
   sixMonth,
   all;
 
+  factory DataTimeFrame.fromValue(String value) => values.firstWhere(
+        (element) => element.name == value,
+        orElse: () => DataTimeFrame.all,
+      );
+
   String label(BuildContext context) => switch (this) {
         oneMonth => context
             .translations.chart.line_chart.filter_label.timeframe.one_month,
