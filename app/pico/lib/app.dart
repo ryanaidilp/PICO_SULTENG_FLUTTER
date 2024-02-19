@@ -26,7 +26,7 @@ class App extends StatelessWidget {
             create: (context) => LatestNationalStatisticCubit()..fetch(),
           ),
           BlocProvider(
-            create: (context) => LatestCovidTestBloc(),
+            create: (context) => LatestCovidTestCubit(),
           ),
         ],
         child: PCComponentInit(
