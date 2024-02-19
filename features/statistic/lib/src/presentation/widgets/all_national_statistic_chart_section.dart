@@ -25,6 +25,13 @@ class _AllNationalStatisticChartState
     super.initState();
     _chartController = PCLineChartController();
     _labelsNotifier = ValueNotifier([]);
+    final dataState = context.read<AllNationalStatisticsCubit>().state;
+    _isInitialLoading = dataState is AllNationalStatisticsLoading;
+    if (!_isInitialLoading) {
+      context.read<LineChartNationalStatisticFilter>().updateStatus(
+            status: false,
+          );
+    }
   }
 
   @override
