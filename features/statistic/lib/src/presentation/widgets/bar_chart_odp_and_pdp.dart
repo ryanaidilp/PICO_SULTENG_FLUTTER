@@ -3,8 +3,8 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:statistic/src/presentation/blocs/latest_statistic/latest_statistic_bloc.dart';
 import 'package:statistic/src/presentation/widgets/bar_chart_widget.dart';
+import 'package:statistic/statistic.dart';
 
 class BarChartODPAndPDP extends StatefulWidget {
   const BarChartODPAndPDP({super.key});
@@ -30,7 +30,7 @@ class _BarChartODPAndPDPState extends State<BarChartODPAndPDP> {
 
   @override
   Widget build(BuildContext context) =>
-      BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
+      BlocBuilder<LatestStatisticCubit, LatestStatisticState>(
         builder: (context, state) => switch (state) {
           LatestStatisticLoadedState(
             data: final data,

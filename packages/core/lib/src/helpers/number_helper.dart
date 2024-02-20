@@ -1,3 +1,6 @@
+import 'package:core/core.dart';
+import 'package:decimal/decimal.dart';
+import 'package:decimal/intl.dart';
 import 'package:dependencies/dependencies.dart';
 import 'package:i10n/i10n.dart';
 
@@ -14,6 +17,42 @@ class NumberHelper {
     String? locale,
     bool compact = false,
     bool showExplicitSign = false,
+    int decimals = 2,
+    bool showSign = false,
+  }) {
+    final formatter = compact
+        ? NumberFormat.compact(
+            explicitSign: showExplicitSign,
+            locale: locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+          )
+        : NumberFormat.decimalPattern(
+            locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+          );
+    final preciseValue =
+        number.toStringAsPrecision(number.toDouble().precision);
+    final customDecimalValue = number.toStringAsFixed(decimals);
+    final preciseDouble = double.parse(preciseValue);
+    final customDecimalDouble = double.parse(customDecimalValue);
+    final isStartWithZero = number.abs().toString().startsWith('0');
+
+    final decimal = Decimal.parse(
+      preciseDouble == customDecimalDouble || !isStartWithZero
+          ? customDecimalValue
+          : preciseValue,
+    );
+
+    return formatter.format(
+      DecimalIntl(decimal),
+    );
+  }
+
+  static String percentageFormat(
+    num number, {
+    String? locale,
+    bool compact = false,
+    bool showExplicitSign = false,
+    int decimals = 2,
+    bool showSign = false,
   }) {
     final formatter = compact
         ? NumberFormat.compact(
@@ -24,18 +63,21 @@ class NumberHelper {
             locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
           );
 
-    return formatter.format(number);
-  }
+    final preciseValue = number.toStringAsFixed(number.toDouble().precision);
+    final customDecimalValue = number.toStringAsFixed(decimals);
+    final preciseDouble = double.parse(preciseValue);
+    final customDecimalDouble = double.parse(customDecimalValue);
+    final isStartWithZero = number.abs().toString().startsWith('0');
 
-  static String percentageFormat(
-    num number, {
-    String? locale,
-  }) {
-    final formatter = NumberFormat.percentPattern(
-      locale ?? AppLocaleUtils.findDeviceLocale().languageCode,
+    final decimal = Decimal.parse(
+      preciseDouble == customDecimalDouble || !isStartWithZero
+          ? customDecimalValue
+          : preciseValue,
     );
 
-    return formatter.format(number);
+    return '${formatter.format(
+      DecimalIntl(decimal),
+    )}%';
   }
 
   static int calculateStep({

@@ -38,8 +38,8 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
     _refreshCounter = 3;
     _errorCounter = 0;
     context.read<BannerBloc>().add(BannerEvent.load());
-    context.read<LatestStatisticBloc>().add(LatestStatisticEvent.load());
-    context.read<LatestCovidTestBloc>().add(LatestCovidTestEvent.load());
+    context.read<LatestStatisticCubit>().fetch();
+    context.read<LatestCovidTestCubit>().fetch();
   }
 
   void _onRefresh() {
@@ -47,8 +47,8 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
     _errorCounter = 0;
     _refreshController.requestRefresh();
     context.read<BannerBloc>().add(BannerEvent.load());
-    context.read<LatestStatisticBloc>().add(LatestStatisticEvent.load());
-    context.read<LatestCovidTestBloc>().add(LatestCovidTestEvent.load());
+    context.read<LatestStatisticCubit>().fetch();
+    context.read<LatestCovidTestCubit>().fetch();
   }
 
   void _onBlocRefreshCompleted() {
@@ -87,7 +87,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
               }
             },
           ),
-          BlocListener<LatestStatisticBloc, LatestStatisticState>(
+          BlocListener<LatestStatisticCubit, LatestStatisticState>(
             listener: (context, state) {
               if (state is LatestStatisticLoadedState ||
                   state is LatestStatisticEmptyState) {
@@ -97,7 +97,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
               }
             },
           ),
-          BlocListener<LatestCovidTestBloc, LatestCovidTestState>(
+          BlocListener<LatestCovidTestCubit, LatestCovidTestState>(
             listener: (context, state) {
               if (state is LatestCovidTestLoadedState ||
                   state is LatestCovidTestEmptyState) {

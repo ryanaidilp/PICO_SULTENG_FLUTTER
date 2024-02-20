@@ -6,6 +6,7 @@ enum PicoIcons {
   ambulance,
   ambulanceOutline,
   barChart,
+  cemetery,
   check,
   close,
   cog,
@@ -28,6 +29,7 @@ enum PicoIcons {
   sunOutline,
   syringe,
   vaccine,
+  virus,
   youtube;
 
   PicoAssetData<SvgGenImage> get data => switch (this) {
@@ -41,6 +43,10 @@ enum PicoIcons {
           ),
         barChart => PicoAssetData<SvgGenImage>(
             file: Assets.icons.barChart,
+            extension: PicoAssetExtension.svg,
+          ),
+        cemetery => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.cemetery,
             extension: PicoAssetExtension.svg,
           ),
         check => PicoAssetData<SvgGenImage>(
@@ -129,6 +135,10 @@ enum PicoIcons {
           ),
         vaccine => PicoAssetData<SvgGenImage>(
             file: Assets.icons.vaccine,
+            extension: PicoAssetExtension.svg,
+          ),
+        virus => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.virus,
             extension: PicoAssetExtension.svg,
           ),
         youtube => PicoAssetData<SvgGenImage>(

@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoTotalTestCardTile extends StatelessWidget {
   const PicoTotalTestCardTile({
@@ -14,19 +13,14 @@ class PicoTotalTestCardTile extends StatelessWidget {
   final int total;
   final GestureTapCallback? onTap;
   @override
-  Widget build(BuildContext context) => Material(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r),
-          side: BorderSide(
-            color: context.picoColors.outline.neutral.main,
-          ),
-        ),
-        color: context.picoColors.background.card.main,
+  Widget build(BuildContext context) => PicoCard(
+        borderRadius: PCRadius.sm.r,
+        padding: EdgeInsets.zero,
         child: InkWell(
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(PCRadius.sm.r),
           onTap: onTap,
           child: Padding(
-            padding: EdgeInsets.all(8.r),
+            padding: EdgeInsets.all(PCSpacing.s8.r),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -47,7 +41,7 @@ class PicoTotalTestCardTile extends StatelessWidget {
                       ),
                       Skeleton.replace(
                         replacement: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.r),
+                          borderRadius: BorderRadius.circular(PCSpacing.s8.r),
                           child: Container(
                             width: 80.w,
                             height: 32.h,
@@ -64,7 +58,7 @@ class PicoTotalTestCardTile extends StatelessWidget {
                     ],
                   ),
                 ),
-                8.horizontalSpace,
+                PCSpacing.s8.horizontalSpace,
                 Skeleton.keep(
                   child: Icon(
                     Icons.arrow_forward_rounded,

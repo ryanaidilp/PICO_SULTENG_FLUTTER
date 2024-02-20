@@ -23,7 +23,7 @@ class StatisticPage extends StatelessWidget {
             scrolledUnderElevation: 10.h,
             surfaceTintColor: context.picoColors.background.neutral.main,
             shadowColor: context.picoColors.text.neutral.main.withOpacity(0.1),
-            title: BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
+            title: BlocBuilder<LatestStatisticCubit, LatestStatisticState>(
               builder: (context, state) => AnimatedSwitcher(
                 duration: 300.milliseconds,
                 child: switch (state) {

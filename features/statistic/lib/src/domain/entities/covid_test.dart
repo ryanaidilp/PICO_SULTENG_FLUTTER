@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
 
 class CovidTest extends Equatable {
@@ -24,10 +25,22 @@ class CovidTest extends Equatable {
   final int invalid;
   final int total;
 
-  double get reactivePercentage => positive / total;
-  double get nonReactivePercentage => negative / total;
-  double get inProcessPercentage => process / total;
-  double get invalidPercentage => invalid / total;
+  double get reactivePercentage => NumberHelper.calculatePercentage(
+        value: positive,
+        total: total,
+      );
+  double get nonReactivePercentage => NumberHelper.calculatePercentage(
+        value: negative,
+        total: total,
+      );
+  double get inProcessPercentage => NumberHelper.calculatePercentage(
+        value: process,
+        total: total,
+      );
+  double get invalidPercentage => NumberHelper.calculatePercentage(
+        value: invalid,
+        total: total,
+      );
   String get nameAbbreviation {
     final buffer = StringBuffer();
     final texts = name.split(' ');

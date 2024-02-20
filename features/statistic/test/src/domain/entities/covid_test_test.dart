@@ -41,7 +41,7 @@ void main() {
         'reactivePercentage is equals to positive/total',
         () => expect(
           covidTest.reactivePercentage,
-          covidTest.positive / covidTest.total,
+          covidTest.positive / covidTest.total * 100,
         ),
       );
 
@@ -49,7 +49,7 @@ void main() {
         'nonReactivePercentage is equals to negative/total',
         () => expect(
           covidTest.nonReactivePercentage,
-          covidTest.negative / covidTest.total,
+          covidTest.negative / covidTest.total * 100,
         ),
       );
 
@@ -57,7 +57,7 @@ void main() {
         'invalidPercentage is equals to invalid/total',
         () => expect(
           covidTest.invalidPercentage,
-          covidTest.invalid / covidTest.total,
+          covidTest.invalid / covidTest.total * 100,
         ),
       );
 
@@ -65,7 +65,7 @@ void main() {
         'inProcessPercentage is equals to process/total',
         () => expect(
           covidTest.inProcessPercentage,
-          covidTest.process / covidTest.total,
+          covidTest.process / covidTest.total * 100,
         ),
       );
 

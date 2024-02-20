@@ -11,7 +11,7 @@ class TestDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      BlocBuilder<LatestCovidTestBloc, LatestCovidTestState>(
+      BlocBuilder<LatestCovidTestCubit, LatestCovidTestState>(
         builder: (context, state) {
           if (state is LatestCovidTestLoadedState) {
             final testDescriptions = {

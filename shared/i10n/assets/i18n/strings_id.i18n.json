@@ -35,6 +35,27 @@
         "active": "Dalam Pemantauan/Pengawasan",
         "finished": "Selesai Pemantauan/Pengawasan"
       }
+    },
+    "line_chart": {
+      "title": "Kasus $name harian",
+      "patient_label": {
+        "zero": "pasien",
+        "one": "pasien",
+        "other": "pasien"
+      },
+      "filter_label": {
+        "cumulative": "Kumulatif",
+        "positive": "Positif",
+        "recovered": "Sembuh",
+        "deceased": "Kematian",
+        "active": "Dirawat",
+        "all": "Semua",
+        "timeframe": {
+          "one_month": "1Bln",
+          "three_month": "3Bln",
+          "six_month": "6Bln"
+        }
+      }
     }
   },
   "data_case_label": "Data Kasus SulTeng",
@@ -46,7 +67,7 @@
     "confirmed": "TOTAL KASUS TERKONFIRMASI",
     "under_treatment": "Dirawat",
     "recovered": "Sembuh",
-    "deceased": "Meninggal",
+    "deceased": "Kematian",
     "active": "Aktif",
     "finish": "Selesai",
     "total_test": "Total Pemeriksaan",

@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
+import 'package:flutter/foundation.dart';
 import 'package:statistic/src/data/models/statistic_model.dart';
 
 abstract class StatisticRemoteDataSource {
@@ -41,17 +42,20 @@ class StatisticRemoteDataSourceImpl implements StatisticRemoteDataSource {
   Future<ApiResponseModel<List<StatisticModel>>> all() async {
     final response = await _httpModule.get(ApiEndpoint.historyProvince());
 
-    final result = ApiResponseModel<List<StatisticModel>>.fromJson(
-      response,
-      (json) {
-        if (json is! List) {
-          return [];
-        }
+    final result = await compute(
+      (message) => ApiResponseModel<List<StatisticModel>>.fromJson(
+        response,
+        (json) {
+          if (json is! List) {
+            return [];
+          }
 
-        final data = json.map((e) => StatisticModel.fromJson(e as JSON));
+          final data = json.map((e) => StatisticModel.fromJson(e as JSON));
 
-        return data.toList();
-      },
+          return data.toList();
+        },
+      ),
+      '',
     );
 
     return result;
@@ -61,17 +65,20 @@ class StatisticRemoteDataSourceImpl implements StatisticRemoteDataSource {
   Future<ApiResponseModel<List<StatisticModel>>> allNational() async {
     final response = await _httpModule.get(ApiEndpoint.history());
 
-    final result = ApiResponseModel<List<StatisticModel>>.fromJson(
-      response,
-      (json) {
-        if (json is! List) {
-          return [];
-        }
+    final result = await compute(
+      (message) => ApiResponseModel<List<StatisticModel>>.fromJson(
+        response,
+        (json) {
+          if (json is! List) {
+            return [];
+          }
 
-        final data = json.map((e) => StatisticModel.fromJson(e as JSON));
+          final data = json.map((e) => StatisticModel.fromJson(e as JSON));
 
-        return data.toList();
-      },
+          return data.toList();
+        },
+      ),
+      '',
     );
 
     return result;

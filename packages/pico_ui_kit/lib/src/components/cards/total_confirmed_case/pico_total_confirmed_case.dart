@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoTotalConfirmedCase extends StatelessWidget {
   const PicoTotalConfirmedCase({
@@ -18,30 +17,26 @@ class PicoTotalConfirmedCase extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          Container(
+          PicoCard(
             width: 1.sw,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: context.picoColors.semantic.info.shade200
-                      .withOpacity(0.3),
-                  blurRadius: 10.r,
-                  spreadRadius: 5.r,
-                  offset: Offset.fromDirection(-30, 5),
-                ),
+            shadow: [
+              BoxShadow(
+                color:
+                    context.picoColors.semantic.info.shade200.withOpacity(0.3),
+                blurRadius: 10.r,
+                spreadRadius: 5.r,
+                offset: Offset.fromDirection(-30, 5),
+              ),
+            ],
+            borderRadius: PCRadius.sm.r,
+            borderColor: context.picoColors.outline.semantic.primary,
+            gradient: LinearGradient(
+              colors: [
+                context.picoColors.semantic.primary,
+                context.picoColors.semantic.primary.shade200.withOpacity(0.5),
               ],
-              borderRadius: BorderRadius.circular(8.r),
-              border: Border.all(
-                color: context.picoColors.outline.semantic.primary,
-              ),
-              gradient: LinearGradient(
-                colors: [
-                  context.picoColors.semantic.primary,
-                  context.picoColors.semantic.primary.shade200.withOpacity(0.5),
-                ],
-              ),
             ),
-            padding: EdgeInsets.all(8.r),
+            padding: EdgeInsets.all(PCSpacing.s8.r),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,7 +55,7 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                   children: [
                     Skeleton.replace(
                       replacement: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(PCSpacing.s8.r),
                         child: Container(
                           width: 80.w,
                           height: 45.h,
@@ -74,10 +69,10 @@ class PicoTotalConfirmedCase extends StatelessWidget {
                         ),
                       ),
                     ),
-                    8.horizontalSpace,
+                    PCSpacing.s8.horizontalSpace,
                     Skeleton.replace(
                       replacement: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.r),
+                        borderRadius: BorderRadius.circular(PCSpacing.s8.r),
                         child: Container(
                           width: 24.w,
                           height: 16.h,

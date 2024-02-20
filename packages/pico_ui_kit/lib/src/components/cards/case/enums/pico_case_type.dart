@@ -13,21 +13,21 @@ enum PicoCaseType {
             iconColor: context.picoColors.icon.semantic.warning,
             bgColor:
                 context.picoColors.semantic.warning.shade100.withOpacity(0.4),
-            iconData: PicoIcons.hospital,
+            iconData: PicoIcons.hospitalBedOutline,
             label: context.i10n.card_case_label.under_treatment,
           ),
         cured => CaseData(
             iconColor: context.picoColors.icon.semantic.success,
             bgColor:
                 context.picoColors.semantic.success.shade100.withOpacity(0.4),
-            iconData: PicoIcons.check,
+            iconData: PicoIcons.selfIsolation,
             label: context.i10n.card_case_label.recovered,
           ),
         death => CaseData(
             iconColor: context.picoColors.icon.semantic.error,
             bgColor:
                 context.picoColors.semantic.error.shade100.withOpacity(0.4),
-            iconData: PicoIcons.close,
+            iconData: PicoIcons.cemetery,
             label: context.i10n.card_case_label.deceased,
           ),
       };

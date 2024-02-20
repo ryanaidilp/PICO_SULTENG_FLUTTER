@@ -3,6 +3,7 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
+import 'package:statistic/src/presentation/widgets/all_statistic_chart_section.dart';
 import 'package:statistic/src/presentation/widgets/statistic_data_list.dart';
 import 'package:statistic/statistic.dart';
 
@@ -13,7 +14,9 @@ class StatisticDetailSection extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          BlocBuilder<LatestStatisticBloc, LatestStatisticState>(
+          const AllStatisticChartSection(),
+          PCSpacing.s16.h.verticalSpace,
+          BlocBuilder<LatestStatisticCubit, LatestStatisticState>(
             builder: (context, state) => AnimatedSwitcher(
               duration: 300.milliseconds,
               child: switch (state) {
@@ -24,9 +27,7 @@ class StatisticDetailSection extends StatelessWidget {
                   ),
                 LatestStatisticFailedState() => PicoErrorPlaceholder(
                     label: context.i10n.error.statistic,
-                    onRetry: () => context.read<LatestStatisticBloc>().add(
-                          LatestStatisticEvent.load(),
-                        ),
+                    onRetry: () => context.read<LatestStatisticCubit>().fetch(),
                   ),
                 LatestStatisticEmptyState() => StatisticDataList(
                     key: const Key('statistic-empty'),
@@ -38,15 +39,13 @@ class StatisticDetailSection extends StatelessWidget {
             ),
           ),
           16.verticalSpace,
-          BlocBuilder<LatestCovidTestBloc, LatestCovidTestState>(
+          BlocBuilder<LatestCovidTestCubit, LatestCovidTestState>(
             builder: (context, state) => AnimatedSwitcher(
               duration: 300.milliseconds,
               child: switch (state) {
                 LatestCovidTestFailedState() => PicoErrorPlaceholder(
                     label: context.i10n.error.test,
-                    onRetry: () => context.read<LatestCovidTestBloc>().add(
-                          LatestCovidTestEvent.load(),
-                        ),
+                    onRetry: () => context.read<LatestCovidTestCubit>().fetch(),
                   ),
                 LatestCovidTestLoadedState(
                   total: final total,

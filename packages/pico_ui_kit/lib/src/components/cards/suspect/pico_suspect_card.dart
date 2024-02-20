@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:pico_ui_kit/src/components/cards/suspect/enums/pico_suspect_type.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoSuspectCard extends StatelessWidget {
   const PicoSuspectCard._({
@@ -57,244 +56,231 @@ class PicoSuspectCard extends StatelessWidget {
   final PicoSuspectType type;
 
   @override
-  Widget build(BuildContext context) => DecoratedBox(
-        decoration: BoxDecoration(
-          color: context.picoColors.background.card.main,
-          borderRadius: BorderRadius.circular(10.r),
-          border: Border.all(
-            color: context.picoColors.outline.neutral.main,
-          ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(8.r),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Skeleton.keep(
-                child: Row(
-                  children: [
-                    Text(
-                      type.label(context),
-                      style: PicoTextStyle.body(),
-                    ),
-                    8.horizontalSpace,
-                    InkWell(
-                      customBorder: const CircleBorder(),
-                      child: Tooltip(
-                        decoration: BoxDecoration(
-                          color: context.picoColors.background.neutral.white,
-                          borderRadius: BorderRadius.circular(12.r),
-                          border: Border.all(
-                            color: context.picoColors.outline.neutral.strong,
+  Widget build(BuildContext context) => PicoCard(
+        padding: EdgeInsets.all(PCSpacing.s8.r),
+        borderRadius: PCRadius.sm.r,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Skeleton.keep(
+              child: Row(
+                children: [
+                  Text(
+                    type.label(context),
+                    style: PicoTextStyle.body(),
+                  ),
+                  PCSpacing.s8.w.horizontalSpace,
+                  InkWell(
+                    customBorder: const CircleBorder(),
+                    child: Tooltip(
+                      decoration: BoxDecoration(
+                        color: context.picoColors.background.neutral.white,
+                        borderRadius: BorderRadius.circular(PCRadius.sm.r),
+                        border: Border.all(
+                          color: context.picoColors.outline.neutral.strong,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: context.picoColors.background.neutral.inverse
+                                .withOpacity(0.1),
+                            spreadRadius: 4.r,
+                            blurRadius: 6.r,
+                            offset: const Offset(
+                              0,
+                              8,
+                            ),
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: context
-                                  .picoColors.background.neutral.inverse
-                                  .withOpacity(0.1),
-                              spreadRadius: 4.r,
-                              blurRadius: 6.r,
-                              offset: const Offset(
-                                0,
-                                8,
+                        ],
+                      ),
+                      margin: EdgeInsets.symmetric(horizontal: PCSpacing.s16.w),
+                      padding: EdgeInsets.all(PCSpacing.s8.r),
+                      showDuration: 10.seconds,
+                      richMessage: WidgetSpan(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: 2,
+                            sigmaY: 2,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                type.title(context),
+                                style: PicoTextStyle.labelLg(),
                               ),
-                            ),
-                          ],
-                        ),
-                        margin: EdgeInsets.symmetric(horizontal: 16.w),
-                        padding: EdgeInsets.all(8.r),
-                        showDuration: 10.seconds,
-                        richMessage: WidgetSpan(
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 2,
-                              sigmaY: 2,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  type.title(context),
-                                  style: PicoTextStyle.labelLg(),
-                                ),
-                                8.verticalSpace,
-                                Text(type.description(context)),
-                              ],
-                            ),
+                              PCSpacing.s8.verticalSpace,
+                              Text(type.description(context)),
+                            ],
                           ),
                         ),
-                        triggerMode: TooltipTriggerMode.tap,
-                        child: PicoAsset.icon(
-                          icon: PicoIcons.questionCircle,
-                          size: 14.sp,
-                          color: context.picoColors.icon.neutral.subtle,
+                      ),
+                      triggerMode: TooltipTriggerMode.tap,
+                      child: PicoAsset.icon(
+                        icon: PicoIcons.questionCircle,
+                        size: 14.sp,
+                        color: context.picoColors.icon.neutral.subtle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PCSpacing.s4.h.verticalSpace,
+            Row(
+              children: [
+                Skeleton.replace(
+                  replacement: ClipRRect(
+                    borderRadius: BorderRadius.circular(PCSpacing.s8.r),
+                    child: Container(
+                      width: 50.w,
+                      height: 36.h,
+                      color: context.picoColors.semantic.info.shade100,
+                    ),
+                  ),
+                  child: Text(
+                    NumberHelper.numberFormat(total),
+                    style: PicoTextStyle.headingXl(),
+                  ),
+                ),
+                PCSpacing.s4.w.horizontalSpace,
+                Skeleton.replace(
+                  replacement: ClipRRect(
+                    borderRadius: BorderRadius.circular(PCSpacing.s8.r),
+                    child: Container(
+                      width: 24.w,
+                      height: 12.h,
+                      color: context.picoColors.semantic.info.shade100,
+                    ),
+                  ),
+                  child: Text(
+                    StringHelper.formatNewCase(newCase),
+                    style: PicoTextStyle.bodySm(
+                      fontWeight: FontWeight.w700,
+                      color: context.picoColors.text.neutral.subtle,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              color: context.picoColors.background.neutral.strong,
+            ),
+            PCSpacing.s8.h.verticalSpace,
+            StaggeredGrid.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: PCSpacing.s16.w,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Skeleton.keep(
+                      child: Text(
+                        context.i10n.card_case_label.active,
+                        style: PicoTextStyle.labelSm(
+                          color: context.picoColors.text.neutral.subtle,
                         ),
                       ),
                     ),
+                    Row(
+                      children: [
+                        Skeleton.replace(
+                          replacement: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Container(
+                              width: 50.w,
+                              height: 36.h,
+                              color: context.picoColors.semantic.info.shade100,
+                            ),
+                          ),
+                          child: Text(
+                            NumberHelper.numberFormat(activeCase),
+                            style: PicoTextStyle.headingXl(),
+                          ),
+                        ),
+                        PCSpacing.s4.w.horizontalSpace,
+                        Skeleton.replace(
+                          replacement: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Container(
+                              width: 24.w,
+                              height: 12.h,
+                              color: context.picoColors.semantic.info.shade100,
+                            ),
+                          ),
+                          child: Text(
+                            StringHelper.formatNewCase(
+                              newCase - newFinishedCase,
+                            ),
+                            style: PicoTextStyle.bodySm(
+                              fontWeight: FontWeight.w700,
+                              color: context.picoColors.text.neutral.subtle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    PCSpacing.s4.h.verticalSpace,
                   ],
                 ),
-              ),
-              4.verticalSpace,
-              Row(
-                children: [
-                  Skeleton.replace(
-                    replacement: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Container(
-                        width: 50.w,
-                        height: 36.h,
-                        color: context.picoColors.semantic.info.shade100,
-                      ),
-                    ),
-                    child: Text(
-                      NumberHelper.numberFormat(total),
-                      style: PicoTextStyle.headingXl(),
-                    ),
-                  ),
-                  4.horizontalSpace,
-                  Skeleton.replace(
-                    replacement: ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: Container(
-                        width: 24.w,
-                        height: 12.h,
-                        color: context.picoColors.semantic.info.shade100,
-                      ),
-                    ),
-                    child: Text(
-                      StringHelper.formatNewCase(newCase),
-                      style: PicoTextStyle.bodySm(
-                        fontWeight: FontWeight.w700,
-                        color: context.picoColors.text.neutral.subtle,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Divider(
-                color: context.picoColors.background.neutral.strong,
-              ),
-              8.verticalSpace,
-              StaggeredGrid.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16.w,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Skeleton.keep(
-                        child: Text(
-                          context.i10n.card_case_label.active,
-                          style: PicoTextStyle.labelSm(
-                            color: context.picoColors.text.neutral.subtle,
-                          ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Skeleton.keep(
+                      child: Text(
+                        context.i10n.card_case_label.finish,
+                        style: PicoTextStyle.labelSm(
+                          color: context.picoColors.text.neutral.subtle,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Skeleton.replace(
-                            replacement: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.r),
-                              child: Container(
-                                width: 50.w,
-                                height: 36.h,
-                                color:
-                                    context.picoColors.semantic.info.shade100,
-                              ),
-                            ),
-                            child: Text(
-                              NumberHelper.numberFormat(activeCase),
-                              style: PicoTextStyle.headingXl(),
+                    ),
+                    Row(
+                      children: [
+                        Skeleton.replace(
+                          replacement: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Container(
+                              width: 50.w,
+                              height: 36.h,
+                              color: context.picoColors.semantic.info.shade100,
                             ),
                           ),
-                          4.horizontalSpace,
-                          Skeleton.replace(
-                            replacement: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.r),
-                              child: Container(
-                                width: 24.w,
-                                height: 12.h,
-                                color:
-                                    context.picoColors.semantic.info.shade100,
-                              ),
-                            ),
-                            child: Text(
-                              StringHelper.formatNewCase(
-                                newCase - newFinishedCase,
-                              ),
-                              style: PicoTextStyle.bodySm(
-                                fontWeight: FontWeight.w700,
-                                color: context.picoColors.text.neutral.subtle,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      4.verticalSpace,
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Skeleton.keep(
-                        child: Text(
-                          context.i10n.card_case_label.finish,
-                          style: PicoTextStyle.labelSm(
-                            color: context.picoColors.text.neutral.subtle,
+                          child: Text(
+                            NumberHelper.numberFormat(finishedCase),
+                            style: PicoTextStyle.headingXl(),
                           ),
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Skeleton.replace(
-                            replacement: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.r),
-                              child: Container(
-                                width: 50.w,
-                                height: 36.h,
-                                color:
-                                    context.picoColors.semantic.info.shade100,
-                              ),
-                            ),
-                            child: Text(
-                              NumberHelper.numberFormat(finishedCase),
-                              style: PicoTextStyle.headingXl(),
+                        PCSpacing.s4.w.horizontalSpace,
+                        Skeleton.replace(
+                          replacement: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Container(
+                              width: 24.w,
+                              height: 12.h,
+                              color: context.picoColors.semantic.info.shade100,
                             ),
                           ),
-                          4.horizontalSpace,
-                          Skeleton.replace(
-                            replacement: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.r),
-                              child: Container(
-                                width: 24.w,
-                                height: 12.h,
-                                color:
-                                    context.picoColors.semantic.info.shade100,
-                              ),
-                            ),
-                            child: Text(
-                              StringHelper.formatNewCase(newFinishedCase),
-                              style: PicoTextStyle.bodySm(
-                                fontWeight: FontWeight.w700,
-                                color: context.picoColors.text.neutral.subtle,
-                              ),
+                          child: Text(
+                            StringHelper.formatNewCase(newFinishedCase),
+                            style: PicoTextStyle.bodySm(
+                              fontWeight: FontWeight.w700,
+                              color: context.picoColors.text.neutral.subtle,
                             ),
                           ),
-                        ],
-                      ),
-                      4.verticalSpace,
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+                        ),
+                      ],
+                    ),
+                    PCSpacing.s4.h.verticalSpace,
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       );
 }

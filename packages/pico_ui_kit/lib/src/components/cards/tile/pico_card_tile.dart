@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoCardTile extends StatelessWidget {
   const PicoCardTile({
@@ -12,21 +11,16 @@ class PicoCardTile extends StatelessWidget {
   final String label;
   final GestureTapCallback? onTap;
   @override
-  Widget build(BuildContext context) => Material(
-        color: context.picoColors.background.card.main,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.r),
-          side: BorderSide(
-            color: context.picoColors.outline.neutral.main,
-          ),
-        ),
+  Widget build(BuildContext context) => PicoCard(
+        padding: EdgeInsets.zero,
+        borderRadius: PCRadius.sm.r,
         child: InkWell(
-          borderRadius: BorderRadius.circular(10.r),
+          borderRadius: BorderRadius.circular(PCRadius.sm.r),
           onTap: onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: 8.w,
-              vertical: 16.h,
+              horizontal: PCSpacing.s8.w,
+              vertical: PCSpacing.s16.h,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,7 +33,7 @@ class PicoCardTile extends StatelessWidget {
                     style: PicoTextStyle.labelLg(),
                   ),
                 ),
-                8.horizontalSpace,
+                PCSpacing.s8.horizontalSpace,
                 Skeleton.keep(
                   child: Icon(
                     Icons.arrow_forward_rounded,

@@ -1,4 +1,5 @@
 export 'case/pico_case_card.dart';
+export 'pico_card.dart';
 export 'suspect/pico_suspect_card.dart';
 export 'test_case/pico_test_case_card.dart';
 export 'tile/pico_card_tile.dart';

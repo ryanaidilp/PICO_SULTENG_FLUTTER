@@ -34,18 +34,14 @@ class _NationalStatisticPageState extends State<NationalStatisticPage> {
   void _onLoading() {
     _refreshCount = 1;
     _errorCount = 0;
-    context.read<LatestNationalStatisticBloc>().add(
-          LatestNationalStatisticEvent.load(),
-        );
+    context.read<LatestNationalStatisticCubit>().fetch();
   }
 
   void _onRefresh() {
     _refreshCount = 1;
     _errorCount = 0;
     _refreshController.requestRefresh();
-    context.read<LatestNationalStatisticBloc>().add(
-          LatestNationalStatisticEvent.load(),
-        );
+    context.read<LatestNationalStatisticCubit>().fetch();
   }
 
   void _onBlocRefreshCompleted() {
@@ -77,7 +73,7 @@ class _NationalStatisticPageState extends State<NationalStatisticPage> {
     return Scaffold(
       body: MultiBlocListener(
         listeners: [
-          BlocListener<LatestNationalStatisticBloc,
+          BlocListener<LatestNationalStatisticCubit,
               LatestNationalStatisticState>(
             listener: (context, state) {
               if (state is LatestNationalStatisticLoadedState) {
@@ -96,7 +92,7 @@ class _NationalStatisticPageState extends State<NationalStatisticPage> {
               surfaceTintColor: context.picoColors.background.neutral.main,
               shadowColor:
                   context.picoColors.text.neutral.main.withOpacity(0.1),
-              title: BlocBuilder<LatestNationalStatisticBloc,
+              title: BlocBuilder<LatestNationalStatisticCubit,
                   LatestNationalStatisticState>(
                 builder: (context, state) => AnimatedSwitcher(
                   duration: 300.milliseconds,
