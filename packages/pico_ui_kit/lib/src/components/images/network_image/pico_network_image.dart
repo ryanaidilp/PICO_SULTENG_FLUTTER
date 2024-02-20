@@ -66,7 +66,7 @@ class PicoNetworkImage extends StatelessWidget {
                         ),
                         8.verticalSpace,
                         Text(
-                          context.i10n.buttons.try_again,
+                          context.translations.general.button.tryAgain,
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall

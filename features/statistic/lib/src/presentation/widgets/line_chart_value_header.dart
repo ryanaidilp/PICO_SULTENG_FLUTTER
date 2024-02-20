@@ -66,7 +66,7 @@ class LineChartValueHeader extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' ${context.translations.chart.line_chart.patient_label(
+                  ' ${context.translations.statistics.caseSuffix(
                     n: totalCase,
                   )}',
                   style: PicoTextStyle.labelLg(),
@@ -121,7 +121,7 @@ class LineChartValueHeader extends StatelessWidget {
                   _formatNewCase(
                     newCase,
                     totalCase,
-                    suffix: context.translations.chart.line_chart.patient_label(
+                    suffix: context.translations.statistics.caseSuffix(
                       n: newCase,
                     ),
                   ),

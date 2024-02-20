@@ -42,7 +42,7 @@ class PicoErrorPlaceholder extends StatelessWidget {
             TextButton(
               onPressed: onRetry,
               child: Text(
-                context.i10n.buttons.try_again,
+                context.translations.general.button.tryAgain,
               ),
             ),
           ],

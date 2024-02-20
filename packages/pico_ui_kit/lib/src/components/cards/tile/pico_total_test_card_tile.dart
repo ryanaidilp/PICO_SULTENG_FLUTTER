@@ -31,7 +31,7 @@ class PicoTotalTestCardTile extends StatelessWidget {
                     children: [
                       Skeleton.keep(
                         child: Text(
-                          context.i10n.test_label,
+                          context.translations.statistics.cardLabel.test.total,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: PicoTextStyle.bodySm(

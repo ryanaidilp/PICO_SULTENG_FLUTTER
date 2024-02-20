@@ -15,8 +15,8 @@ class TestDetailPage extends StatelessWidget {
         builder: (context, state) {
           if (state is LatestCovidTestLoadedState) {
             final testDescriptions = {
-              'pcr': context.i10n.test.pcr.description,
-              'rdt': context.i10n.test.rdt.description,
+              'pcr': context.translations.information.test.pcr.description,
+              'rdt': context.translations.information.test.rdt.description,
             };
 
             return DefaultTabController(
@@ -24,7 +24,7 @@ class TestDetailPage extends StatelessWidget {
               child: Scaffold(
                 appBar: AppBar(
                   title: Text(
-                    context.i10n.card_case_label.total_test,
+                    context.translations.general.pageTitle.totalTest,
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                     ),
@@ -126,7 +126,8 @@ class TestDetailPage extends StatelessWidget {
                                         ),
                                         4.horizontalSpace,
                                         Text(
-                                          context.i10n.card_case_label.sample,
+                                          context.translations.statistics
+                                              .cardLabel.caseType.sample,
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -152,7 +153,8 @@ class TestDetailPage extends StatelessWidget {
                                         ),
                                         4.horizontalSpace,
                                         Text(
-                                          context.i10n.card_case_label.duration,
+                                          context.translations.statistics
+                                              .cardLabel.caseType.duration,
                                           style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w700,
@@ -213,7 +215,7 @@ class TestDetailPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                context.i10n.card_case_label.total_test,
+                context.translations.statistics.cardLabel.test.total,
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                 ),

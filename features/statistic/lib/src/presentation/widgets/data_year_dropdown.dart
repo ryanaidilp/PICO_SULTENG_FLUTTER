@@ -34,7 +34,9 @@ class DataYearDropdown extends StatelessWidget {
           ),
         ).followedBy([
           DropdownMenuItem(
-            child: Text(context.translations.chart.line_chart.filter_label.all),
+            child: Text(
+              context.translations.statistics.mode.all,
+            ),
           ),
         ]).toList(),
         isDense: true,

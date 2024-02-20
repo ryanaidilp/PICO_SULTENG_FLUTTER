@@ -1,0 +1,15 @@
+{
+    "success": {
+        "refresh": "Berhasil memperbarui data!"
+    },
+    "error": {
+        "vaccine": "Terjadi kesalahan saat memuat data vaksin!",
+        "statistic": "Terjadi kesalahan saat memuat data kasus covid!",
+        "test": "Terjadi kesalahan saat memuat data tes covid-19!",
+        "banner": "Terjadi kesalahan saat memuat banner!",
+        "infographic": "Gagal memuat data infografis!",
+        "no_internet": "Tidak ada koneksi internet! Pastikan anda memiliki koneksi internet aktif untuk menggunakan aplikasi!",
+        "article": "Terjadi kesalahan saat memuat data artikel! Harap coba lagi!",
+        "refresh": "Terjadi kesalahan saat memuat ulang!"
+    }
+}

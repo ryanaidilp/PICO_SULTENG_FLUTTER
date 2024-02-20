@@ -1,0 +1,61 @@
+{
+    "case_label": "Data Kasus $level",
+    "case_label_national": "Data Kasus Nasional",
+    "case_label_daily": "Kasus $type harian",
+    "case_suffix": {
+        "zero,one,other": "kasus"
+    },
+    "case_type": {
+        "active": "Dirawat",
+        "deceased": "Kematian",
+        "positive": "Positif",
+        "recovered": "Sembuh"
+    },
+    "timeframe": {
+        "one_month": "1Bln",
+        "three_month": "3Bln",
+        "six_month": "6Bln",
+        "all": "Semua",
+        "custom": "Kustom"
+    },
+    "card_label": {
+        "case_type": {
+            "total_confirmed": "Total Kasus Terkonfirmasi",
+            "under_treatment": "Dirawat",
+            "recovered": "Sembuh",
+            "deceased": "Kematian",
+            "odp": "ODP (Orang Dalam Pemantauan)",
+            "pdp": "Total Orang Dalam Pemantauan",
+            "active": "Aktif",
+            "finish": "Selesai",
+            "sample": "Sampel :",
+            "duration": "Durasi :",
+            "reactive": "Reaktif",
+            "non_reactive": "Non-Reaktif",
+            "invalid": "Invalid",
+            "process": "Proses Lab"
+        },
+        "test": {
+            "total": "Total Pemeriksaan COVID-19",
+            "done": "Jumlah tes yang telah dilakukan"
+        }
+    },
+    "chart": {
+        "title": "Grafik Data",
+        "odp_pdp": {
+            "title": "Pasien ODP & PDP",
+            "labels": {
+                "odp": "ODP",
+                "pdp": "PDP"
+            },
+            "description": {
+                "active": "Dalam Pemantauan/Pengawasan",
+                "finished": "Selesai Pemantauan/Pengawasan"
+            }
+        }
+    },
+    "mode": {
+        "cumulative": "Kumulatif",
+        "all": "Semua"
+    }
+}

@@ -30,12 +30,12 @@ class HomePage extends StatelessWidget {
             children: [
               8.verticalSpace,
               Text(
-                context.i10n.app_name,
+                context.translations.general.appName,
                 style: PicoTextStyle.headingLg(),
               ),
               4.verticalSpace,
               Text(
-                context.i10n.app_desc,
+                context.translations.general.appDesc,
                 style: PicoTextStyle.bodyXs(),
               ),
             ],
@@ -68,10 +68,10 @@ class HomePage extends StatelessWidget {
             onTap: (index) => tabController.animateTo(index),
             tabs: [
               Tab(
-                text: context.i10n.tab_label.sulteng_today,
+                text: context.translations.general.tabLabel.sultengToday,
               ),
               Tab(
-                text: context.i10n.tab_label.covid_info,
+                text: context.translations.general.tabLabel.covid19Information,
               ),
             ],
           ),

@@ -26,7 +26,7 @@ class StatisticDetailSection extends StatelessWidget {
                     statistic: data,
                   ),
                 LatestStatisticFailedState() => PicoErrorPlaceholder(
-                    label: context.i10n.error.statistic,
+                    label: context.translations.feedback.error.statistic,
                     onRetry: () => context.read<LatestStatisticCubit>().fetch(),
                   ),
                 LatestStatisticEmptyState() => StatisticDataList(
@@ -44,7 +44,7 @@ class StatisticDetailSection extends StatelessWidget {
               duration: 300.milliseconds,
               child: switch (state) {
                 LatestCovidTestFailedState() => PicoErrorPlaceholder(
-                    label: context.i10n.error.test,
+                    label: context.translations.feedback.error.test,
                     onRetry: () => context.read<LatestCovidTestCubit>().fetch(),
                   ),
                 LatestCovidTestLoadedState(

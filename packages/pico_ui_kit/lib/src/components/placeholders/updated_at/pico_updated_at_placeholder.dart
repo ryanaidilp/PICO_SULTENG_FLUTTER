@@ -28,7 +28,7 @@ class PicoUpdatedAtPlaceholder extends StatelessWidget {
             children: [
               Skeleton.keep(
                 child: Text(
-                  context.i10n.updated_at,
+                  context.translations.general.updatedAt,
                   style: PicoTextStyle.bodySm(
                     color: context.picoColors.text.neutral.subtle,
                   ),

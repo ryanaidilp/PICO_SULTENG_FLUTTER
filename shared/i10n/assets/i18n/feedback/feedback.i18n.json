@@ -1,0 +1,15 @@
+{
+    "success": {
+        "refresh": "Successfully refresh data!"
+    },
+    "error": {
+        "vaccine": "An error occurred while loading vaccine data!",
+        "statistic": "An error occurred while loading the data of covid cases!",
+        "test": "An error occurred while loading the covid-19 test data!",
+        "banner": "An error occurred while loading the banner!",
+        "infographic": "An error occured while loading the infographics!",
+        "no_internet": "No internet connection! Make sure you have an active internet connection to use the app!",
+        "article": "An error occured while loading the articles!",
+        "refresh": "An error occured while trying to refresh!"
+    }
+}

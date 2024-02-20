@@ -17,7 +17,8 @@ void main() {
         () {
           test(
             'should compile english translations',
-            () => expect(AppLocale.en.build().article, 'Article'),
+            () =>
+                expect(AppLocale.en.build().general.description, 'Description'),
           );
         },
       );
@@ -27,7 +28,7 @@ void main() {
         () {
           test(
             'should compile indonesian translations',
-            () => expect(AppLocale.id.build().article, 'Artikel'),
+            () => expect(AppLocale.id.build().general.description, 'Deskripsi'),
           );
         },
       );

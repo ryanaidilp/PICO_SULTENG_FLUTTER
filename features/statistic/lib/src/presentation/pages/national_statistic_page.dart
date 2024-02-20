@@ -103,18 +103,21 @@ class _NationalStatisticPageState extends State<NationalStatisticPage> {
                         date: DateHelper.buildUpdatedAtText(
                           data.updatedAt.toLocal(),
                         ),
-                        label: context.i10n.national_case_label,
+                        label:
+                            context.translations.statistics.caseLabelNational,
                       ),
                     LatestNationalStatisticFailedState() =>
                       PicoUpdatedAtPlaceholder(
                         key: const Key('updated-at-failed'),
                         date: '-',
-                        label: context.i10n.national_case_label,
+                        label:
+                            context.translations.statistics.caseLabelNational,
                       ),
                     _ => PicoUpdatedAtPlaceholder(
                         key: const Key('updated-at-loading'),
                         date: '12 December 2023 12.05 WITA',
-                        label: context.i10n.national_case_label,
+                        label:
+                            context.translations.statistics.caseLabelNational,
                       ).sekeletonize(),
                   },
                 ),
@@ -137,7 +140,7 @@ class _NationalStatisticPageState extends State<NationalStatisticPage> {
                   ),
                   10.horizontalSpace,
                   Text(
-                    context.i10n.error.refresh,
+                    context.translations.feedback.error.refresh,
                   ),
                 ],
               ),
@@ -156,7 +159,7 @@ class _NationalStatisticPageState extends State<NationalStatisticPage> {
                   ),
                   10.horizontalSpace,
                   Text(
-                    context.i10n.success.refresh,
+                    context.translations.feedback.success.refresh,
                   ),
                 ],
               ),
