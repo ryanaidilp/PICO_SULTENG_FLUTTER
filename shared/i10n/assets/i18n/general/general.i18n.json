@@ -1,0 +1,23 @@
+{
+    "app_name": "PICO SulTeng",
+    "app_desc": "COVID-19 Information Center of Central Sulawesi",
+    "description": "Description",
+    "updated_at": "Updated At :",
+    "central_sulawesi": "Central Sulawesi",
+    "regency": "Regency",
+    "all": "All",
+    "tab_label": {
+        "sulteng_today": "SulTeng Hari Ini",
+        "covid19_information": "Informasi COVID-19"
+    },
+    "button": {
+        "call_center": "Call Center",
+        "hotline": "Hotline",
+        "more": "More",
+        "try_again": "Try Again",
+        "source": "VIEW SOURCE"
+    },
+    "page_title": {
+        "total_test": "Total Test"
+    }
+}
