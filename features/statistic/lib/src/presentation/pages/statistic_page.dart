@@ -32,15 +32,21 @@ class StatisticPage extends StatelessWidget {
                       date: DateHelper.buildUpdatedAtText(
                         data.updatedAt.toLocal(),
                       ),
-                      label: context.i10n.data_case_label,
+                      label: context.translations.statistics.caseLabel(
+                        level: context.translations.general.centralSulawesi,
+                      ),
                     ),
                   LatestStatisticFailedState() => PicoUpdatedAtPlaceholder(
                       date: '-',
-                      label: context.i10n.data_case_label,
+                      label: context.translations.statistics.caseLabel(
+                        level: context.translations.general.centralSulawesi,
+                      ),
                     ),
                   _ => PicoUpdatedAtPlaceholder(
                       date: '12 December 2023 12.05 WITA',
-                      label: context.i10n.data_case_label,
+                      label: context.translations.statistics.caseLabel(
+                        level: context.translations.general.centralSulawesi,
+                      ),
                     ).sekeletonize(),
                 },
               ),
@@ -69,14 +75,14 @@ class StatisticPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            context.i10n.chart.title,
+                            context.translations.statistics.chart.title,
                             style: PicoTextStyle.labelLg(),
                           ),
                           8.horizontalSpace,
                           TextButton(
                             onPressed: () {},
                             child: Text(
-                              context.i10n.buttons.more,
+                              context.translations.general.button.more,
                             ),
                           ),
                         ],

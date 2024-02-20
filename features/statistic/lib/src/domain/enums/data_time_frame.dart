@@ -13,13 +13,10 @@ enum DataTimeFrame {
       );
 
   String label(BuildContext context) => switch (this) {
-        oneMonth => context
-            .translations.chart.line_chart.filter_label.timeframe.one_month,
-        threeMonth => context
-            .translations.chart.line_chart.filter_label.timeframe.three_month,
-        sixMonth => context
-            .translations.chart.line_chart.filter_label.timeframe.six_month,
-        _ => context.translations.chart.line_chart.filter_label.all,
+        oneMonth => context.translations.statistics.timeframe.oneMonth,
+        threeMonth => context.translations.statistics.timeframe.threeMonth,
+        sixMonth => context.translations.statistics.timeframe.sixMonth,
+        _ => context.translations.statistics.timeframe.all,
       };
 
   int get offset => switch (this) {

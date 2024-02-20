@@ -27,17 +27,23 @@ class StatisticSummarySection extends StatelessWidget {
                           date: DateHelper.buildUpdatedAtText(
                             data.updatedAt.toLocal(),
                           ),
-                          label: context.i10n.data_case_label,
+                          label: context.translations.statistics.caseLabel(
+                            level: context.translations.general.centralSulawesi,
+                          ),
                         ),
                       LatestStatisticFailedState() => PicoUpdatedAtPlaceholder(
                           key: const Key('updated-at-failed'),
                           date: '-',
-                          label: context.i10n.data_case_label,
+                          label: context.translations.statistics.caseLabel(
+                            level: context.translations.general.centralSulawesi,
+                          ),
                         ),
                       _ => PicoUpdatedAtPlaceholder(
                           key: const Key('updated-at-loading'),
                           date: '12 December 2023 12.05 WITA',
-                          label: context.i10n.data_case_label,
+                          label: context.translations.statistics.caseLabel(
+                            level: context.translations.general.centralSulawesi,
+                          ),
                         ).sekeletonize(),
                     },
                   ),
@@ -49,7 +55,7 @@ class StatisticSummarySection extends StatelessWidget {
                   const StatisticRoute(),
                 ),
                 child: Text(
-                  context.i10n.buttons.more,
+                  context.translations.general.button.more,
                 ),
               ),
             ],
@@ -66,7 +72,7 @@ class StatisticSummarySection extends StatelessWidget {
                     showSuspectCard: false,
                   ),
                 LatestStatisticFailedState() => PicoErrorPlaceholder(
-                    label: context.i10n.error.statistic,
+                    label: context.translations.feedback.error.statistic,
                     onRetry: () => context.read<LatestStatisticCubit>().fetch(),
                   ),
                 LatestStatisticEmptyState() => StatisticDataList(
@@ -86,7 +92,7 @@ class StatisticSummarySection extends StatelessWidget {
               duration: 300.milliseconds,
               child: switch (state) {
                 LatestCovidTestFailedState() => PicoErrorPlaceholder(
-                    label: context.i10n.error.test,
+                    label: context.translations.feedback.error.test,
                     onRetry: () => context.read<LatestCovidTestCubit>().fetch(),
                   ),
                 LatestCovidTestLoadedState(

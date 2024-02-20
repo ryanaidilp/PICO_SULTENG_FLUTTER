@@ -15,12 +15,10 @@ enum CaseType {
       );
 
   String label(BuildContext context) => switch (this) {
-        positive => context.translations.chart.line_chart.filter_label.positive,
-        recovered =>
-          context.translations.chart.line_chart.filter_label.recovered,
-        deceased => context.translations.chart.line_chart.filter_label.deceased,
-        underTreatment =>
-          context.translations.chart.line_chart.filter_label.active,
+        positive => context.translations.statistics.caseType.positive,
+        recovered => context.translations.statistics.caseType.recovered,
+        deceased => context.translations.statistics.caseType.deceased,
+        underTreatment => context.translations.statistics.caseType.active,
       };
 
   Color color(BuildContext context) => switch (this) {

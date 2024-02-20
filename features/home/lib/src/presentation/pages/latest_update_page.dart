@@ -124,7 +124,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
                 ),
                 10.horizontalSpace,
                 Text(
-                  context.i10n.error.refresh,
+                  context.translations.feedback.error.refresh,
                 ),
               ],
             ),
@@ -143,7 +143,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
                 ),
                 10.horizontalSpace,
                 Text(
-                  context.i10n.success.refresh,
+                  context.translations.feedback.success.refresh,
                 ),
               ],
             ),
@@ -156,7 +156,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
                   duration: 300.milliseconds,
                   child: switch (state) {
                     BannerFailedState() => PicoErrorPlaceholder(
-                        label: context.i10n.error.banner,
+                        label: context.translations.feedback.error.banner,
                         onRetry: () => context.read<BannerBloc>().add(
                               BannerEvent.load(),
                             ),

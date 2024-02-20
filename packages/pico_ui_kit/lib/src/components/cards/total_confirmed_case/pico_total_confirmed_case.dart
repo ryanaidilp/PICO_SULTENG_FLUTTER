@@ -43,7 +43,8 @@ class PicoTotalConfirmedCase extends StatelessWidget {
               children: [
                 Skeleton.keep(
                   child: Text(
-                    context.i10n.card_case_label.confirmed,
+                    context.translations.statistics.cardLabel.caseType
+                        .totalConfirmed,
                     style: PicoTextStyle.labelSm(
                       color: Colors.white,
                     ),

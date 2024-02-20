@@ -38,7 +38,7 @@ class _BarChartODPAndPDPState extends State<BarChartODPAndPDP> {
             ValueListenableBuilder(
               valueListenable: _stackedNotifier,
               builder: (context, value, child) => BarChartWidget(
-                title: context.i10n.chart.odp_pdp.title,
+                title: context.translations.statistics.chart.odpPdp.title,
                 duration: 700.milliseconds,
                 stacked: value,
                 trailingHeader: Row(
@@ -98,12 +98,14 @@ class _BarChartODPAndPDPState extends State<BarChartODPAndPDP> {
                   context.picoColors.icon.semantic.success,
                 ],
                 datasetColorDescriptions: [
-                  context.i10n.chart.odp_pdp.description.active,
-                  context.i10n.chart.odp_pdp.description.finished,
+                  context
+                      .translations.statistics.chart.odpPdp.description.active,
+                  context.translations.statistics.chart.odpPdp.description
+                      .finished,
                 ],
                 datasetVerticalLabels: [
-                  context.i10n.chart.odp_pdp.labels.odp,
-                  context.i10n.chart.odp_pdp.labels.pdp,
+                  context.translations.statistics.chart.odpPdp.labels.odp,
+                  context.translations.statistics.chart.odpPdp.labels.pdp,
                 ],
               ),
             ),

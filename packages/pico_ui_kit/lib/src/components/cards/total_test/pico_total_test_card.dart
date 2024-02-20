@@ -22,7 +22,7 @@ class PicoTotalTestCard extends StatelessWidget {
           children: [
             Skeleton.keep(
               child: Text(
-                context.i10n.test_done,
+                context.translations.statistics.cardLabel.test.done,
                 style: PicoTextStyle.bodySm(
                   color: context.picoColors.text.neutral.subtle,
                 ),

@@ -75,8 +75,8 @@ class LineChartCase extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        context.translations.chart.line_chart.title(
-                          name: caseLabel.toLowerCase(),
+                        context.translations.statistics.caseLabelDaily(
+                          type: caseLabel.toLowerCase(),
                         ),
                         textAlign: TextAlign.start,
                         style: PicoTextStyle.headingXs(),
@@ -86,8 +86,7 @@ class LineChartCase extends StatelessWidget {
                         value: isCumulativeMode,
                         onToggle: onToggleMode,
                         labelPosition: PicoSwitchLabelPosition.trailing,
-                        label: context.translations.chart.line_chart
-                            .filter_label.cumulative,
+                        label: context.translations.statistics.mode.cumulative,
                       ),
                     ],
                   ),

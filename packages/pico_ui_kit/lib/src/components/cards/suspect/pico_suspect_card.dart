@@ -179,7 +179,8 @@ class PicoSuspectCard extends StatelessWidget {
                   children: [
                     Skeleton.keep(
                       child: Text(
-                        context.i10n.card_case_label.active,
+                        context
+                            .translations.statistics.cardLabel.caseType.active,
                         style: PicoTextStyle.labelSm(
                           color: context.picoColors.text.neutral.subtle,
                         ),
@@ -233,7 +234,8 @@ class PicoSuspectCard extends StatelessWidget {
                   children: [
                     Skeleton.keep(
                       child: Text(
-                        context.i10n.card_case_label.finish,
+                        context
+                            .translations.statistics.cardLabel.caseType.finish,
                         style: PicoTextStyle.labelSm(
                           color: context.picoColors.text.neutral.subtle,
                         ),

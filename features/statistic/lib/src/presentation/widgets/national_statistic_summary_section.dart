@@ -28,7 +28,7 @@ class NationalStatisticSummarySection extends StatelessWidget {
                     showSuspectCard: false,
                   ),
                 LatestNationalStatisticFailedState() => PicoErrorPlaceholder(
-                    label: context.i10n.error.statistic,
+                    label: context.translations.feedback.error.statistic,
                     onRetry: () =>
                         context.read<LatestNationalStatisticCubit>().fetch(),
                   ),

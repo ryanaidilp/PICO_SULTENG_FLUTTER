@@ -92,7 +92,7 @@ class BarChartWidget extends StatelessWidget {
               if (datasetColorDescriptions.isNotEmpty) ...[
                 16.verticalSpace,
                 Text(
-                  '${context.i10n.description} :',
+                  '${context.translations.general.description} :',
                 ),
                 8.verticalSpace,
                 Wrap(

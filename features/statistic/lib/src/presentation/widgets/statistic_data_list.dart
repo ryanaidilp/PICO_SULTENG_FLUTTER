@@ -61,14 +61,16 @@ class StatisticDataList extends StatelessWidget {
             ),
             16.verticalSpace,
             PicoCardTile(
-              label: context.i10n.national_case_label,
+              label: context.translations.statistics.caseLabelNational,
               onTap: () => context.router.push(
                 const NationalStatisticRoute(),
               ),
             ),
             16.verticalSpace,
             PicoCardTile(
-              label: context.i10n.regency_case_label,
+              label: context.translations.statistics.caseLabel(
+                level: context.translations.general.regency,
+              ),
               onTap: () {},
             ),
           ],

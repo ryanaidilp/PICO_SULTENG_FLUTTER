@@ -6,17 +6,21 @@ enum PicoSuspectType {
   underObservation;
 
   String label(BuildContext context) => switch (this) {
-        underSupervision => context.i10n.pdp.label,
-        underObservation => context.i10n.odp.label,
+        underSupervision =>
+          context.translations.statistics.cardLabel.caseType.pdp,
+        underObservation =>
+          context.translations.statistics.cardLabel.caseType.odp,
       };
 
   String title(BuildContext context) => switch (this) {
-        underSupervision => context.i10n.pdp.title,
-        underObservation => context.i10n.odp.title,
+        underSupervision => context.translations.information.caseType.pdp.title,
+        underObservation => context.translations.information.caseType.odp.title,
       };
 
   String description(BuildContext context) => switch (this) {
-        underSupervision => context.i10n.pdp.description,
-        underObservation => context.i10n.odp.description,
+        underSupervision =>
+          context.translations.information.caseType.pdp.description,
+        underObservation =>
+          context.translations.information.caseType.odp.description,
       };
 }
