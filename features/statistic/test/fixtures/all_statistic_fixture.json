@@ -1,0 +1,44 @@
+{
+    "success": true,
+    "errors": [],
+    "data": [
+        {
+            "hari_ke": 1,
+            "tanggal": "2020-03-01T17:00:00.000000Z",
+            "kasus_baru": {
+                "positif": 0,
+                "sembuh": 0,
+                "meninggal": 0,
+                "dalam_perawatan": 0,
+                "ODP": 0,
+                "selesai_ODP": 0,
+                "PDP": 0,
+                "selesai_PDP": 0
+            },
+            "kumulatif": {
+                "positif": 0,
+                "sembuh": 0,
+                "meninggal": 0,
+                "dalam_perawatan": 0,
+                "ODP": 0,
+                "dalam_ODP": 0,
+                "selesai_ODP": 0,
+                "PDP": 0,
+                "selesai_PDP": 0,
+                "dalam_PDP": 0
+            },
+            "rekap": {
+                "persentase": {
+                    "dalam_perawatan": 0,
+                    "meninggal": 0,
+                    "sembuh": 0
+                },
+                "angka_reproduksi": {
+                    "rt": null,
+                    "rt_upper": null,
+                    "rt_lower": null
+                }
+            }
+        }
+    ]
+}
