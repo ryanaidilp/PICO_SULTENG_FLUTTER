@@ -6,10 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:statistic/src/domain/enums/enums.dart';
-import 'package:statistic/src/presentation/widgets/case_type_dropdown.dart';
-import 'package:statistic/src/presentation/widgets/data_year_dropdown.dart';
-import 'package:statistic/src/presentation/widgets/line_chart_value_header.dart';
-import 'package:statistic/src/presentation/widgets/time_frame_selector.dart';
 import 'package:statistic/statistic.dart';
 
 class LineChartCase extends StatelessWidget {
