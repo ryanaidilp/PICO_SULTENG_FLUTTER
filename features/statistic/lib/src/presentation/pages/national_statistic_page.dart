@@ -3,7 +3,6 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:statistic/src/presentation/widgets/national_statistic_summary_section.dart';
 import 'package:statistic/statistic.dart';
 
 @RoutePage()

@@ -3,8 +3,6 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:statistic/src/presentation/widgets/all_national_statistic_chart_section.dart';
-import 'package:statistic/src/presentation/widgets/statistic_data_list.dart';
 import 'package:statistic/statistic.dart';
 
 class NationalStatisticSummarySection extends StatelessWidget {

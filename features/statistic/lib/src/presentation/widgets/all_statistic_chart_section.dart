@@ -3,7 +3,6 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:statistic/src/domain/enums/enums.dart';
-import 'package:statistic/src/presentation/widgets/line_chart_case.dart';
 import 'package:statistic/statistic.dart';
 
 class AllStatisticChartSection extends StatefulWidget {

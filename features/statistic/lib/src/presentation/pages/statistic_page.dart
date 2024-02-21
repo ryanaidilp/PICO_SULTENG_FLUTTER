@@ -3,7 +3,6 @@ import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:statistic/src/presentation/widgets/bar_chart_odp_and_pdp.dart';
 import 'package:statistic/statistic.dart';
 
 @RoutePage()

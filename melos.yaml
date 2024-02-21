@@ -71,8 +71,16 @@ scripts:
         - "*core*"
         - "*i10n*"
         - "*config*"
+        - "*widgetbook"
       dependsOn:
         - "build_runner"
+
+  generate-widgetbook:
+    run: melos exec -- "dart run build_runner build -d"
+    description: "Run build runner to generate widget book"
+    packageFilters:
+      dependsOn:
+        - "widgetbook_generator"
 
   build:clean:select:
     run: melos exec -- "dart run build_runner clean"
@@ -210,4 +218,5 @@ scripts:
       melos run generate-assets
       melos run build
       melos run generate-core
+      melos run generate-widgetbook
     description: Initialize PICO Sulteng Flutter.

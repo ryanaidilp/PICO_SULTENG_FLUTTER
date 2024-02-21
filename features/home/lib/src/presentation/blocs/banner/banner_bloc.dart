@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
-import 'package:home/src/domain/entities/banner.dart';
-import 'package:home/src/domain/usecases/get_all_banner.dart';
+import 'package:home/src/domain/domain.dart';
 
 part 'banner_event.dart';
 part 'banner_state.dart';

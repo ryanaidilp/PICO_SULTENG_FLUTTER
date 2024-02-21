@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
-import 'package:home/src/domain/entities/banner.dart';
-import 'package:home/src/domain/repositories/banner_repository.dart';
+import 'package:home/src/domain/domain.dart';
 
 @LazySingleton()
 class GetAllBanner

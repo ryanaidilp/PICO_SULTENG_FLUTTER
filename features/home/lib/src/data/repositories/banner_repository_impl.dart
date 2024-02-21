@@ -1,10 +1,7 @@
 import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
-import 'package:home/src/data/datasources/banner_remote_data_source.dart';
-import 'package:home/src/data/models/banner_model.dart';
-import 'package:home/src/domain/entities/banner.dart';
-import 'package:home/src/domain/failures/banner_failure.dart';
-import 'package:home/src/domain/repositories/banner_repository.dart';
+import 'package:home/src/data/data.dart';
+import 'package:home/src/domain/domain.dart';
 
 @LazySingleton(as: BannerRepository)
 class BannerRepositoryImpl implements BannerRepository {

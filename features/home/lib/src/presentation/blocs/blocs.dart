@@ -1,1 +1,1 @@
-export 'banner/banner_bloc.dart';
+export 'banner/banner.dart';
