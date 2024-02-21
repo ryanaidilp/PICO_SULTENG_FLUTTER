@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home.dart';
-import 'package:home/src/domain/entities/banner.dart' as entity;
+import 'package:home/src/domain/domain.dart' as domain;
 
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
@@ -162,7 +162,7 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
                             ),
                       ),
                     BannerLoadedState(data: final data) =>
-                      PicoBannerSlider<entity.Banner>(
+                      PicoBannerSlider<domain.Banner>(
                         data: data,
                         getImage: (item) => item.image,
                       ),
