@@ -1,0 +1,36 @@
+{
+    "success": true,
+    "errors": [],
+    "data": [
+        {
+            "id": 7202,
+            "hari_ke": 799,
+            "kabupaten": "Banggai",
+            "tanggal": "2022-05-08T09:38:06.000000Z",
+            "kasus_baru": {
+                "positif": 0,
+                "sembuh": 0,
+                "meninggal": 0,
+                "dalam_perawatan": 0
+            },
+            "kumulatif": {
+                "positif": 7542,
+                "sembuh": 7219,
+                "meninggal": 323,
+                "dalam_perawatan": 0
+            },
+            "rekap": {
+                "persentase": {
+                    "dalam_perawatan": 0,
+                    "meninggal": 4.28,
+                    "sembuh": 95.72
+                },
+                "angka_reproduksi": {
+                    "rt": null,
+                    "rt_upper": null,
+                    "rt_lower": null
+                }
+            }
+        }
+    ]
+}
