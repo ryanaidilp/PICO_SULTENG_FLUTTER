@@ -288,8 +288,8 @@ class _PCLineChartState extends State<PCLineChart>
                             if (isHovered)
                               VerticalLine(
                                 x: _hoveredIndex,
-                                dashArray: [6, 6],
-                                strokeWidth: 2.w,
+                                dashArray: [3, 3],
+                                strokeWidth: 1.w,
                                 color:
                                     context.picoColors.outline.neutral.strong,
                                 label: VerticalLineLabel(
