@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
@@ -63,7 +65,12 @@ void main() {
         act: (cubit) => cubit.fetch(),
         expect: () => <AllRegenciesState>[
           AllRegenciesState.loading(),
-          AllRegenciesState.loaded(data: data),
+          AllRegenciesState.loaded(
+            data: data,
+            maxValue: data
+                .map((e) => e.newCase.underTreatment.toDouble())
+                .reduce(max),
+          ),
         ],
         verify: (_) => verify(() => mockUseCase.call(72)),
       );
