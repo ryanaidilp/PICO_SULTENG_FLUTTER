@@ -12,9 +12,15 @@ class _PicoCircularProgressBar extends StatelessWidget {
   final double barHeight;
 
   Color? _valueColor(BuildContext context) => switch (value) {
-        > 0 => context.picoColors.icon.semantic.error,
-        < 0 => context.picoColors.icon.semantic.success,
+        > 0 => context.picoColors.icon.semantic.error.withOpacity(0.6),
+        < 0 => context.picoColors.icon.semantic.success.withOpacity(.6),
         _ => null,
+      };
+
+  Color _borderColor(BuildContext context) => switch (value) {
+        > 0 => context.picoColors.outline.semantic.error,
+        < 0 => context.picoColors.outline.semantic.success,
+        _ => context.picoColors.outline.neutral.main,
       };
 
   Alignment get _valueAlignment => switch (value) {
@@ -45,6 +51,9 @@ class _PicoCircularProgressBar extends StatelessWidget {
                     bottom: Radius.circular(100.r),
                   ),
                   color: _valueColor(context),
+                  border: Border.all(
+                    color: _borderColor(context),
+                  ),
                 ),
               ),
             ),
@@ -56,9 +65,12 @@ class _PicoCircularProgressBar extends StatelessWidget {
                   width: _logoSize.w,
                   height: _logoSize.h,
                   padding: EdgeInsets.all(2.r),
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
+                    border: Border.all(
+                      color: context.picoColors.outline.neutral.main,
+                    ),
                   ),
                   child: PicoNetworkImage(
                     url: logo,
