@@ -10,5 +10,6 @@ abstract class AllRegenciesState with _$AllRegenciesState {
   }) = AllRegenciesFailed;
   factory AllRegenciesState.loaded({
     required List<Regency> data,
+    required double maxValue,
   }) = AllRegenciesLoaded;
 }

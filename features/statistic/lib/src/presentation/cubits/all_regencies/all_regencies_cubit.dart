@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
 import 'package:statistic/src/data/models/regency_model.dart';
@@ -24,7 +26,17 @@ class AllRegenciesCubit extends HydratedCubit<AllRegenciesState> {
         if (r.isEmpty) {
           emit(AllRegenciesState.empty());
         } else {
-          emit(AllRegenciesState.loaded(data: r));
+          final data = r
+            ..sort(
+              (a, b) => a.id.compareTo(b.id),
+            );
+          final maxValue = r.map((e) => e.newCase.underTreatment).reduce(max);
+          emit(
+            AllRegenciesState.loaded(
+              data: data,
+              maxValue: maxValue.toDouble(),
+            ),
+          );
         }
       },
     );
@@ -40,6 +52,8 @@ class AllRegenciesCubit extends HydratedCubit<AllRegenciesState> {
           jsonData.map((e) => RegencyModel.fromJson(e as JSON)).toList();
       return AllRegenciesState.loaded(
         data: data.map((e) => e.toEntity()).toList(),
+        maxValue:
+            data.map((e) => e.newCase.underTreatment.toDouble()).reduce(max),
       );
     }
 
