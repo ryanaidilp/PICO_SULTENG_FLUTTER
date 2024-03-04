@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:core/core.dart';
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
@@ -105,5 +107,25 @@ class NumberHelper {
       // If the number is 1000 or more, ceil to the nearest thousand.
       return ((number + 999) ~/ 1000) * 1000;
     }
+  }
+
+  static double logBase({
+    required num value,
+    required num base,
+    AppLocale? locale,
+  }) {
+    final decimalValue = Decimal.parse(value.toString());
+    final decimalBase = Decimal.parse(base.toString());
+
+    final logDecimal = log(
+          decimalValue.toDouble(),
+        ) /
+        log(
+          decimalBase.toDouble(),
+        );
+
+    return Decimal.parse(
+      logDecimal.toStringAsPrecision(logDecimal.precision),
+    ).toDouble();
   }
 }
