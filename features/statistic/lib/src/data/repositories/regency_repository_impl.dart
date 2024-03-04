@@ -3,6 +3,7 @@ import 'package:dependencies/dependencies.dart';
 import 'package:statistic/src/data/data.dart';
 import 'package:statistic/src/domain/domain.dart';
 
+@LazySingleton(as: RegencyRepository)
 class RegencyRepositoryImpl implements RegencyRepository {
   final RegencyRemoteDataSource _httpDataSource =
       getIt<RegencyRemoteDataSource>();
