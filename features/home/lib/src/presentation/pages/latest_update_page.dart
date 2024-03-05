@@ -35,21 +35,28 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
   }
 
   void _onLoading() {
-    _refreshCounter = 3;
+    _refreshCounter = 4;
     _errorCounter = 0;
-    context.read<BannerBloc>().add(BannerEvent.load());
-    context.read<LatestStatisticCubit>().fetch();
-    context.read<LatestCovidTestCubit>().fetch();
+    _fetchBanners();
+    _fetchLatestStatistics();
+    _fetchCovidTests();
+    _fetchRegencies();
   }
 
   void _onRefresh() {
-    _refreshCounter = 3;
+    _refreshCounter = 4;
     _errorCounter = 0;
     _refreshController.requestRefresh();
-    context.read<BannerBloc>().add(BannerEvent.load());
-    context.read<LatestStatisticCubit>().fetch();
-    context.read<LatestCovidTestCubit>().fetch();
+    _fetchBanners();
+    _fetchLatestStatistics();
+    _fetchCovidTests();
+    _fetchRegencies();
   }
+
+  void _fetchBanners() => context.read<BannerBloc>().add(BannerEvent.load());
+  void _fetchLatestStatistics() => context.read<LatestStatisticCubit>().fetch();
+  void _fetchCovidTests() => context.read<LatestCovidTestCubit>().fetch();
+  void _fetchRegencies() => context.read<AllRegenciesCubit>().fetch();
 
   void _onBlocRefreshCompleted() {
     _refreshCounter--;
@@ -107,6 +114,16 @@ class _LatestUpdatePageState extends State<LatestUpdatePage> {
               }
             },
           ),
+          BlocListener<AllRegenciesCubit, AllRegenciesState>(
+            listener: (context, state) {
+              if (state is AllRegenciesEmpty || state is AllRegenciesLoaded) {
+                _onBlocRefreshCompleted();
+              } else if (state is AllRegenciesFailed) {
+                _onBlocError();
+              }
+            },
+            child: Container(),
+          )
         ],
         child: SmartRefresher(
           controller: _refreshController,

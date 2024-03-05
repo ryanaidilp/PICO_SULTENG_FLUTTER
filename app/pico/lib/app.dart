@@ -28,6 +28,9 @@ class App extends StatelessWidget {
           BlocProvider(
             create: (context) => LatestCovidTestCubit(),
           ),
+          BlocProvider(
+            create: (context) => AllRegenciesCubit(),
+          ),
         ],
         child: PCComponentInit(
           builder: (_) => MaterialApp.router(

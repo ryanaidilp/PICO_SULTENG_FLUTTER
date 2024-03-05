@@ -1,0 +1,4 @@
+enum PCChartScale {
+  linear,
+  log;
+}

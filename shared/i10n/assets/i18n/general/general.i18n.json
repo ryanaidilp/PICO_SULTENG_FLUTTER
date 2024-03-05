@@ -7,8 +7,8 @@
     "regency": "Regency",
     "all": "All",
     "tab_label": {
-        "sulteng_today": "SulTeng Hari Ini",
-        "covid19_information": "Informasi COVID-19"
+        "sulteng_today": "SulTeng Today",
+        "covid19_information": "COVID-19 Information"
     },
     "button": {
         "call_center": "Call Center",

@@ -122,7 +122,7 @@ class LineChartValueHeader extends StatelessWidget {
                     newCase,
                     totalCase,
                     suffix: context.translations.statistics.caseSuffix(
-                      n: newCase,
+                      n: newCase.abs(),
                     ),
                   ),
                 ),
