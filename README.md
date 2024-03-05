@@ -50,45 +50,32 @@ PICO SulTeng (_Pusat Informasi COVID-19 Sulawesi Tengah_/COVID-19 Information Ce
 The codebase is structured as follows:
 
 ```ascii
-root/
-├── android
-├── core/
-│   ├── lib/
-│   │   ├── di //dependency injection
-│   │   ├── exceptions
-│   │   ├── failures
-│   │   ├── helpers
-│   │   ├── log
-│   │   ├── models
-│   │   ├── network
-│   │   ├── router
-│   │   ├── typedef
-│   │   ├── usecase
-│   │   └── core.dart
-│   ├── test
-│   └── pubspec.yaml
-├── feature/ //micromodule of feature/
-│   ├── article
+.
+├── .vscode/
+│   └── launch.json
+├── app/
+│   ├── pico_app
+│   └── pico_widgetbook
+├── coverage
+├── coverage_report
+├── features/
 │   ├── home
-│   ├── news
-│   └── statistic
-├── ios
-├── launcher //launcher icons related file
-├── lib/
-│   ├── app.dart
-│   ├── bootstrap.dart
-│   ├── main_dev.dart
-│   ├── main_stag.dart
-│   └── main.dart
+│   ├── statistic
+│   └── ...
 ├── packages/
+│   ├── core
 │   └── pico_ui_kit
+├── plugins
+├── scripts
 ├── shared/
 │   ├── config
 │   ├── dependencies
 │   └── i10n
-├── test
+├── test_reports
+├── config.json
 ├── melos.yaml
-└── pubspec.yaml
+├── pubspec.yaml
+└── README.md
 ```
 
 ## Getting Started
