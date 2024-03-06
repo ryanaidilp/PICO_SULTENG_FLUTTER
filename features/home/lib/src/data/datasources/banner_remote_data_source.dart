@@ -1,6 +1,6 @@
 import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
-import 'package:home/src/data/models/banner_model.dart';
+import 'package:home/src/data/data.dart';
 
 abstract class BannerRemoteDataSource {
   Future<ApiResponseModel<List<BannerModel>>> get();

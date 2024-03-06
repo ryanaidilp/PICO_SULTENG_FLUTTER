@@ -2,7 +2,7 @@ part of 'pico_color_data.dart';
 
 @immutable
 class PicoSemanticColor with PicoMaterialColor {
-  const PicoSemanticColor({
+  const PicoSemanticColor._({
     required this.info,
     required this.error,
     required this.success,
@@ -11,6 +11,27 @@ class PicoSemanticColor with PicoMaterialColor {
     required this.secondary,
     required this.tertiary,
   });
+
+  factory PicoSemanticColor.light() => const PicoSemanticColor._(
+        info: PicoColors.info,
+        error: PicoColors.error,
+        success: PicoColors.success,
+        warning: PicoColors.warning,
+        primary: PicoColors.primary,
+        secondary: PicoColors.secondary,
+        tertiary: PicoColors.tertiary,
+      );
+
+  factory PicoSemanticColor.dark() => const PicoSemanticColor._(
+        info: PicoColors.info,
+        error: PicoColors.error,
+        success: PicoColors.success,
+        warning: PicoColors.warning,
+        primary: PicoColors.primary,
+        secondary: PicoColors.secondary,
+        tertiary: PicoColors.tertiary,
+      );
+
   final MaterialColor success;
   final MaterialColor info;
   final MaterialColor error;
@@ -28,7 +49,7 @@ class PicoSemanticColor with PicoMaterialColor {
     MaterialColor? secondary,
     MaterialColor? tertiary,
   }) =>
-      PicoSemanticColor(
+      PicoSemanticColor._(
         success: success ?? this.success,
         info: info ?? this.info,
         error: error ?? this.error,
@@ -48,7 +69,7 @@ class PicoSemanticColor with PicoMaterialColor {
     required MaterialColor secondaryVariant,
     required MaterialColor tertiaryVariant,
   }) =>
-      PicoSemanticColor(
+      PicoSemanticColor._(
         success: lerpMaterialColor(success, successVariant, t),
         info: lerpMaterialColor(info, infoVariant, t),
         error: lerpMaterialColor(error, errorVariant, t),

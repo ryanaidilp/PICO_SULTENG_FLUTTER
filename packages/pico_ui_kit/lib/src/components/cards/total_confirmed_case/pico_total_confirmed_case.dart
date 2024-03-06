@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoTotalConfirmedCase extends StatelessWidget {
   const PicoTotalConfirmedCase({
@@ -18,61 +17,79 @@ class PicoTotalConfirmedCase extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Stack(
         children: [
-          Container(
+          PicoCard(
             width: 1.sw,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: context.picoColors.semantic.info.shade200
-                      .withOpacity(0.3),
-                  blurRadius: 10.r,
-                  spreadRadius: 5.r,
-                  offset: Offset.fromDirection(-30, 5),
-                ),
-              ],
-              borderRadius: BorderRadius.circular(8.r),
-              gradient: LinearGradient(
-                colors: [
-                  context.picoColors.semantic.info,
-                  context.picoColors.semantic.info.shade100.withOpacity(0.5),
-                ],
+            shadow: [
+              BoxShadow(
+                color:
+                    context.picoColors.semantic.info.shade200.withOpacity(0.3),
+                blurRadius: 10.r,
+                spreadRadius: 5.r,
+                offset: Offset.fromDirection(-30, 5),
               ),
+            ],
+            borderRadius: PCRadius.sm.r,
+            borderColor: context.picoColors.outline.semantic.primary,
+            gradient: LinearGradient(
+              colors: [
+                context.picoColors.semantic.primary,
+                context.picoColors.semantic.primary.shade200.withOpacity(0.5),
+              ],
             ),
-            padding: EdgeInsets.all(16.r),
+            padding: EdgeInsets.all(PCSpacing.s8.r),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Skeleton.keep(
                   child: Text(
-                    context.i10n.card_case_label.confirmed,
+                    context.translations.statistics.cardLabel.caseType
+                        .totalConfirmed,
                     style: PicoTextStyle.labelSm(
                       color: Colors.white,
                     ),
                   ),
                 ),
-                16.verticalSpace,
                 Wrap(
                   crossAxisAlignment: WrapCrossAlignment.center,
                   alignment: WrapAlignment.center,
                   children: [
-                    Text(
-                      NumberHelper.numberFormat(total),
-                      style: PicoTextStyle.headingXl(
-                        color: Colors.white,
+                    Skeleton.replace(
+                      replacement: ClipRRect(
+                        borderRadius: BorderRadius.circular(PCSpacing.s8.r),
+                        child: Container(
+                          width: 80.w,
+                          height: 45.h,
+                          color: context.picoColors.semantic.info.shade100,
+                        ),
+                      ),
+                      child: Text(
+                        NumberHelper.numberFormat(total),
+                        style: PicoTextStyle.headingXl(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
-                    8.horizontalSpace,
-                    Text(
-                      StringHelper.formatNewCase(newCase),
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontWeight: FontWeight.w700,
+                    PCSpacing.s8.horizontalSpace,
+                    Skeleton.replace(
+                      replacement: ClipRRect(
+                        borderRadius: BorderRadius.circular(PCSpacing.s8.r),
+                        child: Container(
+                          width: 24.w,
+                          height: 16.h,
+                          color: context.picoColors.semantic.info.shade100,
+                        ),
+                      ),
+                      child: Text(
+                        StringHelper.formatNewCase(newCase),
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                8.verticalSpace,
               ],
             ),
           ),

@@ -3,5 +3,9 @@ linter:
   rules:
 
 analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.gr.dart"
+
   errors:
     invalid_annotation_target: ignore

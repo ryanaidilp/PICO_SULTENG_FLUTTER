@@ -14,9 +14,10 @@ enum PicoTestStatus {
       };
 
   String label(BuildContext context) => switch (this) {
-        reactive => context.i10n.card_case_label.reactive,
-        nonReactive => context.i10n.card_case_label.non_reactive,
-        invalid => context.i10n.card_case_label.invalid,
-        onProcess => context.i10n.card_case_label.process,
+        reactive => context.translations.statistics.cardLabel.caseType.reactive,
+        nonReactive =>
+          context.translations.statistics.cardLabel.caseType.nonReactive,
+        invalid => context.translations.statistics.cardLabel.caseType.invalid,
+        onProcess => context.translations.statistics.cardLabel.caseType.process,
       };
 }

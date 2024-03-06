@@ -1,0 +1,20 @@
+{
+    "case_type": {
+        "odp": {
+            "title": "ODP (People Under Monitoring)",
+            "description": "A person under monitoring (ODP) is someone who has a fever (≥38°C) or a history of fever; or symptoms of respiratory system disorders, such as runny nose/sore throat/cough AND no other cause based on a convincing clinical picture AND in the last 14 days before the onset of symptoms, meets one of the following criteria: “have a history of traveling or living abroad reporting local transmission ” or “have a history of traveling or living in a local transmission area in Indonesia”."
+        },
+        "pdp": {
+            "title": "PDP (Patient Under Supervision)",
+            "description": "Patient Under Supervision is someone with an Acute Respiratory Infection (ARI), namely fever (≥38°C) or a history of fever; accompanied by one of the symptoms/signs of respiratory disease such as: cough/shortness of breath/sore throat/runny nose/pneumonia mild to severe AND no other cause based on a convincing clinical picture AND in the last 14 days before symptoms appear, meet one of the criteria: \"have history of traveling or living abroad reporting local transmission\" or \"having a history of traveling or living in a local transmission area in Indonesia."
+        }
+    },
+    "test": {
+        "pcr": {
+            "description": "Polymerase Chain Reaction or PCR is considered the most accurate diagnostic test to confirm whether someone has COVID-19 or not. The displayed number of PCR tests is processed from data published by the Central Sulawesi Health Office."
+        },
+        "rdt": {
+            "description": "Rapid Diagnostic Test (RDT) or rapid diagnostic test is used as an initial medical screening to detect COVID-19. In case of a reactive RDT result, further confirmation will be conducted using the SWAB/Polymerase Chain Reaction (PCR) method."
+        }
+    }
+}

@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+import 'package:pico_ui_kit/pico_ui_kit.dart';
+
+class PicoCardTile extends StatelessWidget {
+  const PicoCardTile({
+    required this.label,
+    this.onTap,
+    super.key,
+  });
+
+  final String label;
+  final GestureTapCallback? onTap;
+  @override
+  Widget build(BuildContext context) => PicoCard(
+        padding: EdgeInsets.zero,
+        borderRadius: PCRadius.sm.r,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(PCRadius.sm.r),
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: PCSpacing.s8.w,
+              vertical: PCSpacing.s16.h,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Skeleton.keep(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: PicoTextStyle.labelLg(),
+                  ),
+                ),
+                PCSpacing.s8.horizontalSpace,
+                Skeleton.keep(
+                  child: Icon(
+                    Icons.arrow_forward_rounded,
+                    size: 16.sp,
+                    color: context.picoColors.icon.neutral.subtle,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+}

@@ -3,5 +3,5 @@
 /// {@endtemplate}
 library config;
 
-export 'src/env/env.dart';
+export 'src/flavors/flavor.dart';
 export 'src/utils/utils.dart';

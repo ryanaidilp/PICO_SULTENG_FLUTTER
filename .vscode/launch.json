@@ -8,22 +8,29 @@
       "name": "dev",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_dev.dart",
+      "program": "app/pico/lib/main_dev.dart",
       "args": ["--flavor", "development", "--target", "lib/main_dev.dart"]
     },
     {
       "name": "staging",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_stag.dart",
+      "program": "app/pico/lib/main_stag.dart",
       "args": ["--flavor", "staging", "--target", "lib/main_stag.dart"]
     },
     {
       "name": "prod",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main.dart",
+      "program": "app/pico/lib/main.dart",
       "args": ["--flavor", "production", "--target", "lib/main.dart"]
+    },
+    {
+      "name": "widgetbook",
+      "request": "launch",
+      "type": "dart",
+      "program": "app/pico_widgetbook/lib/main.dart",
+      "args": ["--target", "lib/main.dart"]
     }
   ]
 }

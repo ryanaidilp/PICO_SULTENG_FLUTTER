@@ -2,10 +2,21 @@ part of 'pico_color_data.dart';
 
 @immutable
 class PicoIconColor {
-  const PicoIconColor({
+  const PicoIconColor._({
     required this.neutral,
     required this.semantic,
   });
+
+  factory PicoIconColor.light() => PicoIconColor._(
+        neutral: PicoForegroundNeutralColor.light(),
+        semantic: PicoForegroundSemanticColor.light(),
+      );
+
+  factory PicoIconColor.dark() => PicoIconColor._(
+        neutral: PicoForegroundNeutralColor.dark(),
+        semantic: PicoForegroundSemanticColor.dark(),
+      );
+
   final PicoForegroundNeutralColor neutral;
   final PicoForegroundSemanticColor semantic;
 
@@ -14,7 +25,7 @@ class PicoIconColor {
     required PicoForegroundSemanticColor semantic,
     required double t,
   }) =>
-      PicoIconColor(
+      PicoIconColor._(
         neutral: this.neutral.lerp(
               t: t,
               mainVariant: neutral.main,
@@ -53,7 +64,7 @@ class PicoIconColor {
     PicoForegroundNeutralColor? neutral,
     PicoForegroundSemanticColor? semantic,
   }) =>
-      PicoIconColor(
+      PicoIconColor._(
         neutral: neutral ?? this.neutral,
         semantic: semantic ?? this.semantic,
       );

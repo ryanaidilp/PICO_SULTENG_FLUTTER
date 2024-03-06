@@ -1,5 +1,5 @@
 import 'package:dependencies/dependencies.dart';
-import 'package:home/src/domain/entities/banner.dart';
+import 'package:home/src/domain/domain.dart';
 
 part 'banner_model.freezed.dart';
 part 'banner_model.g.dart';

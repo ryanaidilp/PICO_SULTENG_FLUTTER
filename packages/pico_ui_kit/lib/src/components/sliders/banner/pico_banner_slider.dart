@@ -1,8 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:i10n/i10n.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
+import 'package:pico_ui_kit/src/components/images/network_image/pico_network_image.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class PicoBannerSlider<T> extends StatefulWidget {
@@ -53,69 +52,13 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
                 onTap: () {
                   widget.onItemTap?.call(widget.data[index]);
                 },
-                child: ExtendedImage.network(
-                  widget.getImage(
+                child: PicoNetworkImage(
+                  url: widget.getImage(
                     widget.data[index],
                   ),
-                  border: Border.all(
-                    color: context.picoColors.background.strong,
-                  ),
+                  width: 0.9.sw,
                   height: 0.2.sh,
                   fit: BoxFit.fill,
-                  loadStateChanged: (state) =>
-                      switch (state.extendedImageLoadState) {
-                    LoadState.loading => ClipRRect(
-                        borderRadius: BorderRadius.circular(12.r),
-                        child: Container(
-                          width: 0.9.sw,
-                          height: 0.2.sh,
-                          color: context.picoColors.background.white,
-                        ).sekeletonize(),
-                      ),
-                    LoadState.failed => Container(
-                        width: 0.9.sw,
-                        height: 0.2.sh,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: context.picoColors.background.subtle,
-                        ),
-                        child: Material(
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: Colors.transparent,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(12.r),
-                            onTap: () => state.reLoadImage(),
-                            child: Center(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Icon(
-                                    Icons.image_not_supported_rounded,
-                                    color: context.picoColors.background.strong,
-                                  ),
-                                  8.verticalSpace,
-                                  Text(
-                                    context.i10n.buttons.try_again,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                          color: context
-                                              .picoColors.text.neutral.strong,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    LoadState.completed => ClipRRect(
-                        borderRadius: BorderRadius.circular(12.r),
-                        child: state.completedWidget,
-                      ),
-                  },
-                  clearMemoryCacheWhenDispose: true,
                   borderRadius: BorderRadius.circular(12.r),
                 ),
               ),
@@ -137,7 +80,7 @@ class _PicoBannerSliderState<T> extends State<PicoBannerSlider<T>> {
               onDotClicked: (index) => _carouselController.animateToPage(index),
               effect: ExpandingDotsEffect(
                 activeDotColor: context.picoColors.icon.semantic.primary,
-                dotColor: context.picoColors.background.strong,
+                dotColor: context.picoColors.background.neutral.strong,
                 dotWidth: 8.w,
                 dotHeight: 8.h,
                 spacing: 4.w,

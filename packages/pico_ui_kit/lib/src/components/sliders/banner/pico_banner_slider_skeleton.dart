@@ -22,7 +22,7 @@ class PicoBannerSliderSkeleton extends StatelessWidget {
                   child: Container(
                     width: 0.9.sw,
                     height: 0.25.sh,
-                    color: context.picoColors.background.white,
+                    color: context.picoColors.background.neutral.white,
                   ).sekeletonize(),
                 ),
               ),
@@ -39,7 +39,7 @@ class PicoBannerSliderSkeleton extends StatelessWidget {
               child: Container(
                 width: 0.15.sw,
                 height: 8.h,
-                color: context.picoColors.background.inverse,
+                color: context.picoColors.background.neutral.inverse,
               ).sekeletonize(),
             ),
           ),

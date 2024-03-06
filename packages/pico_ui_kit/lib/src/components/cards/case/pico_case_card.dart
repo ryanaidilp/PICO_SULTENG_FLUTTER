@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:pico_ui_kit/src/components/cards/case/enums/pico_case_type.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoCaseCard extends StatelessWidget {
   const PicoCaseCard._({
@@ -46,12 +45,11 @@ class PicoCaseCard extends StatelessWidget {
   final int newCase;
 
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          color: context.picoColors.background.subtle,
-          borderRadius: BorderRadius.circular(8.r),
+  Widget build(BuildContext context) => PicoCard(
+        padding: EdgeInsets.all(
+          PCSpacing.s8.r,
         ),
-        padding: EdgeInsets.all(8.r),
+        borderRadius: PCRadius.sm.r,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +63,7 @@ class PicoCaseCard extends StatelessWidget {
                       color: _type.data(context).bgColor,
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(4.r),
+                      padding: EdgeInsets.all(PCSpacing.s4.r),
                       child: PicoAsset.icon(
                         icon: _type.data(context).iconData,
                         color: _type.data(context).iconColor,
@@ -73,26 +71,36 @@ class PicoCaseCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  4.horizontalSpace,
+                  PCSpacing.s4.w.horizontalSpace,
                   Expanded(
                     child: Text(
                       _type.data(context).label,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: PicoTextStyle.bodySm(
-                        fontWeight: FontWeight.w600,
+                        color: context.picoColors.text.neutral.subtle,
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            16.verticalSpace,
-            Text(
-              NumberHelper.numberFormat(total),
-              style: PicoTextStyle.labelLg(),
+            PCSpacing.s8.h.verticalSpace,
+            Skeleton.replace(
+              replacement: ClipRRect(
+                borderRadius: BorderRadius.circular(PCSpacing.s8.r),
+                child: Container(
+                  width: 80.w,
+                  height: 20.h,
+                  color: context.picoColors.semantic.info.shade100,
+                ),
+              ),
+              child: Text(
+                NumberHelper.numberFormat(total),
+                style: PicoTextStyle.labelLg(),
+              ),
             ),
-            20.verticalSpace,
+            PCSpacing.s8.verticalSpace,
             Text(
               StringHelper.formatNewCase(newCase),
               style: PicoTextStyle.bodyXs(
@@ -100,7 +108,6 @@ class PicoCaseCard extends StatelessWidget {
                 color: context.picoColors.text.neutral.subtle,
               ),
             ),
-            8.verticalSpace,
           ],
         ),
       );

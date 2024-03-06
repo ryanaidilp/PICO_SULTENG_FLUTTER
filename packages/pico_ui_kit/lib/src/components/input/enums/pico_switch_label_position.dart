@@ -1,0 +1,4 @@
+enum PicoSwitchLabelPosition {
+  trailing,
+  leading;
+}

@@ -1,0 +1,15 @@
+flutter_native_splash:
+  image: splash/launcher_icon.png
+  color: ffffff
+  color_dark: 24221F
+  branding: "splash/branding.png"
+  branding_dark: "splash/branding_dark.png"
+  branding_mode: bottom
+  android_12:
+    image: splash/launcher_icon.png
+    icon_background_color: "#ffffff"
+    icon_background_color_dark: 24221F
+    color_dark: 24221F
+    branding: "splash/branding_android12.png"
+    branding_dark: "splash/branding_android12_dark.png"
+    branding_mode: bottom

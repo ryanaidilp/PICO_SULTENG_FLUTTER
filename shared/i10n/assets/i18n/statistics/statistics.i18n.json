@@ -1,0 +1,62 @@
+{
+    "case_label": "Case Data in $level",
+    "case_label_national": "National Case Data",
+    "case_label_daily": "Daily $type cases",
+    "case_suffix": {
+        "zero,one": "case",
+        "other": "cases"
+    },
+    "case_type": {
+        "active": "Active",
+        "deceased": "Deceased",
+        "positive": "Positive",
+        "recovered": "Recovered"
+    },
+    "timeframe": {
+        "one_month": "1M",
+        "three_month": "3M",
+        "six_month": "6M",
+        "all": "All",
+        "custom": "Custom"
+    },
+    "card_label": {
+        "case_type": {
+            "total_confirmed": "Total Confirmed Case",
+            "under_treatment": "Active",
+            "recovered": "Recovered",
+            "deceased": "Deceased",
+            "odp": "Total People Under Monitoring",
+            "pdp": "Total Patient Under Supervision",
+            "active": "Active",
+            "finish": "Finished",
+            "sample": "Sample :",
+            "duration": "Duration :",
+            "reactive": "Reactive",
+            "non_reactive": "Non-Reactive",
+            "invalid": "Invalid",
+            "process": "Process in Lab"
+        },
+        "test": {
+            "total": "COVID-19 Testing Total",
+            "done": "Number of tests that have been done"
+        }
+    },
+    "chart": {
+        "title": "Data Graph",
+        "odp_pdp": {
+            "title": "Supervised (PDP) & Monitored (ODP) Patient",
+            "labels": {
+                "odp": "ODP (Monitored)",
+                "pdp": "PDP (Supervised)"
+            },
+            "description": {
+                "active": "Under Monitoring/Supervision",
+                "finished": "Monitoring/Supervision Completed"
+            }
+        }
+    },
+    "mode": {
+        "cumulative": "Cumulative",
+        "all": "All"
+    }
+}

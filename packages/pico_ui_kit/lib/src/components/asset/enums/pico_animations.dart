@@ -1,4 +1,5 @@
 import 'package:pico_ui_kit/src/assets/assets.gen.dart';
+import 'package:pico_ui_kit/src/components/asset/enums/pico_asset_extension.dart';
 import 'package:pico_ui_kit/src/components/asset/models/pico_asset_data.dart';
 
 enum PicoAnimations {
@@ -9,24 +10,30 @@ enum PicoAnimations {
   vaccinatedNational,
   vaccinated;
 
-  PicoAssetData get data => switch (this) {
-        comingSoon => PicoAssetData(
-            path: Assets.animations.comingSoon.path,
+  PicoAssetData<LottieGenImage> get data => switch (this) {
+        comingSoon => PicoAssetData<LottieGenImage>(
+            file: Assets.animations.comingSoon,
+            extension: PicoAssetExtension.lottie,
           ),
-        error => PicoAssetData(
-            path: Assets.animations.error.path,
+        error => PicoAssetData<LottieGenImage>(
+            file: Assets.animations.error,
+            extension: PicoAssetExtension.lottie,
           ),
-        noInternet => PicoAssetData(
-            path: Assets.animations.noInternet.path,
+        noInternet => PicoAssetData<LottieGenImage>(
+            file: Assets.animations.noInternet,
+            extension: PicoAssetExtension.lottie,
           ),
-        success => PicoAssetData(
-            path: Assets.animations.success.path,
+        success => PicoAssetData<LottieGenImage>(
+            file: Assets.animations.success,
+            extension: PicoAssetExtension.lottie,
           ),
-        vaccinatedNational => PicoAssetData(
-            path: Assets.animations.vaccinatedNational.path,
+        vaccinatedNational => PicoAssetData<LottieGenImage>(
+            file: Assets.animations.vaccinatedNational,
+            extension: PicoAssetExtension.lottie,
           ),
-        vaccinated => PicoAssetData(
-            path: Assets.animations.vaccinated.path,
+        vaccinated => PicoAssetData<LottieGenImage>(
+            file: Assets.animations.vaccinated,
+            extension: PicoAssetExtension.lottie,
           ),
       };
 }

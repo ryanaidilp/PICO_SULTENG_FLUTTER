@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:pico_ui_kit/src/components/cards/test_case/enums/pico_test_status.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PicoTestCaseCard extends StatelessWidget {
   const PicoTestCaseCard._({
@@ -13,7 +12,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.reactive({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -23,7 +22,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.nonReactive({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -33,7 +32,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.invalid({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -43,7 +42,7 @@ class PicoTestCaseCard extends StatelessWidget {
 
   factory PicoTestCaseCard.process({
     int count = 0,
-    int percentage = 0,
+    double percentage = 0,
   }) =>
       PicoTestCaseCard._(
         count: count,
@@ -52,43 +51,48 @@ class PicoTestCaseCard extends StatelessWidget {
       );
 
   final int count;
-  final int percentage;
+  final double percentage;
   final PicoTestStatus status;
 
   @override
-  Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.r),
-          color: context.picoColors.background.subtle,
-        ),
-        padding: EdgeInsets.all(8.r),
+  Widget build(BuildContext context) => PicoCard(
+        padding: EdgeInsets.all(PCSpacing.s8.r),
+        borderRadius: PCRadius.sm.r,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            8.verticalSpace,
             Skeleton.keep(
               child: Text(
                 status.label(context),
                 style: PicoTextStyle.body(),
               ),
             ),
-            24.verticalSpace,
-            Text(
-              NumberHelper.numberFormat(count),
-              style: PicoTextStyle.headingLg(
-                color: status.textColor(context),
+            4.verticalSpace,
+            Skeleton.replace(
+              replacement: ClipRRect(
+                borderRadius: BorderRadius.circular(8.r),
+                child: Container(
+                  width: 60.w,
+                  height: 30.h,
+                  color: context.picoColors.semantic.info.shade100,
+                ),
+              ),
+              child: Text(
+                NumberHelper.numberFormat(count),
+                style: PicoTextStyle.headingLg(
+                  color: status.textColor(context),
+                ),
               ),
             ),
-            24.verticalSpace,
+            PCSpacing.s4.verticalSpace,
             Text(
               '(${NumberHelper.percentageFormat(percentage)})',
               style: PicoTextStyle.body(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            8.verticalSpace,
           ],
         ),
       );

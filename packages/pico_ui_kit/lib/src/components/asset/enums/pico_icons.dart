@@ -1,10 +1,12 @@
 import 'package:pico_ui_kit/src/assets/assets.gen.dart';
+import 'package:pico_ui_kit/src/components/asset/enums/pico_asset_extension.dart';
 import 'package:pico_ui_kit/src/components/asset/models/pico_asset_data.dart';
 
 enum PicoIcons {
   ambulance,
   ambulanceOutline,
   barChart,
+  cemetery,
   check,
   close,
   cog,
@@ -27,86 +29,121 @@ enum PicoIcons {
   sunOutline,
   syringe,
   vaccine,
+  virus,
   youtube;
 
-  PicoAssetData get data => switch (this) {
-        ambulance => PicoAssetData(
-            path: Assets.icons.ambulance.path,
+  PicoAssetData<SvgGenImage> get data => switch (this) {
+        ambulance => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.ambulance,
+            extension: PicoAssetExtension.svg,
           ),
-        ambulanceOutline => PicoAssetData(
-            path: Assets.icons.ambulanceOutline.path,
+        ambulanceOutline => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.ambulanceOutline,
+            extension: PicoAssetExtension.svg,
           ),
-        barChart => PicoAssetData(
-            path: Assets.icons.barChart.path,
+        barChart => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.barChart,
+            extension: PicoAssetExtension.svg,
           ),
-        check => PicoAssetData(
-            path: Assets.icons.check.path,
+        cemetery => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.cemetery,
+            extension: PicoAssetExtension.svg,
           ),
-        close => PicoAssetData(
-            path: Assets.icons.close.path,
+        check => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.check,
+            extension: PicoAssetExtension.svg,
           ),
-        cog => PicoAssetData(
-            path: Assets.icons.cog.path,
+        close => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.close,
+            extension: PicoAssetExtension.svg,
           ),
-        donation => PicoAssetData(
-            path: Assets.icons.donation.path,
+        cog => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.cog,
+            extension: PicoAssetExtension.svg,
           ),
-        github => PicoAssetData(
-            path: Assets.icons.github.path,
+        donation => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.donation,
+            extension: PicoAssetExtension.svg,
           ),
-        hospital => PicoAssetData(
-            path: Assets.icons.hospital.path,
+        github => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.github,
+            extension: PicoAssetExtension.svg,
           ),
-        hospitalBed => PicoAssetData(
-            path: Assets.icons.hospitalBed.path,
+        hospital => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.hospital,
+            extension: PicoAssetExtension.svg,
           ),
-        hospitalBedOutline => PicoAssetData(
-            path: Assets.icons.hospitalBedOutline.path,
+        hospitalBed => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.hospitalBed,
+            extension: PicoAssetExtension.svg,
           ),
-        hospitalOutline => PicoAssetData(
-            path: Assets.icons.hospitalOutline.path,
+        hospitalBedOutline => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.hospitalBedOutline,
+            extension: PicoAssetExtension.svg,
           ),
-        image => PicoAssetData(
-            path: Assets.icons.image.path,
+        hospitalOutline => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.hospitalOutline,
+            extension: PicoAssetExtension.svg,
           ),
-        linkedin => PicoAssetData(
-            path: Assets.icons.linkedin.path,
+        image => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.image,
+            extension: PicoAssetExtension.svg,
           ),
-        menu => PicoAssetData(
-            path: Assets.icons.menu.path,
+        linkedin => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.linkedin,
+            extension: PicoAssetExtension.svg,
           ),
-        moon => PicoAssetData(
-            path: Assets.icons.moonBold.path,
+        menu => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.menu,
+            extension: PicoAssetExtension.svg,
           ),
-        moonOutline => PicoAssetData(
-            path: Assets.icons.moon.path,
+        moon => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.moonBold,
+            extension: PicoAssetExtension.svg,
           ),
-        newspaper => PicoAssetData(
-            path: Assets.icons.newspapper.path,
+        moonOutline => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.moon,
+            extension: PicoAssetExtension.svg,
           ),
-        questionCircle => PicoAssetData(
-            path: Assets.icons.questionCircle.path,
+        newspaper => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.newspapper,
+            extension: PicoAssetExtension.svg,
           ),
-        selfIsolation => PicoAssetData(
-            path: Assets.icons.selfIsolation.path,
+        questionCircle => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.questionCircle,
+            extension: PicoAssetExtension.svg,
           ),
-        stetoschope => PicoAssetData(
-            path: Assets.icons.stetoschope.path,
+        selfIsolation => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.selfIsolation,
+            extension: PicoAssetExtension.svg,
           ),
-        sun => PicoAssetData(
-            path: Assets.icons.sunBold.path,
+        stetoschope => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.stetoschope,
+            extension: PicoAssetExtension.svg,
           ),
-        sunOutline => PicoAssetData(
-            path: Assets.icons.sun.path,
+        sun => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.sunBold,
+            extension: PicoAssetExtension.svg,
           ),
-        syringe => PicoAssetData(
-            path: Assets.icons.syringe.path,
+        sunOutline => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.sun,
+            extension: PicoAssetExtension.svg,
           ),
-        vaccine => PicoAssetData(
-            path: Assets.icons.vaccine.path,
+        syringe => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.syringe,
+            extension: PicoAssetExtension.svg,
           ),
-        youtube => PicoAssetData(
-            path: Assets.icons.youtube.path,
+        vaccine => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.vaccine,
+            extension: PicoAssetExtension.svg,
+          ),
+        virus => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.virus,
+            extension: PicoAssetExtension.svg,
+          ),
+        youtube => PicoAssetData<SvgGenImage>(
+            file: Assets.icons.youtube,
+            extension: PicoAssetExtension.svg,
           ),
       };
 }

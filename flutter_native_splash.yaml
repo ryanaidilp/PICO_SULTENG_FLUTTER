@@ -1,7 +1,0 @@
-flutter_native_splash:
-  image: launcher/logo.png
-  color: ffffff
-  android_12:
-    image: launcher/launcher_icon.png
-    icon_background_color: "#ffffff"
-    branding: launcher/branding.png

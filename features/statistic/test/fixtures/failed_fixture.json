@@ -1,0 +1,10 @@
+{
+    "success": false,
+    "errors": [
+        {
+            "message": "There is something wrong!",
+            "code": 404
+        }
+    ],
+    "data": null
+}

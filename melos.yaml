@@ -1,34 +1,222 @@
 name: pico_sulteng_flutter
 packages:
+  - app/*
   - packages/*
   - features/*
   - shared/*
-  - core/*
-  - .
 
 command:
   version:
     branch: master
+  bootstrap:
+    environment:
+      sdk: ">=3.2.3 <4.0.0"
+    dev_dependencies:
+      build_runner: ^2.4.7
+      mocktail: ^1.0.2
+      very_good_analysis: ^5.1.0
+    hooks:
+      post: melos run initialize-app
+  clean:
+    hooks:
+      post: |
+        melos exec --flutter --concurrency=3 -- "flutter clean"
+        melos run build:clean
 
 scripts:
+  analyze:select:
+    run: melos exec -- "flutter analyze lib test"
+    description: "Run flutter analyze in selected package that depends on it."
+    packageFilters:
+      dependsOn:
+        - "flutter"
+      dirExists: test
+
+  analyze:
+    run: melos run analyze:select --no-select
+    description: "Run flutter analyze in all of packages that depends on it."
+
   generate-env:
-    run: melos exec --depends-on="envied_generator" -- "dart run build_runner build -d"
+    run: melos exec -- "dart run build_runner build -d"
     description: "Run build_runner in all of the packages that depends on it."
+    packageFilters:
+      dependsOn:
+        - "envied_generator"
+
   generate-locale:
-    run: melos exec --depends-on="slang" -- "dart run slang"
-    description: "Generate translation from arb."
+    run: melos exec -- "dart run slang"
+    description: "Generate translation from json file."
+    packageFilters:
+      dependsOn:
+        - "slang"
+        - "slang_flutter"
+
   generate-assets:
-    run: melos exec --scope="*pico_ui_kit*" -- "fluttergen"
+    run: melos exec -- "fluttergen"
     description: "Generate asset for UI Kit Package"
+    packageFilters:
+      scope: "*pico_ui_kit*"
+
+  generate-core:
+    run: melos exec -- "dart run build_runner build -d"
+    description: "Generate core"
+    packageFilters:
+      scope: "*core*"
+
+  build:select:
+    run: melos exec -- "dart run build_runner build -d"
+    description: "Run build runner in selected package that depends on build_runner."
+    packageFilters:
+      ignore:
+        - "*core*"
+        - "*i10n*"
+        - "*config*"
+        - "*widgetbook"
+      dependsOn:
+        - "build_runner"
+
+  generate-widgetbook:
+    run: melos exec -- "dart run build_runner build -d"
+    description: "Run build runner to generate widget book"
+    packageFilters:
+      dependsOn:
+        - "widgetbook_generator"
+
+  build:clean:select:
+    run: melos exec -- "dart run build_runner clean"
+    description: "Run build runner clean in selected package that depends on build_runner."
+    packageFilters:
+      dependsOn:
+        - "build_runner"
+
   build:
-    run: melos exec --depends-on="build_runner" -- "dart run build_runner build -d"
+    run: melos run build:select --no-select
     description: "Run build runner in all packages that depend on it."
+
+  build:clean:
+    run: melos run build:clean:select --no-select
+    description: "Run build runner clean in all packages that depend on it."
+
   format:
     run: melos exec -- "dart format . --fix && dart fix --apply"
     description: "Run dart format and dart fix for all packages"
+  format-check:
+    run: melos exec -- "dart format . --set-exit-if-changed"
+
+  get:select:
+    run: melos exec -- "flutter pub get"
+    description: "Run `flutter pub get` in selected package."
+    packageFilters:
+      dependsOn: flutter
   get:
-    run: melos exec --depends-on="flutter" -- "flutter pub get"
-    description: "Run `flutter pub get` in every packages."
+    run: melos run get:select --no-select
+    description: "Run `flutter pub get` in all packages that depends on Flutter."
+
+  upgrade:select:
+    run: melos exec -- "flutter pub upgrade"
+    description: "Run `flutter pub upgrade` in selected package."
+    packageFilters:
+      dependsOn: "flutter"
   upgrade:
-    run: melos exec --depends-on="flutter" -- "flutter pub upgrade"
-    description: "Run `flutter pub upgrade` in every packages."
+    run: melos run upgrade:select --no-select
+    description: "Run `flutter pub upgrade` in all packages."
+
+  test:select:
+    run: melos exec -- "very_good test -j 4 --optimization --coverage --test-randomize-ordering-seed random"
+    description: "Run `flutter test` for selected package."
+    packageFilters:
+      dirExists: test
+  test:
+    run: melos run test:select --no-select
+    description: "run all flutter test in this project."
+
+  coverage:select:
+    run: melos exec -- very_good test --coverage
+    packageFilters:
+      dirExists: test
+    description: "Generate coverage for the selected package."
+  coverage:
+    run: melos run coverage:select --no-select
+    description: "Generate test coverage for all packages."
+
+  test:with-lcov-coverage:select:
+    run: MELOS_ROOT_PATH/scripts/test-with-coverage.sh MELOS_ROOT_PATH MELOS_PACKAGE_PATH MELOS_PACKAGE_NAME
+    exec:
+      concurrency: 6
+    packageFilters:
+      ignore:
+        - "*i10n*"
+        - "*config*"
+      dirExists: test
+    description: Run Flutter tests and publish local lcov coverage for a specific package
+
+  test:with-lcov-coverage:
+    run: |
+      melos run test:with-lcov-coverage:select --no-select && \
+      melos run test:combine-coverage
+    description: Run Flutter tests for all packages and generate a combined lcov coverage report
+
+  test:with-html-coverage:select:
+    run: |
+      MELOS_ROOT_PATH/scripts/test-with-coverage.sh MELOS_ROOT_PATH MELOS_PACKAGE_PATH MELOS_PACKAGE_NAME && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+    exec:
+      concurrency: 6
+    packageFilters:
+      ignore:
+        - "*i10n*"
+        - "*config*"
+      dirExists: test
+    description: Run Flutter tests for a specific package and updates global HTML coverage report
+
+  test:with-html-coverage:
+    run: |
+      melos run test:with-lcov-coverage:select --no-select && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+      echo "🧪📊 You can find coverage report in the following folder: MELOS_ROOT_PATH/coverage_report/index.html\n\n💡To open it just run: open MELOS_ROOT_PATH/coverage_report/index.html"
+    description: Run Flutter tests for all packages and generate a combined HTML coverage report
+
+  test:with-html-coverage:all:auto-open:
+    run: |
+      melos run test:with-lcov-coverage --no-select && \
+      melos run test:combine-coverage && \
+      melos run test:generate-html-coverage
+      open MELOS_ROOT_PATH/coverage_report/index.html
+    description: Run Flutter tests for all packages and generate a combined HTML coverage report
+
+  test:combine-coverage:
+    run: MELOS_ROOT_PATH/scripts/combine-coverage.sh MELOS_ROOT_PATH
+    description: Combine individual lcov coverage into a single lcov coverage file
+    select-package:
+      dir-exists:
+        - test
+        - coverage
+
+  test:generate-html-coverage:
+    run: MELOS_ROOT_PATH/scripts/generate-html-coverage.sh MELOS_ROOT_PATH
+    description: Take combined lcov file and generate a human-readable HTML report
+    select-package:
+      dir-exists:
+        - test
+        - coverage
+
+  update-goldens:select:
+    run: melos exec -- "very_good test --concurrency=4 --update-goldens"
+    packageFilters:
+      dirExists: test
+    description: "Re-generate golden test files for selected package."
+  update-goldens:
+    run: melos run update-goldens:select --no-select
+    description: "Re-generate all golden test files."
+
+  initialize-app:
+    run: |
+      melos run generate-env
+      melos run generate-locale
+      melos run generate-assets
+      melos run build
+      melos run generate-core
+      melos run generate-widgetbook
+    description: Initialize PICO Sulteng Flutter.
