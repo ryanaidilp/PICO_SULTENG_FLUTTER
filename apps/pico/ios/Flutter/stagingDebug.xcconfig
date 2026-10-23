@@ -2,5 +2,5 @@
 #include "Generated.xcconfig"
 
 ASSET_PREFIX=staging
-BUNDLE_NAME=Pico [STG]
-BUNDLE_DISPLAY_NAME=Pico [STG]
+BUNDLE_NAME=PICO Sulteng [STG]
+BUNDLE_DISPLAY_NAME=PICO Sulteng [STG]

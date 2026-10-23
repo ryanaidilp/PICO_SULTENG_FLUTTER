@@ -2,5 +2,5 @@
 #include "Generated.xcconfig"
 
 ASSET_PREFIX=production
-BUNDLE_NAME=Pico
-BUNDLE_DISPLAY_NAME=Pico
+BUNDLE_NAME=PICO Sulteng
+BUNDLE_DISPLAY_NAME=PICO Sulteng

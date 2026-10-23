@@ -9,17 +9,17 @@ android.apply {
         create("development") {
             dimension = "flavor-type"
             applicationId = "com.banuacoders.pico.app.dev"
-            resValue(type = "string", name = "app_name", value = "Pico [Dev]")
+            resValue(type = "string", name = "app_name", value = "PICO Sulteng [DEV]")
         }
         create("staging") {
             dimension = "flavor-type"
             applicationId = "com.banuacoders.pico.app.stg"
-            resValue(type = "string", name = "app_name", value = "Pico [STG]")
+            resValue(type = "string", name = "app_name", value = "PICO Sulteng [STG]")
         }
         create("production") {
             dimension = "flavor-type"
             applicationId = "com.banuacoders.pico.app"
-            resValue(type = "string", name = "app_name", value = "Pico")
+            resValue(type = "string", name = "app_name", value = "PICO Sulteng")
         }
     }
 

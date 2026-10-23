@@ -1,43 +1,43 @@
 flavors:
   development:
     app:
-      name: "Pico [Dev]"
+      name: "PICO Sulteng [DEV]"
     android:
       flavorDimension: "app"
       applicationId: "com.banuacoders.pico.app.dev"
-      icon: "launcher/logo-dev.png"
+      icon: "launcher/app-icon.png"
       adaptiveIcon:
-        background: "launcher/logo-background-dev.png"
-        foreground: "launcher/logo-foreground.png"
+        background: "launcher/adaptive-background.png"
+        foreground: "launcher/adaptive-foreground.png"
     ios:
       bundleId: "com.banuacoders.pico.app.dev"
-      icon: "launcher/ios-logo-dev.png"
+      icon: "launcher/app-icon.png"
   staging:
     app:
-      name: "Pico [STG]"
+      name: "PICO Sulteng [STG]"
     android:
       flavorDimension: "app"
       applicationId: "com.banuacoders.pico.app.stg"
-      icon: "launcher/logo-stg.png"
+      icon: "launcher/app-icon.png"
       adaptiveIcon:
-        background: "launcher/logo-background-stg.png"
-        foreground: "launcher/logo-foreground.png"
+        background: "launcher/adaptive-background.png"
+        foreground: "launcher/adaptive-foreground.png"
     ios:
       bundleId: "com.banuacoders.pico.app.stg"
-      icon: "launcher/ios-logo-stg.png"
+      icon: "launcher/app-icon.png"
   production:
     app:
-      name: "Pico"
+      name: "PICO Sulteng"
     android:
       flavorDimension: "app"
       applicationId: "com.banuacoders.pico.app"
-      icon: "launcher/logo.png"
+      icon: "launcher/app-icon.png"
       adaptiveIcon:
-        background: "launcher/logo-background.png"
-        foreground: "launcher/logo-foreground.png"
+        background: "launcher/adaptive-background.png"
+        foreground: "launcher/adaptive-foreground.png"
     ios:
       bundleId: "com.banuacoders.pico.app"
-      icon: "launcher/ios-logo.png"
+      icon: "launcher/app-icon.png"
 
 instructions:
   - assets:download
