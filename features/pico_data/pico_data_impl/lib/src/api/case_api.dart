@@ -12,22 +12,11 @@ class CaseApi {
 
   final PicoApiClient _client;
 
-  Either<PicoFailure, T> _guard<T>(T Function() f) {
-    try {
-      return Right(f());
-    } on Object catch (e) {
-      return Left(PicoFailure(PicoFailureKind.server, message: 'Bad data: $e'));
-    }
-  }
-
   Future<Either<PicoFailure, T>> _get<T>(
     String path,
     T Function(Object? data) map, {
     Map<String, Object?>? query,
-  }) async => (await _client.getData(
-    path,
-    query: query,
-  )).fold(Left.new, (data) => _guard(() => map(data)));
+  }) => _client.getMapped(path, map, query: query);
 
   /// `GET /national/latest`.
   Future<Either<PicoFailure, CaseDay>> nationalLatest() => _get(

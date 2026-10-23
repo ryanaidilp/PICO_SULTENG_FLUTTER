@@ -50,21 +50,46 @@ class PicoApiClient {
   ///
   /// A paginated payload (`{"data": [...], "pagination": ...}`) is unwrapped
   /// to its list.
+  ///
+  /// With [unwrapPage] false the paginated map is returned whole, for callers
+  /// that need `pagination.has_next`.
   Future<Either<PicoFailure, Object?>> getData(
     String path, {
     Map<String, Object?>? query,
+    bool unwrapPage = true,
   }) async {
-    var result = await _once(path, query);
+    var result = await _once(path, query, unwrapPage);
     if (result.leftOrNull?.kind == PicoFailureKind.rateLimited) {
       await Future<void>.delayed(retryDelay);
-      result = await _once(path, query);
+      result = await _once(path, query, unwrapPage);
     }
     return result;
+  }
+
+  /// [getData] then [map]. A mapping error becomes [PicoFailureKind.server],
+  /// never an exception.
+  Future<Either<PicoFailure, T>> getMapped<T>(
+    String path,
+    T Function(Object? data) map, {
+    Map<String, Object?>? query,
+    bool unwrapPage = true,
+  }) async {
+    final r = await getData(path, query: query, unwrapPage: unwrapPage);
+    return r.fold(Left.new, (data) {
+      try {
+        return Right(map(data));
+      } on Object catch (e) {
+        return Left(
+          PicoFailure(PicoFailureKind.server, message: 'Bad data: $e'),
+        );
+      }
+    });
   }
 
   Future<Either<PicoFailure, Object?>> _once(
     String path,
     Map<String, Object?>? query,
+    bool unwrapPage,
   ) async {
     final Response<String> res;
     try {
@@ -95,7 +120,8 @@ class PicoApiClient {
       );
     }
     var data = json['data'];
-    if (data is Map<String, dynamic> &&
+    if (unwrapPage &&
+        data is Map<String, dynamic> &&
         data['data'] is List &&
         data.containsKey('pagination')) {
       data = data['data'];
