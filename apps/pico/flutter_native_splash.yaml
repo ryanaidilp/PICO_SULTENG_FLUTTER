@@ -1,11 +1,12 @@
+# Brand splash (DESIGN.md "paper" ground: #F4F1EA light, #0E1430 dark).
 flutter_native_splash:
-  color: "#6366F1"
-  color_dark: "#312E81"
-  image: "splash/logo.png"
-  image_dark: "splash/logo_dark.png"
+  color: "#F4F1EA"
+  color_dark: "#0E1430"
+  image: "splash/splash-mark.png"
+  image_dark: "splash/splash-mark.png"
   android_12:
-    color: "#6366F1"
-    color_dark: "#312E81"
-    image: "splash/logo.png"
-    image_dark: "splash/logo_dark.png"
+    color: "#F4F1EA"
+    color_dark: "#0E1430"
+    image: "splash/splash-mark.png"
+    image_dark: "splash/splash-mark.png"
   ios: true
