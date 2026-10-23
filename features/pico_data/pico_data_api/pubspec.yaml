@@ -1,5 +1,5 @@
 name: pico_data_api
-description: Pico Data data contract, with shared models and repository ports.
+description: PICO data contract (C05, C08) - pure Dart models, repository ports and fakes.
 version: 0.1.0
 publish_to: none
 
@@ -9,10 +9,11 @@ environment:
 resolution: workspace
 
 dependencies:
-  flutter:
-    sdk: flutter
+  core_infrastructure_api:
+    path: ../../../shared/core_infrastructure_sdk/core_infrastructure_api
+  dependencies_core:
+    path: ../../../shared/dependencies_core
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
+  test: ^1.31.0
   very_good_analysis: ">=10.3.0"
