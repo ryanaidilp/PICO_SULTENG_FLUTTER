@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:pico_ui_kit/src/components/atoms/brand/pico_themed_svg.dart';
 
 import '../../helpers/golden_test_helpers.dart';
 
@@ -47,12 +46,7 @@ Future<void> prime(WidgetTester tester, Brightness b) =>
     });
 
 const contacts = [
-  Contact(
-    kind: ContactKind.phone,
-    label: 'Telepon',
-    value: '081213756763',
-    uri: null,
-  ),
+  Contact(kind: ContactKind.phone, label: 'Telepon', value: '081213756763'),
   Contact(
     kind: ContactKind.whatsapp,
     label: 'WhatsApp',
@@ -107,7 +101,6 @@ void main() {
           PicoTheme.light(),
           const PicoImage(
             kind: PicoImageKind.banner,
-            url: null,
             title: 'Panduan Isolasi Mandiri',
           ),
         ),
@@ -300,8 +293,9 @@ void main() {
       tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         SystemChannels.platform,
         (call) async {
-          if (call.method == 'Clipboard.setData')
+          if (call.method == 'Clipboard.setData') {
             copied = (call.arguments as Map)['text'] as String;
+          }
           return null;
         },
       );

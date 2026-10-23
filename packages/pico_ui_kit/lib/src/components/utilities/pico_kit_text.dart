@@ -91,6 +91,17 @@ class PicoKitText {
   /// "Lihat sebagai tabel" button of charts.
   String get viewAsTable => _t('Lihat sebagai tabel', 'View as table');
 
+  /// Back to the chart from the table view.
+  String get viewAsChart => _t('Kembali ke grafik', 'Back to chart');
+
+  /// Joins a range in a summary: "2 Mar 2020 sampai 14 Jan 2024".
+  String range(DateTime a, DateTime b) =>
+      _t('${date(a)} sampai ${date(b)}', '${date(a)} to ${date(b)}');
+
+  /// "puncak 64.718 pada 16 Feb 2022".
+  String peak(String value, DateTime d) =>
+      _t('puncak $value pada ${date(d)}', 'peak $value on ${date(d)}');
+
   /// Date range preset labels.
   String presetDays(int days) => _t('$days hari', '$days days');
 
@@ -113,6 +124,36 @@ class PicoKitText {
       b.write(digits[i]);
     }
     return b.toString();
+  }
+
+  /// Compact axis number: `12 rb`, `1,2 jt` (id), `12K`, `1.2M` (en).
+  String compact(num v) {
+    final a = v.abs();
+    String trim(double x) {
+      final s = x.toStringAsFixed(1).replaceFirst(RegExp(r'\.0$'), '');
+      return english ? s : s.replaceFirst('.', ',');
+    }
+
+    final sign = v < 0 ? '-' : '';
+    if (a >= 1000000)
+      return '$sign${trim(a / 1000000)}${english ? 'M' : ' jt'}';
+    if (a >= 1000) return '$sign${trim(a / 1000)}${english ? 'K' : ' rb'}';
+    return '$sign${trim(a.toDouble())}';
+  }
+
+  /// Decimal with [digits] places and the locale separator: `0,46` (id),
+  /// `0.46` (en).
+  String decimal(double v, {int digits = 2}) {
+    final s = v.toStringAsFixed(digits);
+    return english ? s : s.replaceFirst('.', ',');
+  }
+
+  /// Axis date: the year for yearly ticks, otherwise the month (with the year
+  /// in January).
+  String axisDate(DateTime d, {bool yearOnly = false}) {
+    if (yearOnly) return '${d.year}';
+    final m = (english ? _monthsEn : _monthsId)[d.month - 1];
+    return d.month == 1 ? '$m ${d.year}' : m;
   }
 
   /// Short date: `14 Jan 2024` (id), `Jan 14, 2024` (en).

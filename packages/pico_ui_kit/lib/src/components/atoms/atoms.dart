@@ -4,6 +4,7 @@ export 'assets/assets.dart';
 export 'brand/brand.dart';
 export 'buttons/buttons.dart';
 export 'cards/cards.dart';
+export 'charts/charts.dart';
 export 'data_viz/data_viz.dart';
 export 'display/display.dart';
 export 'icons/icons.dart';
