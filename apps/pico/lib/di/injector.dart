@@ -7,6 +7,7 @@ import 'package:pico/di/injector.config.dart';
 import 'package:app_launch_tracker_impl/app_launch_tracker_impl.dart';
 import 'package:monitoring_impl/monitoring_impl.dart';
 import 'package:network_sdk_dio/network_sdk_dio.dart';
+import 'package:pico_data_impl/pico_data_impl.dart';
 
 // archipelago:feature_imports:end
 
@@ -21,6 +22,7 @@ final getIt = GetIt.instance;
     ExternalModule(AppLaunchTrackerImplPackageModule),
     ExternalModule(MonitoringImplPackageModule),
     ExternalModule(NetworkSdkDioPackageModule),
+    ExternalModule(PicoDataImplPackageModule),
     // archipelago:feature_modules_before:end
   ],
   externalPackageModulesAfter: [

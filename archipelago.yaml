@@ -45,6 +45,7 @@ brick_versions:
   core_infrastructure_package: 2.0.10
   coverage_manager: 1.0.8
   detect_new_library: 1.0.7
+  feature_monorepo_skeleton/pico_data: 2.2.0
   flutter_asset: 1.2.7
   flutter_l10n: 2.2.0
   flutter_ui_kit: 1.3.3

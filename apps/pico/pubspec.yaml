@@ -43,6 +43,8 @@ dependencies:
     path: ../../infrastructure/network_sdk_api
   network_sdk_dio:
     path: ../../infrastructure/network_sdk_dio
+  pico_data_impl:
+    path: ../../features/pico_data/pico_data_impl
   pico_ui_kit:
     path: ../../packages/pico_ui_kit
   router_registry:
