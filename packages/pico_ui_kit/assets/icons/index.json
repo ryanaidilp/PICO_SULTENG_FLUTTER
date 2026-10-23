@@ -1,0 +1,375 @@
+{
+  "grid": 24,
+  "stroke": 1.75,
+  "icons": [
+    {
+      "key": "state.positive",
+      "mono": "mono/pico-state-positive.svg",
+      "duotone": "duotone/pico-state-positive.svg",
+      "aria": {
+        "id": "Kasus positif",
+        "en": "Positive cases"
+      }
+    },
+    {
+      "key": "state.recovered",
+      "mono": "mono/pico-state-recovered.svg",
+      "duotone": "duotone/pico-state-recovered.svg",
+      "aria": {
+        "id": "Sembuh",
+        "en": "Recovered"
+      }
+    },
+    {
+      "key": "state.deceased",
+      "mono": "mono/pico-state-deceased.svg",
+      "duotone": "duotone/pico-state-deceased.svg",
+      "aria": {
+        "id": "Meninggal",
+        "en": "Deceased"
+      }
+    },
+    {
+      "key": "state.active",
+      "mono": "mono/pico-state-active.svg",
+      "duotone": "duotone/pico-state-active.svg",
+      "aria": {
+        "id": "Dirawat (kasus aktif)",
+        "en": "Active cases"
+      }
+    },
+    {
+      "key": "metric.rt",
+      "mono": "mono/pico-metric-rt.svg",
+      "duotone": "duotone/pico-metric-rt.svg",
+      "aria": {
+        "id": "Angka reproduksi (Rt)",
+        "en": "Reproduction number (Rt)"
+      }
+    },
+    {
+      "key": "test.pcr",
+      "mono": "mono/pico-test-pcr.svg",
+      "duotone": "duotone/pico-test-pcr.svg",
+      "aria": {
+        "id": "Tes PCR",
+        "en": "PCR test"
+      }
+    },
+    {
+      "key": "test.rapid",
+      "mono": "mono/pico-test-rapid.svg",
+      "duotone": "duotone/pico-test-rapid.svg",
+      "aria": {
+        "id": "Tes cepat (rapid)",
+        "en": "Rapid test"
+      }
+    },
+    {
+      "key": "vaccine",
+      "mono": "mono/pico-vaccine.svg",
+      "duotone": "duotone/pico-vaccine.svg",
+      "aria": {
+        "id": "Vaksinasi",
+        "en": "Vaccination"
+      }
+    },
+    {
+      "key": "facility.hospital",
+      "mono": "mono/pico-facility-hospital.svg",
+      "duotone": "duotone/pico-facility-hospital.svg",
+      "aria": {
+        "id": "Rumah sakit",
+        "en": "Hospital"
+      }
+    },
+    {
+      "key": "facility.bed",
+      "mono": "mono/pico-facility-bed.svg",
+      "duotone": "duotone/pico-facility-bed.svg",
+      "aria": {
+        "id": "Tempat tidur rumah sakit",
+        "en": "Hospital bed"
+      }
+    },
+    {
+      "key": "task-force",
+      "mono": "mono/pico-task-force.svg",
+      "duotone": "duotone/pico-task-force.svg",
+      "aria": {
+        "id": "Satuan tugas",
+        "en": "Task force"
+      }
+    },
+    {
+      "key": "donation",
+      "mono": "mono/pico-donation.svg",
+      "duotone": "duotone/pico-donation.svg",
+      "aria": {
+        "id": "Donasi",
+        "en": "Donation"
+      }
+    },
+    {
+      "key": "telemedicine",
+      "mono": "mono/pico-telemedicine.svg",
+      "duotone": "duotone/pico-telemedicine.svg",
+      "aria": {
+        "id": "Telemedisin",
+        "en": "Telemedicine"
+      }
+    },
+    {
+      "key": "isoman",
+      "mono": "mono/pico-isoman.svg",
+      "duotone": "duotone/pico-isoman.svg",
+      "aria": {
+        "id": "Isolasi mandiri",
+        "en": "Self-isolation at home"
+      }
+    },
+    {
+      "key": "map",
+      "mono": "mono/pico-map.svg",
+      "duotone": "duotone/pico-map.svg",
+      "aria": {
+        "id": "Peta",
+        "en": "Map"
+      }
+    },
+    {
+      "key": "infographic",
+      "mono": "mono/pico-infographic.svg",
+      "duotone": "duotone/pico-infographic.svg",
+      "aria": {
+        "id": "Infografik",
+        "en": "Infographic"
+      }
+    },
+    {
+      "key": "symptoms",
+      "mono": "mono/pico-symptoms.svg",
+      "duotone": "duotone/pico-symptoms.svg",
+      "aria": {
+        "id": "Gejala",
+        "en": "Symptoms"
+      }
+    },
+    {
+      "key": "prevention.mask",
+      "mono": "mono/pico-prevention-mask.svg",
+      "duotone": "duotone/pico-prevention-mask.svg",
+      "aria": {
+        "id": "Pakai masker",
+        "en": "Wear a mask"
+      }
+    },
+    {
+      "key": "prevention.handwash",
+      "mono": "mono/pico-prevention-handwash.svg",
+      "duotone": "duotone/pico-prevention-handwash.svg",
+      "aria": {
+        "id": "Cuci tangan",
+        "en": "Wash hands"
+      }
+    },
+    {
+      "key": "prevention.distancing",
+      "mono": "mono/pico-prevention-distancing.svg",
+      "duotone": "duotone/pico-prevention-distancing.svg",
+      "aria": {
+        "id": "Jaga jarak",
+        "en": "Keep your distance"
+      }
+    },
+    {
+      "key": "action.download",
+      "mono": "mono/pico-action-download.svg",
+      "duotone": "duotone/pico-action-download.svg",
+      "aria": {
+        "id": "Unduh",
+        "en": "Download"
+      }
+    },
+    {
+      "key": "action.export",
+      "mono": "mono/pico-action-export.svg",
+      "duotone": "duotone/pico-action-export.svg",
+      "aria": {
+        "id": "Ekspor data",
+        "en": "Export data"
+      }
+    },
+    {
+      "key": "action.share",
+      "mono": "mono/pico-action-share.svg",
+      "duotone": "duotone/pico-action-share.svg",
+      "aria": {
+        "id": "Bagikan",
+        "en": "Share"
+      }
+    },
+    {
+      "key": "calendar.range",
+      "mono": "mono/pico-calendar-range.svg",
+      "duotone": "duotone/pico-calendar-range.svg",
+      "aria": {
+        "id": "Rentang tanggal",
+        "en": "Date range"
+      }
+    },
+    {
+      "key": "level.kabupaten",
+      "mono": "mono/pico-level-kabupaten.svg",
+      "duotone": "duotone/pico-level-kabupaten.svg",
+      "aria": {
+        "id": "Tingkat kabupaten/kota",
+        "en": "Regency/city level"
+      }
+    },
+    {
+      "key": "level.province",
+      "mono": "mono/pico-level-province.svg",
+      "duotone": "duotone/pico-level-province.svg",
+      "aria": {
+        "id": "Tingkat provinsi",
+        "en": "Province level"
+      }
+    },
+    {
+      "key": "level.national",
+      "mono": "mono/pico-level-national.svg",
+      "duotone": "duotone/pico-level-national.svg",
+      "aria": {
+        "id": "Tingkat nasional",
+        "en": "National level"
+      }
+    },
+    {
+      "key": "info",
+      "mono": "mono/pico-info.svg",
+      "duotone": "duotone/pico-info.svg",
+      "aria": {
+        "id": "Informasi",
+        "en": "Information"
+      }
+    },
+    {
+      "key": "contact.phone",
+      "mono": "mono/pico-contact-phone.svg",
+      "duotone": "duotone/pico-contact-phone.svg",
+      "aria": {
+        "id": "Telepon",
+        "en": "Phone"
+      }
+    },
+    {
+      "key": "contact.whatsapp",
+      "mono": "mono/pico-contact-whatsapp.svg",
+      "duotone": "duotone/pico-contact-whatsapp.svg",
+      "aria": {
+        "id": "WhatsApp",
+        "en": "WhatsApp"
+      }
+    },
+    {
+      "key": "contact.email",
+      "mono": "mono/pico-contact-email.svg",
+      "duotone": "duotone/pico-contact-email.svg",
+      "aria": {
+        "id": "Email",
+        "en": "Email"
+      }
+    },
+    {
+      "key": "contact.telegram",
+      "mono": "mono/pico-contact-telegram.svg",
+      "duotone": "duotone/pico-contact-telegram.svg",
+      "aria": {
+        "id": "Telegram",
+        "en": "Telegram"
+      }
+    },
+    {
+      "key": "contact.web",
+      "mono": "mono/pico-contact-web.svg",
+      "duotone": "duotone/pico-contact-web.svg",
+      "aria": {
+        "id": "Situs web",
+        "en": "Website"
+      }
+    },
+    {
+      "key": "action.copy",
+      "mono": "mono/pico-action-copy.svg",
+      "duotone": "duotone/pico-action-copy.svg",
+      "aria": {
+        "id": "Salin",
+        "en": "Copy"
+      }
+    },
+    {
+      "key": "action.open-external",
+      "mono": "mono/pico-action-open-external.svg",
+      "duotone": "duotone/pico-action-open-external.svg",
+      "aria": {
+        "id": "Buka di luar aplikasi",
+        "en": "Open externally"
+      }
+    },
+    {
+      "key": "nav.home",
+      "mono": "mono/pico-nav-home.svg",
+      "duotone": "duotone/pico-nav-home.svg",
+      "aria": {
+        "id": "Beranda",
+        "en": "Home"
+      }
+    },
+    {
+      "key": "nav.stats",
+      "mono": "mono/pico-nav-stats.svg",
+      "duotone": "duotone/pico-nav-stats.svg",
+      "aria": {
+        "id": "Statistik",
+        "en": "Statistics"
+      }
+    },
+    {
+      "key": "nav.services",
+      "mono": "mono/pico-nav-services.svg",
+      "duotone": "duotone/pico-nav-services.svg",
+      "aria": {
+        "id": "Layanan",
+        "en": "Services"
+      }
+    },
+    {
+      "key": "nav.info",
+      "mono": "mono/pico-nav-info.svg",
+      "duotone": "duotone/pico-nav-info.svg",
+      "aria": {
+        "id": "Info",
+        "en": "Info"
+      }
+    },
+    {
+      "key": "settings",
+      "mono": "mono/pico-settings.svg",
+      "duotone": "duotone/pico-settings.svg",
+      "aria": {
+        "id": "Pengaturan",
+        "en": "Settings"
+      }
+    },
+    {
+      "key": "notification",
+      "mono": "mono/pico-notification.svg",
+      "duotone": "duotone/pico-notification.svg",
+      "aria": {
+        "id": "Notifikasi",
+        "en": "Notifications"
+      }
+    }
+  ]
+}

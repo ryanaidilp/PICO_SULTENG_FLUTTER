@@ -35,6 +35,13 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/mono/
+    - assets/icons/duotone/
+    - assets/illustrations/
+    - assets/lottie/
+    - assets/lottie/static/
+    - assets/patterns/
   # Brand fonts (DESIGN.md), variable files. Never fetched at runtime.
   fonts:
     - family: Archivo
