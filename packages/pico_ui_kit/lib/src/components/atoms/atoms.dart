@@ -1,5 +1,6 @@
 export 'animations/animations.dart';
 export 'assets/assets.dart';
+export 'brand/brand.dart';
 export 'buttons/buttons.dart';
 export 'cards/cards.dart';
 export 'display/display.dart';

@@ -6,7 +6,7 @@ import '../../helpers/golden_test_helpers.dart';
 
 /// Theme sample page: type scale, buttons, segmented control, nav bar.
 class _SamplePage extends StatelessWidget {
-  const _SamplePage();
+  const new();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,6 @@ class _SamplePage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: 0,
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Beranda'),
           NavigationDestination(

@@ -5,7 +5,7 @@ import 'package:pico_ui_kit/pico_ui_kit.dart';
 import '../../helpers/golden_test_helpers.dart';
 
 /// Test font family that uses locally loaded fonts.
-const _testFontFamily = PicoFontFamily(headingFontFamily: 'Archivo');
+const _testFontFamily = PicoFontFamily();
 
 /// Font family constant for test widget labels.
 const _labelFontFamily = 'SourceSans3';
