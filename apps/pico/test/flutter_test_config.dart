@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Global test configuration.
 ///
@@ -13,9 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  // The app theme loads Google Fonts; a runtime fetch hangs offline
-  // (pumpAndSettle times out), so tests fall back to the test font instead.
-  GoogleFonts.config.allowRuntimeFetching = false;
 
   await testMain();
 }

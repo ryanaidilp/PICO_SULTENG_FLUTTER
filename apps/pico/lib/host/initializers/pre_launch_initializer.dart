@@ -13,8 +13,6 @@ import 'package:pico/router/app_router.dart';
 
 import 'dart:async';
 
-import 'package:pico_ui_kit/pico_ui_kit.dart';
-
 // archipelago:pre_launch_imports:start
 // archipelago:pre_launch_imports:end
 
@@ -124,7 +122,6 @@ class PreLaunchInitializer._(final List<Initializer> _initializers)
         // archipelago:pre_launch_initializers:start
         // archipelago:pre_launch_initializers:end
         ...additional,
-        _FontPreloadInitializer(),
       ]);
 
   static const String _tag = 'PreLaunchInitializer';
@@ -328,38 +325,4 @@ class PreLaunchInitializer._(final List<Initializer> _initializers)
     _logger.consoleLazy(() => '[$_tag] disposed');
     return true;
   }
-}
-
-/// Starts warming the UI kit's Google Fonts as early as pre-launch, without
-/// blocking it.
-///
-/// `google_fonts` fetches these over the network and caches them after --
-/// this must never block or fail pre-launch, so the fetch is
-/// fire-and-forget: a failure (offline, DNS, timeout) is logged and
-/// swallowed. Text already on screen using these families simply reflows
-/// once the fetch resolves, same as any other deferred font load.
-class _FontPreloadInitializer() extends Initializer {
-  @override
-  bool get canRunInParallel => true;
-
-  @override
-  Future<InitializerResult> initialize() async {
-    unawaited(
-      PicoFontInitializer.initialize().catchError((
-        Object error,
-        StackTrace stackTrace,
-      ) {
-        getIt<Log>().consoleLazy(
-          () =>
-              '[_FontPreloadInitializer] font fetch failed: '
-              '$error\n$stackTrace',
-          type: LogType.warning,
-        );
-      }),
-    );
-    return const InitializerResult.success();
-  }
-
-  @override
-  Future<bool> dispose() async => true;
 }
