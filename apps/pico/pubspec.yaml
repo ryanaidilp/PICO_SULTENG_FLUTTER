@@ -1,6 +1,6 @@
 name: pico
 description: "The main host app for the Pico workspace."
-version: 0.1.0
+version: 8.0.0+14
 publish_to: "none"
 
 environment:
