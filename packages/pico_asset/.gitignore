@@ -1,0 +1,3 @@
+lib/src/generated/
+.dart_tool/
+build/

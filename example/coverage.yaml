@@ -1,0 +1,8 @@
+# Coverage Manager Configuration
+# Thresholds and exclusions for test coverage enforcement.
+
+threshold: 80
+exclude:
+  - "**/*.g.dart"
+  - "**/*.freezed.dart"
+  - "**/generated/**"

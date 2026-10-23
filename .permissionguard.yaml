@@ -1,0 +1,17 @@
+# permission_guard configuration
+# Run locally: dart run monorepo_toolkit permission-guard android --apk <path>
+#              dart run monorepo_toolkit permission-guard ios --ipa <path>
+#
+# Diffs the OS permissions actually declared in a built APK/IPA against the
+# committed baseline below, so a permission added transitively by a plugin
+# shows up as a reviewed diff on the build that introduced it, instead of
+# being discovered at store review.
+
+# Fail the check when a new (not-yet-baselined) permission is detected.
+fail_on_new: true
+
+# Only warn (don't fail) when a previously-baselined permission is removed.
+warn_on_removed: false
+
+android_baseline_path: permission_baseline/android.txt
+ios_baseline_path: permission_baseline/ios.txt

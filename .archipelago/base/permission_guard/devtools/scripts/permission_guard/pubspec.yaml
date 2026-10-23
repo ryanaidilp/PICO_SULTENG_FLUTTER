@@ -1,0 +1,20 @@
+name: permission_guard
+description: Extracts and diffs permissions from compiled APK and IPA artifacts.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+dependencies:
+  args: ^2.7.0
+  path: ^1.9.1
+  shared_scripts:
+    path: ../shared_scripts
+  xml: ^7.0.1
+  yaml: ^3.1.3
+
+dev_dependencies:
+  test: ^1.31.0
+
+resolution: workspace

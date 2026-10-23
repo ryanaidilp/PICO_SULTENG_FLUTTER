@@ -1,0 +1,22 @@
+analyzer:
+  exclude:
+    - android/**
+    - ios/**
+include: ../../analysis_options.yaml
+
+linter:
+  rules:
+    # Disabled for the host app package only — every other package in the
+    # workspace keeps `directives_ordering`.
+    #
+    # The host app's own package name is a user-chosen template variable, so
+    # `package:pico/...` sorts BEFORE some of the fixed
+    # third-party imports in these templates for some app names and AFTER them
+    # for others. No single static import order in the generated files can
+    # satisfy `directives_ordering` for every project name, and a per-file
+    # `// ignore_for_file: directives_ordering` is not a workaround either — it
+    # flips to an `unnecessary_ignore` info for exactly the names where the
+    # lint happens not to fire. Turning the rule off for this one package is
+    # the only app-name-independent option, and keeps `flutter analyze` clean
+    # on a freshly generated app regardless of what the app is called.
+    directives_ordering: false

@@ -1,0 +1,33 @@
+targets:
+  $default:
+    # `sources:` is customized here (Archipelago-r3mx) to explicitly track
+    # `.env` as a build input, so declare the conventional defaults it would
+    # otherwise silently drop for this package (`lib/**`, `$package$`) —
+    # verified empirically: omitting `$package$` produces a build_runner
+    # warning ("does not include some required sources: $package$"). If a
+    # `test/` directory is ever added to this package, add `test/**` too.
+    sources:
+      - lib/**
+      - $package$
+      # envied_generator reads `.env` via raw `dart:io` File I/O, bypassing
+      # build_runner's asset tracking, BECAUSE `.env` is a dotfile
+      # (build_runner treats it as a "hidden path" and never puts it in the
+      # asset graph by default — see envied_generator's `_hasHiddenPathSegment`
+      # check). Declaring it here as an explicit source makes build_runner
+      # aware of it, so `buildStep.readAsString('.env')` inside the builder
+      # registers as a real dependency of env.g.dart's output. Without this,
+      # build_runner has no way to know env.g.dart depends on `.env` at all:
+      # editing `.env` (e.g. fixing a value envied rejected) does not
+      # invalidate the cached build, and the SAME failure replays forever
+      # until `.dart_tool/build` is deleted by hand. Verified empirically
+      # (template_base/shared/app_config): with `.env` declared as a source,
+      # changing a value and re-running `dart run build_runner build` with
+      # no other changes now regenerates `env.g.dart` (envied_generator goes
+      # from "1 skipped" to "1 output"); without it, the exact same edit is
+      # silently skipped forever.
+      - .env
+    builders:
+      envied_generator:envied:
+        generate_for:
+          include:
+            - lib/src/env/**.dart

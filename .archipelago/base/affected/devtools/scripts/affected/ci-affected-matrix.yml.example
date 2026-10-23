@@ -1,0 +1,86 @@
+# Example: GitHub Actions workflow using affected with package-level matrix + within-package sharding.
+#
+# Usage:
+#   1. Copy to .github/workflows/ci.yml in your generated project.
+#   2. Adjust TOTAL_SHARDS to match your runner budget.
+#
+# How it works:
+#   detect   — runs `affected list --json` to produce a dynamic matrix of changed packages
+#   test     — fans out one runner per package (parallel), each running a shard of tests
+#   finalize — reports overall result
+
+name: CI (Affected)
+
+on:
+  pull_request:
+  push:
+    branches: [main, develop]
+
+env:
+  TOTAL_SHARDS: 4  # Increase for larger test suites
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: $
+      any: $
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Get affected packages
+        id: list
+        run: |
+          PACKAGES=$(dart run devtools/scripts/affected list --json --base origin/main)
+          echo "matrix=$PACKAGES" >> "$GITHUB_OUTPUT"
+          if [ "$PACKAGES" = "[]" ] || [ -z "$PACKAGES" ]; then
+            echo "any=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "any=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  test:
+    needs: detect
+    if: needs.detect.outputs.any == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: $
+        shard: [0, 1, 2, 3]  # Must match TOTAL_SHARDS - 1
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: $
+
+      - name: Run tests (shard $/$)
+        run: |
+          dart run devtools/scripts/affected test \
+            --base origin/main \
+            --shard-index $ \
+            --total-shards $
+
+  finalize:
+    needs: [detect, test]
+    if: always() && needs.detect.outputs.any == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check result
+        run: |
+          if [ "$" != "success" ]; then
+            echo "One or more test shards failed."
+            exit 1
+          fi
+          echo "All shards passed."

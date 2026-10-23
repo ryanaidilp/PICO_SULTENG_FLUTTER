@@ -1,0 +1,42 @@
+name: dependencies
+description: "A centralized package that exports commonly used external dependencies for Pico."
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+
+dependencies:
+  # Routing
+  auto_route: ^11.1.0
+
+  # Equality, dependency injection, annotations (Flutter-free)
+  dependencies_core:
+    path: ../dependencies_core
+
+  # HTTP client
+  dio: ^5.11.0
+
+  # Flutter SDK
+  flutter:
+    sdk: flutter
+
+
+  # State Management - BLoC/Cubit
+  flutter_bloc: ^9.1.1
+
+
+
+
+
+  # Localization
+  slang: ^4.18.0
+  slang_flutter: ^4.18.0
+
+dev_dependencies:
+
+  lints: ^6.1.0
+

@@ -1,0 +1,7 @@
+git_url(ENV['MATCH_GIT_URL'])
+storage_mode("git")
+app_identifier(ENV['APP_IDENTIFIER'] || "com.banuacoders.pico.app")
+readonly(is_ci)
+force_for_new_devices(true)
+username(ENV['APPLE_ID'])
+type("adhoc")

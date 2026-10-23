@@ -1,0 +1,20 @@
+{
+  "brick": "size_guard",
+  "version": "1.0.9",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/size_guard"
+  ],
+  "files": {
+    "devtools/scripts/size_guard/lib/size_guard.dart": "5ca62582",
+    "devtools/scripts/size_guard/lib/src/commands/check_command.dart": "19a828fb",
+    "devtools/scripts/size_guard/lib/src/commands/size_guard_command.dart": "1d175ea",
+    "devtools/scripts/size_guard/lib/src/models/size_guard_config.dart": "44e423fe",
+    "devtools/scripts/size_guard/lib/src/services/size_guard_service.dart": "1734b9a0",
+    "devtools/scripts/size_guard/lib/src/size_guard_command.dart": "f9b0e155",
+    "devtools/scripts/size_guard/pubspec.yaml": "5f4c1d91"
+  }
+}

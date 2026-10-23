@@ -1,0 +1,12 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+// ─── Size optimization (Release only) ──────────────────────
+SWIFT_OPTIMIZATION_LEVEL = -Osize
+DEAD_CODE_STRIPPING = YES
+STRIP_INSTALLED_PRODUCT = YES
+STRIP_SWIFT_SYMBOLS = YES
+DEPLOYMENT_POSTPROCESSING = YES
+ENABLE_BITCODE = NO
+EXCLUDED_ARCHS[sdk=iphoneos*] = armv7
+EXCLUDED_ARCHS[sdk=iphonesimulator*] = i386

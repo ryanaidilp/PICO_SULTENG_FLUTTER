@@ -1,0 +1,33 @@
+{
+  "brick": "app_lints",
+  "version": "1.3.5",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true,
+    "prefix": "Pico"
+  },
+  "dirs": [
+    "utilities/app_lints"
+  ],
+  "files": {
+    "utilities/app_lints/analysis_options.yaml": "3b2c6957",
+    "utilities/app_lints/lib/app_lints.dart": "7b494264",
+    "utilities/app_lints/lib/main.dart": "4c58fe4e",
+    "utilities/app_lints/lib/src/pii/pii_key_matcher.dart": "722a5013",
+    "utilities/app_lints/lib/src/pii/pii_telemetry_scanner.dart": "705a3044",
+    "utilities/app_lints/lib/src/rules/api_no_external_deps_rule.dart": "77f2a9c",
+    "utilities/app_lints/lib/src/rules/di_types.dart": "bda237ca",
+    "utilities/app_lints/lib/src/rules/feature_global_module_allowlist_rule.dart": "18c1ea16",
+    "utilities/app_lints/lib/src/rules/no_impl_cross_import_rule.dart": "bde6dd81",
+    "utilities/app_lints/lib/src/rules/no_pii_in_telemetry_rule.dart": "a02dff76",
+    "utilities/app_lints/lib/src/rules/no_service_locator_in_manifest_rule.dart": "6ebfc09d",
+    "utilities/app_lints/lib/src/rules/no_service_locator_outside_di_rule.dart": "c1125433",
+    "utilities/app_lints/lib/src/rules/no_upward_dependency_rule.dart": "c067dd3b",
+    "utilities/app_lints/lib/src/rules/workspace_layer.dart": "cfc46b48",
+    "utilities/app_lints/pubspec.yaml": "173dad59",
+    "utilities/app_lints/test/dart_sdk_path.dart": "6f8a415c",
+    "utilities/app_lints/test/di_rules_test.dart": "4ca6ef1a",
+    "utilities/app_lints/test/layer_rules_test.dart": "2a341e7d",
+    "utilities/app_lints/test/no_pii_in_telemetry_rule_test.dart": "495586ec"
+  }
+}

@@ -1,0 +1,55 @@
+[
+  {
+    "name": "alphabetical fallback",
+    "packages": [
+      {"name": "zeta", "modules": [{"class": "Z"}]},
+      {"name": "alpha", "modules": [{"class": "A"}]}
+    ],
+    "order": ["alpha::A", "zeta::Z"]
+  },
+  {
+    "name": "depends_on chain overrides alphabetical",
+    "packages": [
+      {"name": "a", "modules": [{"class": "A", "depends_on": ["z"]}]},
+      {"name": "z", "modules": [{"class": "Z"}]}
+    ],
+    "order": ["z::Z", "a::A"]
+  },
+  {
+    "name": "intra-package order is kept",
+    "packages": [
+      {"name": "p", "modules": [{"class": "Second"}, {"class": "First"}]}
+    ],
+    "order": ["p::Second", "p::First"]
+  },
+  {
+    "name": "cycle",
+    "packages": [
+      {"name": "a", "modules": [{"class": "A", "depends_on": ["b"]}]},
+      {"name": "b", "modules": [{"class": "B", "depends_on": ["a"]}]}
+    ],
+    "error": "cycle"
+  },
+  {
+    "name": "unknown dependency",
+    "packages": [
+      {"name": "a", "modules": [{"class": "A", "depends_on": ["ghost"]}]}
+    ],
+    "error": "unknown"
+  },
+  {
+    "name": "same class twice in one package",
+    "packages": [
+      {"name": "a", "modules": [{"class": "A"}, {"class": "A"}]}
+    ],
+    "error": "duplicate"
+  },
+  {
+    "name": "same class in two packages",
+    "packages": [
+      {"name": "impl", "modules": [{"class": "M"}]},
+      {"name": "noop", "modules": [{"class": "M"}]}
+    ],
+    "error": "cross_duplicate"
+  }
+]

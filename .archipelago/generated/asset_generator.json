@@ -1,0 +1,23 @@
+{
+  "brick": "asset_generator",
+  "version": "1.2.6",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/asset_generator"
+  ],
+  "files": {
+    "devtools/scripts/asset_generator/example/asset_generator.yaml": "385b7ade",
+    "devtools/scripts/asset_generator/lib/asset_generator.dart": "370936b0",
+    "devtools/scripts/asset_generator/lib/src/commands/asset_gen_command.dart": "3331e0fb",
+    "devtools/scripts/asset_generator/lib/src/commands/generate_command.dart": "4113eb3c",
+    "devtools/scripts/asset_generator/lib/src/models/asset_generator_config.dart": "c3429cb",
+    "devtools/scripts/asset_generator/lib/src/models/discovered_asset.dart": "439c3d63",
+    "devtools/scripts/asset_generator/lib/src/services/asset_scanner_service.dart": "f1566ce7",
+    "devtools/scripts/asset_generator/pubspec.yaml": "10d7ad0",
+    "devtools/scripts/asset_generator/test/asset_scanner_service_test.dart": "a5998d36",
+    "devtools/scripts/asset_generator/test/fixtures/pulse.lottie": "7a1332d6"
+  }
+}

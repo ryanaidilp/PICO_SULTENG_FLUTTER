@@ -1,0 +1,11 @@
+{
+  "name": "Brand",
+  "slots": {
+    "brand.primary": { "light": "#6366F1", "dark": "#818CF8" },
+    "brand.deep": { "light": "#312E81", "dark": "#C7D2FE" },
+    "brand.accent": { "light": "#F59E0B", "dark": "#FBBF24" },
+    "surface": { "light": "#EEF2FF", "dark": "#1E1B4B" },
+    "ink": { "light": "#0F172A", "dark": "#F8FAFC" }
+  },
+  "backgrounds": { "light": "#FFFFFF", "dark": "#0B0C0E" }
+}

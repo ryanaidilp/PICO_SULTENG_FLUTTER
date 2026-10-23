@@ -1,0 +1,38 @@
+{
+  "brick": "shared_dependencies",
+  "version": "1.0.12",
+  "vars": {
+    "appName": "Pico",
+    "stateManagement": "bloc",
+    "isForMonorepo": true,
+    "isBloc": true,
+    "isCubit": false,
+    "usesBloc": true,
+    "isProvider": false,
+    "isRiverpod": false,
+    "hasStateManagement": true
+  },
+  "dirs": [
+    "shared/dependencies",
+    "shared/dependencies_core"
+  ],
+  "files": {
+    "shared/dependencies/analysis_options.yaml": "3b2c6957",
+    "shared/dependencies/lib/auto_route.dart": "a983dd06",
+    "shared/dependencies/lib/dependencies.dart": "35f355ac",
+    "shared/dependencies/lib/di.dart": "44965f15",
+    "shared/dependencies/lib/equality.dart": "d15ffb20",
+    "shared/dependencies/lib/l10n.dart": "8deaa56b",
+    "shared/dependencies/lib/meta.dart": "effd9817",
+    "shared/dependencies/lib/network.dart": "f03ecceb",
+    "shared/dependencies/lib/state.dart": "fa8bc9de",
+    "shared/dependencies/pubspec.yaml": "dd8ace68",
+    "shared/dependencies_core/analysis_options.yaml": "3b2c6957",
+    "shared/dependencies_core/lib/bloc.dart": "7a9031ea",
+    "shared/dependencies_core/lib/dependencies_core.dart": "1ddea255",
+    "shared/dependencies_core/lib/di.dart": "c8cb040f",
+    "shared/dependencies_core/lib/equality.dart": "9fcab32f",
+    "shared/dependencies_core/lib/meta.dart": "7a2eb4f1",
+    "shared/dependencies_core/pubspec.yaml": "67869aaa"
+  }
+}

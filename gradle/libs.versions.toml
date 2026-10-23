@@ -1,0 +1,20 @@
+# Single source of truth for Android/Kotlin toolchain versions shared across
+# every native plugin package's android/build.gradle in this workspace (and
+# the Java version shared with apps/pico/android/app/build.gradle.kts).
+#
+# Not wired up via Gradle's native version-catalog mechanism
+# (dependencyResolutionManagement.versionCatalogs): each native plugin
+# package (features/**/android, infrastructure/**/android) is its own
+# standalone Gradle project, only ever pulled into the app's build graph
+# dynamically by Flutter's own tooling at build time — none of them are
+# declared as subprojects of one root settings.gradle.kts, which is what
+# Gradle's native catalog wiring requires. Every consumer instead parses this
+# file directly (see the loader block at the top of each build.gradle /
+# build.gradle.kts) so the *values* stay centralized even though the
+# read-the-file plumbing has to be duplicated per project.
+[versions]
+agp = "9.1.0"
+kotlin = "2.4.0"
+compileSdk = "36"
+minSdk = "24"
+javaVersion = "17"

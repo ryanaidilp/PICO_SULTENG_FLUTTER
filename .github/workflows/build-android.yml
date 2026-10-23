@@ -1,0 +1,147 @@
+name: Build Android
+
+on:
+  workflow_call:
+    inputs:
+      flavor:
+        required: true
+        type: string
+        description: "Build flavor (development, staging, production)"
+      track:
+        required: false
+        type: string
+        default: ""
+        description: "Play Store track (internal, alpha, beta, production). If empty, distributes to Firebase."
+      build_number:
+        required: false
+        type: string
+        default: ""
+        description: "Build number override. Defaults to git commit count."
+    secrets:
+      FIREBASE_ANDROID_APP_ID:
+        required: false
+      GOOGLE_PLAY_JSON_KEY_BASE64:
+        required: false
+      SLACK_WEBHOOK_URL:
+        required: false
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/pico
+    env:
+      FLAVOR: ${{ inputs.flavor }}
+      TRACK: ${{ inputs.track }}
+      BUILD_NUM: ${{ inputs.build_number }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      # Android Gradle plugins such as MoEngage's need JDK 19+;
+      # ubuntu-latest defaults to JDK 17.
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+          working-directory: apps/pico
+
+      - name: Install dependencies
+        run: |
+          cd ../..
+          dart pub get
+
+      - name: Melos bootstrap
+        run: |
+          cd ../..
+          dart pub global activate melos
+          melos bootstrap
+
+      - name: Initialize and switch env config
+        run: |
+          cd ../..
+          melos run env:init
+          melos run env:switch -- "$FLAVOR"
+
+      # *.g.dart/*.config.dart/*.gr.dart are gitignored (see .gitignore), so
+      # a fresh CI checkout has none of them — without this step every build
+      # below fails immediately on missing generated sources
+      # (Archipelago-9n5c). Must run after the env steps above: app_config's
+      # envied codegen (part of build:select) hard-fails on a missing/empty
+      # .env (Archipelago-r3mx).
+      - name: Generate code (build_runner)
+        run: |
+          cd ../..
+          melos run build
+
+      # Separate generator from build_runner: <app>_asset's `lib/src/generated/`
+      # (icon/animation/logo constants) is also gitignored, and is produced by
+      # this bespoke codegen command, not build_runner — `melos run build`
+      # above does not cover it. Without this step `flutter build` fails with
+      # "No such file or directory" on the asset package's generated barrel
+      # (Archipelago-lagb).
+      - name: Generate code (assets)
+        run: |
+          cd ../..
+          melos run asset-gen:generate
+
+      - name: Decode Play Store key
+        if: inputs.track != ''
+        run: echo "$PLAY_KEY" | base64 --decode > fastlane/play-store-key.json
+        env:
+          PLAY_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY_BASE64 }}
+
+      - name: Distribute to Firebase
+        if: inputs.track == ''
+        run: bundle exec fastlane android distribute_firebase flavor:"$FLAVOR" build_number:"$BUILD_NUM"
+        env:
+          FIREBASE_ANDROID_APP_ID_DEVELOPMENT: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+          FIREBASE_ANDROID_APP_ID_STAGING: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+          FIREBASE_ANDROID_APP_ID_PRODUCTION: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Deploy to Play Store
+        if: inputs.track != ''
+        run: bundle exec fastlane android deploy_play_store flavor:"$FLAVOR" track:"$TRACK" build_number:"$BUILD_NUM"
+        env:
+          GOOGLE_PLAY_JSON_KEY: fastlane/play-store-key.json
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # Fails a production-flavor build that still resolves a debug-only
+      # package (ADR-035; internal flavors skip that part), and any release
+      # build that still resolves Marionette (debug_build_only). The Fastfile
+      # runs the same check; this step also covers a customised Fastfile.
+      - name: Check debug tooling leak
+        run: |
+          cd ../..
+          dart run monorepo_toolkit build-prepare --check-leaks --flavor "$FLAVOR" --mode release
+
+      - name: Upload APK artifact
+        if: inputs.track == ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-${{ inputs.flavor }}-apk
+          path: apps/pico/build/app/outputs/flutter-apk/app-${{ inputs.flavor }}-release.apk
+          retention-days: 7
+
+      - name: Upload AAB artifact
+        if: inputs.track != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-${{ inputs.flavor }}-aab
+          path: apps/pico/build/app/outputs/bundle/${{ inputs.flavor }}Release/app-${{ inputs.flavor }}-release.aab
+          retention-days: 7

@@ -1,0 +1,23 @@
+name: host_registry_generator
+description: >-
+  Generates the DI module import/registration lists in an app's injector.dart
+  from `archipelago:` manifests declared in each package's pubspec.yaml.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+
+dependencies:
+  args: ^2.7.0
+  meta: ^1.18.0
+  path: ^1.9.1
+  shared_scripts:
+    path: ../shared_scripts
+  yaml: ^3.1.3
+
+dev_dependencies:
+  test: ^1.31.0

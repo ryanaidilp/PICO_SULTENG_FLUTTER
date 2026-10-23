@@ -1,0 +1,24 @@
+name: feature_sdk
+description: Base SDK contract for all feature modules.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  dependencies:
+    path: ../dependencies
+  flutter:
+    sdk: flutter
+  identifiers:
+    path: ../identifiers
+  router_registry:
+    path: ../router_registry
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ">=10.3.0"

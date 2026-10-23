@@ -1,0 +1,24 @@
+{
+  "brick": "app_utilities",
+  "version": "1.0.7",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true,
+    "isUsingMoney": false
+  },
+  "dirs": [
+    "utilities/app_utilities"
+  ],
+  "files": {
+    "utilities/app_utilities/analysis_options.yaml": "3b2c6957",
+    "utilities/app_utilities/build.yaml": "9402b9e3",
+    "utilities/app_utilities/lib/app_utilities.dart": "3da7f65a",
+    "utilities/app_utilities/lib/src/di/injector.dart": "98fa8557",
+    "utilities/app_utilities/lib/src/di/third_party_module.dart": "e622b1a",
+    "utilities/app_utilities/lib/src/error/safe_crash_reporter.dart": "878e15f0",
+    "utilities/app_utilities/lib/src/log/filter/release_log_filter.dart": "35c4593f",
+    "utilities/app_utilities/lib/src/log/log.dart": "f8b4e348",
+    "utilities/app_utilities/lib/src/log/printer/simple_log_printer.dart": "b284f1d2",
+    "utilities/app_utilities/pubspec.yaml": "8ff2465f"
+  }
+}

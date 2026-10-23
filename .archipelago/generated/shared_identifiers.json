@@ -1,0 +1,18 @@
+{
+  "brick": "shared_identifiers",
+  "version": "0.1.6",
+  "vars": {},
+  "dirs": [
+    "shared/identifiers"
+  ],
+  "files": {
+    "shared/identifiers/analysis_options.yaml": "b84693a3",
+    "shared/identifiers/lib/identifiers.dart": "fbcc6f9",
+    "shared/identifiers/lib/src/page_config.dart": "b2fb9938",
+    "shared/identifiers/lib/src/page_identifier.dart": "14e343ff",
+    "shared/identifiers/lib/src/page_identifier_registry.dart": "7c68ad88",
+    "shared/identifiers/pubspec.yaml": "a190fa47",
+    "shared/identifiers/test/page_config_test.dart": "348a2f1b",
+    "shared/identifiers/test/page_identifier_registry_test.dart": "65ee1167"
+  }
+}

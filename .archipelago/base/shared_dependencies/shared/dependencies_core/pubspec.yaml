@@ -1,0 +1,22 @@
+name: dependencies_core
+description: "Flutter-free barrel of the common third-party packages (equatable, get_it, injectable, meta, bloc) for Pico. Pure-Dart packages and *_api contracts depend on this; Flutter packages depend on dependencies, which re-exports it."
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+
+dependencies:
+
+  bloc: ^9.2.1
+
+  equatable: ^2.1.0
+  get_it: ^9.2.1
+  injectable: ^3.0.0
+  meta: ^1.18.0
+
+dev_dependencies:
+  lints: ^6.1.0

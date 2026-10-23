@@ -1,0 +1,28 @@
+{
+  "brick": "shared_app_config",
+  "version": "1.2.6",
+  "vars": {
+    "appName": "Pico",
+    "analyticsVendors": [],
+    "featureFlagVendor": "none",
+    "isForMonorepo": true,
+    "useAppsFlyerAnalytics": false,
+    "useMixpanelAnalytics": false,
+    "useMoEngageAnalytics": false,
+    "useFlagr": false
+  },
+  "dirs": [
+    "shared/app_config"
+  ],
+  "shared": [
+    "shared/app_config/lib/src/env/app_env.dart",
+    "shared/app_config/lib/src/env/env.dart"
+  ],
+  "files": {
+    "shared/app_config/analysis_options.yaml": "3b2c6957",
+    "shared/app_config/build.yaml": "34f04cbd",
+    "shared/app_config/lib/app_config.dart": "40f70c76",
+    "shared/app_config/lib/src/flavor.dart": "f5cdd9ee",
+    "shared/app_config/pubspec.yaml": "1a01f21"
+  }
+}

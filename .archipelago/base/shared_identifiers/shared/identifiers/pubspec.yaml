@@ -1,0 +1,12 @@
+name: identifiers
+description: Typed page identifiers + registry for cross-feature deep-link routing, auth gating, and analytics.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+resolution: workspace
+
+dev_dependencies:
+  test: ^1.31.0
+  very_good_analysis: ">=10.3.0"

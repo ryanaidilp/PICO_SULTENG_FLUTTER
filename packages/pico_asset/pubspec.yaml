@@ -1,0 +1,37 @@
+name: pico_asset
+description: Type-safe asset package with icons, illustrations, animations, and logos.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+dependencies:
+  asset_core:
+    path: ../asset_core
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/icons/actions/
+    - assets/icons/arrows/
+    - assets/icons/communication/
+    - assets/icons/essentials/
+    - assets/icons/feedback/
+    - assets/icons/files/
+    - assets/icons/finance/
+    - assets/icons/maps/
+    - assets/icons/media/
+    - assets/icons/security/
+    - assets/icons/time/
+    - assets/icons/users/
+    - assets/animations/
+    - assets/logos/

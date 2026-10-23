@@ -1,0 +1,24 @@
+{
+  "brick": "permission_guard",
+  "version": "1.1.7",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/permission_guard"
+  ],
+  "files": {
+    "devtools/scripts/permission_guard/lib/permission_guard.dart": "7a0fcb5e",
+    "devtools/scripts/permission_guard/lib/src/commands/android_command.dart": "d462c830",
+    "devtools/scripts/permission_guard/lib/src/commands/ios_command.dart": "a9543360",
+    "devtools/scripts/permission_guard/lib/src/commands/permission_guard_command.dart": "b0f07373",
+    "devtools/scripts/permission_guard/lib/src/commands/update_baseline_command.dart": "393511c3",
+    "devtools/scripts/permission_guard/lib/src/models/permission_guard_config.dart": "79847257",
+    "devtools/scripts/permission_guard/lib/src/services/android_permission_service.dart": "bd772f55",
+    "devtools/scripts/permission_guard/lib/src/services/ios_permission_service.dart": "43257f44",
+    "devtools/scripts/permission_guard/lib/src/services/permission_guard_service.dart": "6936f44e",
+    "devtools/scripts/permission_guard/pubspec.yaml": "b015dc8f",
+    "devtools/scripts/permission_guard/test/permission_guard_service_test.dart": "d09a8213"
+  }
+}

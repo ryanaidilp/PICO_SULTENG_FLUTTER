@@ -1,0 +1,23 @@
+name: app_marionette
+description: Installs LeanCode's MarionetteBinding in debug builds so AI agents can drive the running app over MCP. Swapped to app_marionette_noop for every release and profile build via build_prepare.yaml debug_build_only.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+  logger: ^2.7.0
+  marionette_flutter: ^0.7.0
+
+dev_dependencies:
+  app_marionette_noop:
+    path: ../app_marionette_noop
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ">=10.3.0"

@@ -1,0 +1,161 @@
+# Refreshes the size and permission baselines that PR Checks compares
+# against. It builds an APK and an IPA, so it runs only by hand: after a
+# release, run it on develop (Actions > Update Baselines > Run workflow).
+# It commits the new baselines to the branch it runs on.
+name: Update Baselines
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: update-baselines
+  cancel-in-progress: false
+
+jobs:
+  update-android-baseline:
+    name: Update Android Baselines
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      # Android Gradle plugins such as MoEngage's need JDK 19+;
+      # ubuntu-latest defaults to JDK 17.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Install dependencies
+        run: dart pub get
+      - name: Melos bootstrap
+        run: |
+          dart pub global activate melos
+          melos bootstrap
+      - name: Initialize and switch env config
+        run: |
+          melos run env:init
+          melos run env:switch -- development
+      # *.g.dart/*.config.dart/*.gr.dart are gitignored, so a fresh CI
+      # checkout has none of them — without this step the build below fails
+      # immediately on missing generated sources (Archipelago-9n5c). Must run
+      # after the env steps above: app_config's envied codegen hard-fails on
+      # a missing/empty .env (Archipelago-r3mx).
+      - name: Generate code (build_runner)
+        run: melos run build
+      # Separate generator from build_runner: <app>_asset's `lib/src/generated/`
+      # (icon/animation/logo constants) is also gitignored, and is produced by
+      # this bespoke codegen command, not build_runner — the step above does
+      # not cover it. Without this step the build below fails with "No such
+      # file or directory" on the asset package's generated barrel
+      # (Archipelago-lagb).
+      - name: Generate code (assets)
+        run: melos run asset-gen:generate
+      - name: Build with analyze-size
+        run: |
+          flutter build apk \
+            --flavor development \
+            --target-platform android-arm64 \
+            --analyze-size \
+            --no-tree-shake-icons
+        working-directory: apps/pico
+      - name: Setup Android SDK tools
+        uses: android-actions/setup-android@v3
+      - name: Update size baseline
+        run: |
+          dart run monorepo_toolkit size-analyzer update-baseline \
+            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --output size_baseline/android.json
+        working-directory: devtools/monorepo_toolkit
+      - name: Update permission baseline
+        run: |
+          dart run monorepo_toolkit permission-guard update-baseline \
+            --platform android \
+            --artifact ../../apps/pico/build/app/outputs/flutter-apk/app-development-release.apk \
+            --output permission_baseline/android.txt
+        working-directory: devtools/monorepo_toolkit
+      # The Flutter-only baseline comes from the same APK build.
+      - name: Update flutter size baseline
+        run: |
+          dart run monorepo_toolkit size-analyzer update-baseline \
+            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --output size_baseline/flutter.json
+        working-directory: devtools/monorepo_toolkit
+      - name: Commit updated baselines
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add size_baseline/android.json size_baseline/flutter.json permission_baseline/android.txt
+          git diff --staged --quiet || git commit -m "chore: update android baselines [skip ci]"
+          # The iOS job pushes to the same branch.
+          git pull --rebase
+          git push
+
+  update-ios-baseline:
+    name: Update iOS Baselines
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Install dependencies
+        run: dart pub get
+      - name: Melos bootstrap
+        run: |
+          dart pub global activate melos
+          melos bootstrap
+      - name: Initialize and switch env config
+        run: |
+          melos run env:init
+          melos run env:switch -- development
+      # *.g.dart/*.config.dart/*.gr.dart are gitignored, so a fresh CI
+      # checkout has none of them — without this step the build below fails
+      # immediately on missing generated sources (Archipelago-9n5c). Must run
+      # after the env steps above: app_config's envied codegen hard-fails on
+      # a missing/empty .env (Archipelago-r3mx).
+      - name: Generate code (build_runner)
+        run: melos run build
+      # Separate generator from build_runner: <app>_asset's `lib/src/generated/`
+      # (icon/animation/logo constants) is also gitignored, and is produced by
+      # this bespoke codegen command, not build_runner — the step above does
+      # not cover it. Without this step the build below fails with "No such
+      # file or directory" on the asset package's generated barrel
+      # (Archipelago-lagb).
+      - name: Generate code (assets)
+        run: melos run asset-gen:generate
+      - name: Build with analyze-size
+        run: |
+          flutter build ipa \
+            --flavor development \
+            --analyze-size \
+            --no-codesign
+        working-directory: apps/pico
+      - name: Update size baseline
+        run: |
+          dart run monorepo_toolkit size-analyzer update-baseline \
+            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --output size_baseline/ios.json
+        working-directory: devtools/monorepo_toolkit
+      - name: Update permission baseline
+        run: |
+          dart run monorepo_toolkit permission-guard update-baseline \
+            --platform ios \
+            --artifact ../../apps/pico/build/ios/ipa/*.ipa \
+            --output permission_baseline/ios.txt
+        working-directory: devtools/monorepo_toolkit
+      - name: Commit updated baselines
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add size_baseline/ios.json permission_baseline/ios.txt
+          git diff --staged --quiet || git commit -m "chore: update ios baselines [skip ci]"
+          # The Android job pushes to the same branch.
+          git pull --rebase
+          git push

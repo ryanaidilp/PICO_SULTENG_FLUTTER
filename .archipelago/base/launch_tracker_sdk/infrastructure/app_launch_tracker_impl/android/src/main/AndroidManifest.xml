@@ -1,0 +1,11 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Records native app init and the launch type with no host code. A
+             high initOrder runs it before the app's other providers. -->
+        <provider
+            android:name="com.archipelago.app_launch_tracker.LaunchTimeTrackerInitProvider"
+            android:authorities="${applicationId}.launch-time-tracker"
+            android:exported="false"
+            android:initOrder="1000" />
+    </application>
+</manifest>

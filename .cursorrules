@@ -1,0 +1,22 @@
+// Cursor AI Rules for Pico Flutter Monorepo
+// For full project documentation, see CLAUDE.md in this directory.
+// This file provides Cursor-specific directives.
+
+// Architecture: Flutter monorepo with Dart workspace + Melos
+// Patterns: API/Impl split, Dual-GetIt DI, feature manifest + lazy SDK, two-phase init
+// Formatting: Always use `dart format`
+// Commits: Conventional commit style
+// DI: injectable + GetIt with microPackage pattern
+// Testing: flutter test with coverage
+
+// Key rules:
+// - Never modify generated files (*.g.dart, *.module.dart, *.gr.dart, *.config.dart)
+// - Always add newline at end of file
+// - Use package imports, not relative imports in lib/
+// - API packages (_api) are pure Dart and depend only on shared/dependencies_core
+// - Run `dart analyze` after changes to catch issues
+// - Run `dart format .` to format code
+
+// Task guides (skills): .claude/skills/<name>/SKILL.md, indexed in AGENTS.md.
+// See CLAUDE.md for complete workspace structure, architecture patterns,
+// DI patterns, key commands, and guides for adding features/infrastructure.

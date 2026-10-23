@@ -1,0 +1,9 @@
+{
+  "name": "brand-assets-scripts",
+  "private": true,
+  "type": "module",
+  "description": "dotLottie tooling for the brand-assets agent skill.",
+  "dependencies": {
+    "@dotlottie/dotlottie-js": "1.8.1"
+  }
+}

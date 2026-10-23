@@ -1,0 +1,31 @@
+# Declares every tag used by the golden tests so `flutter test` / `melos run
+# test` stop warning "Tags were used that weren't specified in
+# dart_test.yaml" (Archipelago-g2fq).
+#
+# Golden (pixel-diff) tests carry the `golden` tag (GoldenTestHelper adds it
+# to every golden it creates). The workspace's `melos run test` /
+# `coverage:run:parallel` pass `--exclude-tags golden`, so this package's
+# ordinary tests run and its goldens do not (Archipelago-6649). A per-tag
+# `skip:` here would not work: `flutter test` ignores it for testWidgets()
+# tests (flutter/flutter#76135), so only the CLI flag filters them. If a
+# package ends up with only golden tests, `flutter test --exclude-tags golden`
+# exits 79 ("No tests match the requested tag selectors"); the melos scripts
+# treat 79 as success.
+#
+# Why goldens are not in the default gate: they are sensitive to the Skia
+# engine / font-hinting / OS a fixture was captured on, so they are not a
+# reliable signal across every machine.
+#
+# To run the golden suite and (re)generate fixtures for your machine/CI image:
+#   flutter test --tags golden --update-goldens
+# To just run them read-only against committed fixtures:
+#   flutter test --tags golden
+tags:
+  golden: {}
+  typography: {}
+  colors: {}
+  theme: {}
+  contrast: {}
+  shadows: {}
+  spacing: {}
+  radius: {}

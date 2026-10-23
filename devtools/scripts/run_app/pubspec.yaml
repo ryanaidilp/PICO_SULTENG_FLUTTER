@@ -1,0 +1,22 @@
+name: run_app
+description: "CLI command for running Flutter apps with interactive flavor and device selection."
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+
+dependencies:
+  args: ^2.7.0
+  path: ^1.9.1
+  prepare:
+    path: ../prepare
+  shared_scripts:
+    path: ../shared_scripts
+  yaml: ^3.1.3
+
+dev_dependencies:
+  very_good_analysis: ">=10.3.0"

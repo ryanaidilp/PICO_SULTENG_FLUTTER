@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "prepare-development",
+      "type": "shell",
+      "command": "dart run monorepo_toolkit prepare --flavor development",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "prepare-staging",
+      "type": "shell",
+      "command": "dart run monorepo_toolkit prepare --flavor staging",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "prepare-production",
+      "type": "shell",
+      "command": "dart run monorepo_toolkit prepare --flavor production",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}

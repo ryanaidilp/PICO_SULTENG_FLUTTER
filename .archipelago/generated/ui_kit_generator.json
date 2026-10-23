@@ -1,0 +1,32 @@
+{
+  "brick": "ui_kit_generator",
+  "version": "1.1.8",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true,
+    "uiKitPackageName": "pico_ui_kit"
+  },
+  "dirs": [
+    "devtools/scripts/ui_kit_generator"
+  ],
+  "files": {
+    "devtools/scripts/ui_kit_generator/lib/src/commands/add_command.dart": "e6712c43",
+    "devtools/scripts/ui_kit_generator/lib/src/commands/create_command.dart": "d6eb2e25",
+    "devtools/scripts/ui_kit_generator/lib/src/commands/export_tailwind_command.dart": "751cef05",
+    "devtools/scripts/ui_kit_generator/lib/src/commands/list_command.dart": "419670d4",
+    "devtools/scripts/ui_kit_generator/lib/src/commands/remove_command.dart": "a3efc99f",
+    "devtools/scripts/ui_kit_generator/lib/src/commands/status_command.dart": "13228f37",
+    "devtools/scripts/ui_kit_generator/lib/src/commands/theme_variant_command.dart": "3cfdcef7",
+    "devtools/scripts/ui_kit_generator/lib/src/commands/ui_kit_command.dart": "31dfa24d",
+    "devtools/scripts/ui_kit_generator/lib/src/models/ui_kit_registry.dart": "ad74efad",
+    "devtools/scripts/ui_kit_generator/lib/src/registry/component_meta.dart": "a936835b",
+    "devtools/scripts/ui_kit_generator/lib/src/registry/component_registry.dart": "fff0553f",
+    "devtools/scripts/ui_kit_generator/lib/src/registry/layer.dart": "c0b89fe8",
+    "devtools/scripts/ui_kit_generator/lib/src/tailwind/tailwind_preset.dart": "58a03bfc",
+    "devtools/scripts/ui_kit_generator/lib/src/tailwind/ui_kit_tokens.dart": "bfb46fb2",
+    "devtools/scripts/ui_kit_generator/lib/src/theme_variant_command.dart": "d622f2b",
+    "devtools/scripts/ui_kit_generator/lib/src/ui_kit_command.dart": "3d22faf3",
+    "devtools/scripts/ui_kit_generator/lib/ui_kit_generator.dart": "c0d9deb0",
+    "devtools/scripts/ui_kit_generator/pubspec.yaml": "85da27f5"
+  }
+}

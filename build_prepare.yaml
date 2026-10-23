@@ -1,0 +1,32 @@
+# Swaps debug tooling for its noop twins by build flavor (`mappings`,
+# ADR-035) and by build mode (`debug_build_only`, ADR-035 amendment):
+#   dart run monorepo_toolkit build-prepare --flavor <flavor> --mode release   # before a build
+#   dart run monorepo_toolkit build-prepare --check-leaks --flavor <flavor> --mode release  # after it
+#   dart run monorepo_toolkit build-prepare --restore           # undo the swap
+build_prepare:
+  # Flavors that keep the debug tooling (QA/internal release builds). Every
+  # other flavor, including a new one, gets the noop twins.
+  internal_flavors: [development, staging, alpha, beta]
+
+  # monitoring_impl is deliberately NOT mapped: crash reporting ships in
+  # every flavor, gated by ConsentAwareMonitoring (Archipelago-72z8.31).
+  # app_launch_tracker_impl is not mapped either: launch timing is measured in
+  # production too, and its spans go through that same consent gate.
+  mappings:
+    # archipelago:build_prepare:mappings:start
+    # archipelago:build_prepare:mappings:end
+  # Packages with no noop twin that must never resolve in a production build
+  # (e.g. the Blackbox capability plugins); --check-leaks fails if one does.
+  debug_only: []
+  # Swapped by the build MODE, not the flavor: every release and profile
+  # build (`--mode release|profile`) gets the noop twin, internal flavors
+  # included; `--mode debug` restores it. Bare names have no twin;
+  # --check-leaks fails if a release or profile app graph resolves one.
+  debug_build_only:
+    - debug: app_marionette
+      release: app_marionette_noop
+    - marionette_flutter
+    - marionette_logging
+    - marionette_mcp
+  target_paths:
+    - apps/pico
