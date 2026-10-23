@@ -1,0 +1,22 @@
+PODS:
+  - app_launch_tracker_impl (0.1.0):
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - app_launch_tracker_impl (from `.symlinks/plugins/app_launch_tracker_impl/ios`)
+  - Flutter (from `Flutter`)
+
+EXTERNAL SOURCES:
+  app_launch_tracker_impl:
+    :path: ".symlinks/plugins/app_launch_tracker_impl/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  app_launch_tracker_impl: d62c21ce84ec4cb8fb02855cf24c12fb9e04cc95
+  Flutter: 71a624a5bc0c04062bf19101d501e466baf2fb47
+
+PODFILE CHECKSUM: 831cbc15c59ada78176883691a141694ad8f1a6a
+
+COCOAPODS: 1.16.2
