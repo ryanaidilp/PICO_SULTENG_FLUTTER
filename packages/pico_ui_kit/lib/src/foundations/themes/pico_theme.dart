@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pico_ui_kit/src/foundations/colors/pico_color_token.dart';
+import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
+import 'package:pico_ui_kit/src/foundations/radius/pico_radius_token.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_asset_extension.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_color_extension.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_radius_extension.dart';
@@ -8,93 +9,148 @@ import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_spacing_exten
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_typography_extension.dart';
 import 'package:pico_ui_kit/src/foundations/typography/pico_font_family.dart';
 
-/// Main theme factory for the design system.
+/// Main theme factory for the design system (ADR-0106: Tenun brand on a
+/// Material 3 base). Elevation is 0 everywhere, depth comes from rules and
+/// cloth, and the surface tint is transparent so M3 tonal elevation never leaks.
 abstract final class PicoTheme() {
   /// Creates the light theme.
-  static ThemeData light({PicoFontFamily? fontFamily}) {
-    final fonts = fontFamily ?? const PicoFontFamily();
-    final colorExtension = PicoColorExtension.light();
-    final typographyExtension = PicoTypographyExtension.standard(
-      fontFamily: fonts,
-    );
-    final shadowExtension = PicoShadowExtension.light();
-    final spacingExtension = PicoSpacingExtension.standard();
-    final radiusExtension = PicoRadiusExtension.standard();
-    final assetExtension = PicoAssetExtension.instance();
-
-    return ThemeData(
-      useMaterial3: true,
-      brightness: Brightness.light,
-      fontFamily: fonts.isUsingCustomFonts ? fonts.bodyFontFamily : null,
-      colorScheme: ColorScheme.light(
-        primary: colorExtension.action.primary.active,
-        primaryContainer: PicoColorToken.primary100,
-        onPrimaryContainer: PicoColorToken.primary900,
-        secondary: PicoColorToken.secondary600,
-        secondaryContainer: PicoColorToken.secondary100,
-        onSecondaryContainer: PicoColorToken.secondary900,
-        tertiary: PicoColorToken.tertiary600,
-        tertiaryContainer: PicoColorToken.tertiary100,
-        onTertiaryContainer: PicoColorToken.tertiary900,
-        error: colorExtension.action.destructive.active,
-        errorContainer: PicoColorToken.error100,
-        onErrorContainer: PicoColorToken.error900,
-        surface: colorExtension.background.main,
-        onSurface: colorExtension.foreground.main,
-        outline: colorExtension.outline.main,
-        outlineVariant: colorExtension.outline.subtle,
-      ),
-      textTheme: fonts.applyToTextTheme(_buildTextTheme(typographyExtension)),
-      scaffoldBackgroundColor: colorExtension.background.main,
-      extensions: [
-        colorExtension,
-        typographyExtension,
-        shadowExtension,
-        spacingExtension,
-        radiusExtension,
-        assetExtension,
-      ],
-    );
-  }
+  static ThemeData light({PicoFontFamily? fontFamily}) =>
+      _build(Brightness.light, fontFamily);
 
   /// Creates the dark theme.
-  static ThemeData dark({PicoFontFamily? fontFamily}) {
+  static ThemeData dark({PicoFontFamily? fontFamily}) =>
+      _build(Brightness.dark, fontFamily);
+
+  static ThemeData _build(Brightness brightness, PicoFontFamily? fontFamily) {
+    final isDark = brightness == Brightness.dark;
     final fonts = fontFamily ?? const PicoFontFamily();
-    final colorExtension = PicoColorExtension.dark();
-    final typographyExtension = PicoTypographyExtension.standard(
-      fontFamily: fonts,
+    final colors = isDark
+        ? PicoColorExtension.dark()
+        : PicoColorExtension.light();
+    final typography = PicoTypographyExtension.standard(fontFamily: fonts);
+    // Secondary is crimson (one crimson per view, DESIGN.md), so selected
+    // M3 containers use the cloth tint instead of a crimson wash.
+    final scheme = (isDark ? PicoColorSchemes.dark : PicoColorSchemes.light)
+        .copyWith(
+          secondaryContainer: isDark
+              ? PicoBrandPalette.tintDark
+              : PicoBrandPalette.tintLight,
+          onSecondaryContainer: isDark
+              ? PicoBrandPalette.indigoDark
+              : PicoBrandPalette.indigoLight,
+          surfaceContainerHighest: colors.background.subtle,
+        );
+    final textTheme = fonts.applyToTextTheme(_buildTextTheme(typography));
+    const shape = RoundedRectangleBorder(
+      borderRadius: PicoRadiusToken.borderMd,
     );
-    final shadowExtension = PicoShadowExtension.dark();
-    final spacingExtension = PicoSpacingExtension.standard();
-    final radiusExtension = PicoRadiusExtension.standard();
-    final assetExtension = PicoAssetExtension.instance();
+    final nav = isDark ? colors.background.subtle : colors.background.inverse;
+    final onNav = isDark ? colors.foreground.main : colors.foreground.inverse;
 
     return ThemeData(
       useMaterial3: true,
-      brightness: Brightness.dark,
-      fontFamily: fonts.isUsingCustomFonts ? fonts.bodyFontFamily : null,
-      colorScheme: ColorScheme.dark(
-        primary: PicoColorToken.primary400,
-        onPrimary: PicoColorToken.primary950,
-        primaryContainer: PicoColorToken.primary800,
-        onPrimaryContainer: PicoColorToken.primary100,
-        secondary: PicoColorToken.secondary400,
-        tertiary: PicoColorToken.tertiary400,
-        error: PicoColorToken.error400,
-        surface: colorExtension.background.main,
-        onSurface: colorExtension.foreground.main,
-        outline: colorExtension.outline.main,
-        outlineVariant: colorExtension.outline.subtle,
+      brightness: brightness,
+      fontFamily: fonts.bodyFontFamily,
+      fontFamilyFallback: const <String>[],
+      package: fonts.package,
+      colorScheme: scheme,
+      textTheme: textTheme,
+      scaffoldBackgroundColor: colors.background.main,
+      canvasColor: colors.background.main,
+      dividerColor: colors.outline.subtle,
+      splashFactory: InkRipple.splashFactory,
+      appBarTheme: AppBarTheme(
+        backgroundColor: colors.background.main,
+        foregroundColor: colors.foreground.main,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
+        titleTextStyle: typography.heading.h4.copyWith(
+          color: colors.foreground.main,
+        ),
       ),
-      textTheme: fonts.applyToTextTheme(_buildTextTheme(typographyExtension)),
-      scaffoldBackgroundColor: colorExtension.background.main,
-      extensions: [
-        colorExtension,
-        typographyExtension,
-        shadowExtension,
-        spacingExtension,
-        radiusExtension,
-        assetExtension,
+      cardTheme: CardThemeData(
+        color: colors.background.card,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: PicoRadiusToken.borderMd,
+          side: BorderSide(color: colors.outline.subtle),
+        ),
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: colors.background.card,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+          borderRadius: PicoRadiusToken.borderLg,
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: colors.background.card,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: PicoRadiusToken.radiusLg),
+        ),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          elevation: 0,
+          shape: shape,
+          minimumSize: const Size(48, 48),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          shape: shape,
+          minimumSize: const Size(48, 48),
+          side: BorderSide(color: colors.outline.main),
+        ),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          shape: shape,
+          minimumSize: const Size(48, 48),
+        ),
+      ),
+      // Selvedge band: indigo ground (light), sky indicator, paper labels.
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: nav,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        indicatorColor: isDark
+            ? PicoBrandPalette.tintDark
+            : PicoBrandPalette.skyLight,
+        indicatorShape: const RoundedRectangleBorder(
+          borderRadius: PicoRadiusToken.borderSm,
+        ),
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected) && !isDark
+                ? PicoBrandPalette.indigoLight
+                : onNav,
+          ),
+        ),
+        labelTextStyle: WidgetStateProperty.all(
+          typography.label.caption.copyWith(color: onNav),
+        ),
+      ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: SegmentedButton.styleFrom(
+          shape: shape,
+          minimumSize: const Size(48, 48),
+        ),
+      ),
+      extensions: <ThemeExtension<dynamic>>[
+        colors,
+        typography,
+        if (isDark) PicoShadowExtension.dark() else PicoShadowExtension.light(),
+        PicoSpacingExtension.standard(),
+        PicoRadiusExtension.standard(),
+        PicoAssetExtension.instance(),
+        if (isDark) PicoStateColors.dark else PicoStateColors.light,
+        if (isDark) PicoClothSurface.dark else PicoClothSurface.light,
       ],
     );
   }

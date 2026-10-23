@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_asset_extension.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_color_extension.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_radius_extension.dart';
@@ -32,6 +33,14 @@ extension PicoThemeContextExtension on BuildContext {
       Theme.of(this).extension<PicoAssetExtension>()!;
   PicoAssetExtension? get assetsOrNull =>
       Theme.of(this).extension<PicoAssetExtension>();
+
+  /// Colours of the COVID-19 data roles (positive, recovered, deceased, active, Rt).
+  PicoStateColors get picoStates =>
+      Theme.of(this).extension<PicoStateColors>()!;
+
+  /// Cloth surface colours for woven charts and bands (C06 `chartSurface`).
+  PicoClothSurface get chartSurface =>
+      Theme.of(this).extension<PicoClothSurface>()!;
   bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
   bool get isLightMode => Theme.of(this).brightness == Brightness.light;
 }
