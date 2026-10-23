@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 
 /// Font family used for all test widgets.
-const _testFontFamily = 'Plus Jakarta Sans';
+const _testFontFamily = 'SourceSans3';
 
 /// All known palettes for auto-resolution.
 /// When a color is passed without explicit baseColor, we scan all of these.

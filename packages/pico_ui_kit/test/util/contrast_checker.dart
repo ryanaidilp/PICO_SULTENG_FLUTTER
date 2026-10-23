@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'color_item.dart';
 
 /// Font family used for all test widgets.
-const _testFontFamily = 'Plus Jakarta Sans';
+const _testFontFamily = 'SourceSans3';
 
 /// WCAG 2.1 contrast ratio thresholds.
 enum WcagLevel() {

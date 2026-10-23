@@ -5,14 +5,10 @@ import 'package:pico_ui_kit/pico_ui_kit.dart';
 import '../../helpers/golden_test_helpers.dart';
 
 /// Test font family that uses locally loaded fonts.
-const _testFontFamily = PicoFontFamily(
-  bodyFontFamily: 'Plus Jakarta Sans',
-  headingFontFamily: 'Plus Jakarta Sans',
-  monoFontFamily: 'JetBrains Mono',
-);
+const _testFontFamily = PicoFontFamily(headingFontFamily: 'Archivo');
 
 /// Font family constant for test widget labels.
-const _labelFontFamily = 'Plus Jakarta Sans';
+const _labelFontFamily = 'SourceSans3';
 
 void main() {
   group('PicoTypographyExtension Golden Tests', () {

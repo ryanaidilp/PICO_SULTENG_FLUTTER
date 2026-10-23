@@ -6,11 +6,7 @@ import 'package:pico_ui_kit/pico_ui_kit.dart';
 ///
 /// Use this to avoid Google Fonts network fetching in golden tests.
 /// The font names must match those declared in `test/fonts/` via pubspec.yaml.
-const testFontFamily = PicoFontFamily(
-  bodyFontFamily: 'Plus Jakarta Sans',
-  headingFontFamily: 'Plus Jakarta Sans',
-  monoFontFamily: 'JetBrains Mono',
-);
+const testFontFamily = PicoFontFamily(package: null);
 
 /// Test wrapper that provides app theming for golden tests.
 ///

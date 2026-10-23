@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// Font family used for all test widgets.
-const _testFontFamily = 'Plus Jakarta Sans';
+const _testFontFamily = 'SourceSans3';
 
 /// Data class representing a typography style for golden tests.
 @immutable

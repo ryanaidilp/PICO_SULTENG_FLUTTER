@@ -5,7 +5,7 @@ import 'package:pico_ui_kit/pico_ui_kit.dart';
 import '../../helpers/golden_test_helpers.dart';
 import '../../util/contrast_checker.dart';
 
-const _testFontFamily = 'Plus Jakarta Sans';
+const _testFontFamily = 'SourceSans3';
 
 void main() {
   group('Contrast Ratio Golden Tests', () {
@@ -204,37 +204,27 @@ Map<String, List<ContrastPair>> _buildContrastPairs(
   ],
   'Button Text': [
     ContrastPair(
-      label: 'White on Primary btn',
-      foreground: PicoColorToken.white,
+      label: 'Button text on Primary',
+      foreground: colors.foreground.inverse,
       background: colors.action.primary.active,
     ),
     ContrastPair(
-      label: 'White on Secondary btn',
-      foreground: PicoColorToken.white,
+      label: 'Button text on Secondary',
+      foreground: colors.foreground.inverse,
       background: colors.action.secondary.active,
     ),
     ContrastPair(
-      label: 'White on Destructive btn',
-      foreground: PicoColorToken.white,
+      label: 'Button text on Destructive',
+      foreground: colors.foreground.inverse,
       background: colors.action.destructive.active,
     ),
     ContrastPair(
-      label: 'White on Success btn',
-      foreground: PicoColorToken.white,
+      label: 'Button text on Success',
+      foreground: colors.foreground.inverse,
       background: colors.action.success.active,
     ),
   ],
-  'Outline Visibility': [
-    ContrastPair(
-      label: 'Outline on Main bg',
-      foreground: colors.outline.main,
-      background: colors.background.main,
-    ),
-    ContrastPair(
-      label: 'Outline on Card bg',
-      foreground: colors.outline.main,
-      background: colors.background.card,
-    ),
+  'Strong Outline (non-text 3:1 is asserted in pico_contrast_test.dart)': [
     ContrastPair(
       label: 'Strong outline on Main bg',
       foreground: colors.outline.strong,

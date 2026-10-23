@@ -97,9 +97,9 @@ class const GoldenTestVariant({
 ///
 /// ```dart
 /// const testFontFamily = GoldenTestFontFamily(
-///   bodyFontFamily: 'PlusJakartaSans',
-///   headingFontFamily: 'PlusJakartaSans',
-///   monoFontFamily: 'JetBrainsMono',
+///   bodyFontFamily: 'SourceSans3',
+///   headingFontFamily: 'SourceSans3',
+///   monoFontFamily: 'SourceSans3',
 /// );
 /// ```
 @immutable
@@ -118,15 +118,16 @@ class const GoldenTestFontFamily({
 
   /// Default font family for golden tests.
   ///
-  /// Uses Plus Jakarta Sans for body/heading and JetBrains Mono for code.
+  /// Uses Source Sans 3 for body and code and Archivo for headings.
   static const standard = GoldenTestFontFamily(
-    bodyFontFamily: 'Plus Jakarta Sans',
-    headingFontFamily: 'Plus Jakarta Sans',
-    monoFontFamily: 'JetBrains Mono',
+    bodyFontFamily: 'SourceSans3',
+    headingFontFamily: 'Archivo',
+    monoFontFamily: 'SourceSans3',
   );
 
   /// Converts to [PicoFontFamily] for use with [PicoTheme].
   PicoFontFamily toAppFontFamily() => PicoFontFamily(
+    package: null,
     bodyFontFamily: bodyFontFamily,
     headingFontFamily: headingFontFamily,
     monoFontFamily: monoFontFamily,
@@ -351,7 +352,7 @@ abstract final class GoldenTestHelper() {
 
   /// Loads all standard fonts for golden tests.
   ///
-  /// Loads Plus Jakarta Sans and JetBrains Mono from the test/fonts directory.
+  /// Loads Archivo, Source Sans 3 and Material Icons from the test/fonts directory.
   /// Material Icons should be loaded separately via flutter_test_config.dart.
   ///
   /// Silently returns if the font directory does not exist, since brick users
@@ -366,24 +367,17 @@ abstract final class GoldenTestHelper() {
     final testDir = Directory(fontDir ?? fontDirectory);
     if (!testDir.existsSync()) return;
 
-    // Load Plus Jakarta Sans fonts
+    // Brand fonts (variable files) under the bare names used by tests.
+    await loadFont('Archivo', '${testDir.path}/Archivo.ttf');
+    await loadFont('SourceSans3', '${testDir.path}/SourceSans3.ttf');
+    // The default theme resolves the bundled fonts through the package.
     await loadFont(
-      'Plus Jakarta Sans',
-      '${testDir.path}/PlusJakartaSans-VariableFont_wght.ttf',
+      'packages/pico_ui_kit/Archivo',
+      '${testDir.path}/Archivo.ttf',
     );
     await loadFont(
-      'Plus Jakarta Sans',
-      '${testDir.path}/PlusJakartaSans-Italic-VariableFont_wght.ttf',
-    );
-
-    // Load JetBrains Mono fonts
-    await loadFont(
-      'JetBrains Mono',
-      '${testDir.path}/JetBrainsMono-VariableFont_wght.ttf',
-    );
-    await loadFont(
-      'JetBrains Mono',
-      '${testDir.path}/JetBrainsMono-Italic-VariableFont_wght.ttf',
+      'packages/pico_ui_kit/SourceSans3',
+      '${testDir.path}/SourceSans3.ttf',
     );
 
     // Load Material Icons

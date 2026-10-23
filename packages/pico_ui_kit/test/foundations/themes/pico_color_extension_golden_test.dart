@@ -7,7 +7,7 @@ import '../../helpers/golden_test_helpers.dart';
 import '../../util/color_item.dart';
 
 /// Font family used for all test widgets.
-const _testFontFamily = 'Plus Jakarta Sans';
+const _testFontFamily = 'SourceSans3';
 
 /// Semantic color entry with label and color value.
 /// Token name is auto-resolved by scanning all known palettes.

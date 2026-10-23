@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'color_item.dart';
 
 /// Font family used for all test widgets.
-const _testFontFamily = 'Plus Jakarta Sans';
+const _testFontFamily = 'SourceSans3';
 
 /// A section that groups related colors with a title.
 ///
