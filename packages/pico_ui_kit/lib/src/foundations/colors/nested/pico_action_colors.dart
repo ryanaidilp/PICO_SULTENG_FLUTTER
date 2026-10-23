@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/foundations/colors/pico_color_foundation.dart';
-import 'package:pico_ui_kit/src/foundations/colors/pico_color_token.dart';
 
 /// Action button state colors.
 @immutable
@@ -60,29 +59,28 @@ class const PicoActionColors({
     ),
   );
 
-  /// Dark theme action colors. `primary.active` stays at primary600 (6.3:1
-  /// on white); the other families step one tier darker for white-text
-  /// contrast, hover brightens, disabled sinks toward the background.
+  /// Dark theme action colors (brand dark palette; text on filled actions is
+  /// the inverse foreground, paper dark).
   factory dark() => const PicoActionColors(
     primary: PicoActionStateColors(
-      active: PicoColorToken.primary600,
-      hover: PicoColorToken.primary500,
-      disabled: PicoColorToken.primary800,
+      active: PicoColorFoundation.actionPrimaryDark,
+      hover: PicoColorFoundation.actionPrimaryHoverDark,
+      disabled: PicoColorFoundation.actionPrimaryDisabledDark,
     ),
     secondary: PicoActionStateColors(
-      active: PicoColorToken.secondary700,
-      hover: PicoColorToken.secondary600,
-      disabled: PicoColorToken.secondary900,
+      active: PicoColorFoundation.actionSecondaryDark,
+      hover: PicoColorFoundation.actionSecondaryHoverDark,
+      disabled: PicoColorFoundation.actionSecondaryDisabledDark,
     ),
     destructive: PicoActionStateColors(
-      active: PicoColorToken.error700,
-      hover: PicoColorToken.error600,
-      disabled: PicoColorToken.error900,
+      active: PicoColorFoundation.actionDestructiveDark,
+      hover: PicoColorFoundation.actionDestructiveHoverDark,
+      disabled: PicoColorFoundation.actionDestructiveDisabledDark,
     ),
     success: PicoActionStateColors(
-      active: PicoColorToken.success700,
-      hover: PicoColorToken.success600,
-      disabled: PicoColorToken.success900,
+      active: PicoColorFoundation.actionSuccessDark,
+      hover: PicoColorFoundation.actionSuccessHoverDark,
+      disabled: PicoColorFoundation.actionSuccessDisabledDark,
     ),
   );
 

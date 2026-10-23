@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pico_ui_kit/src/foundations/colors/nested/pico_action_colors.dart';
-import 'package:pico_ui_kit/src/foundations/colors/pico_color_token.dart';
+import 'package:pico_ui_kit/src/foundations/colors/pico_color_foundation.dart';
 
 import '../../util/contrast_checker.dart';
 
@@ -69,38 +69,31 @@ void main() {
       expect(light.success.disabled, isNot(equals(dark.success.disabled)));
     });
 
-    test('dark active (resting) states do not regress light-mode white-text '
-        'contrast', () {
-      // Filled buttons/icon buttons render white text/icons on top of
-      // `.active` in both themes (PicoButtonStyleX.resolveForegroundColor,
-      // PicoIconButtonVariant both hardcode white for filled surfaces) —
-      // the resting state must not get *harder* to read in dark mode.
-      for (final (name, lightActive, darkActive) in [
-        ('primary', light.primary.active, dark.primary.active),
-        ('secondary', light.secondary.active, dark.secondary.active),
-        ('destructive', light.destructive.active, dark.destructive.active),
-        ('success', light.success.active, dark.success.active),
-      ]) {
-        final lightRatio = contrastRatio(PicoColorToken.white, lightActive);
-        final darkRatio = contrastRatio(PicoColorToken.white, darkActive);
-        expect(
-          darkRatio,
-          greaterThanOrEqualTo(lightRatio - 0.01),
-          reason:
-              '$name: dark active ($darkRatio) must not be less '
-              'readable than light active ($lightRatio) against white '
-              'button text.',
-        );
-      }
-    });
-
-    test('dark primary active clears WCAG AA (>=4.5:1) against white', () {
-      final ratio = contrastRatio(PicoColorToken.white, dark.primary.active);
-      expect(ratio, greaterThanOrEqualTo(4.5));
-    });
+    test(
+      'filled action text (inverse foreground) clears AA in both themes',
+      () {
+        // Filled buttons render PicoColorExtension.foreground.inverse on
+        // `.active` and `.hover` (paper on blue/crimson in light, dark paper on
+        // the lighter dark-theme actions).
+        for (final (text, actions) in [
+          (PicoColorFoundation.foregroundInverse, light),
+          (PicoColorFoundation.foregroundInverseDark, dark),
+        ]) {
+          for (final a in [
+            actions.primary,
+            actions.secondary,
+            actions.destructive,
+            actions.success,
+          ]) {
+            expect(contrastRatio(text, a.active), greaterThanOrEqualTo(4.5));
+            expect(contrastRatio(text, a.hover), greaterThanOrEqualTo(4.5));
+          }
+        }
+      },
+    );
 
     test('dark disabled tiers are visibly muted against a near-black bg', () {
-      const slate900 = Color(0xFF0F172A);
+      const slate900 = PicoColorFoundation.bgMainDark;
 
       for (final pair in [
         dark.primary,

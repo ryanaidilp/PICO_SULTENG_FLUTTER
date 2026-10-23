@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/foundations/colors/nested/pico_action_colors.dart';
-import 'package:pico_ui_kit/src/foundations/colors/pico_color_token.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_color_extension.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_radius_extension.dart';
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_spacing_extension.dart';
@@ -83,7 +82,7 @@ extension PicoButtonStyleX on PicoButtonStyle {
 
   /// Returns the foreground (text/icon) color based on widget states.
   ///
-  /// Filled buttons use white text on colored backgrounds.
+  /// Filled buttons use the inverse foreground (paper) on action backgrounds.
   /// Outlined, text, and ghost buttons use the action color.
   Color resolveForegroundColor(
     Set<WidgetState> states,
@@ -99,7 +98,7 @@ extension PicoButtonStyleX on PicoButtonStyle {
     if (states.contains(WidgetState.pressed) ||
         states.contains(WidgetState.hovered)) {
       return switch (this) {
-        PicoButtonStyle.filled => PicoColorToken.white,
+        PicoButtonStyle.filled => colors.foreground.inverse,
         PicoButtonStyle.outlined ||
         PicoButtonStyle.text ||
         PicoButtonStyle.ghost => actionColors.hover,
@@ -107,7 +106,7 @@ extension PicoButtonStyleX on PicoButtonStyle {
     }
 
     return switch (this) {
-      PicoButtonStyle.filled => PicoColorToken.white,
+      PicoButtonStyle.filled => colors.foreground.inverse,
       PicoButtonStyle.outlined ||
       PicoButtonStyle.text ||
       PicoButtonStyle.ghost => actionColors.active,

@@ -1,172 +1,113 @@
 import 'package:flutter/material.dart';
-import 'package:pico_ui_kit/src/foundations/colors/pico_color_token.dart';
+import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
 
-/// Semantic color foundation for the design system.
+/// Semantic color foundation for the design system, mapped onto the PICO
+/// "Tenun Donggala" brand palette (ADR-0106, DESIGN.md).
 ///
-/// Provides color constants organized by purpose for light and dark themes.
+/// Contrast pairs were computed against the brand paper, surface, cotton and
+/// tint grounds: every text pair is at least 4.5:1 in both themes.
+/// Status colors reuse brand hues; state is never colour alone (DESIGN.md).
 abstract final class PicoColorFoundation() {
-  // ============================================================
-  // Background Colors
-  // ============================================================
+  // Backgrounds: paper is the page, surface the card, cotton and tint the layers.
+  static const Color bgMain = PicoBrandPalette.paperLight;
+  static const Color bgSubtle = PicoBrandPalette.cottonDeepLight;
+  static const Color bgStrong = PicoBrandPalette.tintLight;
+  static const Color bgInverse = PicoBrandPalette.indigoLight;
 
-  // Light theme backgrounds (primary-tinted)
-  static const Color bgMain = PicoColorToken.primary50;
-  static const Color bgSubtle = PicoColorToken.primary100;
-  static const Color bgStrong = PicoColorToken.primary200;
-  static const Color bgInverse = PicoColorToken.slate900;
+  static const Color bgMainDark = PicoBrandPalette.paperDark;
+  static const Color bgSubtleDark = PicoBrandPalette.cottonDeepDark;
+  static const Color bgStrongDark = PicoBrandPalette.tintDark;
+  static const Color bgInverseDark = PicoBrandPalette.indigoDark;
 
-  // Dark theme backgrounds (deep slate, not pure black)
-  static const Color bgMainDark = PicoColorToken.slate900;
-  static const Color bgSubtleDark = PicoColorToken.slate800;
-  static const Color bgStrongDark = PicoColorToken.slate950;
-  static const Color bgInverseDark = PicoColorToken.slate50;
+  static const Color bgCard = PicoBrandPalette.surfaceLight;
+  static const Color bgCardSecondary = PicoBrandPalette.tintLight;
+  static const Color bgCardDark = PicoBrandPalette.surfaceDark;
+  static const Color bgCardSecondaryDark = PicoBrandPalette.tintDark;
 
-  // Card backgrounds
-  static const Color bgCard = PicoColorToken.white;
-  static const Color bgCardSecondary = PicoColorToken.primary50;
-  static const Color bgCardDark = PicoColorToken.slate800;
-  static const Color bgCardSecondaryDark = PicoColorToken.slate700;
+  // Foreground.
+  static const Color foregroundMain = PicoBrandPalette.inkLight;
+  static const Color foregroundSubtle = PicoBrandPalette.inkMutedLight;
+  static const Color foregroundMuted = PicoBrandPalette.inkMutedLight;
+  static const Color foregroundDisabled = PicoBrandPalette.lineStrongLight;
+  static const Color foregroundInverse = PicoBrandPalette.onIndigoLight;
 
-  // ============================================================
-  // Foreground Colors
-  // ============================================================
+  static const Color foregroundMainDark = PicoBrandPalette.inkDark;
+  static const Color foregroundSubtleDark = PicoBrandPalette.inkMutedDark;
+  static const Color foregroundMutedDark = PicoBrandPalette.inkMutedDark;
+  static const Color foregroundDisabledDark = PicoBrandPalette.lineStrongDark;
+  static const Color foregroundInverseDark = PicoBrandPalette.onIndigoDark;
 
-  // Light theme foreground (slate)
-  static const Color foregroundMain = PicoColorToken.slate800;
-  static const Color foregroundSubtle = PicoColorToken.slate600;
-  static const Color foregroundMuted = PicoColorToken.slate400;
-  static const Color foregroundDisabled = PicoColorToken.slate300;
-  static const Color foregroundInverse = PicoColorToken.white;
+  static const Color foregroundSuccess = PicoBrandPalette.recoveredLight;
+  static const Color foregroundWarning = PicoBrandPalette.dyeBarkLight;
+  static const Color foregroundError = PicoBrandPalette.crimsonLight;
+  static const Color foregroundInfo = PicoBrandPalette.primaryStrongLight;
+  static const Color foregroundPrimary = PicoBrandPalette.primaryStrongLight;
 
-  // Dark theme foreground
-  static const Color foregroundMainDark = PicoColorToken.slate50;
-  static const Color foregroundSubtleDark = PicoColorToken.slate300;
-  static const Color foregroundMutedDark = PicoColorToken.slate500;
-  static const Color foregroundDisabledDark = PicoColorToken.slate600;
-  static const Color foregroundInverseDark = PicoColorToken.slate900;
+  static const Color foregroundSuccessDark = PicoBrandPalette.recoveredDark;
+  static const Color foregroundWarningDark = PicoBrandPalette.dyeGoldDark;
+  static const Color foregroundErrorDark = PicoBrandPalette.crimsonDark;
+  static const Color foregroundInfoDark = PicoBrandPalette.primaryDark;
 
-  // Semantic foreground colors
-  //
-  // Deliberately the 800 shade, not 600: the 600 shade fails WCAG AA
-  // (4.5:1) as text against bgMain, its own *Bg 50-tint, and (for
-  // success/warning/info) even plain white — verified by direct
-  // contrast-ratio computation, not assumption. 800 clears every one of
-  // those backgrounds with margin (6.3-8.3:1). Root-caused from a Kirana
-  // color-audit finding.
-  static const Color foregroundSuccess = PicoColorToken.success800;
-  static const Color foregroundWarning = PicoColorToken.warning800;
-  static const Color foregroundError = PicoColorToken.error800;
-  static const Color foregroundInfo = PicoColorToken.info800;
-  static const Color foregroundPrimary = PicoColorToken.primary600;
+  // Actions. Filled actions use the inverse foreground as text.
+  static const Color actionPrimary = PicoBrandPalette.primaryStrongLight;
+  static const Color actionPrimaryHover = PicoBrandPalette.indigoLight;
+  static const Color actionPrimaryDisabled = PicoBrandPalette.lineLight;
+  static const Color actionPrimaryDark = PicoBrandPalette.primaryDark;
+  static const Color actionPrimaryHoverDark = PicoBrandPalette.indigoDark;
+  static const Color actionPrimaryDisabledDark = PicoBrandPalette.lineDark;
 
-  // Dark-theme semantic foreground colors. 800 (the light-theme shade
-  // above) fails AA against dark backgrounds — a dark-on-dark color has
-  // low contrast for the same reason a light-on-light one does. 300 clears
-  // bgMainDark/bgCardDark/successBgDark-and-siblings for all four colors
-  // (verified by computation; 400 was close but error400 still failed
-  // against errorBgDark specifically, so 300 is used for all four to keep
-  // one shade instead of a per-color exception).
-  static const Color foregroundSuccessDark = PicoColorToken.success300;
-  static const Color foregroundWarningDark = PicoColorToken.warning300;
-  static const Color foregroundErrorDark = PicoColorToken.error300;
-  static const Color foregroundInfoDark = PicoColorToken.info300;
+  static const Color actionSecondary = PicoBrandPalette.indigoLight;
+  static const Color actionSecondaryHover = PicoBrandPalette.primaryStrongLight;
+  static const Color actionSecondaryDisabled = PicoBrandPalette.lineLight;
+  static const Color actionSecondaryDark = PicoBrandPalette.indigoDark;
+  static const Color actionSecondaryHoverDark = PicoBrandPalette.primaryDark;
+  static const Color actionSecondaryDisabledDark = PicoBrandPalette.lineDark;
 
-  // ============================================================
-  // Action Colors
-  // ============================================================
+  static const Color actionDestructive = PicoBrandPalette.crimsonLight;
+  static const Color actionDestructiveHover = PicoBrandPalette.dyeMaroonLight;
+  static const Color actionDestructiveDisabled = PicoBrandPalette.lineLight;
+  static const Color actionDestructiveDark = PicoBrandPalette.crimsonDark;
+  static const Color actionDestructiveHoverDark = PicoBrandPalette.crimsonDark;
+  static const Color actionDestructiveDisabledDark = PicoBrandPalette.lineDark;
 
-  // Primary action
-  static const Color actionPrimary = PicoColorToken.primary600;
-  static const Color actionPrimaryHover = PicoColorToken.primary700;
-  static const Color actionPrimaryDisabled = PicoColorToken.primary300;
+  static const Color actionSuccess = PicoBrandPalette.recoveredLight;
+  static const Color actionSuccessHover = PicoBrandPalette.indigoLight;
+  static const Color actionSuccessDisabled = PicoBrandPalette.lineLight;
+  static const Color actionSuccessDark = PicoBrandPalette.recoveredDark;
+  static const Color actionSuccessHoverDark = PicoBrandPalette.primaryDark;
+  static const Color actionSuccessDisabledDark = PicoBrandPalette.lineDark;
 
-  // Secondary action (cyan)
-  static const Color actionSecondary = PicoColorToken.secondary600;
-  static const Color actionSecondaryHover = PicoColorToken.secondary700;
-  static const Color actionSecondaryDisabled = PicoColorToken.secondary300;
+  // Outlines. outlineMain is the >= 3:1 boundary of active components
+  // (WCAG 1.4.11): lineStrong measures 3.3:1 on paper, 5.5:1 on dark paper.
+  static const Color outlineMain = PicoBrandPalette.lineStrongLight;
+  static const Color outlineStrong = PicoBrandPalette.inkMutedLight;
+  static const Color outlineSubtle = PicoBrandPalette.lineLight;
+  static const Color outlineFocus = PicoBrandPalette.primaryStrongLight;
 
-  // Destructive action
-  static const Color actionDestructive = PicoColorToken.error600;
-  static const Color actionDestructiveHover = PicoColorToken.error700;
-  static const Color actionDestructiveDisabled = PicoColorToken.error300;
+  static const Color outlineMainDark = PicoBrandPalette.lineStrongDark;
+  static const Color outlineStrongDark = PicoBrandPalette.inkMutedDark;
+  static const Color outlineSubtleDark = PicoBrandPalette.lineDark;
+  static const Color outlineFocusDark = PicoBrandPalette.primaryDark;
 
-  // Success action
-  static const Color actionSuccess = PicoColorToken.success600;
-  static const Color actionSuccessHover = PicoColorToken.success700;
-  static const Color actionSuccessDisabled = PicoColorToken.success300;
-
-  // ============================================================
-  // Outline/Border Colors
-  // ============================================================
-  //
-  // WCAG 2.1 SC 1.4.11 (Non-text Contrast) requires >=3:1 for borders that
-  // are the only way to identify an *active* UI component's boundary or
-  // state — verified by direct computation the same way the foreground
-  // colors above were (see that section's doc comment; Archipelago-nink).
-  // [outlineMain] backs the text field's normal-state border, the card's
-  // outlined variant, the checkbox's enabled border and the icon button's
-  // enabled border — all non-exempt, active-state component boundaries.
-  // The original slate400/slate700 shades read fine to the eye but
-  // measured 2.29:1 (light, vs bgMain) and 1.41-1.72:1 (dark, vs
-  // bgCardDark/bgMainDark) — well under the 3:1 floor.
-  //
-  // [outlineSubtle]/[outlineSubtleDark] are deliberately NOT touched here:
-  // every current usage (the text field/checkbox/icon button's *disabled*
-  // -state border, the avatar's placeholder fill) is an inactive/disabled
-  // component, which SC 1.4.11 explicitly exempts ("Inactive Components").
-  // Darkening `outlineSubtle` to pass 3:1 would work against its actual
-  // job of visually de-emphasizing disabled controls.
-  //
-  // [outlineFocus]/[outlineFocusDark] already clear 3:1 (3.99/5.98 against
-  // bgMain/bgMainDark) and are unchanged.
-
-  // Light theme borders
-  static const Color outlineMain = PicoColorToken.slate500;
-  static const Color outlineStrong = PicoColorToken.slate500;
-  static const Color outlineSubtle = PicoColorToken.slate200;
-  static const Color outlineFocus = PicoColorToken.primary500;
-
-  // Dark theme borders
-  //
-  // outlineMainDark/outlineStrongDark could not simply mirror light theme's
-  // slate500 collapse: slate500 clears bgMainDark at only 3.75:1 and
-  // bgCardDark at 3.07:1, a razor-thin margin over the 3:1 floor that
-  // anti-aliasing/rounding could erode. Moved further up the (inverted,
-  // for dark) scale for headroom: outlineMainDark to slate400 (6.96:1 /
-  // 5.71:1) and outlineStrongDark to slate300 (12.02:1 / 9.85:1), which
-  // also preserves a visible main < strong hierarchy in dark theme even
-  // though light theme's palette has no shade between 400 and 500 to do
-  // the same.
-  static const Color outlineMainDark = PicoColorToken.slate400;
-  static const Color outlineStrongDark = PicoColorToken.slate300;
-  static const Color outlineSubtleDark = PicoColorToken.slate800;
-  static const Color outlineFocusDark = PicoColorToken.primary400;
-
-  // ============================================================
-  // Overlay Colors
-  // ============================================================
-
+  // Overlays.
   static const Color overlay = Color(0x80000000);
   static const Color overlayLight = Color(0x4D000000);
   static const Color overlayDark = Color(0xB3000000);
 
-  // ============================================================
-  // Semantic Status Colors
-  // ============================================================
+  // Status surfaces.
+  static const Color successBg = PicoBrandPalette.tintLight;
+  static const Color successBgDark = PicoBrandPalette.tintDark;
+  static const Color successFg = PicoBrandPalette.recoveredLight;
 
-  static const Color successBg = PicoColorToken.success50;
-  static const Color successBgDark = PicoColorToken.success900;
-  static const Color successFg = PicoColorToken.success800;
+  static const Color warningBg = PicoBrandPalette.cottonDeepLight;
+  static const Color warningBgDark = PicoBrandPalette.cottonDeepDark;
+  static const Color warningFg = PicoBrandPalette.dyeBarkLight;
 
-  static const Color warningBg = PicoColorToken.warning50;
-  static const Color warningBgDark = PicoColorToken.warning900;
-  static const Color warningFg = PicoColorToken.warning800;
+  static const Color errorBg = PicoBrandPalette.cottonDeepLight;
+  static const Color errorBgDark = PicoBrandPalette.cottonDeepDark;
+  static const Color errorFg = PicoBrandPalette.crimsonLight;
 
-  static const Color errorBg = PicoColorToken.error50;
-  static const Color errorBgDark = PicoColorToken.error900;
-  static const Color errorFg = PicoColorToken.error800;
-
-  static const Color infoBg = PicoColorToken.info50;
-  static const Color infoBgDark = PicoColorToken.info900;
-  static const Color infoFg = PicoColorToken.info800;
+  static const Color infoBg = PicoBrandPalette.tintLight;
+  static const Color infoBgDark = PicoBrandPalette.tintDark;
+  static const Color infoFg = PicoBrandPalette.primaryStrongLight;
 }
