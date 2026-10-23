@@ -11,6 +11,11 @@ abstract final class PicoSvgSource {
 
   static final Map<String, Future<String>> _cache = {};
 
+  /// Forgets cached SVG text. Tests call this because a future started inside
+  /// a fake-async zone never completes in the next test.
+  @visibleForTesting
+  static void clearCache() => _cache.clear();
+
   static final RegExp _var = RegExp(
     r'var\(--pico-([a-z-]+),\s*(#[0-9A-Fa-f]{3,8})\)',
   );
@@ -36,6 +41,19 @@ abstract final class PicoSvgSource {
       'crimson': dark
           ? PicoBrandPalette.crimsonDark
           : PicoBrandPalette.crimsonLight,
+      'positive': dark
+          ? PicoBrandPalette.positiveDark
+          : PicoBrandPalette.positiveLight,
+      'recovered': dark
+          ? PicoBrandPalette.recoveredDark
+          : PicoBrandPalette.recoveredLight,
+      'deceased': dark
+          ? PicoBrandPalette.deceasedDark
+          : PicoBrandPalette.deceasedLight,
+      'active': dark
+          ? PicoBrandPalette.activeDark
+          : PicoBrandPalette.activeLight,
+      'rt': dark ? PicoBrandPalette.rtDark : PicoBrandPalette.rtLight,
       'ink': dark ? PicoBrandPalette.inkDark : PicoBrandPalette.inkLight,
       'ink-muted': dark
           ? PicoBrandPalette.inkMutedDark
