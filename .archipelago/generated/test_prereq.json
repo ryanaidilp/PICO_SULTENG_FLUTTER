@@ -1,0 +1,16 @@
+{
+  "brick": "test_prereq",
+  "version": "1.0.8",
+  "vars": {
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "utilities/test_prereq"
+  ],
+  "files": {
+    "utilities/test_prereq/analysis_options.yaml": "3b2c6957",
+    "utilities/test_prereq/lib/src/test_prerequisite.dart": "83cc6430",
+    "utilities/test_prereq/lib/test_prereq.dart": "d498b27e",
+    "utilities/test_prereq/pubspec.yaml": "898d012c"
+  }
+}

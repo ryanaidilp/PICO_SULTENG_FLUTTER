@@ -1,0 +1,331 @@
+default_platform(:ios)
+
+require "shellwords"
+
+# Fastlane runs Fastfile Ruby (File.*, sh) inside fastlane/, but actions inside the app root.
+# Resolve every path explicitly instead of relying on the implicit cwd.
+APP_ROOT = File.expand_path("..", FastlaneCore::FastlaneFolder.path)
+WORKSPACE_ROOT = File.expand_path("../..", APP_ROOT)
+
+# Absolute path of an app-root-relative path (for File.*; actions take the relative form).
+def app_path(rel)
+  File.join(APP_ROOT, rel)
+end
+
+# Runs a shell command from `dir`.
+def sh_in(dir, cmd)
+  sh("cd #{Shellwords.escape(dir)} && #{cmd}")
+end
+
+# Maps flavor name to entry point
+def entry_point_for_flavor(flavor)
+  case flavor
+  when "production" then "lib/main.dart"
+  when "staging" then "lib/main_staging.dart"
+  when "development" then "lib/main_development.dart"
+  else "lib/main_development.dart"
+  end
+end
+
+# Reads the pubspec `name:` field and converts to PascalCase for artifact naming
+def app_name_for_artifact
+  pubspec = File.read(app_path("pubspec.yaml"))
+  name = pubspec.match(/^name:\s*(\S+)/)[1]
+  name.split('_').map(&:capitalize).join
+end
+
+# Reads the pubspec `version:` and strips the build number (X.Y.Z+N → X.Y.Z)
+def version_for_artifact
+  pubspec = File.read(app_path("pubspec.yaml"))
+  pubspec.match(/^version:\s*(\S+)/)[1].split('+').first
+end
+
+# Per-ABI APKs Flutter emits when `--split-per-abi` is used.
+SPLIT_ABIS = %w[armeabi-v7a arm64-v8a x86_64].freeze
+
+# Renames the Flutter default output to {AppName}-v{version}-{flavor}.{ext} and returns the new path.
+# Returns the original path if the expected source file is missing (so downstream lanes still find an artifact).
+def rename_artifact(flavor, type)
+  app = app_name_for_artifact
+  version = version_for_artifact
+
+  case type
+  when "apk"
+    src = "build/app/outputs/flutter-apk/app-#{flavor}-release.apk"
+    dst = "build/app/outputs/flutter-apk/#{app}-v#{version}-#{flavor}.apk"
+  when "aab"
+    src = "build/app/outputs/bundle/#{flavor}Release/app-#{flavor}-release.aab"
+    dst = "build/app/outputs/bundle/#{flavor}Release/#{app}-v#{version}-#{flavor}.aab"
+  when "ipa"
+    src = "build/ios/ipa/pico.ipa"
+    dst = "build/ios/ipa/#{app}-v#{version}-#{flavor}.ipa"
+  else
+    UI.user_error!("Unknown artifact type: #{type}")
+  end
+
+  unless File.exist?(app_path(src))
+    UI.important("rename_artifact: expected #{src} not found, skipping rename")
+    return src
+  end
+
+  File.rename(app_path(src), app_path(dst))
+  UI.success("Renamed → #{File.basename(dst)}")
+  dst
+end
+
+# Renames each per-ABI APK Flutter produces under `--split-per-abi` to
+# {AppName}-v{version}-{flavor}-{abi}.apk. Returns a hash of {abi => renamed_path}.
+def rename_apk_artifacts_per_abi(flavor)
+  app = app_name_for_artifact
+  version = version_for_artifact
+  renamed = {}
+
+  SPLIT_ABIS.each do |abi|
+    src = "build/app/outputs/flutter-apk/app-#{abi}-#{flavor}-release.apk"
+    dst = "build/app/outputs/flutter-apk/#{app}-v#{version}-#{flavor}-#{abi}.apk"
+    if File.exist?(app_path(src))
+      File.rename(app_path(src), app_path(dst))
+      UI.success("Renamed → #{File.basename(dst)}")
+      renamed[abi] = dst
+    else
+      UI.important("rename_apk_artifacts_per_abi: expected #{src} not found, skipping")
+    end
+  end
+
+  if renamed.empty?
+    UI.important("rename_apk_artifacts_per_abi: no per-ABI APKs found for flavor=#{flavor}; was --split-per-abi used?")
+  end
+
+  renamed
+end
+
+# Resolves the renamed APK path for a given flavor (and optional ABI when split builds are used).
+def apk_path_for(flavor, abi: nil)
+  app = app_name_for_artifact
+  version = version_for_artifact
+  if abi
+    "build/app/outputs/flutter-apk/#{app}-v#{version}-#{flavor}-#{abi}.apk"
+  else
+    "build/app/outputs/flutter-apk/#{app}-v#{version}-#{flavor}.apk"
+  end
+end
+
+# Resolves the renamed AAB path for a given flavor.
+def aab_path_for(flavor)
+  app = app_name_for_artifact
+  version = version_for_artifact
+  "build/app/outputs/bundle/#{flavor}Release/#{app}-v#{version}-#{flavor}.aab"
+end
+
+# Resolves the renamed IPA path for a given flavor.
+def ipa_path_for(flavor)
+  app = app_name_for_artifact
+  version = version_for_artifact
+  "build/ios/ipa/#{app}-v#{version}-#{flavor}.ipa"
+end
+
+# Debug tooling follows the build's flavor (ADR-035): flavors in
+# build_prepare.yaml's internal_flavors keep it, every other flavor gets the
+# noop twins. Always pass the same flavor the build uses. Every lane builds in
+# release mode, so --mode release also swaps the debug_build_only list
+# (Marionette) to its noop twin for every flavor.
+before_all do |lane, options|
+  # Same default as the lane itself: deploy lanes build production.
+  default_flavor = lane.to_s.start_with?("deploy") ? "production" : "development"
+  sh_in(WORKSPACE_ROOT, "dart run monorepo_toolkit build-prepare --flavor #{options[:flavor] || default_flavor} --mode release")
+end
+
+# Restore the pre-build pubspec byte-exactly from the build-prepare snapshot.
+# Use --restore (not `build-prepare debug`) so deps keep their original order
+# and formatting — a forward reverse-swap would reorder keys and leave churn.
+after_all do |lane, options|
+  sh_in(WORKSPACE_ROOT, "dart run monorepo_toolkit build-prepare --restore")
+end
+
+error do |lane, exception, options|
+  sh_in(WORKSPACE_ROOT, "dart run monorepo_toolkit build-prepare --restore")
+end
+
+# --- Private helper lanes ---
+
+private_lane :flutter_build do |options|
+  flavor = options[:flavor] || "development"
+  build_type = options[:build_type] || "apk"  # apk, appbundle, ipa
+  entry_point = entry_point_for_flavor(flavor)
+  build_number = options[:build_number] || ENV['BUILD_NUMBER'] || sh("git rev-list --count HEAD").strip
+  split_per_abi = options[:split_per_abi] == true && build_type == "apk"
+
+  build_cmd = "flutter build #{build_type} --flavor #{flavor} -t #{entry_point} --build-number=#{build_number}"
+  build_cmd += " --release" if options[:release] != false
+  build_cmd += " --obfuscate --split-debug-info=build/debug-info" if options[:obfuscate]
+  build_cmd += " --no-tree-shake-icons" if options[:no_tree_shake_icons]
+  build_cmd += " --split-per-abi" if split_per_abi
+
+  sh_in(APP_ROOT, build_cmd)
+
+  # Fails a production-flavor build that still resolves a debug-only package,
+  # and any build that still resolves Marionette.
+  sh_in(WORKSPACE_ROOT, "dart run monorepo_toolkit build-prepare --check-leaks --flavor #{flavor} --mode release")
+
+  # Normalize artifact name to {AppName}-v{version}-{flavor}[-{abi}].{ext}
+  if split_per_abi
+    rename_apk_artifacts_per_abi(flavor)
+  else
+    artifact_type = build_type == "appbundle" ? "aab" : build_type
+    rename_artifact(flavor, artifact_type)
+  end
+end
+
+private_lane :slack_notify do |options|
+  next unless ENV['SLACK_WEBHOOK_URL']
+
+  slack(
+    message: options[:message] || "Build completed",
+    slack_url: ENV['SLACK_WEBHOOK_URL'],
+    default_payloads: [:git_branch, :git_author],
+    payload: {
+      "Flavor" => options[:flavor] || "unknown",
+      "Platform" => options[:platform] || "unknown",
+      "Build Number" => options[:build_number] || "N/A",
+    },
+    success: options[:success] != false,
+  )
+end
+
+# --- Android Platform ---
+
+platform :android do
+  desc "Build Android APK (pass split_per_abi:true for per-ABI APKs)"
+  lane :build do |options|
+    flutter_build(
+      flavor: options[:flavor] || "development",
+      build_type: options[:build_type] || "apk",
+      build_number: options[:build_number],
+      release: options[:release],
+      obfuscate: options[:obfuscate],
+      split_per_abi: options[:split_per_abi],
+    )
+  end
+
+  desc "Distribute to Firebase App Distribution (pass split_per_abi:true + abi:'arm64-v8a' for per-ABI builds)"
+  lane :distribute_firebase do |options|
+    flavor = options[:flavor] || "development"
+    split_per_abi = options[:split_per_abi] == true
+    abi = options[:abi] || (split_per_abi ? "arm64-v8a" : nil)
+
+    build(
+      flavor: flavor,
+      build_type: "apk",
+      build_number: options[:build_number],
+      split_per_abi: split_per_abi,
+    )
+
+    firebase_app_distribution(
+      app: ENV["FIREBASE_ANDROID_APP_ID_#{flavor.upcase}"],
+      groups: options[:groups] || "qa-team",
+      release_notes: options[:release_notes] || changelog_from_git_commits(commits_count: 10),
+      apk_path: apk_path_for(flavor, abi: abi),
+    )
+
+    slack_notify(message: "Android #{flavor} distributed to Firebase", flavor: flavor, platform: "Android")
+  end
+
+  desc "Deploy to Google Play Store"
+  lane :deploy_play_store do |options|
+    flavor = options[:flavor] || "production"
+    track = options[:track] || "internal"
+
+    build(flavor: flavor, build_type: "appbundle", build_number: options[:build_number], obfuscate: true)
+
+    supply(
+      track: track,
+      aab: aab_path_for(flavor),
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+    )
+
+    slack_notify(message: "Android #{flavor} deployed to Play Store (#{track})", flavor: flavor, platform: "Android")
+  end
+end
+
+# --- iOS Platform ---
+
+platform :ios do
+  desc "Build iOS IPA"
+  lane :build do |options|
+    flavor = options[:flavor] || "development"
+
+    match(
+      type: options[:match_type] || "adhoc",
+      app_identifier: ENV['APP_IDENTIFIER'] || "com.banuacoders.pico.app",
+      readonly: is_ci,
+    )
+
+    flutter_build(
+      flavor: flavor,
+      build_type: "ipa",
+      build_number: options[:build_number],
+      release: options[:release],
+      obfuscate: options[:obfuscate],
+    )
+  end
+
+  desc "Distribute to Firebase App Distribution"
+  lane :distribute_firebase do |options|
+    flavor = options[:flavor] || "development"
+    build(flavor: flavor, build_number: options[:build_number])
+
+    firebase_app_distribution(
+      app: ENV["FIREBASE_IOS_APP_ID_#{flavor.upcase}"],
+      groups: options[:groups] || "qa-team",
+      release_notes: options[:release_notes] || changelog_from_git_commits(commits_count: 10),
+      ipa_path: ipa_path_for(flavor),
+    )
+
+    slack_notify(message: "iOS #{flavor} distributed to Firebase", flavor: flavor, platform: "iOS")
+  end
+
+  desc "Deploy to TestFlight"
+  lane :deploy_testflight do |options|
+    flavor = options[:flavor] || "production"
+    build(flavor: flavor, match_type: "appstore", build_number: options[:build_number], obfuscate: true)
+
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      ipa: ipa_path_for(flavor),
+    )
+
+    slack_notify(message: "iOS #{flavor} uploaded to TestFlight", flavor: flavor, platform: "iOS")
+  end
+
+  desc "Deploy to App Store"
+  lane :deploy_app_store do |options|
+    flavor = options[:flavor] || "production"
+    build(flavor: flavor, match_type: "appstore", build_number: options[:build_number], obfuscate: true)
+
+    deliver(
+      ipa: ipa_path_for(flavor),
+      submit_for_review: options[:submit] || false,
+      automatic_release: options[:auto_release] || false,
+      force: true,
+    )
+
+    slack_notify(message: "iOS #{flavor} submitted to App Store", flavor: flavor, platform: "iOS")
+  end
+end
+
+# --- Cross-platform lanes ---
+
+desc "Distribute both platforms to Firebase"
+lane :distribute_all do |options|
+  flavor = options[:flavor] || "development"
+  Fastlane::LaneManager.cruise_lane("android", "distribute_firebase", {flavor: flavor})
+  Fastlane::LaneManager.cruise_lane("ios", "distribute_firebase", {flavor: flavor})
+end
+
+desc "Deploy both platforms to stores"
+lane :deploy_all do |options|
+  Fastlane::LaneManager.cruise_lane("android", "deploy_play_store", options)
+  Fastlane::LaneManager.cruise_lane("ios", "deploy_testflight", options)
+end

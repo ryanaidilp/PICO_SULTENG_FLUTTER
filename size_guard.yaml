@@ -1,0 +1,26 @@
+# Size Guard configuration (devtools/scripts/size_guard).
+# Not guarded, on purpose:
+# - bundled and test fonts: the app font (Source Sans 3, 631 KB) and the
+#   Material icon font that widget tests load; a font cannot be split.
+# - golden images: pixel references of whole pages, tall by design.
+# - .archipelago: the generator's copy of its own base, not app output.
+size_guard:
+  threshold: "500KB"
+  extensions: [png, jpg, jpeg, gif, webp, bmp, ico, svg, ttf, otf, woff, woff2, mp3, mp4, wav, avi, mov, webm, pdf, zip, tar, gz, rar, json, db, sqlite]
+  ignore_paths:
+    - .git
+    - .dart_tool
+    - .vscode
+    - build
+    - node_modules
+    - .fvm
+    - .pub-cache
+    - .gradle
+    - ios/Pods
+    - android/.gradle
+    - coverage
+    - .archipelago
+  ignore_patterns:
+    - "**/assets/fonts/**"
+    - "**/test/fonts/**"
+    - "**/goldens/**"

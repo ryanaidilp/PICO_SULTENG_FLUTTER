@@ -1,0 +1,6 @@
+{
+    "generic": "Something went wrong",
+    "network": "No internet connection",
+    "timeout": "Request timed out",
+    "unauthorized": "Session expired"
+}

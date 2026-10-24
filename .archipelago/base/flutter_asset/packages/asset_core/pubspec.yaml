@@ -1,0 +1,11 @@
+name: asset_core
+description: Pure Dart contracts and data models for type-safe asset management.
+version: 0.1.0
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+dependencies:
+  meta: ^1.18.0
+
+resolution: workspace

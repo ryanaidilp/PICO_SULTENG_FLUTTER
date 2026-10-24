@@ -1,0 +1,60 @@
+name: pico_ui_kit
+description: UI Kit package for Pico with design system foundations
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+
+dependencies:
+  asset_core:
+    path: ../asset_core
+  cached_network_image: ^4.0.5
+  cupertino_icons: ^1.0.9
+  dependencies:
+    path: ../../shared/dependencies
+  equatable: ^2.1.0
+  flutter:
+    sdk: flutter
+  flutter_cache_manager: ^3.4.5
+  flutter_svg: ^2.3.0
+  haptic_feedback: ^0.6.5
+  http: ^1.6.0
+  lottie: ^3.5.1
+  pico_asset:
+    path: ../pico_asset
+  pico_data_api:
+    path: ../../features/pico_data/pico_data_api
+  skeletonizer: ^3.0.0
+  url_launcher: ^6.3.3
+
+dev_dependencies:
+  alchemist: ^0.14.0
+  flutter_localizations:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+  meta: ^1.18.0
+
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/icons/mono/
+    - assets/icons/duotone/
+    - assets/icons/legacy/
+    - assets/images/
+    - assets/illustrations/
+    - assets/logo/
+    - assets/lottie/
+    - assets/lottie/static/
+    - assets/patterns/
+  # Source Sans 3, variable file. Never fetched at runtime.
+  fonts:
+    - family: SourceSans3
+      fonts:
+        - asset: assets/fonts/SourceSans3.ttf

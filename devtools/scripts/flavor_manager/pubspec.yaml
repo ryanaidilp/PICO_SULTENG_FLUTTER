@@ -1,0 +1,22 @@
+name: flavor_manager
+description: "CLI commands for managing app flavors using flutter_flavorizr."
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+
+dependencies:
+  args: ^2.7.0
+  crypto: ^3.0.7
+  path: ^1.9.1
+  shared_scripts:
+    path: ../shared_scripts
+  yaml: ^3.1.3
+  yaml_edit: ^2.2.4
+
+dev_dependencies:
+  very_good_analysis: ">=10.3.0"

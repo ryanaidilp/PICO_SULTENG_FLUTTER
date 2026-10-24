@@ -1,0 +1,114 @@
+name: pico
+description: "The main host app for the Pico workspace."
+version: 8.0.0+14
+publish_to: "none"
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  app_config:
+    path: ../../shared/app_config
+  app_launch_tracker_impl:
+    path: ../../infrastructure/app_launch_tracker_impl
+  app_marionette:
+    path: ../../features/app_marionette/app_marionette
+  # Referenced directly by lib/di/injector.dart (AppUtilitiesPackageModule) and
+  # by lib/host/initializers/*.dart, so it must be a declared dependency and not
+  # merely a transitive one — otherwise `depend_on_referenced_packages` fires on
+  # four files in a freshly generated app.
+  app_settings: ^9.0.1
+  app_utilities:
+    path: ../../utilities/app_utilities
+  consent_api:
+    path: ../../shared/consent_api
+  consent_impl:
+    path: ../../shared/consent_impl
+  dependencies:
+    path: ../../shared/dependencies
+  feature_sdk:
+    path: ../../shared/feature_sdk
+  flutter:
+    sdk: flutter
+  flutter_native_splash: ^2.4.8
+  home:
+    path: ../../features/home
+  identifiers:
+    path: ../../shared/identifiers
+
+  infografis:
+    path: ../../features/infografis
+  informasi:
+    path: ../../features/informasi
+  layanan:
+    path: ../../features/layanan
+  locale_core:
+    path: ../../shared/locale_core
+  # Always generated (post_gen runs monitoring_sdk unconditionally). The host
+  # shell reports bootstrap, zone and initializer failures to AppMonitoring.
+  monitoring_api:
+    path: ../../infrastructure/monitoring_api
+  monitoring_impl:
+    path: ../../infrastructure/monitoring_impl
+  network_sdk_api:
+    path: ../../infrastructure/network_sdk_api
+  network_sdk_dio:
+    path: ../../infrastructure/network_sdk_dio
+  pengaturan:
+    path: ../../features/pengaturan
+  peta:
+    path: ../../features/peta
+  pico_data_api:
+    path: ../../features/pico_data/pico_data_api
+  pico_data_impl:
+    path: ../../features/pico_data/pico_data_impl
+  pico_ui_kit:
+    path: ../../packages/pico_ui_kit
+  push_notification_api:
+    path: ../../features/push_notification/push_notification_api
+  push_notification_impl:
+    path: ../../features/push_notification/push_notification_impl
+  push_notification_onesignal_impl:
+    path: ../../features/push_notification/push_notification_onesignal_impl
+  router_registry:
+    path: ../../shared/router_registry
+
+  statistik:
+    path: ../../features/statistik
+  vaksin:
+    path: ../../features/vaksin
+dev_dependencies:
+
+
+  auto_route_generator: ^10.5.0
+
+  build_runner:
+    version: ^2.15.1
+  change_app_package_name: ^1.5.0
+  flutter_flavorizr: ^2.5.0
+  flutter_launcher_icons: ^0.14.4
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^3.0.2
+  integration_test:
+    sdk: flutter
+  logger: ^2.7.0
+  patrol: ^4.8.0
+  very_good_analysis: ">=10.3.0"
+
+# Patrol CLI settings (patrol_cli 4.x reads pubspec.yaml, not patrol.toml).
+# Ids and flavor match flavorizr.yaml; for another flavor, pass --flavor and
+# change the ids to that flavor's.
+patrol:
+  app_name: "PICO Sulteng [DEV]"
+  flavor: development
+  test_directory: integration_test
+  android:
+    package_name: "com.banuacoders.pico.app.dev"
+  ios:
+    bundle_id: "com.banuacoders.pico.app.dev"
+
+flutter:
+  uses-material-design: true

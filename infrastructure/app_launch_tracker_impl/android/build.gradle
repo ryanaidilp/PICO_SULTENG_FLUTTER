@@ -1,0 +1,101 @@
+// Shared AGP/Kotlin/SDK version source of truth — see gradle/libs.versions.toml
+// at the workspace root. This loop is duplicated twice in this file (once
+// inside buildscript {}, once again below for the android {} block) because:
+// (a) each federated Flutter plugin is its own standalone Gradle project,
+// not a module of one composite build, so only the *values* are
+// centralized, not this loader; (b) Gradle compiles buildscript {} as an
+// isolated unit that cannot see script-level `def` variables or methods
+// declared elsewhere in this file — verified empirically (a shared `def`
+// referenced inside buildscript {} throws "unknown property"), so the
+// AGP/Kotlin versions needed inside buildscript {} must be read again,
+// self-contained, right there.
+buildscript {
+    def versions = [:]
+    def dir = projectDir
+    def catalogFile = null
+    for (int i = 0; i < 8 && dir != null; i++) {
+        def candidate = new File(dir, 'gradle/libs.versions.toml')
+        if (candidate.exists()) {
+            catalogFile = candidate
+            break
+        }
+        dir = dir.parentFile
+    }
+    if (catalogFile == null) {
+        throw new GradleException('Could not find gradle/libs.versions.toml walking up from ' + projectDir)
+    }
+    catalogFile.eachLine { line ->
+        def matcher = line.trim() =~ /^(\w+)\s*=\s*"([^"]*)"/
+        if (matcher.find()) {
+            versions[matcher.group(1)] = matcher.group(2)
+        }
+    }
+    ext.kotlin_version = versions['kotlin']
+    ext.agp_version = versions['agp']
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:${agp_version}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+def versions = [:]
+def dir = projectDir
+def catalogFile = null
+for (int i = 0; i < 8 && dir != null; i++) {
+    def candidate = new File(dir, 'gradle/libs.versions.toml')
+    if (candidate.exists()) {
+        catalogFile = candidate
+        break
+    }
+    dir = dir.parentFile
+}
+if (catalogFile == null) {
+    throw new GradleException('Could not find gradle/libs.versions.toml walking up from ' + projectDir)
+}
+catalogFile.eachLine { line ->
+    def matcher = line.trim() =~ /^(\w+)\s*=\s*"([^"]*)"/
+    if (matcher.find()) {
+        versions[matcher.group(1)] = matcher.group(2)
+    }
+}
+
+group = "com.archipelago.app_launch_tracker"
+version = "1.0-SNAPSHOT"
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: "com.android.library"
+apply plugin: "kotlin-android"
+
+android {
+    namespace = "com.archipelago.app_launch_tracker"
+    compileSdk = versions['compileSdk'].toInteger()
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.toVersion(versions['javaVersion'])
+        targetCompatibility = JavaVersion.toVersion(versions['javaVersion'])
+    }
+
+    kotlinOptions {
+        jvmTarget = versions['javaVersion']
+    }
+
+    sourceSets {
+        main.java.srcDirs += "src/main/kotlin"
+    }
+
+    defaultConfig {
+        minSdk = versions['minSdk'].toInteger()
+    }
+}

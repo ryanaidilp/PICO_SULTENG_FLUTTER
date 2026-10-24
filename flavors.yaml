@@ -1,0 +1,37 @@
+# Global Flavor Settings
+# This file provides centralized flavor management for all apps in the monorepo.
+# Managed by the flavor_manager devtool.
+#
+# Usage:
+#   dart run monorepo_toolkit flavor list      # List configured flavors
+#   dart run monorepo_toolkit flavor generate  # Generate flavor files
+#   dart run monorepo_toolkit flavor sync      # Sync across packages
+
+# Default settings for new flavors
+defaults:
+  # Pattern for bundle ID suffix (e.g., ".dev", ".stg")
+  suffix_pattern: ".{flavor}"
+
+  # Pattern for app name display (e.g., "MyApp [DEV]")
+  app_name_pattern: "{app} [{FLAVOR}]"
+
+  # Default flavors to create for new apps
+  default_flavors:
+    - development
+    - staging
+    - production
+
+# App-specific flavor configurations
+apps:
+  pico:
+    # Base Android application ID (without flavor suffix)
+    android_app_id: com.banuacoders.pico.app
+
+    # Base iOS bundle identifier (without flavor suffix)
+    ios_bundle_id: com.banuacoders.pico.app
+
+    # List of flavors for this app
+    flavors:
+      - development
+      - staging
+      - production

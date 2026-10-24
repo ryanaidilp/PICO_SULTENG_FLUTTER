@@ -1,0 +1,48 @@
+{
+  "brick": "push_notification_sdk",
+  "version": "1.4.0",
+  "vars": {
+    "includeFcm": false,
+    "uiKitPackageName": "pico_ui_kit",
+    "prefix": "Pico"
+  },
+  "dirs": [
+    "features/push_notification/push_notification_api",
+    "features/push_notification/push_notification_fcm_impl",
+    "features/push_notification/push_notification_impl"
+  ],
+  "shared": [
+    "features/push_notification/push_notification_impl/pubspec.yaml"
+  ],
+  "files": {
+    "features/push_notification/push_notification_api/analysis_options.yaml": "b84693a3",
+    "features/push_notification/push_notification_api/lib/push_notification_api.dart": "ea8fea43",
+    "features/push_notification/push_notification_api/lib/src/models/notification_preferences.dart": "27353cb6",
+    "features/push_notification/push_notification_api/lib/src/models/push_notification.dart": "8ea2fd56",
+    "features/push_notification/push_notification_api/lib/src/models/push_notification_permission.dart": "534095b2",
+    "features/push_notification/push_notification_api/lib/src/models/push_notification_provider.dart": "b95b930",
+    "features/push_notification/push_notification_api/lib/src/models/push_token.dart": "af4d2fe5",
+    "features/push_notification/push_notification_api/lib/src/policy/notification_policy.dart": "1331ed06",
+    "features/push_notification/push_notification_api/lib/src/push_notification_provider_handler.dart": "2355dae8",
+    "features/push_notification/push_notification_api/lib/src/push_notification_sdk.dart": "f95ccb16",
+    "features/push_notification/push_notification_api/pubspec.yaml": "78c67020",
+    "features/push_notification/push_notification_api/test/notification_policy_test.dart": "3cae5e03",
+    "features/push_notification/push_notification_api/test/push_notification_api_test.dart": "b49447c1",
+    "features/push_notification/push_notification_impl/analysis_options.yaml": "b84693a3",
+    "features/push_notification/push_notification_impl/build.yaml": "fd39a8c2",
+    "features/push_notification/push_notification_impl/l10n/en.i18n.json": "257e6429",
+    "features/push_notification/push_notification_impl/l10n/id.i18n.json": "62218746",
+    "features/push_notification/push_notification_impl/lib/push_notification_impl.dart": "369d4c8f",
+    "features/push_notification/push_notification_impl/lib/src/di/push_notification_global_module.dart": "8bfdea1f",
+    "features/push_notification/push_notification_impl/lib/src/policy/default_notification_policy.dart": "5054e12a",
+    "features/push_notification/push_notification_impl/lib/src/policy/notification_policy_store.dart": "13d083d",
+    "features/push_notification/push_notification_impl/lib/src/presentation/notification_settings_page.dart": "86f8d3e5",
+    "features/push_notification/push_notification_impl/lib/src/push_notification_sdk_impl.dart": "6cbb15bf",
+    "features/push_notification/push_notification_impl/slang.yaml": "e37a01e2",
+    "features/push_notification/push_notification_impl/test/default_notification_policy_test.dart": "b49d6244",
+    "features/push_notification/push_notification_impl/test/flutter_test_config.dart": "8d928d91",
+    "features/push_notification/push_notification_impl/test/notification_preferences_test.dart": "cc1959c5",
+    "features/push_notification/push_notification_impl/test/presentation/notification_settings_page_test.dart": "4aa7e219",
+    "features/push_notification/push_notification_impl/test/push_notification_sdk_impl_test.dart": "9f7536fb"
+  }
+}

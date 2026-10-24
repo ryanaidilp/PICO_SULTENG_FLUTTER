@@ -1,0 +1,20 @@
+{
+  "brick": "changelog_generator",
+  "version": "1.0.5",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/changelog_generator"
+  ],
+  "files": {
+    "devtools/scripts/changelog_generator/README.md": "c4a67a9f",
+    "devtools/scripts/changelog_generator/lib/changelog_generator.dart": "79970fa4",
+    "devtools/scripts/changelog_generator/lib/src/commands/changelog_command.dart": "aaa2eb60",
+    "devtools/scripts/changelog_generator/lib/src/models/conventional_commit.dart": "49c491c3",
+    "devtools/scripts/changelog_generator/lib/src/services/changelog_service.dart": "b2988806",
+    "devtools/scripts/changelog_generator/pubspec.yaml": "e9b86d65",
+    "devtools/scripts/changelog_generator/test/changelog_service_test.dart": "cac0284c"
+  }
+}

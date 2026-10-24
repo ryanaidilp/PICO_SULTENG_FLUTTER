@@ -1,0 +1,76 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.banuacoders.pico.app.dev",
+      "sha256_cert_fingerprints": [
+        "FE:A4:A3:9A:A6:6E:F8:4A:E5:C7:D4:1D:32:14:1A:3D:17:34:95:08:2D:F6:E8:A0:A0:AB:30:07:45:11:5A:E8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.banuacoders.pico.app.stg",
+      "sha256_cert_fingerprints": [
+        "FE:A4:A3:9A:A6:6E:F8:4A:E5:C7:D4:1D:32:14:1A:3D:17:34:95:08:2D:F6:E8:A0:A0:AB:30:07:45:11:5A:E8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.banuacoders.pico.app",
+      "sha256_cert_fingerprints": [
+        "FE:A4:A3:9A:A6:6E:F8:4A:E5:C7:D4:1D:32:14:1A:3D:17:34:95:08:2D:F6:E8:A0:A0:AB:30:07:45:11:5A:E8",
+        "RELEASE_SHA256_FINGERPRINT_PLACEHOLDER"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.banuacoders.pico.app.dev",
+      "sha256_cert_fingerprints": [
+        "FE:A4:A3:9A:A6:6E:F8:4A:E5:C7:D4:1D:32:14:1A:3D:17:34:95:08:2D:F6:E8:A0:A0:AB:30:07:45:11:5A:E8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.banuacoders.pico.app.stg",
+      "sha256_cert_fingerprints": [
+        "FE:A4:A3:9A:A6:6E:F8:4A:E5:C7:D4:1D:32:14:1A:3D:17:34:95:08:2D:F6:E8:A0:A0:AB:30:07:45:11:5A:E8"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.banuacoders.pico.app",
+      "sha256_cert_fingerprints": [
+        "FE:A4:A3:9A:A6:6E:F8:4A:E5:C7:D4:1D:32:14:1A:3D:17:34:95:08:2D:F6:E8:A0:A0:AB:30:07:45:11:5A:E8",
+        "RELEASE_SHA256_FINGERPRINT_PLACEHOLDER"
+      ]
+    }
+  }
+]

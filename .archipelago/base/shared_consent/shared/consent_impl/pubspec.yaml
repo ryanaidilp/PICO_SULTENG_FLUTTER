@@ -1,0 +1,24 @@
+name: consent_impl
+description: Persisted consent gate and the default telemetry scrubbing rule set.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+dependencies:
+  consent_api:
+    path: ../consent_api
+  dependencies:
+    path: ../dependencies
+  flutter:
+    sdk: flutter
+  shared_preferences: ^2.5.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ">=10.3.0"

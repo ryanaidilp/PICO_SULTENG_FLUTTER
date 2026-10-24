@@ -1,0 +1,83 @@
+# Analyze and test what a change can break, once per change (docs: "CI test
+# scope" in the Archipelago monorepo toolkit guide):
+# - master is this repo's production branch (the Archipelago template calls it
+#   main), so it is treated like main everywhere.
+# - pull_request: PRs into develop run the changed packages plus their
+#   dependents; PRs into main and release/* and hotfix/* PRs run everything.
+# - push: develop only, for direct pushes, diffed against the last commit
+#   this workflow passed there. The push of a merged PR tests nothing (its
+#   pull_request run did). No push run on main (every change reaches it
+#   through a PR that already passed) or on PR branches (their
+#   pull_request run covers them).
+# - Version-bump and empty back-merge PRs, and docs-only changes, skip the
+#   suite. Make `ci-ok` the required check: it fails when scope fails or a
+#   test job fails, and passes when they were skipped on purpose.
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main, master]
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  scope:
+    runs-on: ubuntu-latest
+    # actions: read lets scope.sh find the last passing push run.
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      full: ${{ steps.scope.outputs.full }}
+      base: ${{ steps.scope.outputs.base }}
+      version_only: ${{ steps.scope.outputs.version_only }}
+      code: ${{ steps.scope.outputs.code }}
+    steps:
+      # Full history without file contents: enough for merge-base and diffs.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - id: scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash devtools/ci/scope.sh
+
+  test:
+    needs: scope
+    if: needs.scope.outputs.code == 'true' && needs.scope.outputs.version_only != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      # The affected diff needs the scope base commit.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Analyze and test
+        env:
+          FULL: ${{ needs.scope.outputs.full }}
+          BASE: ${{ needs.scope.outputs.base }}
+        run: bash devtools/ci/test.sh
+
+  # The one check to require in branch protection. A job skipped because
+  # scope failed would otherwise count as passing.
+  ci-ok:
+    needs: [scope, test]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scope and tests passed or were skipped on purpose
+        if: needs.scope.result != 'success' || (needs.test.result != 'success' && needs.test.result != 'skipped')
+        run: exit 1
+      - run: echo "CI passed"

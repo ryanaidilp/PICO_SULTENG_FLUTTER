@@ -1,0 +1,38 @@
+name: pico_ui_kit
+description: UI Kit package for Pico with design system foundations
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+
+dependencies:
+  asset_core:
+    path: ../asset_core
+  cupertino_icons: ^1.0.9
+  dependencies:
+    path: ../../shared/dependencies
+  equatable: ^2.1.0
+  flutter:
+    sdk: flutter
+  flutter_svg: ^2.3.0
+  google_fonts: ^8.2.1
+  haptic_feedback: ^0.6.5
+  lottie: ^3.5.1
+  pico_asset:
+    path: ../pico_asset
+  skeletonizer: ^3.0.0
+
+dev_dependencies:
+  alchemist: ^0.14.0
+  flutter_test:
+    sdk: flutter
+  meta: ^1.18.0
+
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,17 @@
+name: app_marionette_noop
+description: Release and profile twin of app_marionette. Installs the plain WidgetsFlutterBinding and has no Marionette dependency. Swapped in via build_prepare.yaml debug_build_only.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  very_good_analysis: ">=10.3.0"

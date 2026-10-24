@@ -1,0 +1,47 @@
+# Asset Generator Configuration
+#
+# Place a copy of this file (renamed to `asset_generator.yaml`) at the root
+# of the package that owns your assets (next to its pubspec.yaml). Fields
+# below match `AssetGeneratorConfig.fromYaml` exactly — this file is loaded
+# as-is, there is no translation layer.
+#
+# Usage:
+#   dart run monorepo_toolkit asset-gen generate
+#   dart run monorepo_toolkit asset-gen generate --dry-run
+
+# Assets root directory, relative to this package's root.
+assets_path: assets
+
+# Output directory for generated enums + barrels, relative to this
+# package's root.
+output_path: lib/src/generated
+
+# Prefix for generated class names (e.g. App -> AppActionsIcons). Must
+# match the prefix used by your asset_core package's contracts
+# (AppIconAsset, AppAssetData, ...) — otherwise the generated code will
+# reference types that don't exist.
+prefix: App
+
+# The `package:` name assets are loaded from (packageName in AppAssetData),
+# usually this package's own name.
+package_name: app_asset
+
+# Import path for asset_core's contracts/data types.
+asset_core_import: package:asset_core/asset_core.dart
+
+# Subdirectories under assets_path/icons/ to scan as separate icon enums
+# (e.g. assets/icons/actions -> AppActionsIcons). Leave empty to treat
+# assets/icons/ as one flat category instead.
+icon_categories:
+  - actions
+  - arrows
+  - communication
+  - essentials
+  - feedback
+  - files
+  - finance
+  - maps
+  - media
+  - security
+  - time
+  - users

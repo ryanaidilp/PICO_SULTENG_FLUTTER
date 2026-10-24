@@ -1,0 +1,29 @@
+{
+  "brick": "affected",
+  "version": "1.0.8",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/affected"
+  ],
+  "files": {
+    "devtools/scripts/affected/ci-affected-matrix.yml.example": "abcb0fb4",
+    "devtools/scripts/affected/lib/affected.dart": "eb0a3aea",
+    "devtools/scripts/affected/lib/src/commands/affected_command.dart": "a8641e2a",
+    "devtools/scripts/affected/lib/src/commands/analyze_command.dart": "fa031640",
+    "devtools/scripts/affected/lib/src/commands/build_command.dart": "d2d34d67",
+    "devtools/scripts/affected/lib/src/commands/devtool_command.dart": "cee23ba1",
+    "devtools/scripts/affected/lib/src/commands/fix_check_command.dart": "e25c6ca8",
+    "devtools/scripts/affected/lib/src/commands/format_command.dart": "1859fdbd",
+    "devtools/scripts/affected/lib/src/commands/golden_command.dart": "925a5bce",
+    "devtools/scripts/affected/lib/src/commands/license_command.dart": "8545da9d",
+    "devtools/scripts/affected/lib/src/commands/list_command.dart": "e277bdcf",
+    "devtools/scripts/affected/lib/src/commands/run_command.dart": "1bfed82e",
+    "devtools/scripts/affected/lib/src/commands/test_command.dart": "68a61da7",
+    "devtools/scripts/affected/lib/src/models/affected_config.dart": "ff475154",
+    "devtools/scripts/affected/lib/src/services/affected_service.dart": "481706a4",
+    "devtools/scripts/affected/pubspec.yaml": "e3d099d2"
+  }
+}

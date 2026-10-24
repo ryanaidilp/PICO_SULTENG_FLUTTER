@@ -1,0 +1,35 @@
+name: push_notification_onesignal_impl
+description: OneSignal provider handler for push_notification_api.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
+
+resolution: workspace
+
+dependencies:
+  app_config:
+    path: ../../../shared/app_config
+  consent_api:
+    path: ../../../shared/consent_api
+  dependencies:
+    path: ../../../shared/dependencies
+  flutter:
+    sdk: flutter
+  onesignal_flutter: ^5.6.7
+  push_notification_api:
+    path: ../push_notification_api
+
+dev_dependencies:
+  build_runner: ^2.15.1
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^3.0.2
+  mocktail: ^1.0.5
+  very_good_analysis: ">=10.3.0"
+
+archipelago:
+  di_modules:
+    - class: PushNotificationOnesignalImplPackageModule

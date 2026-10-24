@@ -1,0 +1,14 @@
+{
+  "title": "Infografis",
+  "images_count": "$count gambar",
+  "page_of": "$n dari $total",
+  "image_alt": "$title, gambar $n dari $total",
+  "view_source": "Lihat sumber",
+  "share": "Bagikan",
+  "no_items": "Belum ada infografis.",
+  "loading_more": "Memuat infografis berikutnya",
+  "not_found": "Infografis tidak ditemukan.",
+  "no_images": "Infografis ini tidak punya gambar.",
+  "zoom_hint": "Ketuk dua kali untuk memperbesar",
+  "images_count_one": "1 gambar"
+}

@@ -1,0 +1,23 @@
+# Size Guard Configuration
+# File size thresholds for monorepo workspaces.
+# Copy to <workspace root>/size_guard.yaml (or run `size-guard check
+# --config example/size_guard.yaml`) to activate.
+
+size_guard:
+  threshold: "500KB"
+  extensions:
+    - png
+    - jpg
+    - jpeg
+    - gif
+    - webp
+    - mp3
+    - mp4
+  ignore_paths:
+    - .git
+    - .dart_tool
+    - build
+  ignore_patterns:
+    - "**/*.g.dart"
+    - "**/build/**"
+    - "**/.dart_tool/**"

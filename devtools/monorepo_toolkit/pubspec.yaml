@@ -1,0 +1,60 @@
+name: monorepo_toolkit
+description: >-
+  A CLI tool for managing Flutter/Dart monorepo workspaces,
+  including dependency management, code generation, and project scaffolding.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+
+dependencies:
+  affected:
+    path: ../scripts/affected
+  app_scaffold:
+    path: ../scripts/app_scaffold
+  args: ^2.7.0
+  asset_generator:
+    path: ../scripts/asset_generator
+  asset_optimizer:
+    path: ../scripts/asset_optimizer
+  build_prepare:
+    path: ../scripts/build_prepare
+  changelog_generator:
+    path: ../scripts/changelog_generator
+  coverage_manager:
+    path: ../scripts/coverage_manager
+  dependency_graph:
+    path: ../scripts/dependency_graph
+  dependency_manager:
+    path: ../scripts/dependency_manager
+  detect_new_library:
+    path: ../scripts/detect_new_library
+  env_sync:
+    path: ../scripts/env_sync
+  flavor_manager:
+    path: ../scripts/flavor_manager
+  host_registry_generator:
+    path: ../scripts/host_registry_generator
+  permission_guard:
+    path: ../scripts/permission_guard
+  prepare:
+    path: ../scripts/prepare
+  run_app:
+    path: ../scripts/run_app
+  shared_scripts:
+    path: ../scripts/shared_scripts
+  size_analyzer:
+    path: ../scripts/size_analyzer
+  size_guard:
+    path: ../scripts/size_guard
+  ui_kit_generator:
+    path: ../scripts/ui_kit_generator
+  workspace_setup:
+    path: ../scripts/workspace_setup
+
+executables:
+  monorepo_toolkit:

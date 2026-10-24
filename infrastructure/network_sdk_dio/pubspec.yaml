@@ -1,0 +1,35 @@
+name: network_sdk_dio
+description: Dio-based HTTP client implementation.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  app_config:
+    path: ../../shared/app_config
+  dependencies:
+    path: ../../shared/dependencies
+  dio: ^5.11.0
+  flutter:
+    sdk: flutter
+  network_sdk_api:
+    path: ../network_sdk_api
+
+dev_dependencies:
+  build_runner: ^2.15.1
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^3.0.2
+  very_good_analysis: ">=10.3.0"
+
+# Declares the package's DI module so `monorepo_toolkit generate
+# host-registry` can regenerate the host injector's marker regions without
+# losing this registration. No real ordering constraint on other infra
+# packages, so `depends_on` is intentionally left empty.
+archipelago:
+  di_modules:
+    - class: NetworkSdkDioPackageModule

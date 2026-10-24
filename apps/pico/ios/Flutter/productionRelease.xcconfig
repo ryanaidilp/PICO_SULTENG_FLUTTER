@@ -1,0 +1,6 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"
+#include "Generated.xcconfig"
+
+ASSET_PREFIX=production
+BUNDLE_NAME=PICO Sulteng
+BUNDLE_DISPLAY_NAME=PICO Sulteng

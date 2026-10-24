@@ -1,0 +1,38 @@
+# Asset Optimizer Configuration
+# Configures image optimization for SVG, PNG, and JPEG assets.
+#
+# Usage:
+#   dart run monorepo_toolkit assets optimize
+#   dart run monorepo_toolkit assets optimize --dry-run
+#
+# Tools required:
+#   SVG:  npm install -g svgo
+#   PNG:  brew install oxipng  (macOS) or cargo install oxipng
+#   JPEG: brew install jpegoptim  (macOS) or apt-get install jpegoptim
+
+asset_optimizer:
+  # Directories to scan for assets. Omit to use these defaults.
+  # paths:
+  #   - apps/*/assets
+  #   - apps/*/*/assets
+  #   - packages/*/assets
+
+  # SVG optimization via svgo
+  svg:
+    enabled: true
+    # disable_plugins:
+    #   - removeViewBox
+
+  # PNG optimization via oxipng
+  png:
+    enabled: true
+    level: 4  # 1-6, higher = smaller but slower
+
+  # JPEG optimization via jpegoptim
+  jpeg:
+    enabled: true
+    quality: 80  # 1-100
+
+  # Glob patterns to exclude
+  # ignore:
+  #   - '**/vendor/**'

@@ -1,67 +1,407 @@
-name: pico_sulteng_flutter
-version: 7.0.0+13
-publish_to: none
-description: Pusat Informasi Covid-19 Sulawesi Tengah
+name: pico_workspace
+description: "A monorepo Flutter project with Melos for Pico"
+
+version: 0.1.0
+
 environment:
-  sdk: ">=2.18.2 <3.0.0"
+  sdk: ">=3.13.0 <4.0.0"
+  flutter: ">=3.47.0"
 
 dependencies:
-  animate_icons: ^2.0.0
-  bubble_tab_indicator: ^0.1.6
-  carousel_slider: ^4.2.1
-  cupertino_icons: ^1.0.5
-  envied: ^0.3.0
-  eva_icons_flutter: ^3.1.0
-  extended_image: ^7.0.2
   flutter:
     sdk: flutter
-  flutter_animation_progress_bar: ^2.3.1
-  flutter_app_name: ^0.1.1
-  flutter_inappwebview: ^5.7.2+3
-  flutter_launcher_icons: ^0.11.0
-  flutter_native_splash: ^2.1.3+1
-  flutter_spinkit: ^5.1.0
-  get: ^4.6.5
-  google_fonts: ^4.0.3
-  http: ^0.13.5
-  iconsax: ^0.0.8
-  infinite_scroll_pagination: ^3.2.0
-  internet_connection_checker: ^1.0.0+1
-  intl: ^0.18.0
-  line_icons: ^2.0.1
-  lint: ^2.0.1
-  lottie: ^2.3.0
-  onesignal_flutter: ^3.5.1
-  pull_to_refresh: ^2.0.0
-  shimmer: ^2.0.0
-  sleek_circular_slider: ^2.0.1
-  url_launcher: ^6.1.10
 
 dev_dependencies:
-  build_runner: ^2.3.3
-  envied_generator: ^0.3.0
-  flutter_lints: ^2.0.1
-  flutter_test:
-    sdk: flutter
+  app_lints:
+    path: utilities/app_lints
+  melos: ">=7.8.1"
+  very_good_analysis: ">=10.3.0"
 
 flutter:
-  assets:
-    - assets/images/
-    - assets/icons/
-    - assets/geojson/
-    - assets/lottie/
   uses-material-design: true
 
-flutter_native_splash:
-  image: assets/images/logo.png
-  color: ffffff
-  android_disable_fullscreen: true
+# Temporary vendoring, see third_party/VENDORED_PATCH.md and
+# third_party/mason_logger/PROVENANCE.md (Archipelago-r4et). Remove once
+# mason_logger publishes a win32 ^6.x-compatible release on pub.dev.
+dependency_overrides:
+  mason_logger:
+    path: third_party/mason_logger
+  package_info_plus: ^10.2.1
+  share_plus: ^13.3.0
+  win32: ^6.4.0
+  xml: ^7.0.1
 
-flutter_icons:
-  image_path_ios: assets/images/logo.png
-  image_path_android: assets/images/logo.png
-  ios: true
-  android: true
+workspace:
+  - apps/*
+  - devtools/**
+  - shared/**
+  - packages/*
+  - infrastructure/**
+  - features/**
+  - utilities/*
 
-flutter_app_name:
-  name: "PICO SulTeng"
+melos:
+  command:
+    bootstrap:
+      environment:
+        sdk: ">=3.13.0 <4.0.0"
+        flutter: ">=3.47.0"
+      dev_dependencies:
+        build_runner: ^2.15.1
+        mocktail: ^1.0.5
+        very_good_analysis: ">=10.3.0"
+      hooks:
+        # NOTE: lifecycle hooks must nest under `hooks:` — melos silently
+        # ignores a `pre`/`post` key placed directly under the command (no
+        # unknown-key validation), so `clean.pre` sat dead here for a long
+        # time without ever actually running. See Archipelago-hol4.
+        post: dart run melos run env:ensure
+    clean:
+      hooks:
+        pre: dart run melos run build:clean
+
+  scripts:
+    analyze:select:
+      run: dart run melos exec -- "flutter analyze --no-fatal-infos --no-fatal-warnings lib"
+      description: "Perform static analysis on selected packages."
+
+    analyze:
+      run: dart run melos run analyze:select --no-select
+      description: "Run static analysis on all packages."
+      failFast: true
+
+    build:select:
+      run: dart run melos exec --order-dependents --ignore=pico --depends-on=build_runner -- "dart run build_runner build"
+      description: "Run build_runner for non-app packages in topological order."
+      packageFilters:
+        excludes:
+          - pico
+        dependsOn:
+          - build_runner
+
+    build:
+      # Chains build:select (all non-app packages) then build:app (the host
+      # app itself, which build:select explicitly --ignore=s). Without the
+      # second step, `melos run build` — the one documented, "just works"
+      # command — never generates the app's injector.config.dart /
+      # app_router.gr.dart, so a fresh scaffold fails `flutter analyze`
+      # out of the box (Archipelago-ytsg). build:select and build:app
+      # remain independently runnable for iterative package-only loops.
+      #
+      # l10n:generate:all runs BETWEEN the two, and is not optional
+      # (Archipelago-hb4w). build:select selects packages with
+      # `--depends-on=build_runner`, which only matches a DIRECT dependency.
+      # shared/locale_core declares only `slang_build_runner` (build_runner is
+      # merely transitive), so build:select silently skips it even though its
+      # build.yaml wires a working slang_build_runner target — verified: a
+      # direct `dart run build_runner build` inside shared/locale_core writes
+      # the 3 translation files fine, `melos run build` never does. Since
+      # generated projects gitignore *.g.dart, `lib/src/translations/` is
+      # empty on every fresh clone and CI checkout, and nothing in the
+      # documented build command could produce it; every package importing
+      # locale_core then fails to compile. Placed after build:select so the
+      # standalone slang CLI never runs BEFORE build_runner for a package
+      # build_runner also generates slang output for (that ordering is what
+      # collided with "InvalidOutputException: Asset already exists" in
+      # Archipelago-m6r1), and before build:app so the host app's own codegen
+      # resolves against real translations.
+      #
+      # The committed injector.module.dart files (see .gitignore) are formatted
+      # last: build_runner writes them unformatted, while generation and brick
+      # hooks format them, so every build or brick run left them modified.
+      run: dart run melos run build:select --no-select && dart run melos run l10n:generate:all --no-select && dart run melos run build:app --no-select && find . -name '*.module.dart' -not -path '*/.dart_tool/*' -not -path '*/build/*' -exec dart format {} +
+      description: "Run build_runner + slang for all eligible packages, including the host app."
+      orderDependents: true
+
+    build:clean:
+      run: dart run melos exec -- "dart run build_runner clean"
+      description: "Clean build artifacts using build_runner."
+      orderDependents: true
+
+    build:app:
+      run: dart run melos exec --order-dependents --scope="*pico*" -- "dart run build_runner build"
+      description: "Run build_runner for the app package."
+      orderDependents: true
+      packageFilters:
+        scope:
+          - "*pico*"
+
+    build-prepare:debug:
+      run: dart run monorepo_toolkit build-prepare debug --mode debug
+      description: "Swap noop dependencies (Marionette included) back to the debug versions."
+
+    build-prepare:production:
+      run: dart run monorepo_toolkit build-prepare --flavor production --mode release
+      description: "Swap debug tooling and Marionette to their noop twins for a production release build."
+
+    # Alias of build-prepare:production (ADR-035).
+    build-prepare:release:
+      run: dart run monorepo_toolkit build-prepare --flavor production --mode release
+      description: "Alias of build-prepare:production."
+
+    env:init:
+      run: dart run monorepo_toolkit env init
+      description: "Initialize env configuration for all flavors."
+
+    env:add:
+      run: dart run monorepo_toolkit env add
+      description: "Add a new env variable to all flavors."
+
+    env:sync:
+      run: dart run monorepo_toolkit env sync
+      description: "Sync FlavorStatus enum with configured flavors in flavors.yaml."
+
+    env:switch:
+      run: dart run monorepo_toolkit env switch
+      description: "Switch active flavor by copying .env.<flavor> to .env. Pass flavor via 'melos run env:switch -- <flavor>'."
+
+    env:ensure:
+      run: dart run monorepo_toolkit env switch development --if-missing
+      description: "Seed shared/app_config/.env from .env.development if it doesn't exist yet. Idempotent — run automatically after every 'melos bootstrap' so a fresh clone can codegen without a manual cp."
+
+    env:generate:
+      run: dart run melos exec -- "dart run build_runner build"
+      description: "Generate envied code for app_config package."
+      packageFilters:
+        scope: "app_config"
+
+    fix:select:
+      run: dart run melos exec -- "dart fix --apply"
+      description: "Apply automated fixes to Dart code in selected packages."
+
+    fix:
+      run: dart run melos run fix:select --no-select
+      description: "Apply automated fixes to Dart code in all packages."
+      failFast: true
+
+    format:
+      run: dart run melos exec -- "dart format ."
+      description: "Format all Dart files in the workspace."
+      failFast: true
+
+    # Golden (pixel-diff) tests are excluded by TAG, not by package name: a
+    # *_ui_kit package grows ordinary widget/logic tests next to its goldens,
+    # and a whole-package ignore would silently skip those too. Every golden
+    # test carries `golden` (GoldenTestHelper adds it). Golden fixtures are
+    # sensitive to the Skia engine / font-hinting / OS they were captured on,
+    # so they are not a reliable default CI signal. `flutter test` exits 79
+    # ("No tests match the requested tag selectors") when the exclusion leaves
+    # nothing to run (a package whose tests are all golden), so 79 counts as
+    # success; any other exit code still fails. Single quotes keep `$?` for the
+    # per-package shell. Run goldens with `melos run test:golden`
+    # (Archipelago-6649, generalizes Archipelago-g2fq).
+    test:select:
+      run: dart run melos exec -- 'flutter test --coverage --exclude-tags golden || [ $? -eq 79 ]'
+      description: "Run flutter test with coverage on selected packages, excluding golden tests."
+      packageFilters:
+        dirExists: test
+
+    test:
+      run: dart run melos run test:select --no-select
+      description: "Run flutter test with coverage on all packages with tests."
+      failFast: true
+
+    test:golden:select:
+      run: dart run melos exec -- "flutter test --tags golden"
+      description: >-
+        Run golden (pixel-diff) tests on selected *_ui_kit packages,
+        read-only against committed fixtures. Opt-in — excluded from
+        test:select/test by default via --exclude-tags golden (see the comment there).
+      packageFilters:
+        scope: "*ui_kit*"
+
+    test:golden:
+      run: dart run melos run test:golden:select --no-select
+      description: >-
+        Run golden tests on all *_ui_kit packages, read-only. To
+        (re)generate fixtures for your machine/CI image, run inside the
+        package instead: flutter test --tags golden --update-goldens
+
+    workspace:setup:
+      run: dart run monorepo_toolkit workspace setup
+      description: "Setup workspace by finding all packages and updating workspace list."
+      failFast: true
+
+    affected:list:
+      run: dart run monorepo_toolkit affected list
+      description: "List packages affected by changes since the base branch."
+
+    affected:analyze:
+      run: dart run monorepo_toolkit affected analyze
+      description: "Run analysis on affected packages only."
+
+    affected:test:
+      run: dart run monorepo_toolkit affected test
+      description: "Run tests on affected packages only."
+
+    affected:run:
+      run: dart run monorepo_toolkit affected run
+      description: "Run a custom command on affected packages."
+
+    coverage:init:
+      run: dart run monorepo_toolkit coverage init
+      description: "Initialize coverage configuration."
+
+    coverage:run:
+      run: dart run monorepo_toolkit coverage run
+      description: "Run tests with coverage collection."
+
+    coverage:combine:
+      run: dart run monorepo_toolkit coverage combine
+      description: "Combine coverage reports from all packages."
+
+    coverage:check:
+      run: dart run monorepo_toolkit coverage check
+      description: "Check coverage against configured thresholds."
+
+    coverage:full:
+      run: dart run monorepo_toolkit coverage full
+      description: "Run full coverage pipeline (run + combine + check)."
+
+    coverage:run:parallel:
+      run: dart run melos exec --concurrency=4 -- 'flutter test --coverage --exclude-tags golden || [ $? -eq 79 ]'
+      description: "Run tests with coverage in parallel (4 packages at once), excluding golden tests."
+      packageFilters:
+        dirExists: test
+        # See test:select above (Archipelago-6649) — same reasoning applies.
+
+    graph:visualize:
+      run: dart run monorepo_toolkit graph visualize
+      description: "Generate a visual dependency graph."
+
+    graph:stats:
+      run: dart run monorepo_toolkit graph stats
+      description: "Show dependency statistics for the workspace."
+
+    graph:cycles:
+      run: dart run monorepo_toolkit graph cycles
+      description: "Detect circular dependencies in the workspace."
+
+    graph:validate:
+      run: dart run monorepo_toolkit graph validate
+      description: "Validate dependency graph rules (CI enforcement)."
+
+    di:check:
+      run: >-
+        dart run monorepo_toolkit generate host-registry --check &&
+        dart run monorepo_toolkit generate test-harness --check
+      description: >-
+        Fail if an app's injector.dart or test/support/composition_root_harness.dart
+        is out of sync with the archipelago: di_modules / test_prerequisites
+        manifests. Add it to your CI workflow to enforce.
+
+    changelog:
+      run: dart run monorepo_toolkit changelog
+      description: "Write a CHANGELOG.md entry from commits since the last tag."
+
+    size-guard:check:
+      run: dart run monorepo_toolkit size-guard check
+      description: "Check file sizes against configured thresholds."
+
+    assets:optimize:
+      run: dart run monorepo_toolkit assets optimize
+      description: "Optimize image assets in the workspace."
+
+    asset-gen:generate:
+      run: dart run monorepo_toolkit asset-gen generate
+      description: "Generate type-safe asset enums from directory structure."
+
+    ui-kit:list:
+      run: dart run monorepo_toolkit ui-kit list
+      description: "List registered UI Kit components."
+
+    ui-kit:add:
+      run: dart run monorepo_toolkit ui-kit add
+      description: "Add a new UI Kit component."
+
+    ui-kit:remove:
+      run: dart run monorepo_toolkit ui-kit remove
+      description: "Remove a UI Kit component."
+
+    ui-kit:status:
+      run: dart run monorepo_toolkit ui-kit status
+      description: "Show status of UI Kit components."
+
+    ui-kit:create:
+      run: dart run monorepo_toolkit ui-kit create
+      description: "Create a new UI Kit component from template."
+
+    theme-variant:
+      run: dart run monorepo_toolkit theme-variant
+      description: "Generate theme variant classes from config."
+
+    deps:add:
+      run: dart run monorepo_toolkit deps add
+      description: "Add a dependency to a package."
+
+    deps:remove:
+      run: dart run monorepo_toolkit deps remove
+      description: "Remove a dependency from a package."
+
+    deps:external:
+      run: dart run monorepo_toolkit deps external
+      description: "Add an external (pub.dev) dependency."
+
+    deps:internal:
+      run: dart run monorepo_toolkit deps internal
+      description: "Add an internal (workspace) dependency."
+
+    deps:check:
+      run: dart run monorepo_toolkit deps check
+      description: "List direct pins that drift between packages or duplicate the dependencies barrels."
+
+    deps:align:
+      run: dart run monorepo_toolkit deps align
+      description: "Set every direct pin of a package to one constraint."
+
+    deps:diagnose:
+      run: dart run monorepo_toolkit deps diagnose
+      description: "Run pub get and explain a version-solving failure."
+
+    flavor:list:
+      run: dart run monorepo_toolkit flavor list
+      description: "List configured flavors."
+
+    flavor:list-apps:
+      run: dart run monorepo_toolkit flavor list-apps
+      description: "List apps that support flavors."
+
+    flavor:add:
+      run: dart run monorepo_toolkit flavor add
+      description: "Add a new flavor."
+
+    flavor:generate:
+      run: dart run monorepo_toolkit flavor generate
+      description: "Generate flavor configuration files."
+
+    flavor:sync:
+      run: dart run monorepo_toolkit flavor sync
+      description: "Sync flavor configuration across packages."
+
+    app:create:
+      run: dart run monorepo_toolkit app create
+      description: "Scaffold a new Flutter app from Mason brick."
+
+    run:app:
+      run: dart run monorepo_toolkit run
+      description: "Run a Flutter app with interactive flavor and device selection."
+
+    l10n:generate:
+      run: dart run melos exec --scope="locale_core" -- "dart run slang"
+      description: "Generate slang translations for locale_core."
+
+    l10n:generate:all:
+      run: dart run melos exec -- "dart run slang"
+      description: "Generate slang translations for all packages with slang.yaml."
+      packageFilters:
+        fileExists: slang.yaml
+
+    integration-test:
+      run: |
+        cd apps/pico && patrol test --flavor development --target integration_test/app_test.dart
+      description: "Run Patrol integration tests on the app."
+
+    integration-test:all:
+      run: |
+        cd apps/pico && patrol test --flavor development
+      description: "Run all Patrol integration tests."

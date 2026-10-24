@@ -1,0 +1,8 @@
+# detect-new-library configuration
+# Run locally: dart run monorepo_toolkit detect-new-library check
+
+fail_on_new: false
+
+ignored_packages:
+  - flutter
+  - dart

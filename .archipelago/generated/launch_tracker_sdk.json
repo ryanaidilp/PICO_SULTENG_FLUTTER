@@ -1,0 +1,29 @@
+{
+  "brick": "launch_tracker_sdk",
+  "version": "3.3.5",
+  "vars": {
+    "isForMonorepo": true,
+    "appName": "Pico"
+  },
+  "dirs": [
+    "infrastructure/app_launch_tracker_impl"
+  ],
+  "files": {
+    "infrastructure/app_launch_tracker_impl/android/build.gradle": "cc97f1b7",
+    "infrastructure/app_launch_tracker_impl/android/src/main/AndroidManifest.xml": "9ce11e71",
+    "infrastructure/app_launch_tracker_impl/android/src/main/kotlin/com/archipelago/app_launch_tracker/LaunchTimeTrackerPlugin.kt": "db26308d",
+    "infrastructure/app_launch_tracker_impl/ios/Classes/LaunchTimeTrackerPlugin.swift": "a6c15d87",
+    "infrastructure/app_launch_tracker_impl/ios/app_launch_tracker_impl.podspec": "162c36bc",
+    "infrastructure/app_launch_tracker_impl/lib/app_launch_tracker_impl.dart": "b5a5406c",
+    "infrastructure/app_launch_tracker_impl/lib/src/app_launch_metrics.dart": "d7986b69",
+    "infrastructure/app_launch_tracker_impl/lib/src/app_launch_tracker_impl.dart": "41ca823c",
+    "infrastructure/app_launch_tracker_impl/lib/src/di/injector.dart": "5bd51d6f",
+    "infrastructure/app_launch_tracker_impl/lib/src/launch_time_tracker_channel.dart": "ea906d63",
+    "infrastructure/app_launch_tracker_impl/lib/src/launch_trace.dart": "6ff4cfea",
+    "infrastructure/app_launch_tracker_impl/lib/src/trace_utils.dart": "bb5acca9",
+    "infrastructure/app_launch_tracker_impl/pubspec.yaml": "d5b63cad",
+    "infrastructure/app_launch_tracker_impl/test/app_launch_tracker_test.dart": "6049e33e",
+    "infrastructure/app_launch_tracker_impl/test/injector_module_test.dart": "3124a612",
+    "infrastructure/app_launch_tracker_impl/test/launch_trace_test.dart": "e1d364f8"
+  }
+}

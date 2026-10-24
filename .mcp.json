@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "marionette": {
+      "type": "stdio",
+      "command": "marionette_mcp",
+      "args": []
+    }
+  }
+}

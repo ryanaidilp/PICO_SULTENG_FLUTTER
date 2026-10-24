@@ -1,0 +1,36 @@
+{
+  "brick": "monitoring_sdk",
+  "version": "2.0.7",
+  "vars": {
+    "isForMonorepo": true,
+    "appName": "Pico"
+  },
+  "dirs": [
+    "infrastructure/monitoring_api",
+    "infrastructure/monitoring_impl",
+    "infrastructure/monitoring_noop"
+  ],
+  "files": {
+    "infrastructure/monitoring_api/README.md": "8d5d9b3",
+    "infrastructure/monitoring_api/lib/monitoring_api.dart": "154f338b",
+    "infrastructure/monitoring_api/lib/src/monitoring/app_monitoring.dart": "eea63f51",
+    "infrastructure/monitoring_api/lib/src/monitoring/app_monitoring_vendor.dart": "1214e613",
+    "infrastructure/monitoring_api/lib/src/monitoring/consent_withdrawal_aware.dart": "c2e10515",
+    "infrastructure/monitoring_api/lib/src/monitoring/flutter_aware_monitoring_vendor.dart": "f7b27038",
+    "infrastructure/monitoring_api/lib/src/monitoring/monitoring_level.dart": "7b29f535",
+    "infrastructure/monitoring_api/lib/src/utils/monitoring_injector_key.dart": "d752ad69",
+    "infrastructure/monitoring_api/pubspec.yaml": "23c83f95",
+    "infrastructure/monitoring_impl/README.md": "809ea713",
+    "infrastructure/monitoring_impl/lib/monitoring_impl.dart": "7234e198",
+    "infrastructure/monitoring_impl/lib/src/consent_aware_monitoring.dart": "77ea1ed0",
+    "infrastructure/monitoring_impl/lib/src/di/injector.dart": "1e009aa7",
+    "infrastructure/monitoring_impl/lib/src/di/register_module.dart": "41bcc471",
+    "infrastructure/monitoring_impl/lib/src/monitoring_fanout_impl.dart": "8ca7899",
+    "infrastructure/monitoring_impl/pubspec.yaml": "e76716e8",
+    "infrastructure/monitoring_noop/README.md": "32e0a048",
+    "infrastructure/monitoring_noop/lib/monitoring_noop.dart": "10ee9f79",
+    "infrastructure/monitoring_noop/lib/src/consent_aware_monitoring.dart": "77d15286",
+    "infrastructure/monitoring_noop/lib/src/di/injector.dart": "8e0ee0a8",
+    "infrastructure/monitoring_noop/pubspec.yaml": "7048e8cd"
+  }
+}

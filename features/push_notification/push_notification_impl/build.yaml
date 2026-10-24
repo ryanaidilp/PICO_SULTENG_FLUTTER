@@ -1,0 +1,42 @@
+targets:
+  $default:
+    sources:
+      - "$package$"
+      - "l10n/**"
+      - "lib/**"
+    builders:
+      # Generated projects ignore *.g.dart, so build_runner writes the slang
+      # output (template_base commits it and disables this builder instead).
+      # Keep the options in step with slang.yaml.
+      # The default builder fails with "Asset already exists" when its
+      # outputs are on disk but not in build_runner's asset graph, for
+      # example after .dart_tool/build is deleted or restored from a cache.
+      # The legacy builder writes the same files and overwrites them.
+      # (Archipelago-6n5d)
+      slang_build_runner:
+        enabled: false
+      slang_build_runner:legacy:
+        enabled: true
+        options:
+          base_locale: en
+          fallback_strategy: base_locale
+          input_directory: l10n
+          input_file_pattern: .i18n.json
+          output_directory: lib/src/l10n
+          output_file_name: push_translations.g.dart
+          locale_handling: true
+          flutter_integration: true
+          namespaces: false
+          translate_var: pushL10n
+          enum_name: PushLocale
+          class_name: PushTranslations
+          translation_class_visibility: public
+          key_case: camel
+          key_map_case: camel
+          param_case: camel
+          string_interpolation: dart
+          flat_map: false
+          translation_overrides: false
+          timestamp: true
+          statistics: true
+          lazy: false

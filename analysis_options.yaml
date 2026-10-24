@@ -1,34 +1,125 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
+##################################################################################
+##                      Linter rules for all packages                           ##
+##                      -----------------------------                           ##
+## Note that there is no need to define another                                 ##
+## analysis-options.yaml in each package because they will                      ##
+## automatically go up the tree if not found in the package. See here:          ##
+## https://dart.dev/guides/language/analysis-options#the-analysis-options-file  ##
+##################################################################################
+include: package:very_good_analysis/analysis_options.yaml
 
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
-include: package:flutter_lints/flutter.yaml
+formatter:
+  trailing_commas: automate
+
+##
+# Lint rules to be used for apps without developer facing API. i.e. command line tools and Flutter applications
+##
+plugins:
+  app_lints:
+    path: utilities/app_lints
+    diagnostics:
+      no_pii_in_telemetry: true
+      feature_global_module_allowlist: true
+      no_service_locator_outside_di: true
+      no_service_locator_in_manifest: true
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    # treat missing required parameters as an error (not a hint)
+    missing_required_param: error
+    # treat missing returns as an error (not a hint)
+    missing_return: error
+    # Reassignment should be treated as warning (not a hint)
+    parameter_assignments: warning
+    invalid_annotation_target: ignore
+    one_member_abstracts: ignore
+    public_member_api_docs: ignore
+
+  # Exclude auto-generated files from dart analysis
+  exclude:
+    - "**/**.freezed.dart"
+    - "**/**.config.dart"
+    - "**/**.module.dart"
+    - "**/**.gr.dart"
+    - "**/**.gm.dart"
+    - "**/**.g.dart"
+    - build/**
 
 linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at
-  # https://dart-lang.github.io/linter/lints/index.html.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    prefer_single_quotes: true # Uncomment to enable the `prefer_single_quotes` rule
-    use_super_parameters: true
-    constant_identifier_names: false
+    ########################################################################
+    ##                            CUSTOM RULES                            ##
+    ##                       -----------------------                      ##
+    ##                                                                    ##
+    ## Those rules are either :                                           ##
+    ##  -  disabled in inherited package and enabled here (if true here)  ##
+    ##  -  enabled in inherited package and disabled here (if false here) ##
+    ########################################################################
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
-analyzer:
-  errors:
-    invalid_annotation_target: ignore
+    always_put_required_named_parameters_first: true
+    require_trailing_commas: true
+    unnecessary_underscores: true
+    avoid_positional_boolean_parameters: false
+    avoid_catches_without_on_clauses: false
+
+    # Enforce package imports over relative imports in lib/
+    always_use_package_imports: true
+
+    # Prefer expression bodies for concise code
+    prefer_expression_function_bodies: true
+
+    # Nobody wants to manually wrap lines when changing a few words
+    lines_longer_than_80_chars: false
+
+    # Types for local variables can improve readability
+    omit_local_variable_types: false
+
+
+    # Only relevant for packages, not applications
+    public_member_api_docs: false
+
+    # No argument which makes int literals better than double literals for doubles
+    prefer_int_literals: false
+
+    # Sorting pub dependencies improves readability
+    sort_pub_dependencies: true
+
+    # Use single quotes consistently
+    prefer_single_quotes: true
+
+    # Too opinionated for constructor ordering
+    sort_constructors_first: false
+
+    # Collection methods with unrelated types
+    collection_methods_unrelated_type: true
+
+    # Combinators ordering
+    combinators_ordering: true
+
+    # Dangling library doc comments
+    dangling_library_doc_comments: true
+
+    # Library annotations
+    library_annotations: true
+
+    # Unnecessary library directive
+    unnecessary_library_directive: true
+
+    # Implicit call tearoffs
+    implicit_call_tearoffs: true
+
+    # Unreachable from main
+    unreachable_from_main: true
+
+    # Use string in part of directives
+    use_string_in_part_of_directives: true
+
+    specify_nonobvious_property_types: false
+
+    cascade_invocations: false
+
+    discarded_futures: false

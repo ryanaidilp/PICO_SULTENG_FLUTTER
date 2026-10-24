@@ -1,0 +1,186 @@
+name: Build iOS
+
+on:
+  workflow_call:
+    inputs:
+      flavor:
+        required: true
+        type: string
+        description: "Build flavor (development, staging, production)"
+      destination:
+        required: false
+        type: string
+        default: "firebase"
+        description: "Distribution destination (firebase, testflight, appstore)"
+      build_number:
+        required: false
+        type: string
+        default: ""
+        description: "Build number override. Defaults to git commit count."
+    secrets:
+      MATCH_GIT_URL:
+        required: true
+      MATCH_PASSWORD:
+        required: true
+      APPLE_ID:
+        required: true
+      TEAM_ID:
+        required: true
+      ITC_TEAM_ID:
+        required: false
+      APP_IDENTIFIER:
+        required: false
+      FIREBASE_IOS_APP_ID:
+        required: false
+      SLACK_WEBHOOK_URL:
+        required: false
+      APP_STORE_CONNECT_API_KEY_ID:
+        required: false
+      APP_STORE_CONNECT_API_ISSUER_ID:
+        required: false
+      APP_STORE_CONNECT_API_KEY_CONTENT:
+        required: false
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: apps/pico
+    env:
+      FLAVOR: ${{ inputs.flavor }}
+      BUILD_NUM: ${{ inputs.build_number }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+          working-directory: apps/pico
+
+      - name: Install dependencies
+        run: |
+          cd ../..
+          dart pub get
+
+      - name: Melos bootstrap
+        run: |
+          cd ../..
+          dart pub global activate melos
+          melos bootstrap
+
+      - name: Initialize and switch env config
+        run: |
+          cd ../..
+          melos run env:init
+          melos run env:switch -- "$FLAVOR"
+
+      # *.g.dart/*.config.dart/*.gr.dart are gitignored (see .gitignore), so
+      # a fresh CI checkout has none of them — without this step every build
+      # below fails immediately on missing generated sources
+      # (Archipelago-9n5c). Must run after the env steps above: app_config's
+      # envied codegen (part of build:select) hard-fails on a missing/empty
+      # .env (Archipelago-r3mx).
+      - name: Generate code (build_runner)
+        run: |
+          cd ../..
+          melos run build
+
+      # Separate generator from build_runner: <app>_asset's `lib/src/generated/`
+      # (icon/animation/logo constants) is also gitignored, and is produced by
+      # this bespoke codegen command, not build_runner — `melos run build`
+      # above does not cover it. Without this step `flutter build` fails with
+      # "No such file or directory" on the asset package's generated barrel
+      # (Archipelago-lagb).
+      - name: Generate code (assets)
+        run: |
+          cd ../..
+          melos run asset-gen:generate
+
+      - name: Install CocoaPods
+        run: |
+          cd ios
+          pod install
+
+      - name: Distribute to Firebase
+        if: inputs.destination == 'firebase'
+        run: bundle exec fastlane ios distribute_firebase flavor:"$FLAVOR" build_number:"$BUILD_NUM"
+        env:
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+          APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
+          FIREBASE_IOS_APP_ID_DEVELOPMENT: ${{ secrets.FIREBASE_IOS_APP_ID }}
+          FIREBASE_IOS_APP_ID_STAGING: ${{ secrets.FIREBASE_IOS_APP_ID }}
+          FIREBASE_IOS_APP_ID_PRODUCTION: ${{ secrets.FIREBASE_IOS_APP_ID }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Deploy to TestFlight
+        if: inputs.destination == 'testflight'
+        run: bundle exec fastlane ios deploy_testflight flavor:"$FLAVOR" build_number:"$BUILD_NUM"
+        env:
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+          ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+          APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
+          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Deploy to App Store
+        if: inputs.destination == 'appstore'
+        run: bundle exec fastlane ios deploy_app_store flavor:"$FLAVOR" build_number:"$BUILD_NUM"
+        env:
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
+          ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+          APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
+          APP_STORE_CONNECT_API_KEY_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # Fails a production-flavor build that still resolves a debug-only
+      # package (ADR-035; internal flavors skip that part), and any release
+      # build that still resolves Marionette (debug_build_only). The Fastfile
+      # runs the same check; this step also covers a customised Fastfile.
+      - name: Check debug tooling leak
+        id: leaks
+        run: |
+          cd ../..
+          dart run monorepo_toolkit build-prepare --check-leaks --flavor "$FLAVOR" --mode release
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-${{ inputs.flavor }}-ipa
+          path: apps/pico/build/ios/ipa/pico.ipa
+          retention-days: 7
+
+      # A skipped or cancelled leak check must not pass as a clean build: this
+      # runs even when an earlier step failed or was skipped and fails the job
+      # unless the check really succeeded.
+      - name: Require the leak check
+        if: always()
+        env:
+          LEAKS_OUTCOME: ${{ steps.leaks.outcome }}
+        run: |
+          if [ "$LEAKS_OUTCOME" != "success" ]; then
+            echo "::error::build-prepare --check-leaks outcome was '$LEAKS_OUTCOME', not 'success'"
+            exit 1
+          fi

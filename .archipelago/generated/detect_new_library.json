@@ -1,0 +1,20 @@
+{
+  "brick": "detect_new_library",
+  "version": "1.0.7",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/detect_new_library"
+  ],
+  "files": {
+    "devtools/scripts/detect_new_library/lib/detect_new_library.dart": "6cbf2bc2",
+    "devtools/scripts/detect_new_library/lib/src/commands/check_command.dart": "83e11dae",
+    "devtools/scripts/detect_new_library/lib/src/commands/detect_new_library_command.dart": "d08ab31",
+    "devtools/scripts/detect_new_library/lib/src/models/new_library_config.dart": "77d65f89",
+    "devtools/scripts/detect_new_library/lib/src/services/detect_new_library_service.dart": "92aedb74",
+    "devtools/scripts/detect_new_library/pubspec.yaml": "b2b92dbb",
+    "devtools/scripts/detect_new_library/test/detect_new_library_service_test.dart": "4b099cda"
+  }
+}

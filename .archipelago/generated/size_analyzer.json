@@ -1,0 +1,22 @@
+{
+  "brick": "size_analyzer",
+  "version": "1.0.7",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/size_analyzer"
+  ],
+  "files": {
+    "devtools/scripts/size_analyzer/lib/size_analyzer.dart": "5e5b117f",
+    "devtools/scripts/size_analyzer/lib/src/commands/analyze_command.dart": "33b952b",
+    "devtools/scripts/size_analyzer/lib/src/commands/size_analyzer_command.dart": "d55c0661",
+    "devtools/scripts/size_analyzer/lib/src/commands/update_baseline_command.dart": "c7c5f634",
+    "devtools/scripts/size_analyzer/lib/src/models/size_node.dart": "4250eadd",
+    "devtools/scripts/size_analyzer/lib/src/reporters/size_metrics_reporter.dart": "3e8ed6c6",
+    "devtools/scripts/size_analyzer/lib/src/services/size_analyzer_service.dart": "30132eee",
+    "devtools/scripts/size_analyzer/pubspec.yaml": "90d3016a",
+    "devtools/scripts/size_analyzer/test/size_analyzer_service_test.dart": "57e7d231"
+  }
+}

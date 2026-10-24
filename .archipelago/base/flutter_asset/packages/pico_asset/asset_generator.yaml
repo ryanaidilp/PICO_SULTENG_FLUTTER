@@ -1,0 +1,27 @@
+# Asset Generator Configuration
+#
+# Configures the asset_generator devtool (see the asset_generator brick /
+# devtools/scripts/asset_generator) to regenerate this package's type-safe
+# asset enums whenever assets/ changes.
+#
+# Usage (from your monorepo root, once the asset_generator brick is added):
+#   dart run monorepo_toolkit asset-gen generate
+#   dart run monorepo_toolkit asset-gen generate --dry-run
+
+assets_path: assets
+output_path: lib/src/generated
+prefix: Pico
+package_name: pico_asset
+icon_categories:
+  - actions
+  - arrows
+  - communication
+  - essentials
+  - feedback
+  - files
+  - finance
+  - maps
+  - media
+  - security
+  - time
+  - users

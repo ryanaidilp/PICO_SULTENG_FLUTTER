@@ -1,0 +1,7 @@
+base_locale: en
+input_directory: l10n
+input_file_pattern: .i18n.json
+output_directory: lib/src/l10n
+output_file_name: translations.g.dart
+key_case: camel
+param_case: camel

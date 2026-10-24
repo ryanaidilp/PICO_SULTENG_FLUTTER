@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "title": "Notifications",
+    "quietHours": "Quiet hours",
+    "quietHoursSubtitle": "Promotions are held back during this time.",
+    "starts": "Starts",
+    "ends": "Ends",
+    "marketing": "Promotions",
+    "marketingSubtitle": "Offers and news. Follows your marketing consent.",
+    "alwaysSent": "Security alerts and transaction updates are always sent."
+  }
+}

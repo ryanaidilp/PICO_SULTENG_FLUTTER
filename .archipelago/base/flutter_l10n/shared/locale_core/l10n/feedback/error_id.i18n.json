@@ -1,0 +1,6 @@
+{
+    "generic": "Terjadi kesalahan",
+    "network": "Tidak ada koneksi internet",
+    "timeout": "Permintaan habis waktu",
+    "unauthorized": "Sesi telah berakhir"
+}

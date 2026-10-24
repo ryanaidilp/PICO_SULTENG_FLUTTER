@@ -1,0 +1,53 @@
+{
+  "brick": "feature_monorepo_skeleton/pico_data",
+  "version": "2.2.0",
+  "vars": {
+    "featureName": "pico_data",
+    "isShared": true,
+    "isDataOnly": true,
+    "hasBusinessLogic": true,
+    "hasLocale": false,
+    "isPlugin": false,
+    "includeGenerated": false,
+    "stateManagement": "none",
+    "prefix": "Pico",
+    "isBloc": false,
+    "isCubit": false,
+    "isRiverpod": false,
+    "isProvider": false,
+    "isNone": true,
+    "usesBloc": false,
+    "usesProvider": false,
+    "usesRiverpod": false,
+    "hasStateManagement": false,
+    "pluginOrg": "com.banuacoders",
+    "pluginOrgPath": "com/banuacoders",
+    "l10nBaseLocale": "en",
+    "l10nInputDirectory": "l10n",
+    "l10nInputFilePattern": ".i18n.json",
+    "l10nOutputDirectory": "lib/src/l10n",
+    "l10nOutputFileName": "translations.g.dart",
+    "uiKitPackageName": "pico_ui_kit"
+  },
+  "dirs": [
+    "features/pico_data"
+  ],
+  "files": {
+    "features/pico_data/README.md": "1918ccaa",
+    "features/pico_data/pico_data_api/analysis_options.yaml": "5ddcb34a",
+    "features/pico_data/pico_data_api/lib/pico_data_api.dart": "4cb54c31",
+    "features/pico_data/pico_data_api/pubspec.yaml": "b4cfb64f",
+    "features/pico_data/pico_data_impl/analysis_options.yaml": "5ddcb34a",
+    "features/pico_data/pico_data_impl/build.yaml": "9402b9e3",
+    "features/pico_data/pico_data_impl/lib/pico_data_impl.dart": "bcbc203",
+    "features/pico_data/pico_data_impl/lib/src/data/data.dart": "d2cfa625",
+    "features/pico_data/pico_data_impl/lib/src/data/datasources/datasources.dart": "d612de89",
+    "features/pico_data/pico_data_impl/lib/src/data/datasources/local/local.dart": "87348372",
+    "features/pico_data/pico_data_impl/lib/src/data/datasources/remote/remote.dart": "186d3c69",
+    "features/pico_data/pico_data_impl/lib/src/data/models/models.dart": "b3d78f3d",
+    "features/pico_data/pico_data_impl/lib/src/data/repositories/repositories.dart": "92898e98",
+    "features/pico_data/pico_data_impl/lib/src/di/injector.dart": "389d63df",
+    "features/pico_data/pico_data_impl/pubspec.yaml": "a1b4bd67",
+    "features/pico_data/pico_data_impl/test/di/pico_data_di_test.dart": "9c4d0027"
+  }
+}

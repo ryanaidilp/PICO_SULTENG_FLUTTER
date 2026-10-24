@@ -1,0 +1,6 @@
+# Active env file — written at build time by `dart run monorepo_toolkit env switch <flavor>`.
+# Never commit this; it contains secrets for the currently active flavor only.
+.env
+
+# Generated envied code — contains obfuscated secrets, commit only if your policy allows.
+lib/src/env/env.g.dart

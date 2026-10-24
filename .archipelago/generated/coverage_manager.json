@@ -1,0 +1,24 @@
+{
+  "brick": "coverage_manager",
+  "version": "1.0.8",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/coverage_manager"
+  ],
+  "files": {
+    "devtools/scripts/coverage_manager/lib/coverage_manager.dart": "ec4b9017",
+    "devtools/scripts/coverage_manager/lib/src/commands/check_command.dart": "aa741766",
+    "devtools/scripts/coverage_manager/lib/src/commands/combine_command.dart": "8435608b",
+    "devtools/scripts/coverage_manager/lib/src/commands/coverage_command.dart": "c56ac1e5",
+    "devtools/scripts/coverage_manager/lib/src/commands/full_command.dart": "875771e9",
+    "devtools/scripts/coverage_manager/lib/src/commands/init_command.dart": "6a8b2f0a",
+    "devtools/scripts/coverage_manager/lib/src/commands/run_command.dart": "24bb6b10",
+    "devtools/scripts/coverage_manager/lib/src/coverage_command.dart": "5c97423c",
+    "devtools/scripts/coverage_manager/lib/src/models/coverage_config.dart": "a8f20f4e",
+    "devtools/scripts/coverage_manager/lib/src/services/coverage_service.dart": "cb362d74",
+    "devtools/scripts/coverage_manager/pubspec.yaml": "ad7e9849"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "brick": "asset_optimizer",
+  "version": "1.1.4",
+  "vars": {
+    "appName": "Pico",
+    "isForMonorepo": true
+  },
+  "dirs": [
+    "devtools/scripts/asset_optimizer"
+  ],
+  "files": {
+    "devtools/scripts/asset_optimizer/example/asset_optimizer.yaml": "dcc078a7",
+    "devtools/scripts/asset_optimizer/lib/asset_optimizer.dart": "28c99c2f",
+    "devtools/scripts/asset_optimizer/lib/src/commands/asset_optimize_command.dart": "5afccf56",
+    "devtools/scripts/asset_optimizer/lib/src/commands/optimize_command.dart": "31bc1517",
+    "devtools/scripts/asset_optimizer/lib/src/models/asset_optimizer_config.dart": "3d5ef277",
+    "devtools/scripts/asset_optimizer/lib/src/services/asset_optimizer_service.dart": "3ed87a56",
+    "devtools/scripts/asset_optimizer/lib/src/services/optimizers/jpeg_optimizer.dart": "315214d4",
+    "devtools/scripts/asset_optimizer/lib/src/services/optimizers/optimizer.dart": "4b015e3d",
+    "devtools/scripts/asset_optimizer/lib/src/services/optimizers/png_optimizer.dart": "c30f1f2e",
+    "devtools/scripts/asset_optimizer/lib/src/services/optimizers/svg_optimizer.dart": "34ee4f24",
+    "devtools/scripts/asset_optimizer/pubspec.yaml": "d0da540d"
+  }
+}

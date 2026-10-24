@@ -1,0 +1,20 @@
+{
+  "apps": {
+    "pico": {
+      "flavors": {
+        "development": {
+          "input_hash": "6cc0e1eaa9c2444440509db7f59c6faa",
+          "last_generated": "2026-10-24T00:18:27.651590"
+        },
+        "production": {
+          "input_hash": "6cc0e1eaa9c2444440509db7f59c6faa",
+          "last_generated": "2026-10-24T00:18:27.660782"
+        },
+        "staging": {
+          "input_hash": "6cc0e1eaa9c2444440509db7f59c6faa",
+          "last_generated": "2026-10-24T00:18:27.661910"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+name: core_infrastructure_api
+description: Contract/API for core infrastructure.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+resolution: workspace
+
+dependencies:
+  dependencies_core:
+    path: ../../dependencies_core
+
+flutter:
+  uses-material-design: true

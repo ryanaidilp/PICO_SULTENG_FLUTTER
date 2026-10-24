@@ -1,0 +1,41 @@
+{
+  "brick": "core_infrastructure_package",
+  "version": "2.0.10",
+  "vars": {
+    "appName": "Pico",
+    "organization": "banuacoders",
+    "domain": "com",
+    "isForMonorepo": true,
+    "includeGenerated": false,
+    "prefix": "Pico"
+  },
+  "dirs": [
+    "shared/core_infrastructure_sdk/core_infrastructure_api",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl"
+  ],
+  "files": {
+    "shared/core_infrastructure_sdk/core_infrastructure_api/analysis_options.yaml": "5ddcb34a",
+    "shared/core_infrastructure_sdk/core_infrastructure_api/lib/core_infrastructure_api.dart": "8fdc6ded",
+    "shared/core_infrastructure_sdk/core_infrastructure_api/lib/src/base/base_use_case.dart": "17094588",
+    "shared/core_infrastructure_sdk/core_infrastructure_api/lib/src/base/either.dart": "37477a53",
+    "shared/core_infrastructure_sdk/core_infrastructure_api/lib/src/failures/failure.dart": "7d5522d",
+    "shared/core_infrastructure_sdk/core_infrastructure_api/lib/src/log/log.dart": "4f568eb",
+    "shared/core_infrastructure_sdk/core_infrastructure_api/lib/src/log/log_type.dart": "bd2444d4",
+    "shared/core_infrastructure_sdk/core_infrastructure_api/pubspec.yaml": "1d1257db",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/analysis_options.yaml": "5ddcb34a",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/build.yaml": "ce8e853d",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/core_infrastructure_impl.dart": "15801c05",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/di/injector.dart": "87407342",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/di/register_module.dart": "2baa1ac1",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/log/filter/filter.dart": "f0821a24",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/log/filter/release_log_filter.dart": "543a6b48",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/log/log.dart": "61c14933",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/log/printer/printer.dart": "14cf1b31",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/log/printer/simple_log_printer.dart": "361133bf",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/utils/core_injector_key.dart": "14091740",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/utils/extensions.dart": "4217bbfe",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/utils/logger.dart": "3a843b00",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/lib/src/utils/utils.dart": "729c42a7",
+    "shared/core_infrastructure_sdk/core_infrastructure_impl/pubspec.yaml": "b2b2a797"
+  }
+}

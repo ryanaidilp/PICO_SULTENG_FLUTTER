@@ -1,0 +1,6 @@
+*.g.dart
+*.gr.dart
+*.config.dart
+*.module.dart
+.dart_tool/
+build/

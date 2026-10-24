@@ -1,0 +1,14 @@
+{
+  "title": "Infographics",
+  "images_count": "$count images",
+  "page_of": "$n of $total",
+  "image_alt": "$title, image $n of $total",
+  "view_source": "View source",
+  "share": "Share",
+  "no_items": "No infographics yet.",
+  "loading_more": "Loading more infographics",
+  "not_found": "Infographic not found.",
+  "no_images": "This infographic has no images.",
+  "zoom_hint": "Double tap to zoom",
+  "images_count_one": "1 image"
+}

@@ -1,0 +1,55 @@
+name: Release Mobile
+
+on:
+  push:
+    tags:
+      - "mobile/v*"
+
+permissions:
+  contents: read
+
+jobs:
+  extract-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      build_number: ${{ steps.version.outputs.build_number }}
+    steps:
+      - name: Extract version from tag
+        id: version
+        env:
+          GIT_TAG: ${{ github.ref_name }}
+        run: |
+          VERSION="${GIT_TAG#mobile/v}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "build_number=${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+
+  build-android:
+    needs: extract-version
+    uses: ./.github/workflows/build-android.yml
+    with:
+      flavor: production
+      track: internal
+      build_number: ${{ needs.extract-version.outputs.build_number }}
+    secrets:
+      GOOGLE_PLAY_JSON_KEY_BASE64: ${{ secrets.GOOGLE_PLAY_JSON_KEY_BASE64 }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  build-ios:
+    needs: extract-version
+    uses: ./.github/workflows/build-ios.yml
+    with:
+      flavor: production
+      destination: testflight
+      build_number: ${{ needs.extract-version.outputs.build_number }}
+    secrets:
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      APPLE_ID: ${{ secrets.APPLE_ID }}
+      TEAM_ID: ${{ secrets.TEAM_ID }}
+      ITC_TEAM_ID: ${{ secrets.ITC_TEAM_ID }}
+      APP_IDENTIFIER: ${{ secrets.APP_IDENTIFIER }}
+      APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+      APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+      APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

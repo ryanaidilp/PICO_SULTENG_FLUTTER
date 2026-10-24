@@ -1,0 +1,9 @@
+# iOS configuration
+app_identifier(ENV['APP_IDENTIFIER'] || "com.banuacoders.pico.app")
+apple_id(ENV['APPLE_ID'])
+itc_team_id(ENV['ITC_TEAM_ID'])
+team_id(ENV['TEAM_ID'])
+
+# Android configuration
+json_key_file(ENV['GOOGLE_PLAY_JSON_KEY'] || "fastlane/play-store-key.json")
+package_name(ENV['APP_IDENTIFIER'] || "com.banuacoders.pico.app")
