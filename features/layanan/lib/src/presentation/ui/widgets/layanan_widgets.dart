@@ -276,3 +276,56 @@ class BedSection extends StatelessWidget {
     );
   }
 }
+
+/// [PicoContactActions] with an optional launcher (tests).
+Widget contactActions(List<Contact> contacts, UriLauncher? launcher) =>
+    launcher == null
+    ? PicoContactActions(contacts: contacts)
+    : PicoContactActions(contacts: contacts, launcher: launcher);
+
+/// A bordered surface for one listing.
+class ListingCard extends StatelessWidget {
+  const new({required this.child, super.key});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6),
+    child: DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colors.background.card,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: context.colors.outline.subtle),
+      ),
+      child: Padding(padding: const EdgeInsets.all(12), child: child),
+    ),
+  );
+}
+
+/// A calm note that stays visible: archived data, check before you act.
+class ArchiveNote extends StatelessWidget {
+  const new({required this.text, super.key});
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    container: true,
+    child: DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.chartSurface.tint,
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Text(
+          text,
+          style: context.typography.body.regular.copyWith(
+            color: context.colors.foreground.main,
+          ),
+        ),
+      ),
+    ),
+  );
+}

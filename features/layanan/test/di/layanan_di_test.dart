@@ -52,7 +52,8 @@ void main() {
       // A root with only the types layanan_imports.dart
       // forwards: register one fake per forwarded type.
       final root = GetIt.asNewInstance()
-        ..registerSingleton<DirectoryRepository>(FakeDirectoryRepository());
+        ..registerSingleton<DirectoryRepository>(FakeDirectoryRepository())
+        ..registerSingleton<ContentRepository>(FakeContentRepository());
       late GetIt child;
       final container = FeatureContainer(
         'layanan',

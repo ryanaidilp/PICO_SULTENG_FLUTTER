@@ -73,3 +73,90 @@ const regencies = [
 ];
 
 final all = [sindhu, noCoords, accented];
+
+Contact _phone(String v) => Contact(
+  kind: ContactKind.phone,
+  label: 'Telepon',
+  value: v,
+  uri: Uri(scheme: 'tel', path: v),
+);
+
+/// Banggai with 2 members (C03 fixture) and a second group.
+final taskForces = [
+  TaskForceGroup(
+    regencyCode: '7202',
+    regencyName: 'Banggai',
+    members: [
+      TaskForce(
+        name: 'dr. Anang (Kepala Dinkes Banggai)',
+        contacts: [_phone('081241415651')],
+      ),
+      TaskForce(
+        name: 'Ibu Nur Datu Adam (Jubir)',
+        contacts: [_phone('085281691921')],
+      ),
+    ],
+  ),
+  TaskForceGroup(
+    regencyCode: '7271',
+    regencyName: 'Kota Palu',
+    members: [
+      TaskForce(name: 'Pak Budi', contacts: [_phone('0451111')]),
+    ],
+  ),
+];
+
+/// Donation 2 of the fixture: image on a dead host, one account with spaces.
+final donation = Donation(
+  id: 2,
+  title: 'Untuk Kawan Baik',
+  initiator: '@yaumilmasri',
+  url: Uri.parse('https://www.instagram.com/yaumilmasri/'),
+  description: 'Teman-teman saya di Palu banyak yang Isoman.',
+  imageUrl: 'https://banuacoders.com/storage/donations/a.jpg',
+  acceptsGoods: true,
+  deliveryAddress: 'Jl. Ki Hajar No. 76A, Kota Palu',
+  accounts: const [
+    BankAccount(
+      bankName: 'BCA',
+      accountNumber: '7921 0246 85',
+      accountHolder: 'Yaumil',
+      logoUrl: 'https://banuacoders.com/logo.png',
+    ),
+  ],
+  contacts: [
+    _phone('085256087018'),
+    const Contact(
+      kind: ContactKind.telegram,
+      label: 'Telegram',
+      value: 'evansevansevans',
+      uri: null,
+    ),
+  ],
+);
+
+final doctors = [
+  Telemedicine(
+    id: 1,
+    name: 'dr. Evans Suryani',
+    isFree: true,
+    schedules: const [
+      Schedule(days: 'Senin-Jumat', time: '07:00-20:00', timezone: 'WIB'),
+    ],
+    contacts: [
+      Contact(
+        kind: ContactKind.telegram,
+        label: 'Telegram',
+        value: 'evansevansevans',
+        uri: Uri.parse('https://t.me/evansevansevans'),
+      ),
+    ],
+  ),
+  const Telemedicine(
+    id: 2,
+    name: 'dr. Berbayar',
+    isFree: false,
+    schedules: [],
+    contacts: [],
+  ),
+];

@@ -8,6 +8,8 @@ import 'package:layanan/src/di/layanan_container.dart';
 import 'package:layanan/src/l10n/translations.g.dart' as sl;
 import 'package:layanan/src/presentation/bloc/hospitals_bloc.dart';
 import 'package:layanan/src/presentation/bloc/hospitals_event.dart';
+import 'package:layanan/src/presentation/ui/pages/isoman_page.dart';
+import 'package:layanan/src/presentation/ui/pages/satgas_page.dart';
 import 'package:locale_core/locale_core.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 
@@ -107,10 +109,30 @@ class _LayananShellPageState() extends State<LayananShellPage> {
                 // it with this shell. Pass it what it needs from
                 // `_lease.get<T>()`.
                 return sl.TranslationProvider(
-                  child: BlocProvider(
-                    create: (_) =>
-                        HospitalsBloc(_lease.get<DirectoryRepository>())
-                          ..add(const HospitalsStarted()),
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) =>
+                            HospitalsBloc(_lease.get<DirectoryRepository>())
+                              ..add(const HospitalsStarted()),
+                      ),
+                      // Lazy: a source nobody opens is never requested.
+                      BlocProvider(
+                        create: (_) => SatgasCubit(
+                          _lease.get<DirectoryRepository>().watchTaskForces,
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (_) => DonationsCubit(
+                          _lease.get<ContentRepository>().watchDonations,
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (_) => TelemedicineCubit(
+                          _lease.get<ContentRepository>().watchTelemedicines,
+                        ),
+                      ),
+                    ],
                     child: const AutoRouter(),
                   ),
                 );

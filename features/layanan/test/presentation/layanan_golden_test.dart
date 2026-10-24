@@ -4,7 +4,6 @@ import 'package:layanan/src/l10n/translations.g.dart';
 import 'package:layanan/src/presentation/ui/pages/hospital_list_page.dart';
 import 'package:layanan/src/presentation/ui/pages/layanan_page.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:pico_ui_kit/src/components/atoms/brand/pico_themed_svg.dart';
 
 import 'harness.dart';
 
