@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_impl/src/api/pico_api_client.dart';
 import 'package:pico_data_impl/src/cache/local_data_admin_impl.dart';
+import 'package:pico_data_impl/src/cache/seed_source.dart';
 import 'package:pico_data_impl/src/cache/snapshot_source.dart';
 import 'package:pico_data_impl/src/cache/snapshot_store.dart';
 import 'package:pico_data_impl/src/settings/settings_repository_impl.dart';
@@ -47,7 +48,7 @@ abstract class PicoDataImplModule {
   /// The shared stream-rule reader.
   @lazySingleton
   SnapshotSource snapshotSource(PicoApiClient client, SnapshotStore store) =>
-      SnapshotSource(client, store);
+      SnapshotSource(client, store, seed: AssetSeed());
 
   /// Disk image cache admin.
   @lazySingleton

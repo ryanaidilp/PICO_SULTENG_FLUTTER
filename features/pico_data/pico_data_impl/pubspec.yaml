@@ -25,6 +25,10 @@ dependencies:
   pico_data_api:
     path: ../pico_data_api
 
+flutter:
+  assets:
+    - assets/seed/
+
 dev_dependencies:
   build_runner: ^2.15.1
   flutter_test:

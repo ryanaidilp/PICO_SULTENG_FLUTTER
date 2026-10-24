@@ -4,6 +4,7 @@ library;
 
 export 'src/api/api.dart';
 export 'src/cache/local_data_admin_impl.dart';
+export 'src/cache/seed_source.dart';
 export 'src/cache/snapshot_source.dart';
 export 'src/cache/snapshot_store.dart';
 export 'src/cache/ttl.dart';
