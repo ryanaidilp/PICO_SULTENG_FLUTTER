@@ -185,6 +185,7 @@ void main() {
     await tester.pumpWidget(host(stats(), scale: 2));
     await tester.pumpAndSettle();
     expect(tester.takeException(), isNull);
+    await hiDpi(tester);
     await expectLater(tester, meetsGuideline(textContrastGuideline));
     h.dispose();
   });
@@ -213,4 +214,16 @@ void main() {
       );
     }
   }, tags: ['golden']);
+}
+
+/// Renders at twice the density before the contrast check: at 1x the 12 to
+/// 16 px text of a Linux software raster has no pixel dark enough, so the
+/// guideline measures its anti-aliasing and not its colour (CI failed at 1.4:1
+/// on text that is 7:1). The logical size does not change.
+Future<void> hiDpi(WidgetTester tester) async {
+  final view = tester.view;
+  if (view.devicePixelRatio >= 2) return;
+  view.physicalSize = view.physicalSize * 2;
+  view.devicePixelRatio = 2;
+  await tester.pumpAndSettle();
 }
