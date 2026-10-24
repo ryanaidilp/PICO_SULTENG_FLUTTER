@@ -185,7 +185,9 @@ class _PicoChartBaseState extends State<PicoChartBase>
   String _summary(PicoKitText t) {
     final custom = widget.semanticsSummary;
     if (custom != null) return custom;
-    final names = widget.series.map((s) => t.stateLabel(s.state)).join(', ');
+    final names = widget.series
+        .map((s) => (s.label ?? t.stateLabel(s.state)))
+        .join(', ');
     final peak = _peak();
     final parts = [names, t.range(_start, _end)];
     if (peak != null)
@@ -226,7 +228,7 @@ class _PicoChartBaseState extends State<PicoChartBase>
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  '${t.stateLabel(s.state)} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}',
+                  '${(s.label ?? t.stateLabel(s.state))} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}',
                   style: text,
                 ),
               ],
@@ -255,7 +257,7 @@ class _PicoChartBaseState extends State<PicoChartBase>
             final d = dates[dates.length - 1 - i];
             final cells = [
               for (final s in widget.series)
-                '${t.stateLabel(s.state)} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}',
+                '${(s.label ?? t.stateLabel(s.state))} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}',
             ];
             return Semantics(
               container: true,
@@ -284,6 +286,7 @@ class _PicoChartBaseState extends State<PicoChartBase>
     final readout = _readout(t);
     final legend = PicoMarkLegend(
       states: [for (final s in widget.series) s.state],
+      labels: [for (final s in widget.series) s.label],
     );
     final toggle = Align(
       alignment: Alignment.centerLeft,

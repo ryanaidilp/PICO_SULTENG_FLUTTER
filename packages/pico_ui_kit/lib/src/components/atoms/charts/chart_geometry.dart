@@ -6,10 +6,14 @@ import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
 /// One series of a line chart. Null values are gaps, never 0.
 class ChartSeries {
   /// Creates a series for a data role.
-  const new({required this.state, required this.points});
+  const new({required this.state, required this.points, this.label});
 
   /// Role: colour, line form, mark and label.
   final PicoState state;
+
+  /// Text label that replaces the role label (for example "Dosis 1"). The
+  /// role still sets colour, line form and mark.
+  final String? label;
 
   /// Points in any order. Dates are reduced to calendar dates by the chart.
   final List<(DateTime, num?)> points;

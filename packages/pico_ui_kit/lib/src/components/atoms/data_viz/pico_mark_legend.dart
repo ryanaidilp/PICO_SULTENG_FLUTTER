@@ -8,10 +8,18 @@ import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
 /// alone (DESIGN.md "Data roles").
 class PicoMarkLegend extends StatelessWidget {
   /// Creates a legend for [states].
-  const new({required this.states, super.key});
+  const new({required this.states, this.labels, super.key});
 
   /// Roles to list.
   final List<PicoState> states;
+
+  /// Optional text per role, same order as [states]. A null entry keeps the
+  /// role label.
+  final List<String?>? labels;
+
+  String _label(PicoKitText t, int i, PicoState s) =>
+      (labels != null && i < labels!.length ? labels![i] : null) ??
+      t.stateLabel(s);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +29,10 @@ class PicoMarkLegend extends StatelessWidget {
       spacing: 16,
       runSpacing: 8,
       children: [
-        for (final s in states)
+        for (final (i, s) in states.indexed)
           Semantics(
             container: true,
-            label: t.stateLabel(s),
+            label: _label(t, i, s),
             child: ExcludeSemantics(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -41,7 +49,7 @@ class PicoMarkLegend extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    t.stateLabel(s),
+                    _label(t, i, s),
                     style: context.typography.label.caption.copyWith(
                       color: context.colors.foreground.main,
                     ),
