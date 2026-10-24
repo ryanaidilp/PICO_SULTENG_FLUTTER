@@ -14,7 +14,9 @@ import 'package:pico/di/injector.dart';
 import 'package:pico/host/host_app_widget.dart';
 import 'package:pico/host/initializers/initializer.dart';
 import 'package:pico/host/initializers/pre_launch_initializer.dart';
+import 'package:pico/host/push/push_tap_router.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
+import 'package:push_notification_api/push_notification_api.dart';
 
 /// Builder function that receives the initialization result.
 typedef AppBuilder = Widget Function(InitializerResult result);
@@ -143,6 +145,15 @@ Future<void> bootstrap({
     await AppLocaleController.restore();
 
     await initializeInjector();
+
+    // Subscribe to notification taps before the first frame: the tap that
+    // cold-started the app can arrive before the router exists. The router
+    // attaches in PicoApp (S51, ADR-0112 step 7).
+    if (getIt.isRegistered<PushNotificationSDK>()) {
+      getIt.registerSingleton<PushTapRouter>(
+        PushTapRouter(getIt<PushNotificationSDK>().tapStream),
+      );
+    }
 
     // Non-blocking: crash reporting must not delay the first frame.
     unawaited(initializeMonitoring());

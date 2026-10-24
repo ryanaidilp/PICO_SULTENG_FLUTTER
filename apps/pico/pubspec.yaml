@@ -9,6 +9,8 @@ environment:
 resolution: workspace
 
 dependencies:
+  app_config:
+    path: ../../shared/app_config
   app_launch_tracker_impl:
     path: ../../infrastructure/app_launch_tracker_impl
   app_marionette:
@@ -17,6 +19,7 @@ dependencies:
   # by lib/host/initializers/*.dart, so it must be a declared dependency and not
   # merely a transitive one — otherwise `depend_on_referenced_packages` fires on
   # four files in a freshly generated app.
+  app_settings: ^9.0.1
   app_utilities:
     path: ../../utilities/app_utilities
   consent_api:
