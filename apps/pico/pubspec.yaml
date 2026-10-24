@@ -27,6 +27,8 @@ dependencies:
     path: ../../shared/dependencies
   feature_sdk:
     path: ../../shared/feature_sdk
+  identifiers:
+    path: ../../shared/identifiers
 
   flutter:
     sdk: flutter
@@ -43,6 +45,8 @@ dependencies:
     path: ../../infrastructure/network_sdk_api
   network_sdk_dio:
     path: ../../infrastructure/network_sdk_dio
+  pico_data_api:
+    path: ../../features/pico_data/pico_data_api
   pico_data_impl:
     path: ../../features/pico_data/pico_data_impl
   pico_ui_kit:
