@@ -6,7 +6,7 @@ name: PR Checks
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [develop, main, master]
   workflow_dispatch:
 
 concurrency:
@@ -47,7 +47,7 @@ jobs:
   android-size-analysis:
     name: Android Size Analysis
     if: >-
-      github.event_name == 'workflow_dispatch' || github.base_ref == 'main' ||
+      github.event_name == 'workflow_dispatch' || github.base_ref == 'main' || github.base_ref == 'master' ||
       startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')
     runs-on: ubuntu-latest
     steps:
@@ -136,7 +136,7 @@ jobs:
   ios-size-analysis:
     name: iOS Size Analysis
     if: >-
-      github.event_name == 'workflow_dispatch' || github.base_ref == 'main' ||
+      github.event_name == 'workflow_dispatch' || github.base_ref == 'main' || github.base_ref == 'master' ||
       startsWith(github.head_ref, 'release/') || startsWith(github.head_ref, 'hotfix/')
     runs-on: macos-latest
     steps:

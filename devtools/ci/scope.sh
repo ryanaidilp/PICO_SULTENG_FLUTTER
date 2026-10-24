@@ -19,7 +19,7 @@ full=false base='' candidates='' merged=false
 if [[ -n ${GITHUB_ACTIONS:-} ]]; then
   case $GITHUB_EVENT_NAME in
     pull_request)
-      [[ $GITHUB_BASE_REF == main || $GITHUB_HEAD_REF == release/* || $GITHUB_HEAD_REF == hotfix/* ]] && full=true
+      [[ $GITHUB_BASE_REF == main || $GITHUB_BASE_REF == master || $GITHUB_HEAD_REF == release/* || $GITHUB_HEAD_REF == hotfix/* ]] && full=true
       base=$(git merge-base "origin/$GITHUB_BASE_REF" HEAD) ;;
     push)
       # The merge of a PR: its pull_request run already tested it.
@@ -38,7 +38,7 @@ if [[ -n ${GITHUB_ACTIONS:-} ]]; then
 elif [[ -n ${GITLAB_CI:-} ]]; then
   case $CI_PIPELINE_SOURCE in
     merge_request_event)
-      [[ $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == main || $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == release/* || $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == hotfix/* ]] && full=true
+      [[ $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == main || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == master || $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == release/* || $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME == hotfix/* ]] && full=true
       base=$CI_MERGE_REQUEST_DIFF_BASE_SHA ;;
     push)
       # GitLab's default merge commit message ends with "See merge request

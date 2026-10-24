@@ -1,5 +1,7 @@
 # Analyze and test what a change can break, once per change (docs: "CI test
 # scope" in the Archipelago monorepo toolkit guide):
+# - master is this repo's production branch (the Archipelago template calls it
+#   main), so it is treated like main everywhere.
 # - pull_request: PRs into develop run the changed packages plus their
 #   dependents; PRs into main and release/* and hotfix/* PRs run everything.
 # - push: develop only, for direct pushes, diffed against the last commit
@@ -14,7 +16,7 @@ name: CI
 
 on:
   pull_request:
-    branches: [develop, main]
+    branches: [develop, main, master]
   push:
     branches: [develop]
   workflow_dispatch:

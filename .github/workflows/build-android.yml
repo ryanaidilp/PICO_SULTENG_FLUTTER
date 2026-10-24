@@ -126,6 +126,7 @@ jobs:
       # build that still resolves Marionette (debug_build_only). The Fastfile
       # runs the same check; this step also covers a customised Fastfile.
       - name: Check debug tooling leak
+        id: leaks
         run: |
           cd ../..
           dart run monorepo_toolkit build-prepare --check-leaks --flavor "$FLAVOR" --mode release
@@ -145,3 +146,16 @@ jobs:
           name: android-${{ inputs.flavor }}-aab
           path: apps/pico/build/app/outputs/bundle/${{ inputs.flavor }}Release/app-${{ inputs.flavor }}-release.aab
           retention-days: 7
+
+      # A skipped or cancelled leak check must not pass as a clean build: this
+      # runs even when an earlier step failed or was skipped and fails the job
+      # unless the check really succeeded.
+      - name: Require the leak check
+        if: always()
+        env:
+          LEAKS_OUTCOME: ${{ steps.leaks.outcome }}
+        run: |
+          if [ "$LEAKS_OUTCOME" != "success" ]; then
+            echo "::error::build-prepare --check-leaks outcome was '$LEAKS_OUTCOME', not 'success'"
+            exit 1
+          fi
