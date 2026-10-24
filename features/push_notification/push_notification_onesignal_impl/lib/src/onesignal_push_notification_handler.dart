@@ -138,6 +138,17 @@ class OneSignalPushNotificationHandler(final OneSignalConfig _config)
   Future<PushNotificationPermission> requestPermission() async {
     await _ready;
     final granted = await OneSignal.Notifications.requestPermission(true);
+    if (granted) {
+      // TEMPORARY (pico-qq7.38, Archipelago defect "onesignal handler cannot
+      // resume after clearAll"): clearAll() calls optOut(), and nothing in
+      // the contract calls optIn() again, so a user who turns alerts off and
+      // on again would stay opted out. Remove once the brick does this.
+      try {
+        await OneSignal.User.pushSubscription.optIn();
+      } on Object catch (e) {
+        debugPrint('[OneSignalPushNotificationHandler] optIn failed: $e');
+      }
+    }
     return granted
         ? PushNotificationPermission.granted
         : PushNotificationPermission.denied;

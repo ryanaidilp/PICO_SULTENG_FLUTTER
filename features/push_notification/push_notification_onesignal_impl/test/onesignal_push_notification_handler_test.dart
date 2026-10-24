@@ -195,17 +195,34 @@ void main() {
     });
   });
 
-  test('an empty app id leaves OneSignal off (no native call at all)', () async {
-    final handler = OneSignalPushNotificationHandler(
-      const OneSignalConfig(
-        appId: '',
-        consentPurpose: ConsentPurpose.marketing,
-      ),
-    );
-    await Future<void>.delayed(Duration.zero);
+  test(
+    'an empty app id leaves OneSignal off (no native call at all)',
+    () async {
+      final handler = OneSignalPushNotificationHandler(
+        const OneSignalConfig(
+          appId: '',
+          consentPurpose: ConsentPurpose.marketing,
+        ),
+      );
+      await Future<void>.delayed(Duration.zero);
 
-    expect(handler.provider, PushNotificationProvider.oneSignal);
-    expect(calls, isEmpty);
+      expect(handler.provider, PushNotificationProvider.oneSignal);
+      expect(calls, isEmpty);
+    },
+  );
+
+  test('a granted permission opts the subscription back in', () async {
+    final handler = OneSignalPushNotificationHandler(_config);
+    await handler.requestPermission();
+    await handler.clearAll();
+    await handler.requestPermission();
+
+    final optOut = indexOf('OneSignal#optOut');
+    expect(optOut, isNonNegative);
+    expect(
+      calls.sublist(optOut).any((c) => c.call.method == 'OneSignal#optIn'),
+      isTrue,
+    );
   });
 
   test('initialize runs before requestPermission', () async {
