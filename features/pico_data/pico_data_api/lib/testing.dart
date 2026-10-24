@@ -254,3 +254,48 @@ class FakeLocalDataAdmin implements LocalDataAdmin {
     bytes = 0;
   }
 }
+
+/// In-memory [DataUpdateAlerts] that records every call in order.
+class FakeDataUpdateAlerts implements DataUpdateAlerts {
+  /// Creates the fake. Set [available], [permission] and [outcome] per test.
+  FakeDataUpdateAlerts({
+    this.available = true,
+    this.permission = false,
+    this.outcome = DataUpdateAlertsOutcome.enabled,
+  });
+
+  @override
+  bool available;
+
+  /// What [osPermissionGranted] returns.
+  bool permission;
+
+  /// What [enable] returns.
+  DataUpdateAlertsOutcome outcome;
+
+  /// Completes [enable] later when set, so a test can see the busy state.
+  Completer<void>? gate;
+
+  /// Calls in order: `permission`, `enable`, `disable`, `settings`.
+  final calls = <String>[];
+
+  @override
+  Future<bool> osPermissionGranted() async {
+    calls.add('permission');
+    return permission;
+  }
+
+  @override
+  Future<DataUpdateAlertsOutcome> enable() async {
+    calls.add('enable');
+    await gate?.future;
+    if (outcome == DataUpdateAlertsOutcome.enabled) permission = true;
+    return outcome;
+  }
+
+  @override
+  Future<void> disable() async => calls.add('disable');
+
+  @override
+  Future<void> openSystemSettings() async => calls.add('settings');
+}
