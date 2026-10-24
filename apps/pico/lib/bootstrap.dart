@@ -22,34 +22,12 @@ import 'package:push_notification_api/push_notification_api.dart';
 /// Builder function that receives the initialization result.
 typedef AppBuilder = Widget Function(InitializerResult result);
 
-/// Loading indicator shown by [HostAppWidget] while pre-launch
-/// initialization runs — before `MaterialApp`'s `theme`/`darkTheme` (and
-/// therefore any ambient `Theme`) is mounted, so this can't use
-/// `context.colors`/`Theme.of(context)` like the rest of the app. It reads
-/// brand colors directly from [PicoColorToken]/
-/// [PicoColorFoundation] instead, and picks the
-/// light/dark variant via [MediaQuery.platformBrightnessOf], which only
-/// depends on OS-level brightness and is available this early — this keeps
-/// the loading screen from flashing Flutter's default purple `ColorScheme`
-/// between the native splash screen and the app's real theme.
+/// Loading screen shown by [HostAppWidget] while pre-launch initialization
+/// runs, before `MaterialApp`'s theme is mounted: the legacy PICO logo on the
+/// themed background ([PicoBootScreen]).
 class const _BootstrapLoadingIndicator() extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    final isDark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
-
-    return ColoredBox(
-      color: isDark
-          ? PicoColorFoundation.bgMainDark
-          : PicoColorFoundation.bgMain,
-      child: Center(
-        child: CircularProgressIndicator(
-          color: isDark
-              ? PicoBrandPalette.indigoDark
-              : PicoBrandPalette.indigoLight,
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => const PicoBootScreen();
 }
 
 /// Installs the app's `FlutterError.onError` and
