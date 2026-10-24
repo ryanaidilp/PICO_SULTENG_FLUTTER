@@ -1,6 +1,7 @@
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_impl/src/api/contact_mapper.dart';
 import 'package:pico_data_impl/src/api/dates.dart';
+import 'package:pico_data_impl/src/api/endpoints.dart';
 import 'package:pico_data_impl/src/api/pico_api_client.dart';
 
 /// Image fields are kept as stored. Hosts are dead, relative or blocked
@@ -114,45 +115,27 @@ List<Partner> partnersFrom(List<dynamic> rows) => [
 /// Content endpoints of C04.
 class ContentApi {
   /// Creates the API over [client].
-  new(this._client);
+  ContentApi(this._client);
 
   final PicoApiClient _client;
 
   /// `GET /banners?load_all=true`.
-  Future<Either<PicoFailure, List<Banner>>> banners() => _client.getMapped(
-    '/banners',
-    (d) => bannersFrom(d! as List<dynamic>),
-    query: {'load_all': true},
-  );
+  Future<Either<PicoFailure, List<Banner>>> banners() =>
+      _client.fetch(PicoEndpoints.banners);
 
   /// `GET /infographics?page=N&per_page=20`, the only paged call.
   Future<Either<PicoFailure, InfographicPage>> infographics(int page) =>
-      _client.getMapped(
-        '/infographics',
-        (d) => infographicsFrom(d! as Map<String, dynamic>, page),
-        query: {'page': page, 'per_page': 20},
-        unwrapPage: false,
-      );
+      _client.fetch(PicoEndpoints.infographics(page));
 
   /// `GET /donations?load_all=true`.
-  Future<Either<PicoFailure, List<Donation>>> donations() => _client.getMapped(
-    '/donations',
-    (d) => donationsFrom(d! as List<dynamic>),
-    query: {'load_all': true},
-  );
+  Future<Either<PicoFailure, List<Donation>>> donations() =>
+      _client.fetch(PicoEndpoints.donations);
 
   /// `GET /telemedicines?load_all=true`.
   Future<Either<PicoFailure, List<Telemedicine>>> telemedicines() =>
-      _client.getMapped(
-        '/telemedicines',
-        (d) => telemedicinesFrom(d! as List<dynamic>),
-        query: {'load_all': true},
-      );
+      _client.fetch(PicoEndpoints.telemedicines);
 
   /// `GET /partners?load_all=true`.
-  Future<Either<PicoFailure, List<Partner>>> partners() => _client.getMapped(
-    '/partners',
-    (d) => partnersFrom(d! as List<dynamic>),
-    query: {'load_all': true},
-  );
+  Future<Either<PicoFailure, List<Partner>>> partners() =>
+      _client.fetch(PicoEndpoints.partners);
 }

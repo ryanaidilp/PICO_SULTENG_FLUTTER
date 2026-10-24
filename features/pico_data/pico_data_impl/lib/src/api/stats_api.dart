@@ -1,5 +1,6 @@
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_impl/src/api/dates.dart';
+import 'package:pico_data_impl/src/api/endpoints.dart';
 import 'package:pico_data_impl/src/api/pico_api_client.dart';
 
 int _int(Object? v) => (v as num?)?.toInt() ?? 0;
@@ -116,35 +117,24 @@ VaccinationSeries vaccinationFrom(VaccinationScope scope, List<dynamic> rows) {
 /// Statistics endpoints of C03.
 class StatsApi {
   /// Creates the API over [client].
-  new(this._client);
+  StatsApi(this._client);
 
   final PicoApiClient _client;
 
   /// `GET /stats/test-types`.
-  Future<Either<PicoFailure, List<TestType>>> testTypes() => _client.getMapped(
-    '/stats/test-types',
-    (d) => testTypesFrom(d! as List<dynamic>),
-  );
+  Future<Either<PicoFailure, List<TestType>>> testTypes() =>
+      _client.fetch(PicoEndpoints.testTypes);
 
   /// `GET /stats/tests`, reduced to the latest row per type.
-  Future<Either<PicoFailure, List<TestTotal>>> latestTests() => _client
-      .getMapped('/stats/tests', (d) => latestTestsFrom(d! as List<dynamic>));
+  Future<Either<PicoFailure, List<TestTotal>>> latestTests() =>
+      _client.fetch(PicoEndpoints.latestTests);
 
   /// `GET /stats/gender/latest`.
   Future<Either<PicoFailure, GenderSnapshot>> latestGender() =>
-      _client.getMapped(
-        '/stats/gender/latest',
-        (d) => genderFrom(d! as Map<String, dynamic>),
-      );
+      _client.fetch(PicoEndpoints.latestGender);
 
   /// `GET /vaccination/national|province?load_all=true`.
   Future<Either<PicoFailure, VaccinationSeries>> vaccination(
     VaccinationScope scope,
-  ) => _client.getMapped(
-    scope == VaccinationScope.national
-        ? '/vaccination/national'
-        : '/vaccination/province',
-    (d) => vaccinationFrom(scope, d! as List<dynamic>),
-    query: {'load_all': true},
-  );
+  ) => _client.fetch(PicoEndpoints.vaccination(scope));
 }

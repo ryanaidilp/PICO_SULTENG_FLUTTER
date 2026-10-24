@@ -1,6 +1,7 @@
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_impl/src/api/contact_mapper.dart';
 import 'package:pico_data_impl/src/api/dates.dart';
+import 'package:pico_data_impl/src/api/endpoints.dart';
 import 'package:pico_data_impl/src/api/pico_api_client.dart';
 
 int _int(Object? v) => (v as num?)?.toInt() ?? 0;
@@ -74,30 +75,19 @@ List<VaccineLocation> vaccineLocationsFrom(List<dynamic> rows) => [
 /// Directory endpoints of C03.
 class FacilitiesApi {
   /// Creates the API over [client].
-  new(this._client);
+  FacilitiesApi(this._client);
 
   final PicoApiClient _client;
 
   /// `GET /hospitals?load_all=true`.
-  Future<Either<PicoFailure, List<Hospital>>> hospitals() => _client.getMapped(
-    '/hospitals',
-    (d) => hospitalsFrom(d! as List<dynamic>),
-    query: {'load_all': true},
-  );
+  Future<Either<PicoFailure, List<Hospital>>> hospitals() =>
+      _client.fetch(PicoEndpoints.hospitals);
 
   /// `GET /task-forces?load_all=true`.
   Future<Either<PicoFailure, List<TaskForceGroup>>> taskForces() =>
-      _client.getMapped(
-        '/task-forces',
-        (d) => taskForcesFrom(d! as List<dynamic>),
-        query: {'load_all': true},
-      );
+      _client.fetch(PicoEndpoints.taskForces);
 
   /// `GET /vaccination/locations?load_all=true`.
   Future<Either<PicoFailure, List<VaccineLocation>>> vaccineLocations() =>
-      _client.getMapped(
-        '/vaccination/locations',
-        (d) => vaccineLocationsFrom(d! as List<dynamic>),
-        query: {'load_all': true},
-      );
+      _client.fetch(PicoEndpoints.vaccineLocations);
 }

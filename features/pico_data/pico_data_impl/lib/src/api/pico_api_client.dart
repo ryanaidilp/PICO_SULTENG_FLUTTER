@@ -4,6 +4,7 @@ import 'dart:isolate';
 
 import 'package:dependencies/network.dart';
 import 'package:pico_data_api/pico_data_api.dart';
+import 'package:pico_data_impl/src/api/endpoint.dart';
 
 /// Body size above which JSON is decoded off the UI isolate (C05).
 const int kIsolateDecodeThreshold = 100 * 1024;
@@ -58,12 +59,11 @@ class PicoApiClient {
     Map<String, Object?>? query,
     bool unwrapPage = true,
   }) async {
-    var result = await _once(path, query, unwrapPage);
-    if (result.leftOrNull?.kind == PicoFailureKind.rateLimited) {
-      await Future<void>.delayed(retryDelay);
-      result = await _once(path, query, unwrapPage);
-    }
-    return result;
+    final body = await getBody(path, query: query);
+    return switch (body) {
+      Left(:final value) => Left(value),
+      Right(:final value) => decode(value, unwrapPage: unwrapPage),
+    };
   }
 
   /// [getData] then [map]. A mapping error becomes [PicoFailureKind.server],
@@ -73,23 +73,58 @@ class PicoApiClient {
     T Function(Object? data) map, {
     Map<String, Object?>? query,
     bool unwrapPage = true,
-  }) async {
-    final r = await getData(path, query: query, unwrapPage: unwrapPage);
-    return r.fold(Left.new, (data) {
-      try {
-        return Right(map(data));
-      } on Object catch (e) {
-        return Left(
-          PicoFailure(PicoFailureKind.server, message: 'Bad data: $e'),
-        );
-      }
-    });
+  }) async => (await getData(
+    path,
+    query: query,
+    unwrapPage: unwrapPage,
+  )).fold(Left.new, (data) => _mapGuard(data, map));
+
+  /// Fetches an [Endpoint] and maps it.
+  Future<Either<PicoFailure, T>> fetch<T>(Endpoint<T> endpoint) => getMapped(
+    endpoint.path,
+    endpoint.map,
+    query: endpoint.query,
+    unwrapPage: endpoint.unwrapPage,
+  );
+
+  /// Decodes a stored or fresh body and maps it with [endpoint].
+  Future<Either<PicoFailure, T>> parse<T>(
+    Endpoint<T> endpoint,
+    String body,
+  ) async => (await decode(
+    body,
+    unwrapPage: endpoint.unwrapPage,
+  )).fold(Left.new, (data) => _mapGuard(data, endpoint.map));
+
+  Either<PicoFailure, T> _mapGuard<T>(
+    Object? data,
+    T Function(Object? data) map,
+  ) {
+    try {
+      return Right(map(data));
+    } on Object catch (e) {
+      return Left(PicoFailure(PicoFailureKind.server, message: 'Bad data: $e'));
+    }
   }
 
-  Future<Either<PicoFailure, Object?>> _once(
+  /// GETs [path] and returns the raw response body (HTTP status mapped, one
+  /// retry after 429). The body is what the snapshot store keeps, so network
+  /// and cache parse the same text.
+  Future<Either<PicoFailure, String>> getBody(
+    String path, {
+    Map<String, Object?>? query,
+  }) async {
+    var result = await _once(path, query);
+    if (result.leftOrNull?.kind == PicoFailureKind.rateLimited) {
+      await Future<void>.delayed(retryDelay);
+      result = await _once(path, query);
+    }
+    return result;
+  }
+
+  Future<Either<PicoFailure, String>> _once(
     String path,
     Map<String, Object?>? query,
-    bool unwrapPage,
   ) async {
     final Response<String> res;
     try {
@@ -99,8 +134,16 @@ class PicoApiClient {
     }
     final failure = _fromStatus(res.statusCode ?? 0);
     if (failure != null) return Left(failure);
+    return Right(res.data ?? '');
+  }
 
-    final body = res.data ?? '';
+  /// Decodes a body and checks the envelope. Bodies over 100 KB decode in an
+  /// isolate. A paginated payload is unwrapped to its list unless
+  /// [unwrapPage] is false.
+  Future<Either<PicoFailure, Object?>> decode(
+    String body, {
+    bool unwrapPage = true,
+  }) async {
     final Object? json;
     try {
       json = body.length > kIsolateDecodeThreshold
