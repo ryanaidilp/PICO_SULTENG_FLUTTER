@@ -10,6 +10,7 @@ import 'package:statistik/src/l10n/translations.g.dart' as sl;
 import 'package:statistik/src/di/statistik_container.dart';
 import 'package:statistik/src/presentation/bloc/area_bloc.dart';
 import 'package:statistik/src/presentation/bloc/regencies_cubit.dart';
+import 'package:statistik/src/presentation/bloc/rt_bloc.dart';
 import 'package:statistik/src/presentation/ui/widgets/profile_widgets.dart';
 import 'package:statistik/src/presentation/ui/widgets/province_picker.dart';
 
@@ -116,6 +117,9 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
                       ),
                       // Lazy: asked for only when the picker or the Sulteng
                       // profile is on screen.
+                      BlocProvider(
+                        create: (_) => RtBloc(_lease.get<CaseRepository>()),
+                      ),
                       BlocProvider(
                         create: (_) => ProvincesCubit(
                           _lease.get<CaseRepository>().watchProvinceSummaries,
