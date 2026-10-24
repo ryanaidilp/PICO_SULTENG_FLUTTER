@@ -5,29 +5,7 @@ import 'package:statistik/src/domain/regency_math.dart';
 import 'package:statistik/src/l10n/translations.g.dart';
 import 'package:statistik/src/presentation/ui/widgets/area_widgets.dart';
 
-/// Kabupaten band patterns are shown only after the cultural review (O-12,
-/// pico-jlc.8). Until then the swatch is a plain neutral square.
-const bool kDistrictWeavesEnabled = false;
-
-/// A small square that stands for the kabupaten. Decorative: identity, not
-/// data, so it is excluded from semantics.
-class RegencySwatch extends StatelessWidget {
-  const RegencySwatch({super.key});
-
-  @override
-  Widget build(BuildContext context) => ExcludeSemantics(
-    child: DecoratedBox(
-      decoration: BoxDecoration(
-        color: context.chartSurface.tint,
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(color: context.colors.outline.subtle),
-      ),
-      child: const SizedBox(width: 24, height: 24),
-    ),
-  );
-}
-
-/// One kabupaten: swatch, name, the chosen metric (cumulative and daily) of the
+/// One kabupaten: name, the chosen metric (cumulative and daily) of the
 /// latest day and a woven bar to compare. One semantics node.
 class RegencyRow extends StatelessWidget {
   const RegencyRow({
@@ -89,8 +67,6 @@ class RegencyRow extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const RegencySwatch(),
-                      const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           name,
@@ -158,8 +134,6 @@ class FailedRegencyRow extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              const RegencySwatch(),
-              const SizedBox(width: 12),
               Expanded(
                 child: Text(
                   t.regencyFailed(name: name),

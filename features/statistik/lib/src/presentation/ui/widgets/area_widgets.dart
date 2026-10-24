@@ -322,6 +322,8 @@ class AreaChart extends StatelessWidget {
     final overlay = compare && !query.daily;
     final metrics = overlay ? CaseMetric.values : [query.metric];
     return PicoLineChart(
+      valueHeader: !overlay,
+      showChange: !overlay && !query.daily,
       range: DateTimeRange(start: view.range.start, end: view.range.end),
       yLabel: query.daily ? context.t.yDaily : context.t.yCumulative,
       series: [

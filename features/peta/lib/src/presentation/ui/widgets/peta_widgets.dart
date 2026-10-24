@@ -5,11 +5,6 @@ import 'package:peta/src/domain/regions.dart';
 import 'package:peta/src/l10n/translations.g.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 
-/// Kabupaten band patterns on the map wait for the cultural review (O-12,
-/// pico-jlc.8). Until then a selected kabupaten gets a stronger outline and a
-/// tinted fill, never a weave.
-const bool kDistrictWeavesEnabled = false;
-
 /// The role of a metric (colour, mark).
 PicoState stateOfMetric(PetaMetric m) => switch (m) {
   PetaMetric.positive => PicoState.positive,

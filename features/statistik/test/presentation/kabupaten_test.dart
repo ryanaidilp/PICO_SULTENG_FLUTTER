@@ -152,26 +152,6 @@ void main() {
     h.dispose();
   });
 
-  testWidgets('the swatch is decorative: excluded from semantics', (
-    tester,
-  ) async {
-    await page.setup(tester, AppLocale.id);
-    tester.view.physicalSize = const Size(412, 6000);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
-    await tester.pumpWidget(host(cubit()));
-    await tester.pumpAndSettle();
-    expect(find.byType(RegencySwatch), findsNWidgets(13));
-    expect(
-      find.descendant(
-        of: find.byType(RegencySwatch),
-        matching: find.byType(ExcludeSemantics),
-      ),
-      findsNWidgets(13),
-    );
-    expect(kDistrictWeavesEnabled, isFalse, reason: 'O-12: weaves stay off');
-  });
-
   testWidgets(
     'one regency failing: 12 rows and a retry row for the failed one',
     (tester) async {
