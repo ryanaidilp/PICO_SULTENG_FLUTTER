@@ -109,7 +109,15 @@ class _PicoImageState extends State<PicoImage> {
   Widget build(BuildContext context) {
     final url = widget.url;
     if (!PicoImageUrl.isUsable(url) || PicoImage.failedUrls.contains(url)) {
-      return PicoImageMissing(kind: widget.kind, title: widget.title);
+      final missing = PicoImageMissing(kind: widget.kind, title: widget.title);
+      // A missing image keeps its alt text, read once instead of the title.
+      return widget.semanticLabel == null
+          ? missing
+          : Semantics(
+              image: true,
+              label: widget.semanticLabel,
+              child: ExcludeSemantics(child: missing),
+            );
     }
     return Semantics(
       image: true,

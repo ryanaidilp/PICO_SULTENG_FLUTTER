@@ -93,6 +93,23 @@ void main() {
       expect(find.byType(PicoImageMissing), findsOneWidget);
     });
 
+    testWidgets('a missing image keeps its alt text', (tester) async {
+      final h = tester.ensureSemantics();
+      await tester.pumpWidget(
+        app(
+          PicoTheme.light(),
+          const PicoImage(
+            kind: PicoImageKind.infographic,
+            url: 'https://banuacoders.com/a.png',
+            title: 'Judul',
+            semanticLabel: 'Judul, gambar 2 dari 3',
+          ),
+        ),
+      );
+      expect(find.bySemanticsLabel('Judul, gambar 2 dari 3'), findsOneWidget);
+      h.dispose();
+    });
+
     testWidgets('a banner without an image is a text card with the title', (
       tester,
     ) async {
