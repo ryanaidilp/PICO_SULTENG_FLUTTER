@@ -16,7 +16,7 @@ class StatsRepositoryImpl implements StatsRepository {
   Watch<List<TestType>> watchTestTypes({bool forceRefresh = false}) =>
       _source.watch(
         PicoEndpoints.testTypes,
-        ttl: PicoTtl.data,
+        ttl: PicoTtl.stats,
         forceRefresh: forceRefresh,
       );
 
@@ -24,7 +24,7 @@ class StatsRepositoryImpl implements StatsRepository {
   Watch<List<TestTotal>> watchLatestTests({bool forceRefresh = false}) =>
       _source.watch(
         PicoEndpoints.latestTests,
-        ttl: PicoTtl.data,
+        ttl: PicoTtl.stats,
         forceRefresh: forceRefresh,
       );
 
@@ -32,7 +32,7 @@ class StatsRepositoryImpl implements StatsRepository {
   Watch<GenderSnapshot> watchLatestGender({bool forceRefresh = false}) =>
       _source.watch(
         PicoEndpoints.latestGender,
-        ttl: PicoTtl.data,
+        ttl: PicoTtl.stats,
         forceRefresh: forceRefresh,
       );
 
@@ -42,7 +42,7 @@ class StatsRepositoryImpl implements StatsRepository {
     bool forceRefresh = false,
   }) => _source.watch(
     PicoEndpoints.vaccination(scope),
-    ttl: PicoTtl.data,
+    ttl: PicoTtl.stats,
     forceRefresh: forceRefresh,
   );
 }

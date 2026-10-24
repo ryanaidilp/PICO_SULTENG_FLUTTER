@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_impl/src/api/dates.dart';
 
@@ -149,3 +151,37 @@ List<Regency> regencyList(List<dynamic> rows) => [
   for (final r in rows.cast<Map<String, dynamic>>())
     Regency(code: '${r['id']}', name: r['name'] as String),
 ];
+
+/// The newest day of [s] that has an Rt, never a zero stand-in.
+LatestRt? latestRtOf(CaseSeries s) {
+  for (final d in s.days.reversed) {
+    final rt = d.rt;
+    if (rt != null) return (date: d.date, rt: rt);
+  }
+  return null;
+}
+
+/// The small stored form of a [LatestRt]: `{date, value, lower, upper}`, or
+/// `{}` when there is none.
+String encodeLatestRt(LatestRt? r) => r == null
+    ? '{}'
+    : jsonEncode({
+        'date': formatApiDate(r.date),
+        'value': r.rt.value,
+        'lower': r.rt.lower,
+        'upper': r.rt.upper,
+      });
+
+/// Reverse of [encodeLatestRt].
+LatestRt? decodeLatestRt(String text) {
+  final j = jsonDecode(text) as Map<String, dynamic>;
+  if (j['date'] == null || j['value'] == null) return null;
+  return (
+    date: parseApiDate(j['date'] as String),
+    rt: Rt(
+      value: (j['value'] as num).toDouble(),
+      lower: (j['lower'] as num).toDouble(),
+      upper: (j['upper'] as num).toDouble(),
+    ),
+  );
+}

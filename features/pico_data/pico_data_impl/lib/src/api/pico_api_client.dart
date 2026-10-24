@@ -9,6 +9,21 @@ import 'package:pico_data_impl/src/api/endpoint.dart';
 /// Body size above which JSON is decoded off the UI isolate (C05).
 const int kIsolateDecodeThreshold = 100 * 1024;
 
+/// A response body with its validator.
+final class FetchedBody {
+  /// Creates a fetched body.
+  const new(this.body, {this.etag, this.notModified = false});
+
+  /// The raw text (empty for a 304).
+  final String body;
+
+  /// The `ETag` header, when the API sends one.
+  final String? etag;
+
+  /// The server answered 304: the saved copy is still current.
+  final bool notModified;
+}
+
 /// Reads the PICO API (C01): envelope, failure mapping, one retry on 429.
 ///
 /// Only plain `YYYY-MM-DD` dates and `all=true` / `load_all=true` are ever
@@ -88,13 +103,20 @@ class PicoApiClient {
   );
 
   /// Decodes a stored or fresh body and maps it with [endpoint].
+  ///
+  /// A body over 100 KB is decoded AND mapped in one isolate: only the typed
+  /// result comes back, so the UI isolate never walks the generic JSON graph.
   Future<Either<PicoFailure, T>> parse<T>(
     Endpoint<T> endpoint,
     String body,
-  ) async => (await decode(
-    body,
-    unwrapPage: endpoint.unwrapPage,
-  )).fold(Left.new, (data) => _mapGuard(data, endpoint.map));
+  ) async {
+    if (body.length <= kIsolateDecodeThreshold) {
+      return _decodeAndMap(body, endpoint.unwrapPage, endpoint.map);
+    }
+    final map = endpoint.map;
+    final unwrap = endpoint.unwrapPage;
+    return Isolate.run(() => _decodeAndMap(body, unwrap, map));
+  }
 
   Either<PicoFailure, T> _mapGuard<T>(
     Object? data,
@@ -113,28 +135,50 @@ class PicoApiClient {
   Future<Either<PicoFailure, String>> getBody(
     String path, {
     Map<String, Object?>? query,
+  }) async => (await fetchBody(
+    path,
+    query: query,
+  )).fold(Left.new, (f) => Right(f.body));
+
+  /// Like [getBody], with the `ETag` of the answer. With [ifNoneMatch] a
+  /// `304` comes back as [FetchedBody.notModified] (an empty body).
+  Future<Either<PicoFailure, FetchedBody>> fetchBody(
+    String path, {
+    Map<String, Object?>? query,
+    String? ifNoneMatch,
   }) async {
-    var result = await _once(path, query);
+    var result = await _once(path, query, ifNoneMatch);
     if (result.leftOrNull?.kind == PicoFailureKind.rateLimited) {
       await Future<void>.delayed(retryDelay);
-      result = await _once(path, query);
+      result = await _once(path, query, ifNoneMatch);
     }
     return result;
   }
 
-  Future<Either<PicoFailure, String>> _once(
+  Future<Either<PicoFailure, FetchedBody>> _once(
     String path,
     Map<String, Object?>? query,
+    String? ifNoneMatch,
   ) async {
     final Response<String> res;
     try {
-      res = await _dio.get<String>(path, queryParameters: query);
+      res = await _dio.get<String>(
+        path,
+        queryParameters: query,
+        options: ifNoneMatch == null
+            ? null
+            : Options(headers: {'If-None-Match': ifNoneMatch}),
+      );
     } on DioException catch (e) {
       return Left(_fromDio(e));
     }
-    final failure = _fromStatus(res.statusCode ?? 0);
+    final status = res.statusCode ?? 0;
+    if (status == 304 && ifNoneMatch != null) {
+      return Right(FetchedBody('', etag: ifNoneMatch, notModified: true));
+    }
+    final failure = _fromStatus(status);
     if (failure != null) return Left(failure);
-    return Right(res.data ?? '');
+    return Right(FetchedBody(res.data ?? '', etag: res.headers.value('etag')));
   }
 
   /// Decodes a body and checks the envelope. Bodies over 100 KB decode in an
@@ -143,34 +187,9 @@ class PicoApiClient {
   Future<Either<PicoFailure, Object?>> decode(
     String body, {
     bool unwrapPage = true,
-  }) async {
-    final Object? json;
-    try {
-      json = body.length > kIsolateDecodeThreshold
-          ? await Isolate.run(() => jsonDecode(body))
-          : jsonDecode(body);
-    } on FormatException {
-      return const Left(
-        PicoFailure(PicoFailureKind.server, message: 'Response is not JSON'),
-      );
-    }
-    if (json is! Map<String, dynamic> || json['status'] != 'success') {
-      return Left(
-        PicoFailure(
-          PicoFailureKind.server,
-          message: json is Map ? '${json['error']}' : 'Unexpected response',
-        ),
-      );
-    }
-    var data = json['data'];
-    if (unwrapPage &&
-        data is Map<String, dynamic> &&
-        data['data'] is List &&
-        data.containsKey('pagination')) {
-      data = data['data'];
-    }
-    return Right(data);
-  }
+  }) async => body.length > kIsolateDecodeThreshold
+      ? Isolate.run(() => decodeEnvelope(body, unwrapPage: unwrapPage))
+      : decodeEnvelope(body, unwrapPage: unwrapPage);
 
   PicoFailure? _fromStatus(int status) {
     if (status >= 200 && status < 300) return null;
@@ -189,4 +208,52 @@ class PicoApiClient {
         : PicoFailureKind.network,
     message: e.message ?? e.type.name,
   );
+}
+
+/// Decodes [body], checks the C01 envelope and returns its `data`. Pure and
+/// synchronous, so it can run in any isolate.
+Either<PicoFailure, Object?> decodeEnvelope(
+  String body, {
+  bool unwrapPage = true,
+}) {
+  final Object? json;
+  try {
+    json = jsonDecode(body);
+  } on FormatException {
+    return const Left(
+      PicoFailure(PicoFailureKind.server, message: 'Response is not JSON'),
+    );
+  }
+  if (json is! Map<String, dynamic> || json['status'] != 'success') {
+    return Left(
+      PicoFailure(
+        PicoFailureKind.server,
+        message: json is Map ? '${json['error']}' : 'Unexpected response',
+      ),
+    );
+  }
+  var data = json['data'];
+  if (unwrapPage &&
+      data is Map<String, dynamic> &&
+      data['data'] is List &&
+      data.containsKey('pagination')) {
+    data = data['data'];
+  }
+  return Right(data);
+}
+
+/// [decodeEnvelope] then [map]. A mapping error becomes
+/// [PicoFailureKind.server], never an exception.
+Either<PicoFailure, T> _decodeAndMap<T>(
+  String body,
+  bool unwrapPage,
+  T Function(Object? data) map,
+) {
+  final decoded = decodeEnvelope(body, unwrapPage: unwrapPage);
+  if (decoded.isLeft) return Left(decoded.left);
+  try {
+    return Right(map(decoded.right));
+  } on Object catch (e) {
+    return Left(PicoFailure(PicoFailureKind.server, message: 'Bad data: $e'));
+  }
 }

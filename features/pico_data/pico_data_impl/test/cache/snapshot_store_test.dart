@@ -26,22 +26,46 @@ void main() {
     expect(await store.read('nope'), isNull);
   });
 
-  test('stale is decided by the TTL', () async {
+  test('stale is decided by the TTL of the resource class', () async {
     final at = DateTime.utc(2024, 1, 15);
     await store.write('k', 'x', at);
     final s = (await store.read('k'))!;
-    expect(s.isStale(PicoTtl.data, at.add(const Duration(hours: 23))), isFalse);
-    expect(s.isStale(PicoTtl.data, at.add(const Duration(hours: 25))), isTrue);
-    expect(
-      s.isStale(PicoTtl.content, at.add(const Duration(hours: 7))),
-      isTrue,
-    );
+    bool stale(Duration ttl, Duration age) => s.isStale(ttl, at.add(age));
+    expect(stale(PicoTtl.latest, const Duration(days: 6)), isFalse);
+    expect(stale(PicoTtl.latest, const Duration(days: 8)), isTrue);
+    expect(stale(PicoTtl.content, const Duration(days: 2)), isFalse);
+    expect(stale(PicoTtl.content, const Duration(days: 4)), isTrue);
+    expect(stale(PicoTtl.archiveSeries, const Duration(days: 60)), isFalse);
+    expect(stale(PicoTtl.archiveSeries, const Duration(days: 100)), isTrue);
+  });
+
+  test('the body is stored as plain text after a one line header', () async {
+    await store.write('k', '{"a":"x\\"y"}', DateTime.utc(2024), etag: 'W/"1"');
+    final raw = dir
+        .listSync(recursive: true)
+        .whereType<File>()
+        .single
+        .readAsStringSync();
+    expect(raw.split('\n').length, 2);
+    expect(raw.endsWith('{"a":"x\\"y"}'), isTrue);
+    final s = (await store.read('k'))!;
+    expect(s.body, '{"a":"x\\"y"}');
+    expect(s.etag, 'W/"1"');
+  });
+
+  test('touch moves the date and keeps body and etag', () async {
+    await store.write('k', 'body', DateTime.utc(2024), etag: 'e');
+    await store.touch('k', DateTime.utc(2025));
+    final s = (await store.read('k'))!;
+    expect(s.body, 'body');
+    expect(s.etag, 'e');
+    expect(s.fetchedAt.isAtSameMomentAs(DateTime.utc(2025)), isTrue);
   });
 
   test('a corrupt file is a miss and is deleted', () async {
     await store.write('k', 'x', DateTime.utc(2024));
     final f = File(dir.listSync(recursive: true).whereType<File>().single.path)
-      ..writeAsStringSync('{"v":1,"body"');
+      ..writeAsStringSync('{"v":2,"bo');
     expect(await store.read('k'), isNull);
     expect(f.existsSync(), isFalse);
   });
@@ -55,8 +79,8 @@ void main() {
 
   test('another schema version is a miss', () async {
     await store.write('k', 'x', DateTime.utc(2024));
-    final v2 = SnapshotStore(store.directory, schemaVersion: 2);
-    expect(await v2.read('k'), isNull);
+    final v3 = SnapshotStore(store.directory, schemaVersion: 3);
+    expect(await v3.read('k'), isNull);
   });
 
   test('keys with slashes and queries are safe file names', () async {

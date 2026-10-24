@@ -16,7 +16,7 @@ class DirectoryRepositoryImpl implements DirectoryRepository {
   Watch<List<Regency>> watchRegencies({bool forceRefresh = false}) =>
       _source.watch(
         PicoEndpoints.regencies,
-        ttl: PicoTtl.content,
+        ttl: PicoTtl.directory,
         forceRefresh: forceRefresh,
       );
 
@@ -24,7 +24,7 @@ class DirectoryRepositoryImpl implements DirectoryRepository {
   Watch<List<Hospital>> watchHospitals({bool forceRefresh = false}) =>
       _source.watch(
         PicoEndpoints.hospitals,
-        ttl: PicoTtl.content,
+        ttl: PicoTtl.directory,
         forceRefresh: forceRefresh,
       );
 
@@ -32,7 +32,7 @@ class DirectoryRepositoryImpl implements DirectoryRepository {
   Watch<List<TaskForceGroup>> watchTaskForces({bool forceRefresh = false}) =>
       _source.watch(
         PicoEndpoints.taskForces,
-        ttl: PicoTtl.content,
+        ttl: PicoTtl.directory,
         forceRefresh: forceRefresh,
       );
 
@@ -41,7 +41,7 @@ class DirectoryRepositoryImpl implements DirectoryRepository {
     bool forceRefresh = false,
   }) => _source.watch(
     PicoEndpoints.vaccineLocations,
-    ttl: PicoTtl.content,
+    ttl: PicoTtl.directory,
     forceRefresh: forceRefresh,
   );
 }

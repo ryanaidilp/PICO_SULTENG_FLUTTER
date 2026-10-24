@@ -33,7 +33,7 @@ void main() {
   }) => s
       .watch(
         PicoEndpoints.nationalLatest,
-        ttl: PicoTtl.data,
+        ttl: PicoTtl.latest,
         forceRefresh: force,
       )
       .toList();
@@ -78,7 +78,7 @@ void main() {
 
     test('step 2: a stale copy is emitted (stale), then refreshed from the network', () async {
       await run(source());
-      clock = clock.add(const Duration(hours: 25));
+      clock = clock.add(const Duration(days: 8));
       final events = await run(source());
       expect(events.length, 2);
       expect(events[0].right.source, DataSource.cache);
@@ -99,7 +99,7 @@ void main() {
     test('step 3: a failed fetch with a copy emits the copy again as stale, no Left', () async {
       await run(source());
       adapter.routes['/national/latest'] = const FakeReply(500, 'boom');
-      clock = clock.add(const Duration(hours: 30));
+      clock = clock.add(const Duration(days: 8));
       final events = await run(source());
       expect(events.length, 2);
       expect(events.every((e) => e.isRight), isTrue);
@@ -125,7 +125,7 @@ void main() {
 
     test('step 5: the stream closes after the last event', () async {
       final done = source()
-          .watch(PicoEndpoints.nationalLatest, ttl: PicoTtl.data)
+          .watch(PicoEndpoints.nationalLatest, ttl: PicoTtl.latest)
           .isEmpty;
       expect(await done, isFalse);
     });
@@ -180,8 +180,12 @@ void main() {
   test('two watchers of one key cause one client call', () async {
     adapter.delay = const Duration(milliseconds: 40);
     final s = source();
-    final a = s.watch(PicoEndpoints.nationalLatest, ttl: PicoTtl.data).toList();
-    final b = s.watch(PicoEndpoints.nationalLatest, ttl: PicoTtl.data).toList();
+    final a = s
+        .watch(PicoEndpoints.nationalLatest, ttl: PicoTtl.latest)
+        .toList();
+    final b = s
+        .watch(PicoEndpoints.nationalLatest, ttl: PicoTtl.latest)
+        .toList();
     final both = await Future.wait([a, b]);
     expect(both[0].single.right.data.cumulative.positive, 6812127);
     expect(both[1].single.right.data.cumulative.positive, 6812127);

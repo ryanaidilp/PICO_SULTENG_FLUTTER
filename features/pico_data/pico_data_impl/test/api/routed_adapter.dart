@@ -14,6 +14,9 @@ class RoutedAdapter implements HttpClientAdapter {
   /// Paths in call order.
   final List<String> calls = [];
 
+  /// Request headers, in call order.
+  final List<Map<String, dynamic>> headers = [];
+
   /// Optional delay before answering, to keep requests in flight.
   Duration delay = Duration.zero;
 
@@ -24,6 +27,7 @@ class RoutedAdapter implements HttpClientAdapter {
     Future<void>? cancelFuture,
   ) async {
     calls.add(options.path);
+    headers.add(Map.of(options.headers));
     if (delay > Duration.zero) await Future<void>.delayed(delay);
     final r = routes[options.path];
     if (r is DioException) throw r;
@@ -35,6 +39,7 @@ class RoutedAdapter implements HttpClientAdapter {
       reply.status,
       headers: {
         Headers.contentTypeHeader: ['application/json'],
+        if (reply.etag != null) 'etag': [reply.etag!],
       },
     );
   }

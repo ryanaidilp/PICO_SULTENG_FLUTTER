@@ -38,13 +38,16 @@ class FakeAdapter implements HttpClientAdapter {
 }
 
 class FakeReply {
-  const new(this.status, this.body);
+  const new(this.status, this.body, {this.etag});
 
   /// A 200 reply with [json] as the whole body.
-  new ok(Object json) : status = 200, body = jsonEncode(json);
+  new ok(Object json) : status = 200, body = jsonEncode(json), etag = null;
 
   final int status;
   final String body;
+
+  /// The `ETag` header of the reply, if any.
+  final String? etag;
 }
 
 /// Reads a recorded API fixture as text.
