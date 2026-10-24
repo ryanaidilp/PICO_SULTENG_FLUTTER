@@ -22,7 +22,7 @@ void main() {
   tearDown(() => bloc.close());
 
   test('opening an area loads its series once', () async {
-    bloc.add(const AreaOpened(AreaQuery()));
+    bloc.add(const AreaOpened(nationalQuery));
     await settle();
     expect(bloc.state.loading, isFalse);
     expect(bloc.state.view, isNotNull);
@@ -32,7 +32,7 @@ void main() {
   test(
     'changing metric, daily or range emits a new view with no new request',
     () async {
-      bloc.add(const AreaOpened(AreaQuery()));
+      bloc.add(const AreaOpened(nationalQuery));
       await settle();
       final first = bloc.state.view;
       bloc
@@ -62,7 +62,7 @@ void main() {
   );
 
   test('changing the area asks the repository for that area', () async {
-    bloc.add(const AreaOpened(AreaQuery()));
+    bloc.add(const AreaOpened(nationalQuery));
     await settle();
     bloc.add(const AreaQueryChanged(AreaQuery(area: AreaRef.province('72'))));
     await settle();
@@ -71,9 +71,9 @@ void main() {
   });
 
   test('re-opening with the same query does not reload', () async {
-    bloc.add(const AreaOpened(AreaQuery()));
+    bloc.add(const AreaOpened(nationalQuery));
     await settle();
-    bloc.add(const AreaOpened(AreaQuery()));
+    bloc.add(const AreaOpened(nationalQuery));
     await settle();
     expect(repo.calls[const AreaRef.national()], 1);
   });
@@ -81,7 +81,7 @@ void main() {
   test(
     'refresh asks again with forceRefresh and the done future completes',
     () async {
-      bloc.add(const AreaOpened(AreaQuery()));
+      bloc.add(const AreaOpened(nationalQuery));
       await settle();
       final done = Completer<void>();
       bloc.add(AreaRefreshed(done: done));
@@ -101,7 +101,7 @@ void main() {
   });
 
   test('compare toggles without a request', () async {
-    bloc.add(const AreaOpened(AreaQuery()));
+    bloc.add(const AreaOpened(nationalQuery));
     await settle();
     bloc.add(const AreaCompareToggled());
     await settle();

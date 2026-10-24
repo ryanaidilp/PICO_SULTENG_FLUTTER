@@ -43,24 +43,29 @@ void main() {
     },
   );
 
-  test('a national series keeps its last row even when it is zero', () {
+  test('a national series is trimmed the same way, so a 7 day window holds real days', () {
+    Map<String, dynamic> nested(String date, int daily, int cum) => {
+      'date': '${date}T16:00:00.000000Z',
+      'daily': {'positive': daily, 'recovered': 0, 'deceased': 0, 'active': 0},
+      'cumulative': {
+        'positive': cum,
+        'recovered': 0,
+        'deceased': 0,
+        'active': 0,
+      },
+    };
     final s = seriesFromNested(
       [
-        {
-          'date': '2024-01-13T16:00:00.000000Z',
-          'daily': {'positive': 0, 'recovered': 0, 'deceased': 0, 'active': 0},
-          'cumulative': {
-            'positive': 5,
-            'recovered': 0,
-            'deceased': 0,
-            'active': 5,
-          },
-        },
+        nested('2024-01-14', 0, 9),
+        nested('2024-01-13', 0, 9),
+        nested('2024-01-12', 4, 9),
+        nested('2024-01-11', 5, 5),
       ],
       area: const AreaRef.national(),
       fallbackName: 'Indonesia',
     );
-    expect(s.days, hasLength(1));
+    expect(s.latest!.date, DateTime(2024, 1, 12));
+    expect(s.days, hasLength(2));
   });
 
   test('a series with no active day at all is left as it is', () {

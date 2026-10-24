@@ -27,6 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         _national(emit, force),
         _sulteng(emit, force),
         _rt(emit, force),
+        _regencies(emit, force),
         _banners(emit, force),
       ]);
 
@@ -64,6 +65,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         state.sulteng,
       ),
     ),
+  );
+
+  Future<void> _regencies(Emitter<HomeState> emit, bool force) => emit.forEach(
+    _cases.watchRegencySummaries(forceRefresh: force),
+    onData: (r) => state.copyWith(regencies: _section(r, state.regencies)),
   );
 
   /// Beranda never loads a full series: the Rt reading is a small local value

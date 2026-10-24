@@ -72,7 +72,7 @@ CaseSeries seriesFromNested(
     area: area,
     areaName: province?['name'] as String? ?? fallbackName,
     days: maps.map(caseDayFromNested),
-    trimIdleTail: area is! NationalArea,
+    trimIdleTail: true,
   );
 }
 

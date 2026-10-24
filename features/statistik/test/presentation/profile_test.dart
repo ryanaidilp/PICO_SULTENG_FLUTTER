@@ -153,7 +153,7 @@ void main() {
       tester.view.physicalSize = const Size(412, 3600);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.reset);
-      await tester.pumpWidget(page.host(repo(), const AreaQuery()));
+      await tester.pumpWidget(page.host(repo(), nationalQuery));
       await tester.pumpAndSettle();
       expect(find.text('ODP dan PDP'), findsNothing);
       expect(find.text('Jenis kelamin dan usia'), findsNothing);

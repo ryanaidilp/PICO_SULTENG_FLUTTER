@@ -121,7 +121,7 @@ class _RtContentState extends State<RtContent> {
         } else {
           final bounds = DateTimeRange(
             start: snap.data.days.first.date,
-            end: snap.data.days.last.date,
+            end: rtEndOf(snap.data),
           );
           content = RtBody(
             view: view,
@@ -130,7 +130,7 @@ class _RtContentState extends State<RtContent> {
             onRange: (r) => bloc.add(RtRangeChanged(r)),
             onMethod: () => open('${PicoRoutes.tentang}#metodologi'),
             stamp: PicoDataStamp(
-              dataDate: snap.data.days.last.date,
+              dataDate: rtEndOf(snap.data),
               fetchedAt: snap.fetchedAt,
               isStale: snap.isStale,
               offline: snap.isOffline,

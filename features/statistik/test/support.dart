@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:statistik/src/domain/area_query.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_api/testing.dart';
 
@@ -170,3 +171,6 @@ GenderSnapshot genderSnapshot() => const GenderSnapshot(
     female: GenderCounts(total: 112, ageGroups: {'0_14': 9}),
   ),
 );
+
+/// The national query (the default area is Sulawesi Tengah).
+const nationalQuery = AreaQuery(area: AreaRef.national());

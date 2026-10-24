@@ -74,6 +74,16 @@ final class RtView extends Equatable {
   ];
 }
 
+/// The last day whose Rt is computed, or the last data day when none is. The
+/// Rt range, its presets and its stamp end here: days after it have cases but
+/// no Rt, and a window made only of those would be all "no data".
+DateTime rtEndOf(CaseSeries series) {
+  for (var i = series.days.length - 1; i >= 0; i--) {
+    if (series.days[i].rt != null) return series.days[i].date;
+  }
+  return series.days.last.date;
+}
+
 /// Builds the view of [series] for [from]..[to] (null = open ends), clamped to
 /// the data and swapped if reversed. Null for an empty series.
 RtView? buildRtView(CaseSeries series, {DateTime? from, DateTime? to}) {
@@ -84,7 +94,7 @@ RtView? buildRtView(CaseSeries series, {DateTime? from, DateTime? to}) {
   DateTime clamp(DateTime d) =>
       d.isBefore(first) ? first : (d.isAfter(last) ? last : d);
   var start = clamp(from ?? first);
-  var end = clamp(to ?? last);
+  var end = clamp(to ?? rtEndOf(series));
   if (start.isAfter(end)) (start, end) = (end, start);
   final range = DateRange(start, end);
   final days = series.inRange(range);
@@ -104,7 +114,7 @@ RtView? buildRtView(CaseSeries series, {DateTime? from, DateTime? to}) {
     range: range,
     points: [for (final d in days) (d.date, d.rt)],
     latest: latest,
-    lastDataDay: days.last.date,
+    lastDataDay: last,
     nullDays: nulls,
     computedDays: days.length - nulls,
     daysAboveOne: above,

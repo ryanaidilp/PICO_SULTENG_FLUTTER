@@ -64,30 +64,46 @@ FakeCaseRepository repo({
   CaseSeries? rtSeries,
   bool stale = true,
   PicoFailureKind? refreshFailure = PicoFailureKind.network,
-}) => FakeCaseRepository(
-  nationalLatest: failNational
-      ? fakeFailure(kind)
+}) {
+  Either<PicoFailure, DataSnapshot<T>> snap<T>(T data) => failNational
+      ? fakeFailure<T>(kind)
       : fakeSnapshot(
-          nationalDay,
+          data,
           source: cache ? DataSource.cache : DataSource.network,
           isStale: cache && stale,
           refreshFailure: cache ? refreshFailure : null,
           fetchedAt: DateTime(2024, 1, 12),
-        ),
-  provinces: fakeSnapshot([
-    AreaSummary(
-      area: const AreaRef.province('72'),
-      name: 'Sulawesi Tengah',
-      latest: sultengDay,
-    ),
-    AreaSummary(
-      area: const AreaRef.province('11'),
-      name: 'Aceh',
-      latest: day('2024-01-14', pos: 45092),
-    ),
-  ]),
-  // No series: Beranda must never ask for one (fullSeriesRequests stays 0).
-)..latestRtResult = fakeSnapshot(latestRtOf(rtSeries ?? series()));
+        );
+  return FakeCaseRepository(
+    nationalLatest: snap(nationalDay),
+    // `failNational` fails the headline source: Sulawesi Tengah.
+    provinces: snap([
+      AreaSummary(
+        area: const AreaRef.province('72'),
+        name: 'Sulawesi Tengah',
+        latest: sultengDay,
+      ),
+      AreaSummary(
+        area: const AreaRef.province('11'),
+        name: 'Aceh',
+        latest: day('2024-01-14', pos: 45092),
+      ),
+    ]),
+    regencies: snap([
+      AreaSummary(
+        area: const AreaRef.regency('7271'),
+        name: 'Kota Palu',
+        latest: day('2024-01-14', pos: 13824),
+      ),
+      AreaSummary(
+        area: const AreaRef.regency('7201'),
+        name: 'Banggai',
+        latest: day('2024-01-14', pos: 8335),
+      ),
+    ]),
+    // No series: Beranda must never ask for one (fullSeriesRequests stays 0).
+  )..latestRtResult = fakeSnapshot(latestRtOf(rtSeries ?? series()));
+}
 
 Widget host(
   CaseRepository cases, {
@@ -127,17 +143,23 @@ Future<void> setup(WidgetTester tester, AppLocale l) async {
 void main() {
   testWidgets('national positive tile shows 6.812.127 in id', (tester) async {
     await setup(tester, AppLocale.id);
+    tester.view.physicalSize = const Size(412, 3600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await tester.pumpWidget(host(repo()));
     await tester.pumpAndSettle();
-    expect(find.text('6.812.127'), findsOneWidget);
+    expect(find.textContaining('6.812.127'), findsOneWidget);
     expect(find.text('64.718'), findsOneWidget);
   });
 
   testWidgets('and 6,812,127 in en', (tester) async {
     await setup(tester, AppLocale.en);
+    tester.view.physicalSize = const Size(412, 3600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await tester.pumpWidget(host(repo(), locale: const Locale('en')));
     await tester.pumpAndSettle();
-    expect(find.text('6,812,127'), findsOneWidget);
+    expect(find.textContaining('6,812,127'), findsOneWidget);
     expect(find.text('Central Sulawesi'), findsOneWidget);
     await setup(tester, AppLocale.id);
   });
@@ -160,6 +182,9 @@ void main() {
     'latest Rt is the newest non-null day, never 0; an all-null series says not computed',
     (tester) async {
       await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 3600);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
       final repoUsed = repo();
       await tester.pumpWidget(host(repoUsed));
       await tester.pumpAndSettle();
@@ -191,7 +216,7 @@ void main() {
       addTearDown(tester.view.reset);
       await tester.pumpWidget(host(repo(cache: true)));
       await tester.pumpAndSettle();
-      expect(find.text('Nasional'), findsOneWidget);
+      expect(find.textContaining('Nasional (Indonesia)'), findsOneWidget);
       expect(find.textContaining('data tersimpan'), findsOneWidget);
       expect(find.textContaining('Tidak terhubung'), findsOneWidget);
       expect(find.byType(PicoStateView), findsNothing);
@@ -248,7 +273,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Tidak terhubung'), findsOneWidget);
     expect(find.text('Coba lagi'), findsOneWidget);
-    expect(find.text('Nasional'), findsNothing);
+    expect(find.textContaining('Nasional (Indonesia)'), findsNothing);
   });
 
   testWidgets('a server failure with no copy is the error state', (
@@ -303,9 +328,9 @@ void main() {
       await setup(tester, AppLocale.id);
       await tester.pumpWidget(host(repo()));
       await tester.pumpAndSettle();
-      // Hero plus three tiles for Nasional and for Sulawesi Tengah: each
-      // change starts with a glyph (flat here), not only a colour.
-      expect(find.textContaining('■ 0'), findsAtLeastNWidgets(8));
+      // Hero plus three tiles of Sulawesi Tengah: each change starts with a
+      // glyph (flat here), not only a colour.
+      expect(find.textContaining('■ 0'), findsAtLeastNWidgets(4));
     },
   );
 

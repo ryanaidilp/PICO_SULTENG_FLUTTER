@@ -258,3 +258,150 @@ class QuickLinksGrid extends StatelessWidget {
     },
   );
 }
+
+/// The kabupaten and kota of Sulawesi Tengah as one list under the province:
+/// name, cumulative positive and a chevron. Each row opens its area page. The
+/// biggest totals come first.
+class RegencyList extends StatelessWidget {
+  /// Creates the list.
+  const new({required this.rows, required this.onOpen, super.key});
+
+  /// One summary per kabupaten or kota.
+  final List<AreaSummary> rows;
+
+  /// Opens a path.
+  final ValueChanged<String> onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    final k = PicoKitText.of(context);
+    final sorted = [...rows]
+      ..sort(
+        (a, b) => b.latest.cumulative.positive.compareTo(
+          a.latest.cumulative.positive,
+        ),
+      );
+    final text = context.typography.body.regular.copyWith(
+      color: context.colors.foreground.main,
+    );
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colors.background.card,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: context.colors.outline.subtle),
+      ),
+      child: Column(
+        children: [
+          for (final (i, r) in sorted.indexed) ...[
+            if (i > 0) Divider(height: 1, color: context.colors.outline.subtle),
+            Semantics(
+              button: true,
+              excludeSemantics: true,
+              label: context.t.regencyRow(
+                name: r.name,
+                value: k.number(r.latest.cumulative.positive),
+              ),
+              onTap: () => onOpen(
+                PicoRoutes.kabupatenDetail((r.area as RegencyArea).code),
+              ),
+              child: InkWell(
+                onTap: () => onOpen(
+                  PicoRoutes.kabupatenDetail((r.area as RegencyArea).code),
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 48),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 8,
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(child: Text(r.name, style: text)),
+                        Text(
+                          k.number(r.latest.cumulative.positive),
+                          style: text.copyWith(fontWeight: FontWeight.w700),
+                        ),
+                        const SizedBox(width: 8),
+                        Icon(
+                          Icons.chevron_right,
+                          color: context.colors.foreground.subtle,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Indonesia as a small card: the four cumulative totals in one wrapped line.
+/// It is the secondary section of Beranda; Sulawesi Tengah leads.
+class NationalCompact extends StatelessWidget {
+  /// Creates the card.
+  const new({required this.day, super.key});
+
+  /// The latest national day.
+  final CaseDay day;
+
+  @override
+  Widget build(BuildContext context) {
+    final k = PicoKitText.of(context);
+    final text = context.typography.body.small.copyWith(
+      color: context.colors.foreground.main,
+    );
+    final states = context.picoStates;
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: context.colors.background.card,
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: context.colors.outline.subtle),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${context.t.nationalSmall} · ${k.date(day.date)}',
+              style: text.copyWith(color: context.colors.foreground.subtle),
+            ),
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 16,
+              runSpacing: 6,
+              children: [
+                for (final (state, metric) in const [
+                  (PicoState.positive, CaseMetric.positive),
+                  (PicoState.active, CaseMetric.active),
+                  (PicoState.recovered, CaseMetric.recovered),
+                  (PicoState.deceased, CaseMetric.deceased),
+                ])
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      PicoMarkView(
+                        mark: state.mark,
+                        color: states.of(state),
+                        size: 11,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        '${k.stateLabel(state)} ${k.number(day.cumulative.of(metric))}',
+                        style: text,
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

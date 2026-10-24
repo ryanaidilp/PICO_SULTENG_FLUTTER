@@ -22,5 +22,8 @@
   "banner_label": "$title, banner $n dari $total",
   "banner_prev": "Banner sebelumnya",
   "banner_next": "Banner berikutnya",
-  "total_positive": "Total kasus positif"
+  "total_positive": "Total kasus positif",
+  "regencies": "Kabupaten dan kota",
+  "regency_row": "$name, positif kumulatif $value",
+  "national_small": "Nasional (Indonesia)"
 }

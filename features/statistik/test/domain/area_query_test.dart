@@ -14,8 +14,10 @@ void main() {
   group('URL round trip', () {
     const urls = [
       '/statistik',
-      '/statistik?level=province&id=72',
-      '/statistik?level=province&id=72&metric=active&from=2021-07-15&to=2021-07-16&daily=false',
+      '/statistik?level=national',
+      '/statistik?level=province&id=71',
+      '/statistik?metric=active&from=2021-07-15&to=2021-07-16&daily=false',
+      '/statistik?level=national&metric=active&from=2021-07-15&to=2021-07-16&daily=false',
       '/statistik?level=regency&id=7271&metric=deceased',
       '/statistik?metric=recovered&from=2023-01-01',
       '/statistik?daily=false',
@@ -37,8 +39,10 @@ void main() {
       expect(parse(q.path), q);
     });
 
-    test('defaults are never printed', () {
+    test('defaults are never printed: Sulawesi Tengah leads, Indonesia is explicit', () {
       expect(const AreaQuery().path, '/statistik');
+      expect(const AreaQuery().area, const AreaRef.province('72'));
+      expect(nationalQuery.path, '/statistik?level=national');
     });
 
     test('invalid values fall back to defaults and never throw', () {
@@ -46,10 +50,13 @@ void main() {
         '/statistik?level=galaxy&id=zz&metric=pizza&from=2021-02-31&to=hari&daily=maybe',
       );
       expect(q, const AreaQuery());
-      expect(parse('/statistik?level=province').area, const AreaRef.national());
+      expect(
+        parse('/statistik?level=province').area,
+        const AreaRef.province('72'),
+      );
       expect(
         parse('/statistik?level=regency&id=72').area,
-        const AreaRef.national(),
+        const AreaRef.province('72'),
       );
     });
   });
@@ -96,7 +103,7 @@ void main() {
     });
 
     test('the open range follows the whole data', () {
-      final v = buildAreaView(series, const AreaQuery())!;
+      final v = buildAreaView(series, nationalQuery)!;
       expect(v.range.start, DateTime(2020, 3, 2));
       expect(v.range.end, DateTime(2024, 1, 14));
       expect(v.days.length, 1414);
@@ -110,7 +117,7 @@ void main() {
             areaName: 'x',
             days: const [],
           ),
-          const AreaQuery(),
+          nationalQuery,
         ),
         isNull,
       );

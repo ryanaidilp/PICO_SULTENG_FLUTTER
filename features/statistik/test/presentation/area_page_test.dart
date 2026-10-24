@@ -129,21 +129,24 @@ void main() {
       addTearDown(tester.view.reset);
       final repo = CountingCases(series);
       final nav = <String>[];
-      await tester.pumpWidget(host(repo, const AreaQuery(), navigated: nav));
+      await tester.pumpWidget(host(repo, nationalQuery, navigated: nav));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Positif').first);
       await tester.pumpAndSettle();
       await tester.tap(find.text('Sembuh').last);
       await tester.pumpAndSettle();
-      expect(nav.last, '/statistik?metric=recovered');
+      expect(nav.last, '/statistik?level=national&metric=recovered');
       await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
-      expect(nav.last, '/statistik?metric=recovered&daily=false');
+      expect(
+        nav.last,
+        '/statistik?level=national&metric=recovered&daily=false',
+      );
       await tester.tap(find.text('30 hari'));
       await tester.pumpAndSettle();
       expect(
         nav.last,
-        '/statistik?metric=recovered&from=2023-12-16&to=2024-01-14&daily=false',
+        '/statistik?level=national&metric=recovered&from=2023-12-16&to=2024-01-14&daily=false',
       );
       expect(
         repo.calls[const AreaRef.national()],
@@ -161,12 +164,12 @@ void main() {
       final nav = <String>[];
       final open = <String>[];
       await tester.pumpWidget(
-        host(repo, const AreaQuery(), navigated: nav, opened: open),
+        host(repo, nationalQuery, navigated: nav, opened: open),
       );
       await tester.pumpAndSettle();
       await tester.tap(find.text('Provinsi'));
       await tester.pumpAndSettle();
-      expect(nav.last, '/statistik?level=province&id=72');
+      expect(nav.last, '/statistik');
       await tester.tap(find.text('Kabupaten'));
       expect(open.last, PicoRoutes.kabupatenList);
     },
@@ -199,7 +202,7 @@ void main() {
     tester,
   ) async {
     await setup(tester, AppLocale.id);
-    await tester.pumpWidget(host(OfflineCases(series), const AreaQuery()));
+    await tester.pumpWidget(host(OfflineCases(series), nationalQuery));
     await tester.pumpAndSettle();
     expect(find.text('Coba lagi'), findsOneWidget);
     expect(find.byType(PicoStateView), findsOneWidget);
@@ -211,7 +214,7 @@ void main() {
       await setup(tester, AppLocale.id);
       final opened = <String>[];
       await tester.pumpWidget(
-        host(OfflineCases(series), const AreaQuery(), opened: opened),
+        host(OfflineCases(series), nationalQuery, opened: opened),
       );
       await tester.pumpAndSettle();
       expect(find.byType(PicoStateView), findsOneWidget);
@@ -242,11 +245,7 @@ void main() {
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
-      host(
-        CountingCases(series),
-        const AreaQuery(),
-        locale: const Locale('en'),
-      ),
+      host(CountingCases(series), nationalQuery, locale: const Locale('en')),
     );
     await tester.pumpAndSettle();
     expect(find.text('Cumulative'), findsOneWidget);
@@ -260,7 +259,7 @@ void main() {
     tester.view.physicalSize = const Size(412, 3000);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.reset);
-    await tester.pumpWidget(host(CountingCases(series), const AreaQuery()));
+    await tester.pumpWidget(host(CountingCases(series), nationalQuery));
     await tester.pumpAndSettle();
     await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
     await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
@@ -317,4 +316,64 @@ void main() {
       matchesGoldenFile('goldens/area_light_x1.png'),
     );
   }, tags: ['golden']);
+
+  group('filters on a series that ends in zero rows', () {
+    // The API pads the end of a series with zero rows; the data layer trims
+    // them, so every window ends on the last day with real cases.
+    final padded = sultengSeries();
+    final trimmed = CaseSeries.fromDays(
+      area: padded.area,
+      areaName: padded.areaName,
+      days: padded.days,
+      trimIdleTail: true,
+    );
+    final lastReal = trimmed.days.last.date;
+
+    testWidgets('the trim ended before the padded rows', (tester) async {
+      expect(lastReal.isBefore(padded.days.last.date), isTrue);
+      expect(trimmed.days.last.daily.positive, greaterThan(0));
+    });
+
+    for (final chip in ['7 hari', '30 hari', '90 hari']) {
+      testWidgets('$chip ends on the last real day and is not all zeros', (
+        tester,
+      ) async {
+        await setup(tester, AppLocale.id);
+        tester.view.physicalSize = const Size(412, 3000);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          host(CountingCases(trimmed), const AreaQuery()),
+        );
+        await tester.pumpAndSettle();
+        await tester.tap(find.text(chip));
+        await tester.pumpAndSettle();
+        final k = PicoKitText.of(tester.element(find.byType(AreaContent)));
+        expect(find.textContaining(k.date(lastReal)), findsWidgets);
+        final total = find.textContaining('Total dalam rentang: ');
+        expect(total, findsOneWidget);
+        expect(
+          (tester.widget<Text>(total).data!).endsWith(': 0'),
+          isFalse,
+          reason: '$chip window must hold real cases',
+        );
+      });
+    }
+
+    testWidgets('a year picked in the dropdown is cut from real days', (
+      tester,
+    ) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 3000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(host(CountingCases(trimmed), const AreaQuery()));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Semua tahun'));
+      await tester.pumpAndSettle();
+      // The last year offered is the year of the last real day.
+      expect(find.text('${lastReal.year}'), findsWidgets);
+      expect(find.text('2024'), findsNothing);
+    });
+  });
 }

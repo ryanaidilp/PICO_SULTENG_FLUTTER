@@ -13,8 +13,9 @@ import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// Beranda: archive note, national and Sulawesi Tengah figures, the data
-/// stamp and quick links. The banners sit between the note and Nasional.
+/// Beranda: archive note, Sulawesi Tengah figures, its kabupaten and kota, a
+/// small national card, and quick links. The banners sit between the note and
+/// the province.
 @RoutePage()
 class HomePage extends StatelessWidget {
   /// Creates the page. [onOpen] opens a path, replaced in tests.
@@ -31,15 +32,19 @@ class HomePage extends StatelessWidget {
     builder: (context, state) {
       final bloc = context.read<HomeBloc>();
       void retry() => bloc.add(const HomeRefreshed());
-      final national = state.national;
-      if (national.loading) return const PicoStateView.loading();
-      final failure = national.failure;
+      // Sulawesi Tengah leads: without it the page is a state view. Indonesia
+      // and the kabupaten list never block it.
+      final lead = state.sulteng;
+      if (lead.loading) return const PicoStateView.loading();
+      final failure = lead.failure;
       if (failure != null) {
         return failure.kind == PicoFailureKind.network
             ? PicoStateView.offline(onRetry: retry)
             : PicoStateView.error(onRetry: retry);
       }
-      final snap = national.snapshot!;
+      final snap = lead.snapshot!;
+      final national = state.national.data;
+      final regencies = state.regencies.data;
       final open =
           onOpen ?? (path) => unawaited(context.router.navigatePath(path));
       return RefreshIndicator.adaptive(
@@ -64,16 +69,10 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
             ],
-            PicoSectionHeader(title: context.t.national),
+            PicoSectionHeader(title: context.t.sulteng),
             const SizedBox(height: 12),
             CaseTiles(day: snap.data),
             const SizedBox(height: 8),
-            LatestRtLine(rt: state.rt, onOpen: open),
-            const SizedBox(height: 16),
-            PicoSectionHeader(title: context.t.sulteng),
-            const SizedBox(height: 12),
-            _Sulteng(section: state.sulteng, onOpen: open, onRetry: retry),
-            const SizedBox(height: 16),
             PicoDataStamp(
               dataDate: snap.data.date,
               fetchedAt: snap.fetchedAt,
@@ -81,7 +80,19 @@ class HomePage extends StatelessWidget {
               offline: snap.isOffline,
               refreshFailed: snap.refreshFailed,
             ),
+            if (regencies != null && regencies.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              PicoSectionHeader(title: context.t.regencies),
+              const SizedBox(height: 12),
+              RegencyList(rows: regencies, onOpen: open),
+            ],
+            RegencyLink(onOpen: open),
             const SizedBox(height: 16),
+            if (national != null) ...[
+              NationalCompact(day: national),
+              LatestRtLine(rt: state.rt, onOpen: open),
+              const SizedBox(height: 16),
+            ],
             PicoSectionHeader(title: context.t.quickLinks),
             const SizedBox(height: 12),
             QuickLinksGrid(onOpen: open),
@@ -90,40 +101,4 @@ class HomePage extends StatelessWidget {
       );
     },
   );
-}
-
-class _Sulteng extends StatelessWidget {
-  const new({
-    required this.section,
-    required this.onOpen,
-    required this.onRetry,
-  });
-
-  final HomeSection<CaseDay> section;
-  final ValueChanged<String> onOpen;
-  final VoidCallback onRetry;
-
-  @override
-  Widget build(BuildContext context) {
-    final day = section.data;
-    if (section.loading) {
-      return const Padding(
-        padding: EdgeInsets.all(16),
-        child: Center(child: CircularProgressIndicator()),
-      );
-    }
-    if (day == null) {
-      return SizedBox(
-        height: 240,
-        child: PicoStateView.error(onRetry: onRetry),
-      );
-    }
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CaseTiles(day: day),
-        RegencyLink(onOpen: onOpen),
-      ],
-    );
-  }
 }

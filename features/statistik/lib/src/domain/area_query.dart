@@ -3,19 +3,24 @@ import 'package:identifiers/identifiers.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 
 /// Which kind of area a query reads.
+///
+/// The order is the order of the level control: PICO is the app of Sulawesi
+/// Tengah, so the province comes first, then its kabupaten, and Indonesia last.
 enum AreaLevel {
-  /// Indonesia.
-  national,
-
-  /// One province.
+  /// One province (Sulawesi Tengah unless another is picked).
   province,
 
   /// One kabupaten or kota.
   regency,
+
+  /// Indonesia.
+  national,
 }
 
 /// Province id of Sulawesi Tengah.
 const String kSultengProvinceId = '72';
+
+const AreaRef _defaultArea = AreaRef.province(kSultengProvinceId);
 
 /// What the area page shows: the area, the case type, daily or cumulative and
 /// the date range. It maps 1:1 to the query string of `/statistik` (C07).
@@ -26,7 +31,7 @@ const String kSultengProvinceId = '72';
 final class AreaQuery extends Equatable {
   /// Creates a query.
   const AreaQuery({
-    this.area = const AreaRef.national(),
+    this.area = const AreaRef.province(kSultengProvinceId),
     this.metric = CaseMetric.positive,
     this.daily = true,
     this.from,
@@ -43,7 +48,8 @@ final class AreaQuery extends Equatable {
           AreaRef.province(id),
         'regency' when id != null && RegExp(r'^\d{4}$').hasMatch(id) =>
           AreaRef.regency(id),
-        _ => const AreaRef.national(),
+        'national' => const AreaRef.national(),
+        _ => const AreaRef.province(kSultengProvinceId),
       };
     }
 
@@ -98,8 +104,8 @@ final class AreaQuery extends Equatable {
 
   /// The canonical path: `/statistik` plus the non-default parameters.
   String get path => PicoRoutes.statistik(
-    level: level == AreaLevel.national ? null : level.name,
-    id: areaId,
+    level: area == _defaultArea ? null : level.name,
+    id: area == _defaultArea ? null : areaId,
     metric: metric == CaseMetric.positive ? null : metric.name,
     from: from,
     to: to,

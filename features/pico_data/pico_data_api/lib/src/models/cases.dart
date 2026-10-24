@@ -149,9 +149,10 @@ final class CaseSeries extends Equatable {
   /// row seen for a repeated date (the API sends duplicates, C01).
   ///
   /// With [trimIdleTail] the rows after the last day with new positive,
-  /// recovered or deceased cases are dropped. The API pads province and
-  /// regency series with zero rows after the last real report (its regency
-  /// query has no activity filter), and a zero there is not a report. The
+  /// recovered or deceased cases are dropped. The API pads series with zero
+  /// rows after the last real report (its regency query has no activity
+  /// filter), and a zero there is not a report. Every area is trimmed, so the
+  /// 7, 30 and 90 day windows and the year windows end on a real day. The
   /// series then ends on the last real day and later days are "no data". A
   /// series with no active day at all is left as it is.
   factory fromDays({
