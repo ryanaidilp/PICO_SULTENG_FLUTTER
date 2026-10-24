@@ -47,7 +47,10 @@ brick_versions:
   coverage_manager: 1.0.8
   detect_new_library: 1.0.7
   feature_monorepo_skeleton/home: 2.2.0
+  feature_monorepo_skeleton/infografis: 2.2.0
+  feature_monorepo_skeleton/informasi: 2.2.0
   feature_monorepo_skeleton/layanan: 2.2.0
+  feature_monorepo_skeleton/pengaturan: 2.2.0
   feature_monorepo_skeleton/pico_data: 2.2.0
   feature_monorepo_skeleton/statistik: 2.2.0
   feature_monorepo_skeleton/vaksin: 2.2.0

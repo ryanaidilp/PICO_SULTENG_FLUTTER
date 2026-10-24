@@ -35,6 +35,10 @@ dependencies:
   identifiers:
     path: ../../shared/identifiers
 
+  infografis:
+    path: ../../features/infografis
+  informasi:
+    path: ../../features/informasi
   layanan:
     path: ../../features/layanan
   locale_core:
@@ -49,6 +53,8 @@ dependencies:
     path: ../../infrastructure/network_sdk_api
   network_sdk_dio:
     path: ../../infrastructure/network_sdk_dio
+  pengaturan:
+    path: ../../features/pengaturan
   pico_data_api:
     path: ../../features/pico_data/pico_data_api
   pico_data_impl:

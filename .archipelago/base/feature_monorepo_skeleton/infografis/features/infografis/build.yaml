@@ -1,0 +1,31 @@
+targets:
+  $default:
+    sources:
+      - "$package$"
+      - "l10n/**"
+      - "lib/**"
+    builders:
+      auto_route_generator:auto_route_generator:
+        enabled: true
+      freezed|freezed:
+        enabled: true
+      injectable_generator|injectable_builder:
+        enabled: true
+      injectable_generator|injectable_config_builder:
+        enabled: true
+      # The default builder fails with "Asset already exists" when its
+      # outputs are on disk but not in build_runner's asset graph, for
+      # example after .dart_tool/build is deleted or restored from a cache.
+      # The legacy builder writes the same files and overwrites them.
+      # (Archipelago-6n5d)
+      slang_build_runner:
+        enabled: false
+      slang_build_runner:legacy:
+        enabled: true
+        options:
+          base_locale: en
+          input_directory: l10n
+          input_file_pattern: .i18n.json
+          output_directory: lib/src/l10n
+          output_file_name: translations.g.dart
+
