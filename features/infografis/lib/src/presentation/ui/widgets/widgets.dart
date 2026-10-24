@@ -1,1 +1,1 @@
-// Export feature widgets here.
+export 'infografis_widgets.dart';

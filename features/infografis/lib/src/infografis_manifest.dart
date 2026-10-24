@@ -1,4 +1,3 @@
-import 'package:dependencies/auto_route.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:infografis/src/router/infografis_router.dart';
 import 'package:router_registry/router_registry.dart';
@@ -12,16 +11,6 @@ import 'package:router_registry/router_registry.dart';
 class const InfografisManifest() extends FeatureManifest {
   @override
   void registerRoutes(RouteRegistry registry) {
-    registry.register([
-      AutoRoute(
-        page: InfografisShellRoute.page,
-        path: '/infografis',
-        children: [
-          AutoRoute(page: InfografisRoute.page, path: '', initial: true),
-          // TODO(user): Register more child routes for this feature, e.g.
-          //   AutoRoute(page: InfografisDetailRoute.page, path: 'detail/:id'),
-        ],
-      ),
-    ]);
+    registry.register(InfografisRouter().routes);
   }
 }

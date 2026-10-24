@@ -8,6 +8,8 @@ import 'package:infografis/src/di/infografis_container.dart';
 import 'package:infografis/src/di/infografis_global_module.dart';
 import 'package:infografis/src/infografis_manifest.dart';
 import 'package:infografis/src/infografis_sdk.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:pico_data_api/testing.dart';
 
 void main() {
   setUp(FeatureSDKRegistry.instance.clear);
@@ -49,7 +51,8 @@ void main() {
     () async {
       // A root with only the types infografis_imports.dart
       // forwards: register one fake per forwarded type.
-      final root = GetIt.asNewInstance();
+      final root = GetIt.asNewInstance()
+        ..registerSingleton<ContentRepository>(FakeContentRepository());
       late GetIt child;
       final container = FeatureContainer(
         'infografis',

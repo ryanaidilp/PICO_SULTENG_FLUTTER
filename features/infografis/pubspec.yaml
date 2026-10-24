@@ -16,19 +16,24 @@ dependencies:
   flutter:
     sdk: flutter
   freezed_annotation: ^3.1.0
+  identifiers:
+    path: ../../shared/identifiers
   locale_core:
     path: ../../shared/locale_core
+  pico_data_api:
+    path: ../pico_data/pico_data_api
   pico_ui_kit:
     path: ../../packages/pico_ui_kit
   router_registry:
     path: ../../shared/router_registry
+  share_plus: ^13.3.0
+  url_launcher: ^6.3.3
 
 dev_dependencies:
-
-
   auto_route_generator: ^10.5.0
-
   build_runner: ^2.15.1
+  flutter_localizations:
+    sdk: flutter
   flutter_test:
     sdk: flutter
   freezed: ^4.0.1

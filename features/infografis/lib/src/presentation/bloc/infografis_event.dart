@@ -1,11 +1,23 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'dart:async';
 
-part 'infografis_event.freezed.dart';
+/// Events of the infographics bloc.
+abstract class InfografisEvent {
+  const new();
+}
 
-/// Events for the Infografis feature bloc.
-@freezed
-sealed class InfografisEvent with _$InfografisEvent {
-  const factory started() = InfografisStarted;
-  const factory loadRequested() = InfografisLoadRequested;
-  const factory refreshed() = InfografisRefreshed;
+/// Load page 1.
+final class InfografisStarted extends InfografisEvent {
+  const new();
+}
+
+/// Load the next page, if there is one and none is loading.
+final class InfografisMoreRequested extends InfografisEvent {
+  const new();
+}
+
+/// Pull to refresh: reload from page 1. [done] completes when it ends.
+final class InfografisRefreshed extends InfografisEvent {
+  const new({this.done});
+
+  final Completer<void>? done;
 }
