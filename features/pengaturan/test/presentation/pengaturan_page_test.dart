@@ -45,9 +45,11 @@ PengaturanBloc make(
   FakeSettingsRepository s,
   FakeLocalDataAdmin a, {
   List<PicoLocale>? locales,
+  DataUpdateAlerts alerts = const UnavailableDataUpdateAlerts(),
 }) => PengaturanBloc(
   s,
   a,
+  alerts,
   setLocale: (l) async => locales?.add(l),
   loadVersion: () async => (version: '8.0.0', build: '14'),
 )..add(const PengaturanStarted());

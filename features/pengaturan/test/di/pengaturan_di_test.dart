@@ -53,7 +53,8 @@ void main() {
       // forwards: register one fake per forwarded type.
       final root = GetIt.asNewInstance()
         ..registerSingleton<SettingsRepository>(FakeSettingsRepository())
-        ..registerSingleton<LocalDataAdmin>(FakeLocalDataAdmin());
+        ..registerSingleton<LocalDataAdmin>(FakeLocalDataAdmin())
+        ..registerSingleton<DataUpdateAlerts>(FakeDataUpdateAlerts());
       late GetIt child;
       final container = FeatureContainer(
         'pengaturan',

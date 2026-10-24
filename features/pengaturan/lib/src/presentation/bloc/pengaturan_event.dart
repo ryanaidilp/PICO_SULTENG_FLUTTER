@@ -35,3 +35,22 @@ final class SavedDataCleared extends PengaturanEvent {
   /// Creates the event.
   const new();
 }
+
+/// The user accepted the explain sheet ("Izinkan"): consent, OS permission,
+/// topic (ADR-0112 steps 4 and 5).
+final class AlertsEnableRequested extends PengaturanEvent {
+  /// Creates the event.
+  const new();
+}
+
+/// The user switched "Kabar pembaruan data" off (ADR-0112 step 6).
+final class AlertsDisableRequested extends PengaturanEvent {
+  /// Creates the event.
+  const new();
+}
+
+/// The user tapped "Buka pengaturan sistem".
+final class SystemSettingsRequested extends PengaturanEvent {
+  /// Creates the event.
+  const new();
+}

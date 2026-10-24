@@ -18,7 +18,8 @@ class PengaturanBloc extends Bloc<PengaturanEvent, PengaturanState> {
   /// Creates the bloc. [setLocale] and [loadVersion] are for tests.
   new(
     this._settings,
-    this._admin, {
+    this._admin,
+    this._alerts, {
     Future<void> Function(PicoLocale)? setLocale,
     VersionLoader? loadVersion,
   }) : _setLocale = setLocale ?? AppLocaleController.setLocale,
@@ -31,6 +32,7 @@ class PengaturanBloc extends Bloc<PengaturanEvent, PengaturanState> {
        ) {
     on<PengaturanStarted>((e, emit) async {
       emit(state.copyWith(cachedBytes: await _bytes()));
+      await _readAlerts(emit);
       try {
         final v = await _loadVersion();
         emit(state.copyWith(version: v.version, build: v.build));
@@ -56,6 +58,75 @@ class PengaturanBloc extends Bloc<PengaturanEvent, PengaturanState> {
         emit(state.copyWith(saveFailed: state.saveFailed + 1));
       }
     });
+    on<AlertsEnableRequested>((e, emit) async {
+      if (!_alerts.available || state.alertsBusy) return;
+      emit(state.copyWith(alertsBusy: true));
+      try {
+        final outcome = await _alerts.enable();
+        switch (outcome) {
+          case DataUpdateAlertsOutcome.enabled:
+            await _settings.setDataUpdateAlertsWanted(true);
+            emit(
+              state.copyWith(
+                alertsOn: true,
+                alertsBusy: false,
+                alertsDenied: false,
+              ),
+            );
+          case DataUpdateAlertsOutcome.denied:
+            await _settings.setDataUpdateAlertsWanted(false);
+            emit(
+              state.copyWith(
+                alertsOn: false,
+                alertsBusy: false,
+                alertsDenied: true,
+              ),
+            );
+          case DataUpdateAlertsOutcome.failed:
+            emit(
+              state.copyWith(
+                alertsOn: false,
+                alertsBusy: false,
+                saveFailed: state.saveFailed + 1,
+              ),
+            );
+        }
+      } on Object {
+        emit(
+          state.copyWith(
+            alertsOn: false,
+            alertsBusy: false,
+            saveFailed: state.saveFailed + 1,
+          ),
+        );
+      }
+    });
+    on<AlertsDisableRequested>((e, emit) async {
+      if (!_alerts.available || state.alertsBusy) return;
+      emit(state.copyWith(alertsBusy: true));
+      try {
+        await _alerts.disable();
+        await _settings.setDataUpdateAlertsWanted(false);
+        emit(
+          state.copyWith(
+            alertsOn: false,
+            alertsBusy: false,
+            alertsDenied: false,
+          ),
+        );
+      } on Object {
+        emit(
+          state.copyWith(alertsBusy: false, saveFailed: state.saveFailed + 1),
+        );
+      }
+    });
+    on<SystemSettingsRequested>((e, emit) async {
+      try {
+        await _alerts.openSystemSettings();
+      } on Object {
+        // Nothing to undo; the row stays for another try.
+      }
+    });
     on<SavedDataCleared>((e, emit) async {
       try {
         await _admin.clearAll();
@@ -73,8 +144,37 @@ class PengaturanBloc extends Bloc<PengaturanEvent, PengaturanState> {
 
   final SettingsRepository _settings;
   final LocalDataAdmin _admin;
+  final DataUpdateAlerts _alerts;
   final Future<void> Function(PicoLocale) _setLocale;
   final VersionLoader _loadVersion;
+
+  /// Reads the saved switch and the OS permission. Never prompts and never
+  /// calls the push vendor before the user opted in.
+  Future<void> _readAlerts(Emitter<PengaturanState> emit) async {
+    if (!_alerts.available) return;
+    var wanted = false;
+    try {
+      wanted = _settings.dataUpdateAlertsWanted;
+    } on Object {
+      // Default: off.
+    }
+    // Only a user who opted in has a reason to ask the OS.
+    var granted = false;
+    if (wanted) {
+      try {
+        granted = await _alerts.osPermissionGranted();
+      } on Object {
+        // Treated as not granted.
+      }
+    }
+    emit(
+      state.copyWith(
+        alertsAvailable: true,
+        alertsOn: wanted && granted,
+        alertsDenied: wanted && !granted,
+      ),
+    );
+  }
 
   Future<int> _bytes() async {
     try {

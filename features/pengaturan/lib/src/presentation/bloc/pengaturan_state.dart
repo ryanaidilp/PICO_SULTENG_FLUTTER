@@ -13,6 +13,10 @@ final class PengaturanState extends Equatable {
     this.build,
     this.saveFailed = 0,
     this.clearedCount = 0,
+    this.alertsAvailable = false,
+    this.alertsOn = false,
+    this.alertsBusy = false,
+    this.alertsDenied = false,
   });
 
   /// Chosen language.
@@ -36,6 +40,18 @@ final class PengaturanState extends Equatable {
   /// Counts completed clears, so a listener shows the toast once per clear.
   final int clearedCount;
 
+  /// Whether push exists in this build. False hides the notification row.
+  final bool alertsAvailable;
+
+  /// The switch: the user wants alerts and the OS permission is granted.
+  final bool alertsOn;
+
+  /// An enable or disable is running.
+  final bool alertsBusy;
+
+  /// The OS permission is missing: show "Buka pengaturan sistem".
+  final bool alertsDenied;
+
   /// Copy with replaced fields.
   PengaturanState copyWith({
     PicoLocale? locale,
@@ -45,6 +61,10 @@ final class PengaturanState extends Equatable {
     String? build,
     int? saveFailed,
     int? clearedCount,
+    bool? alertsAvailable,
+    bool? alertsOn,
+    bool? alertsBusy,
+    bool? alertsDenied,
   }) => PengaturanState(
     locale: locale ?? this.locale,
     themeMode: themeMode ?? this.themeMode,
@@ -53,6 +73,10 @@ final class PengaturanState extends Equatable {
     build: build ?? this.build,
     saveFailed: saveFailed ?? this.saveFailed,
     clearedCount: clearedCount ?? this.clearedCount,
+    alertsAvailable: alertsAvailable ?? this.alertsAvailable,
+    alertsOn: alertsOn ?? this.alertsOn,
+    alertsBusy: alertsBusy ?? this.alertsBusy,
+    alertsDenied: alertsDenied ?? this.alertsDenied,
   );
 
   @override
@@ -64,5 +88,9 @@ final class PengaturanState extends Equatable {
     build,
     saveFailed,
     clearedCount,
+    alertsAvailable,
+    alertsOn,
+    alertsBusy,
+    alertsDenied,
   ];
 }

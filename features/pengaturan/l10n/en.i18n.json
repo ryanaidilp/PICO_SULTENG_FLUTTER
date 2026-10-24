@@ -18,5 +18,16 @@
   "save_failed": "Settings were not saved",
   "about": "About the app",
   "version": "Version $version ($build)",
-  "system_note": "Text size and motion follow the system settings."
+  "system_note": "Text size and motion follow the system settings.",
+  "notifications": "Notifications",
+  "alerts_title": "Data update alerts",
+  "alerts_hint": "A message when new data is available.",
+  "alerts_manage": "Notification settings",
+  "alerts_denied_title": "Notifications are not allowed yet",
+  "alerts_denied_body": "Allow notifications for PICO in the system settings so the messages can arrive.",
+  "alerts_open_system": "Open system settings",
+  "alerts_sheet_body": "PICO sends a message when new data is available, a few times a month at most. No ads.",
+  "alerts_sheet_device": "To send it, PICO uses the OneSignal service. After you allow it, OneSignal receives your device ID. You can turn it off here at any time.",
+  "alerts_allow": "Allow",
+  "alerts_later": "Not now"
 }

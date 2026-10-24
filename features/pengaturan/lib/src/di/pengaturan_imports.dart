@@ -5,5 +5,6 @@ import 'package:pico_data_api/pico_data_api.dart';
 void importPengaturanGlobals(GetIt child, GetIt root) {
   child
     ..registerFactory<SettingsRepository>(() => root<SettingsRepository>())
-    ..registerFactory<LocalDataAdmin>(() => root<LocalDataAdmin>());
+    ..registerFactory<LocalDataAdmin>(() => root<LocalDataAdmin>())
+    ..registerFactory<DataUpdateAlerts>(() => root<DataUpdateAlerts>());
 }

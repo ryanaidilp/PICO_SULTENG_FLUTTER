@@ -18,5 +18,16 @@
   "save_failed": "Pengaturan tidak tersimpan",
   "about": "Tentang aplikasi",
   "version": "Versi $version ($build)",
-  "system_note": "Ukuran teks dan animasi mengikuti pengaturan sistem."
+  "system_note": "Ukuran teks dan animasi mengikuti pengaturan sistem.",
+  "notifications": "Notifikasi",
+  "alerts_title": "Kabar pembaruan data",
+  "alerts_hint": "Kabar saat data baru tersedia.",
+  "alerts_manage": "Atur notifikasi",
+  "alerts_denied_title": "Notifikasi belum diizinkan",
+  "alerts_denied_body": "Izinkan notifikasi untuk PICO di pengaturan sistem agar kabar bisa masuk.",
+  "alerts_open_system": "Buka pengaturan sistem",
+  "alerts_sheet_body": "PICO mengirim kabar saat data baru tersedia, paling banyak beberapa kali per bulan. Tidak ada iklan.",
+  "alerts_sheet_device": "Untuk mengirimnya, PICO memakai layanan OneSignal. Setelah Anda mengizinkan, OneSignal menerima ID perangkat Anda. Anda dapat mematikannya kapan saja di sini.",
+  "alerts_allow": "Izinkan",
+  "alerts_later": "Nanti saja"
 }

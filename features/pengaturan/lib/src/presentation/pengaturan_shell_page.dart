@@ -111,6 +111,7 @@ class _PengaturanShellPageState() extends State<PengaturanShellPage> {
                     create: (_) => PengaturanBloc(
                       _lease.get<SettingsRepository>(),
                       _lease.get<LocalDataAdmin>(),
+                      _lease.get<DataUpdateAlerts>(),
                     )..add(const PengaturanStarted()),
                     // This route sits above the tab bar, so it brings its own
                     // Material surface, safe area and title.
