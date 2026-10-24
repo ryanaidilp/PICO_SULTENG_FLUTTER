@@ -203,6 +203,24 @@ void main() {
     expect(find.byType(PicoStateView), findsOneWidget);
   });
 
+  testWidgets(
+    'offline with no copy: the level bar stays and Kabupaten opens its list',
+    (tester) async {
+      await setup(tester, AppLocale.id);
+      final opened = <String>[];
+      await tester.pumpWidget(
+        host(OfflineCases(series), const AreaQuery(), opened: opened),
+      );
+      await tester.pumpAndSettle();
+      expect(find.byType(PicoStateView), findsOneWidget);
+      // The emulator bug: this segment was missing in the offline state.
+      expect(find.text('Nasional'), findsOneWidget);
+      await tester.tap(find.text('Kabupaten'));
+      await tester.pumpAndSettle();
+      expect(opened, ['/statistik/kabupaten']);
+    },
+  );
+
   testWidgets('offline with no copy is the offline state; english labels', (
     tester,
   ) async {

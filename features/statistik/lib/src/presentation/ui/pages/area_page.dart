@@ -74,7 +74,33 @@ class _AreaContentState extends State<AreaContent> {
           _navigate(q.path);
         }
 
-        if (s.loading) return const PicoStateView.loading();
+        void onLevel(AreaLevel level) => switch (level) {
+          AreaLevel.national => change(
+            s.query.copyWith(area: const AreaRef.national()),
+          ),
+          AreaLevel.province => change(
+            s.query.copyWith(
+              area: s.query.area is ProvinceArea
+                  ? s.query.area
+                  : const AreaRef.province(kSultengProvinceId),
+            ),
+          ),
+          AreaLevel.regency => open(PicoRoutes.kabupatenList),
+        };
+        // The level bar stays above the loading, offline and error states.
+        Widget withLevels(Widget stateView) => Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: AreaLevelBar(level: s.query.level, onLevel: onLevel),
+              ),
+            ),
+            Expanded(child: stateView),
+          ],
+        );
+        if (s.loading) return withLevels(const PicoStateView.loading());
         final failure = s.failure;
         final view = s.view;
         final snap = s.snapshot;
@@ -82,9 +108,11 @@ class _AreaContentState extends State<AreaContent> {
           return PicoStateView.notFound(message: context.t.areaNotFound);
         }
         if (failure != null || view == null || snap == null) {
-          return failure?.kind == PicoFailureKind.network
-              ? PicoStateView.offline(onRetry: retry)
-              : PicoStateView.error(onRetry: retry);
+          return withLevels(
+            failure?.kind == PicoFailureKind.network
+                ? PicoStateView.offline(onRetry: retry)
+                : PicoStateView.error(onRetry: retry),
+          );
         }
         final bounds = DateTimeRange(
           start: snap.data.days.first.date,
@@ -109,19 +137,7 @@ class _AreaContentState extends State<AreaContent> {
                 bounds: bounds,
                 onQuery: change,
                 onCompare: (_) => bloc.add(const AreaCompareToggled()),
-                onLevel: (level) => switch (level) {
-                  AreaLevel.national => change(
-                    s.query.copyWith(area: const AreaRef.national()),
-                  ),
-                  AreaLevel.province => change(
-                    s.query.copyWith(
-                      area: s.query.area is ProvinceArea
-                          ? s.query.area
-                          : const AreaRef.province(kSultengProvinceId),
-                    ),
-                  ),
-                  AreaLevel.regency => open(PicoRoutes.kabupatenList),
-                },
+                onLevel: onLevel,
               ),
               const SizedBox(height: 16),
               Text(

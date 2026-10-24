@@ -49,6 +49,40 @@ class MetricChips extends StatelessWidget {
   }
 }
 
+/// Nasional, Provinsi, Kabupaten. It stays on screen in the loading, offline
+/// and error states too, so the user can still reach Kabupaten (which can
+/// answer from saved data) when the national series is not available.
+class AreaLevelBar extends StatelessWidget {
+  /// Creates the bar.
+  const AreaLevelBar({required this.level, required this.onLevel, super.key});
+
+  /// The current level.
+  final AreaLevel level;
+
+  /// A level was chosen.
+  final ValueChanged<AreaLevel> onLevel;
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    String levelLabel(AreaLevel l) => switch (l) {
+      AreaLevel.national => t.levelNational,
+      AreaLevel.province => t.levelProvince,
+      AreaLevel.regency => t.levelRegency,
+    };
+    return Semantics(
+      label: t.levelLabel,
+      container: true,
+      child: PicoSegmented<AreaLevel>(
+        values: AreaLevel.values,
+        selected: level,
+        label: levelLabel,
+        onChanged: onLevel,
+      ),
+    );
+  }
+}
+
 /// Level, case type, daily or cumulative, compare and date range controls.
 class AreaControls extends StatelessWidget {
   /// Creates the controls.
@@ -87,24 +121,10 @@ class AreaControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.t;
-    String levelLabel(AreaLevel l) => switch (l) {
-      AreaLevel.national => t.levelNational,
-      AreaLevel.province => t.levelProvince,
-      AreaLevel.regency => t.levelRegency,
-    };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Semantics(
-          label: t.levelLabel,
-          container: true,
-          child: PicoSegmented<AreaLevel>(
-            values: AreaLevel.values,
-            selected: query.level,
-            label: levelLabel,
-            onChanged: onLevel,
-          ),
-        ),
+        AreaLevelBar(level: query.level, onLevel: onLevel),
         const SizedBox(height: 12),
         MetricChips(
           metric: query.metric,
