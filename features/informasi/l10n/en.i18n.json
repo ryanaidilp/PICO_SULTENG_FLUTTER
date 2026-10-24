@@ -1,3 +1,15 @@
 {
-  "title": "Informasi"
+  "title": "Info",
+  "hub_infographic": "Infographics",
+  "hub_infographic_desc": "Information images, page by page",
+  "hub_about": "About and methodology",
+  "hub_about_desc": "Data sources, how Rt is calculated, and who made PICO",
+  "hub_settings": "Settings",
+  "hub_settings_desc": "Language, theme and saved data",
+  "tips": "Health tips",
+  "tips_note": "A summary of public sources. It does not replace a doctor's advice.",
+  "not_reviewed": "Not yet reviewed by a health professional",
+  "sources": "Sources",
+  "tip_not_found": "Article not found.",
+  "back": "Back"
 }

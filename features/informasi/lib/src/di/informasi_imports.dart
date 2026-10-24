@@ -10,5 +10,5 @@ import 'package:dependencies/di.dart';
 /// child.registerFactory<HttpClient>(() => root<HttpClient>());
 /// ```
 void importInformasiGlobals(GetIt child, GetIt root) {
-  // TODO(user): Forward each root type this feature needs.
+  // Nothing to forward: the articles are bundled assets, not root ports.
 }

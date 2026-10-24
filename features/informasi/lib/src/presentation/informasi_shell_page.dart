@@ -5,6 +5,8 @@ import 'package:dependencies/state.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:informasi/src/di/informasi_container.dart';
+import 'package:informasi/src/domain/tip_source.dart';
+import 'package:informasi/src/l10n/translations.g.dart' as sl;
 import 'package:informasi/src/presentation/bloc/informasi_bloc.dart';
 import 'package:informasi/src/presentation/bloc/informasi_event.dart';
 import 'package:locale_core/locale_core.dart';
@@ -38,6 +40,7 @@ class _InformasiShellPageState() extends State<InformasiShellPage> {
   final _isReady = ValueNotifier<bool>(false);
 
   late final FeatureLease _lease;
+  StreamSubscription<PicoLocale>? _localeSub;
 
   /// The last synced locale to avoid redundant loads.
   PicoLocale? _lastSyncedLocale;
@@ -46,6 +49,10 @@ class _InformasiShellPageState() extends State<InformasiShellPage> {
   void initState() {
     super.initState();
     _lease = informasiContainer.acquire();
+    // Follow language changes while the page is open.
+    _localeSub = LocaleSettings.getLocaleStream().listen(
+      (l) => unawaited(_syncLocale(l)),
+    );
     // Build the content only once the container is ready.
     unawaited(
       _lease.ready
@@ -56,6 +63,7 @@ class _InformasiShellPageState() extends State<InformasiShellPage> {
 
   @override
   void dispose() {
+    unawaited(_localeSub?.cancel());
     _isReady.dispose();
     // The container is torn down after the last lease is released.
     unawaited(_lease.release().catchError(_reportContainerError));
@@ -70,9 +78,12 @@ class _InformasiShellPageState() extends State<InformasiShellPage> {
     if (_lastSyncedLocale == locale) return;
     _lastSyncedLocale = locale;
 
-    // TODO(user): If this feature uses slang translations, load them here:
-    // final featureLocale = _mapToFeatureLocale(locale);
-    // await LocaleSettings.setLocale(featureLocale);
+    // The feature's own slang follows the app-wide language.
+    final featureLocale = sl.AppLocale.values.firstWhere(
+      (l) => l.languageCode == locale.languageCode,
+      orElse: () => sl.AppLocale.id,
+    );
+    await sl.LocaleSettings.setLocale(featureLocale);
 
     if (mounted) {
       _isReady.value = true;
@@ -95,10 +106,13 @@ class _InformasiShellPageState() extends State<InformasiShellPage> {
                 // Created once the container is ready; the provider closes
                 // it with this shell. Pass it what it needs from
                 // `_lease.get<T>()`.
-                return BlocProvider(
-                  create: (_) =>
-                      InformasiBloc()..add(const InformasiEvent.started()),
-                  child: const AutoRouter(),
+                return sl.TranslationProvider(
+                  child: BlocProvider(
+                    create: (_) =>
+                        InformasiBloc(const AssetTipSource())
+                          ..add(const TipsStarted()),
+                    child: const AutoRouter(),
+                  ),
                 );
               },
             )

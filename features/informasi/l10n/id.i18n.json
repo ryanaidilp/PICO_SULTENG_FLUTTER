@@ -1,3 +1,15 @@
 {
-  "title": "Informasi"
+  "title": "Info",
+  "hub_infographic": "Infografis",
+  "hub_infographic_desc": "Gambar informasi, halaman demi halaman",
+  "hub_about": "Tentang dan metodologi",
+  "hub_about_desc": "Sumber data, cara menghitung Rt, dan pembuat PICO",
+  "hub_settings": "Pengaturan",
+  "hub_settings_desc": "Bahasa, tema, dan data tersimpan",
+  "tips": "Tips kesehatan",
+  "tips_note": "Ringkasan dari sumber publik. Bukan pengganti nasihat dokter.",
+  "not_reviewed": "Belum ditinjau tenaga kesehatan",
+  "sources": "Sumber",
+  "tip_not_found": "Artikel tidak ditemukan.",
+  "back": "Kembali"
 }

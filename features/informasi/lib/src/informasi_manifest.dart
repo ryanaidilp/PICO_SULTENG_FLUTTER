@@ -1,4 +1,3 @@
-import 'package:dependencies/auto_route.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:informasi/src/router/informasi_router.dart';
 import 'package:router_registry/router_registry.dart';
@@ -12,16 +11,6 @@ import 'package:router_registry/router_registry.dart';
 class const InformasiManifest() extends FeatureManifest {
   @override
   void registerRoutes(RouteRegistry registry) {
-    registry.register([
-      AutoRoute(
-        page: InformasiShellRoute.page,
-        path: '/informasi',
-        children: [
-          AutoRoute(page: InformasiRoute.page, path: '', initial: true),
-          // TODO(user): Register more child routes for this feature, e.g.
-          //   AutoRoute(page: InformasiDetailRoute.page, path: 'detail/:id'),
-        ],
-      ),
-    ]);
+    registry.register(InformasiRouter().routes);
   }
 }
