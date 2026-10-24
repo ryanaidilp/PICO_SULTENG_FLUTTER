@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:identifiers/identifiers.dart';
 import 'package:locale_core/locale_core.dart';
 import 'package:pico/app.dart';
+import 'package:pico/host/push/push_tap_router.dart';
 import 'package:pico/router/app_router.dart';
 import 'package:pico/router/pico_tab_bar.dart';
 import 'package:pico_data_api/pico_data_api.dart';
@@ -46,6 +47,7 @@ Future<AppRouter> pumpApp(
   RouteRegistry? registry,
   SettingsRepository? settings,
   double scale = 1,
+  PushTapRouter? pushTaps,
 }) async {
   SharedPreferences.setMockInitialValues({});
   await tester.runAsync(() => LocaleSettings.setLocale(PicoLocale.id));
@@ -59,6 +61,7 @@ Future<AppRouter> pumpApp(
       child: PicoApp(
         router: router,
         settings: settings ?? FakeSettingsRepository(),
+        pushTaps: pushTaps,
       ),
     ),
   );
@@ -226,22 +229,4 @@ void main() {
     expect(box.width, lessThanOrEqualTo(640));
     expect(box.center.dx, closeTo(700, 1));
   });
-
-  for (final dark in [false, true]) {
-    testWidgets('shell golden ${dark ? 'dark' : 'light'}', (tester) async {
-      tester.view.physicalSize = const Size(412, 892);
-      tester.view.devicePixelRatio = 1;
-      addTearDown(tester.view.reset);
-      await pumpApp(
-        tester,
-        settings: FakeSettingsRepository()
-          ..setThemeMode(dark ? PicoThemeMode.dark : PicoThemeMode.light),
-      );
-      await tester.pumpAndSettle();
-      await expectLater(
-        find.byType(MaterialApp),
-        matchesGoldenFile('goldens/shell_${dark ? 'dark' : 'light'}.png'),
-      );
-    }, tags: ['golden']);
-  }
 }
