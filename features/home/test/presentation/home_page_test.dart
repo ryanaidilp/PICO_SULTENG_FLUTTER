@@ -6,6 +6,7 @@ import 'package:home/src/l10n/translations.g.dart';
 import 'package:home/src/presentation/bloc/home_bloc.dart';
 import 'package:home/src/presentation/bloc/home_event.dart';
 import 'package:home/src/presentation/ui/pages/home_page.dart';
+import 'package:home/src/presentation/ui/widgets/home_widgets.dart';
 import 'package:identifiers/identifiers.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_api/testing.dart';
@@ -418,6 +419,38 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(tester.takeException(), isNull);
+    });
+  });
+
+  group('quick links', () {
+    testWidgets('every link resolves to a registered brand icon, has a label '
+        'and a semantic button that opens its path', (tester) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 2600);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final h = tester.ensureSemantics();
+      final opened = <String>[];
+      await tester.pumpWidget(host(repo(), onOpen: opened.add));
+      await tester.pumpAndSettle();
+      final links = quickLinks(AppLocale.id.buildSync());
+      expect(links, hasLength(8));
+      expect({for (final l in links) l.icon}, hasLength(8), reason: 'distinct');
+      for (final l in links) {
+        expect(PicoIconRegistry.has(l.icon), isTrue, reason: l.icon);
+        expect(l.label, isNotEmpty);
+        expect(
+          PicoRoutes.patterns.contains(l.path.split('?').first),
+          isTrue,
+          reason: l.path,
+        );
+        final node = find.bySemanticsLabel(l.label);
+        expect(node, findsWidgets, reason: l.label);
+      }
+      await tester.ensureVisible(find.text('Rumah sakit'));
+      await tester.tap(find.text('Rumah sakit'));
+      expect(opened.last, PicoRoutes.rumahSakit);
+      h.dispose();
     });
   });
 }

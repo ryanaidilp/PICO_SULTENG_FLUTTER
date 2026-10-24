@@ -1,6 +1,6 @@
 ---
 title: Gejala dan kapan ke fasilitas kesehatan
-icon: state.active
+icon: symptoms
 reviewed: false
 sources:
   - https://www.who.int/health-topics/coronavirus

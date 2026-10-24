@@ -1,6 +1,6 @@
 ---
 title: Symptoms and when to go to a health facility
-icon: state.active
+icon: symptoms
 reviewed: false
 sources:
   - https://www.who.int/health-topics/coronavirus

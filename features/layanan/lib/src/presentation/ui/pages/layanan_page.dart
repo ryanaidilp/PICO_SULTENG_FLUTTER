@@ -32,7 +32,7 @@ class LayananPage extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         ServiceTile(
-          iconKey: 'state.recovered',
+          iconKey: 'vaccine',
           title: t.hubVaccine,
           description: t.hubVaccineDesc,
           onTap: () => open(PicoRoutes.vaksin),
@@ -44,13 +44,13 @@ class LayananPage extends StatelessWidget {
           onTap: () => open(PicoRoutes.rumahSakit),
         ),
         ServiceTile(
-          iconKey: 'level.kabupaten',
+          iconKey: 'task-force',
           title: t.hubTaskforce,
           description: t.hubTaskforceDesc,
           onTap: () => open(PicoRoutes.satgas),
         ),
         ServiceTile(
-          iconKey: 'facility.bed',
+          iconKey: 'isoman',
           title: t.hubIsoman,
           description: t.hubIsomanDesc,
           onTap: () => open(PicoRoutes.isoman),

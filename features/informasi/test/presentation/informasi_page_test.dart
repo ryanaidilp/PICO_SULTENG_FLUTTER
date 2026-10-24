@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:informasi/src/l10n/translations.g.dart';
 import 'package:informasi/src/presentation/ui/pages/informasi_page.dart';
 import 'package:informasi/src/presentation/ui/pages/tip_page.dart';
+import 'package:pico_ui_kit/pico_ui_kit.dart';
 
 import 'harness.dart';
 

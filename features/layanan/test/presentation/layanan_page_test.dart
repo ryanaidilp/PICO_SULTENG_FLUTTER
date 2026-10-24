@@ -39,6 +39,18 @@ void main() {
       '/layanan/isoman',
     ]);
     expect(tester.takeException(), isNull);
+    // Every hub icon is a registered brand icon, and the same destination
+    // uses the same icon as the Beranda quick links.
+    final keys = [
+      for (final w in tester.widgetList<PicoBrandIcon>(
+        find.byType(PicoBrandIcon),
+      ))
+        w.iconKey,
+    ];
+    expect(keys, ['vaccine', 'facility.hospital', 'task-force', 'isoman']);
+    for (final k in keys) {
+      expect(PicoIconRegistry.has(k), isTrue, reason: k);
+    }
   });
 
   testWidgets('list: grouped by kabupaten with beds free of all', (

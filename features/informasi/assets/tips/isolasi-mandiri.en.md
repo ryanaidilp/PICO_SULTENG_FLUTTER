@@ -1,6 +1,6 @@
 ---
 title: Home isolation
-icon: facility.bed
+icon: isoman
 reviewed: false
 sources:
   - https://infeksiemerging.kemkes.go.id/document/download/mvE

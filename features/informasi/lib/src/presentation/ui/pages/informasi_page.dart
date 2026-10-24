@@ -29,7 +29,7 @@ class InformasiPage extends StatelessWidget {
           PageHeader(title: t.title),
           const SizedBox(height: 12),
           HubTile(
-            icon: PicoBrandIcon('level.national', duotone: true, color: color),
+            icon: PicoBrandIcon('infographic', duotone: true, color: color),
             title: t.hubInfographic,
             description: t.hubInfographicDesc,
             onTap: () => open(PicoRoutes.infografis),
@@ -41,7 +41,7 @@ class InformasiPage extends StatelessWidget {
             onTap: () => open(PicoRoutes.tentang),
           ),
           HubTile(
-            icon: Icon(Icons.tune, color: color),
+            icon: PicoBrandIcon('settings', duotone: true, color: color),
             title: t.hubSettings,
             description: t.hubSettingsDesc,
             onTap: () => open(PicoRoutes.pengaturan),
@@ -77,6 +77,8 @@ String _iconFor(String slug) => switch (slug) {
   'cuci-tangan' => 'prevention.handwash',
   'pakai-masker' => 'prevention.mask',
   'jaga-jarak' => 'prevention.distancing',
-  'vaksinasi' => 'state.recovered',
+  'vaksinasi' => 'vaccine',
+  'gejala' => 'symptoms',
+  'isolasi-mandiri' => 'isoman',
   _ => 'info',
 };
