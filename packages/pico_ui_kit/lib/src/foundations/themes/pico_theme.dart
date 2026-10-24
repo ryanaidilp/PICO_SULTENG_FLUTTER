@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart' show CupertinoPageTransitionsBuilder;
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
 import 'package:pico_ui_kit/src/foundations/radius/pico_radius_token.dart';
@@ -9,9 +10,12 @@ import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_spacing_exten
 import 'package:pico_ui_kit/src/foundations/themes/extensions/pico_typography_extension.dart';
 import 'package:pico_ui_kit/src/foundations/typography/pico_font_family.dart';
 
-/// Main theme factory for the design system (ADR-0106: Tenun brand on a
-/// Material 3 base). Elevation is 0 everywhere, depth comes from rules and
-/// cloth, and the surface tint is transparent so M3 tonal elevation never leaks.
+/// Main theme factory for the design system: the original PICO look (warm
+/// grey ground, white cards with a thin outline, the 0B92D5 blue, Source Sans
+/// 3) on a Material 3 base. Elevation is 0 and the surface tint is transparent
+/// so M3 tonal elevation never leaks. The page, canvas, dialog and sheet
+/// colours all come from the theme, in dark mode too, so no light flash shows
+/// while a page changes.
 abstract final class PicoTheme() {
   /// Creates the light theme.
   static ThemeData light({PicoFontFamily? fontFamily}) =>
@@ -38,14 +42,13 @@ abstract final class PicoTheme() {
           onSecondaryContainer: isDark
               ? PicoBrandPalette.indigoDark
               : PicoBrandPalette.indigoLight,
+          surface: colors.background.main,
           surfaceContainerHighest: colors.background.subtle,
         );
     final textTheme = fonts.applyToTextTheme(_buildTextTheme(typography));
     const shape = RoundedRectangleBorder(
       borderRadius: PicoRadiusToken.borderMd,
     );
-    final nav = isDark ? colors.background.subtle : colors.background.inverse;
-    final onNav = isDark ? colors.foreground.main : colors.foreground.inverse;
 
     return ThemeData(
       useMaterial3: true,
@@ -114,27 +117,36 @@ abstract final class PicoTheme() {
           minimumSize: const Size(48, 48),
         ),
       ),
-      // Selvedge band: indigo ground (light), sky indicator, paper labels.
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: nav,
+        backgroundColor: colors.background.card,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: isDark
-            ? PicoBrandPalette.tintDark
-            : PicoBrandPalette.skyLight,
-        indicatorShape: const RoundedRectangleBorder(
-          borderRadius: PicoRadiusToken.borderSm,
-        ),
+        indicatorColor: colors.background.strong,
+        indicatorShape: const StadiumBorder(),
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
-            color: states.contains(WidgetState.selected) && !isDark
-                ? PicoBrandPalette.indigoLight
-                : onNav,
+            color: states.contains(WidgetState.selected)
+                ? colors.action.primary.active
+                : colors.foreground.subtle,
           ),
         ),
-        labelTextStyle: WidgetStateProperty.all(
-          typography.label.caption.copyWith(color: onNav),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => typography.label.caption.copyWith(
+            color: states.contains(WidgetState.selected)
+                ? colors.action.primary.active
+                : colors.foreground.subtle,
+          ),
         ),
+      ),
+      // Pages cross-fade over the themed canvas: the window never shows a
+      // default light background between two routes.
+      pageTransitionsTheme: PageTransitionsTheme(
+        builders: <TargetPlatform, PageTransitionsBuilder>{
+          TargetPlatform.android: FadeForwardsPageTransitionsBuilder(
+            backgroundColor: colors.background.main,
+          ),
+          TargetPlatform.iOS: const CupertinoPageTransitionsBuilder(),
+        },
       ),
       segmentedButtonTheme: SegmentedButtonThemeData(
         style: SegmentedButton.styleFrom(

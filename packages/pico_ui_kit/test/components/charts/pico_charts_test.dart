@@ -274,19 +274,28 @@ void main() {
       },
     );
 
-    testWidgets('draw-on runs for 240 ms with animations on', (tester) async {
-      await tester.pumpWidget(
-        app(
-          PicoTheme.light(),
-          PicoLineChart(series: [fourSeries.first], range: all),
-          noAnim: false,
-        ),
-      );
-      await tester.pump(const Duration(milliseconds: 100));
-      expect(tester.hasRunningAnimations, isTrue);
-      await tester.pump(const Duration(milliseconds: 200));
-      expect(tester.hasRunningAnimations, isFalse);
-    });
+    testWidgets(
+      'draw-on runs for 1500 ms with animations on (original motion)',
+      (tester) async {
+        await tester.pumpWidget(
+          app(
+            PicoTheme.light(),
+            PicoLineChart(series: [fourSeries.first], range: all),
+            noAnim: false,
+          ),
+        );
+        await tester.pump(const Duration(milliseconds: 100));
+        expect(tester.hasRunningAnimations, isTrue);
+        await tester.pump(const Duration(milliseconds: 1000));
+        expect(tester.hasRunningAnimations, isTrue, reason: 'still drawing');
+        await tester.pump(const Duration(milliseconds: 600));
+        // Then the last point pulses three times (1500 ms each) and stops.
+        for (var i = 0; i < 6; i++) {
+          await tester.pump(const Duration(milliseconds: 1600));
+        }
+        expect(tester.hasRunningAnimations, isFalse);
+      },
+    );
 
     testWidgets('reduced motion draws at once, no animation', (tester) async {
       await tester.pumpWidget(
@@ -311,23 +320,6 @@ void main() {
         ),
       );
       expect(tester.takeException(), isNull);
-    });
-
-    test('only the active role is crimson', () {
-      for (final c in [PicoStateColors.light, PicoStateColors.dark]) {
-        final crimson = identical(c, PicoStateColors.light)
-            ? PicoBrandPalette.crimsonLight
-            : PicoBrandPalette.crimsonDark;
-        expect(c.active, crimson);
-        for (final s in [
-          PicoState.positive,
-          PicoState.recovered,
-          PicoState.deceased,
-          PicoState.rt,
-        ]) {
-          expect(c.of(s), isNot(crimson), reason: s.name);
-        }
-      }
     });
   });
 
@@ -407,7 +399,6 @@ void main() {
       xTicks: xTicks(start, end),
       series: layers,
       band: null,
-      bandShader: null,
       bandColor: Colors.black,
       threshold: null,
       thresholdLabel: null,
@@ -421,6 +412,8 @@ void main() {
       formatTick: (v) => '$v',
       monthLabel: (d) => '${d.year}',
       progress: ctrl,
+      pulse: ctrl,
+      fillBelow: false,
       inkColor: Colors.black,
     );
     final times = <int>[];

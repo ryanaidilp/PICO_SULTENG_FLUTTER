@@ -102,7 +102,7 @@ void main() {
 
   test('theme uses bundled brand fonts and no Google Fonts', () {
     final style = PicoTheme.light().textTheme.headlineLarge!;
-    expect(style.fontFamily, 'packages/pico_ui_kit/Archivo');
+    expect(style.fontFamily, 'packages/pico_ui_kit/SourceSans3');
     final body = PicoTheme.light().textTheme.bodyMedium!;
     expect(body.fontFamily, 'packages/pico_ui_kit/SourceSans3');
     expect(body.fontFeatures, contains(const FontFeature.tabularFigures()));

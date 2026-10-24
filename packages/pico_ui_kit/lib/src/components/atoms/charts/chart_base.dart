@@ -15,7 +15,6 @@ import 'package:pico_ui_kit/src/components/atoms/charts/pico_rt_chart.dart'
     show PicoRtChart;
 import 'package:pico_ui_kit/src/components/atoms/data_viz/pico_mark_legend.dart';
 import 'package:pico_ui_kit/src/components/atoms/data_viz/pico_marks.dart';
-import 'package:pico_ui_kit/src/components/atoms/data_viz/weave_shader_cache.dart';
 import 'package:pico_ui_kit/src/components/components.dart'
     show PicoLineChart, PicoRtChart;
 import 'package:pico_ui_kit/src/components/utilities/pico_kit_text.dart';
@@ -92,11 +91,27 @@ class PicoChartBase extends StatefulWidget {
 }
 
 class _PicoChartBaseState extends State<PicoChartBase>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _draw = AnimationController(
+    with TickerProviderStateMixin {
+  // The original chart motion: the line draws on in 1500 ms (ease-in cubic),
+  // then the last point pulses three times (1500 ms each, ease-out cubic).
+  // Both are off with reduced motion.
+  late final AnimationController _drawCtl = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 240),
+    duration: const Duration(milliseconds: 1500),
   );
+  late final Animation<double> _draw = CurvedAnimation(
+    parent: _drawCtl,
+    curve: Curves.easeInCubic,
+  );
+  late final AnimationController _pulseCtl = AnimationController(
+    vsync: this,
+    duration: const Duration(milliseconds: 1500),
+  );
+  late final Animation<double> _pulse = CurvedAnimation(
+    parent: _pulseCtl,
+    curve: Curves.easeOutCubic,
+  );
+  int _pulses = 0;
   DateTime? _scrub;
   bool _table = false;
   final FocusNode _focus = FocusNode();
@@ -105,24 +120,26 @@ class _PicoChartBaseState extends State<PicoChartBase>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final b = Theme.of(context).brightness;
-    final dpr = MediaQuery.devicePixelRatioOf(context);
-    WeaveShaderCache.instance.load(PicoState.rt, b, dpr).then((_) {
-      if (mounted) setState(() {});
-    });
     if (!_started) {
       _started = true;
       if (MediaQuery.disableAnimationsOf(context)) {
-        _draw.value = 1;
+        _drawCtl.value = 1;
       } else {
-        _draw.forward();
+        _drawCtl.forward().whenComplete(_startPulse);
       }
     }
   }
 
+  void _startPulse() {
+    if (!mounted || _pulses >= 3) return;
+    _pulses++;
+    _pulseCtl.forward(from: 0).whenComplete(_startPulse);
+  }
+
   @override
   void dispose() {
-    _draw.dispose();
+    _drawCtl.dispose();
+    _pulseCtl.dispose();
     _focus.dispose();
     super.dispose();
   }
@@ -202,6 +219,22 @@ class _PicoChartBaseState extends State<PicoChartBase>
     return null;
   }
 
+  /// The lower and upper bound of the band on [d], when both exist.
+  (double, double)? _boundsOn(DateTime d) {
+    final band = widget.band;
+    if (band == null) return null;
+    num? at(List<(DateTime, num?)> l) {
+      for (final p in l) {
+        if (dateOnly(p.$1) == d) return p.$2;
+      }
+      return null;
+    }
+
+    final lo = at(band.lower);
+    final hi = at(band.upper);
+    return lo == null || hi == null ? null : (lo.toDouble(), hi.toDouble());
+  }
+
   Widget _readout(PicoKitText t) {
     final d = _scrub;
     final text = context.typography.label.caption.copyWith(
@@ -228,7 +261,8 @@ class _PicoChartBaseState extends State<PicoChartBase>
                 ),
                 const SizedBox(width: 4),
                 Text(
-                  '${(s.label ?? t.stateLabel(s.state))} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}',
+                  '${(s.label ?? t.stateLabel(s.state))} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}'
+                  '${_valueOn(s, d) != null && _boundsOn(d) != null ? ' (${t.bounds(widget.formatValue(t, _boundsOn(d)!.$1), widget.formatValue(t, _boundsOn(d)!.$2))})' : ''}',
                   style: text,
                 ),
               ],
@@ -257,7 +291,8 @@ class _PicoChartBaseState extends State<PicoChartBase>
             final d = dates[dates.length - 1 - i];
             final cells = [
               for (final s in widget.series)
-                '${(s.label ?? t.stateLabel(s.state))} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}',
+                '${(s.label ?? t.stateLabel(s.state))} ${_valueOn(s, d) == null ? t.noData : widget.formatValue(t, _valueOn(s, d)!)}'
+                    '${_valueOn(s, d) != null && _boundsOn(d) != null ? ' (${t.bounds(widget.formatValue(t, _boundsOn(d)!.$1), widget.formatValue(t, _boundsOn(d)!.$2))})' : ''}',
             ];
             return Semantics(
               container: true,
@@ -311,8 +346,6 @@ class _PicoChartBaseState extends State<PicoChartBase>
   }
 
   Widget _plot(PicoKitText t) {
-    final b = Theme.of(context).brightness;
-    final dpr = MediaQuery.devicePixelRatioOf(context);
     final captionStyle = context.typography.label.caption.copyWith(
       color: context.colors.foreground.subtle,
     );
@@ -398,11 +431,6 @@ class _PicoChartBaseState extends State<PicoChartBase>
                     ),
                 ],
                 band: widget.band == null ? null : bandRuns(widget.band!, cs),
-                bandShader: WeaveShaderCache.instance.shaderIfReady(
-                  PicoState.rt,
-                  b,
-                  dpr,
-                ),
                 bandColor: colors.rt,
                 threshold: widget.threshold == null
                     ? null
@@ -423,6 +451,8 @@ class _PicoChartBaseState extends State<PicoChartBase>
                   yearOnly: _end.difference(_start).inDays > 730,
                 ),
                 progress: _draw,
+                pulse: _pulse,
+                fillBelow: widget.series.length == 1 && widget.band == null,
                 inkColor: context.colors.foreground.main,
               );
               return GestureDetector(
@@ -509,7 +539,6 @@ class ChartPainter extends CustomPainter {
     required this.xTicks,
     required this.series,
     required this.band,
-    required this.bandShader,
     required this.bandColor,
     required this.threshold,
     required this.thresholdLabel,
@@ -523,8 +552,10 @@ class ChartPainter extends CustomPainter {
     required this.formatTick,
     required this.monthLabel,
     required this.progress,
+    required this.pulse,
+    required this.fillBelow,
     required this.inkColor,
-  }) : super(repaint: progress);
+  }) : super(repaint: Listenable.merge([progress, pulse]));
 
   /// Pixel mapping.
   final ChartScale scale;
@@ -541,10 +572,7 @@ class ChartPainter extends CustomPainter {
   /// Band polygons.
   final List<Path>? band;
 
-  /// Weave shader for the band, if rasterised.
-  final ui.Shader? bandShader;
-
-  /// Fallback colour for the band.
+  /// Colour of the band (translucent fill and thin edges).
   final Color bandColor;
 
   /// Y pixel of the threshold.
@@ -582,6 +610,12 @@ class ChartPainter extends CustomPainter {
 
   /// Draw-on progress 0..1.
   final Animation<double> progress;
+
+  /// Pulse of the last point, 0..1 (1 when idle).
+  final Animation<double> pulse;
+
+  /// Fill a soft gradient under a single line (the original look).
+  final bool fillBelow;
 
   /// Ink colour for the scrub rule.
   final Color inkColor;
@@ -678,20 +712,24 @@ class ChartPainter extends CustomPainter {
       );
     final bands = band;
     if (bands != null) {
-      final fill = Paint()..style = PaintingStyle.fill;
-      if (bandShader != null) {
-        fill.shader = bandShader;
-      } else {
-        fill.color = bandColor.withValues(alpha: .25);
-      }
+      final fill = Paint()
+        ..style = PaintingStyle.fill
+        ..color = bandColor.withValues(alpha: .16);
+      final edge = Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 1
+        ..color = bandColor.withValues(alpha: .55);
       for (final p in bands) {
-        canvas.drawPath(p, fill);
+        canvas
+          ..drawPath(p, fill)
+          ..drawPath(p, edge);
       }
     }
     for (final layer in series) {
       _drawLayer(canvas, layer);
     }
     canvas.restore();
+    if (progress.value >= 1) _drawPulse(canvas);
 
     final sd = scrub;
     if (sd != null) {
@@ -718,6 +756,53 @@ class ChartPainter extends CustomPainter {
     }
   }
 
+  /// A smooth path through [run]: monotone cubic (no overshoot, so a zero
+  /// baseline stays a baseline).
+  static Path smoothPath(List<Offset> run, double dy) {
+    final p = Path()..moveTo(run.first.dx, run.first.dy + dy);
+    final n = run.length;
+    if (n == 2) return p..lineTo(run[1].dx, run[1].dy + dy);
+    final h = [for (var i = 0; i < n - 1; i++) run[i + 1].dx - run[i].dx];
+    final d = [
+      for (var i = 0; i < n - 1; i++)
+        h[i] == 0 ? 0.0 : (run[i + 1].dy - run[i].dy) / h[i],
+    ];
+    final m = List<double>.filled(n, 0);
+    m[0] = d.first;
+    m[n - 1] = d.last;
+    for (var i = 1; i < n - 1; i++) {
+      m[i] = d[i - 1] * d[i] <= 0 ? 0 : (d[i - 1] + d[i]) / 2;
+    }
+    for (var i = 0; i < n - 1; i++) {
+      if (d[i] == 0) {
+        m[i] = 0;
+        m[i + 1] = 0;
+        continue;
+      }
+      final a = m[i] / d[i];
+      final b = m[i + 1] / d[i];
+      final s = a * a + b * b;
+      if (s > 9) {
+        final tau = 3 / math.sqrt(s);
+        m[i] = tau * a * d[i];
+        m[i + 1] = tau * b * d[i];
+      }
+    }
+    for (var i = 0; i < n - 1; i++) {
+      final x1 = run[i].dx + h[i] / 3;
+      final x2 = run[i + 1].dx - h[i] / 3;
+      p.cubicTo(
+        x1,
+        run[i].dy + dy + m[i] * h[i] / 3,
+        x2,
+        run[i + 1].dy + dy - m[i + 1] * h[i] / 3,
+        run[i + 1].dx,
+        run[i + 1].dy + dy,
+      );
+    }
+    return p;
+  }
+
   void _drawLayer(Canvas canvas, ChartLayer layer) {
     final st = layer.state;
     final stroke = Paint()
@@ -725,22 +810,36 @@ class ChartPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.round
       ..strokeCap = st.line == PicoLineForm.dotted
           ? StrokeCap.round
-          : StrokeCap.butt
+          : StrokeCap.round
       ..color = layer.color
       ..strokeWidth = st.line == PicoLineForm.doubled
           ? 1.6
           : (st.line == PicoLineForm.dotted ? 3 : 2.5);
+    final plot = scale.plot;
     for (final run in layer.runs) {
       if (run.length == 1) {
         canvas.drawCircle(run.first, 2, Paint()..color = layer.color);
         continue;
       }
-      Path path(double dy) {
-        final p = Path()..moveTo(run.first.dx, run.first.dy + dy);
-        for (final o in run.skip(1)) {
-          p.lineTo(o.dx, o.dy + dy);
-        }
-        return p;
+      Path path(double dy) => smoothPath(run, dy);
+
+      if (fillBelow && st.line == PicoLineForm.solid) {
+        final area = path(0)
+          ..lineTo(run.last.dx, plot.bottom)
+          ..lineTo(run.first.dx, plot.bottom)
+          ..close();
+        canvas.drawPath(
+          area,
+          Paint()
+            ..shader = ui.Gradient.linear(
+              Offset(0, plot.top),
+              Offset(0, plot.bottom),
+              [
+                layer.color.withValues(alpha: 0.22),
+                layer.color.withValues(alpha: 0.02),
+              ],
+            ),
+        );
       }
 
       switch (st.line) {
@@ -756,12 +855,31 @@ class ChartPainter extends CustomPainter {
     }
   }
 
+  /// The pulsing ring on the newest point of the last series.
+  void _drawPulse(Canvas canvas) {
+    if (series.isEmpty || scrub != null) return;
+    final runs = series.last.runs;
+    if (runs.isEmpty || runs.last.isEmpty) return;
+    final at = runs.last.last;
+    final color = series.last.color;
+    final v = pulse.value;
+    canvas
+      ..drawCircle(
+        at,
+        4 + v * 6,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 3
+          ..color = color.withValues(alpha: 0.5 * (1 - v)),
+      )
+      ..drawCircle(at, 4, Paint()..color = color);
+  }
+
   @override
   bool shouldRepaint(ChartPainter old) =>
       old.scale != scale ||
       old.scrub != scrub ||
       old.series != series ||
       old.band != band ||
-      old.bandShader != bandShader ||
       old.threshold != threshold;
 }

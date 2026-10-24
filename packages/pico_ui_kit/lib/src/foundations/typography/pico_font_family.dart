@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 
 /// Font family configuration for the design system.
 ///
-/// Defaults to the bundled PICO brand fonts (DESIGN.md): Archivo for display
-/// and headings (`wdth` 87.5, weight 650 to 760) and Source Sans 3 for text.
-/// Both are variable fonts shipped in this package, so the app never fetches
-/// a font at runtime. Every style sets its `wght` axis explicitly (the Source
+/// Source Sans 3 for text and headings, as in the original app. It is a
+/// variable font shipped in this package, so the app never fetches a font at
+/// runtime. Every style sets its `wght` axis explicitly (the Source
 /// Sans 3 default instance is ExtraLight) and uses tabular figures.
 @immutable
 class PicoFontFamily {
   /// Creates a font family set. The defaults are the bundled brand fonts.
   const new({
     this.bodyFontFamily = 'SourceSans3',
-    this.headingFontFamily = 'Archivo',
+    this.headingFontFamily = 'SourceSans3',
     this.monoFontFamily = 'SourceSans3',
     this.package = 'pico_ui_kit',
   });
@@ -36,10 +35,9 @@ class PicoFontFamily {
     FontFeature.tabularFigures(),
   ];
 
-  /// Archivo display range from DESIGN.md.
-  static const double _displayMinWeight = 650;
-  static const double _displayMaxWeight = 760;
-  static const double _displayWidth = 87.5;
+  /// Heading weight range.
+  static const double _displayMinWeight = 600;
+  static const double _displayMaxWeight = 800;
 
   TextStyle _style(
     String family, {
@@ -80,7 +78,7 @@ class PicoFontFamily {
     color: color,
   );
 
-  /// Text style for display and headings (Archivo, condensed to wdth 87.5).
+  /// Text style for display and headings (Source Sans 3, bold).
   TextStyle headingTextStyle({
     double? fontSize,
     FontWeight? fontWeight,
@@ -93,7 +91,6 @@ class PicoFontFamily {
       FontVariation.weight(
         _wght(fontWeight).clamp(_displayMinWeight, _displayMaxWeight),
       ),
-      const FontVariation.width(_displayWidth),
     ],
     fontSize: fontSize,
     fontWeight: fontWeight,

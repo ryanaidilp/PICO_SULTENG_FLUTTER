@@ -46,16 +46,15 @@ flutter:
   assets:
     - assets/icons/mono/
     - assets/icons/duotone/
+    - assets/icons/legacy/
+    - assets/images/
     - assets/illustrations/
     - assets/logo/
     - assets/lottie/
     - assets/lottie/static/
     - assets/patterns/
-  # Brand fonts (DESIGN.md), variable files. Never fetched at runtime.
+  # Source Sans 3, variable file. Never fetched at runtime.
   fonts:
-    - family: Archivo
-      fonts:
-        - asset: assets/fonts/Archivo.ttf
     - family: SourceSans3
       fonts:
         - asset: assets/fonts/SourceSans3.ttf

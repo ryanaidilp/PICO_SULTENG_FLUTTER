@@ -94,6 +94,10 @@ class PicoKitText {
   /// "Lihat sebagai tabel" button of charts.
   String get viewAsTable => _t('Lihat sebagai tabel', 'View as table');
 
+  /// The Rt interval at a day: "batas 0,80 sampai 1,04".
+  String bounds(String lower, String upper) =>
+      _t('batas $lower sampai $upper', 'bounds $lower to $upper');
+
   /// Back to the chart from the table view.
   String get viewAsChart => _t('Kembali ke grafik', 'Back to chart');
 

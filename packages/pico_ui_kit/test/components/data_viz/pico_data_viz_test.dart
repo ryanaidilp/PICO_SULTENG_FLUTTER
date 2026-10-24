@@ -184,7 +184,8 @@ void main() {
           ),
         ),
       );
-      await tester.pump();
+      // The bars grow in 700 ms: settle, then read the final fractions.
+      await tester.pumpAndSettle();
       final bars = find
           .byType(CustomPaint)
           .evaluate()

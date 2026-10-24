@@ -1,8 +1,5 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:pico_ui_kit/src/components/atoms/data_viz/pico_marks.dart';
-import 'package:pico_ui_kit/src/components/atoms/data_viz/weave_shader_cache.dart';
+import 'package:pico_ui_kit/src/components/atoms/data_viz/pico_state_icon.dart';
 import 'package:pico_ui_kit/src/components/utilities/pico_kit_text.dart';
 import 'package:pico_ui_kit/src/extensions/build_context_extensions.dart';
 import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
@@ -26,13 +23,16 @@ class WovenBarItem {
   /// Full scale.
   final int max;
 
-  /// Data role: its weave fills the bar and its mark leads the label.
+  /// Data role: its colour fills the bar and its icon leads the label.
   final PicoState state;
 }
 
-/// Horizontal bars. Length carries the value, the fill is the weave of the
-/// role, and the value label sits outside the bar (never on texture).
-class PicoWovenBar extends StatefulWidget {
+/// Horizontal bars that grow from zero in 700 ms (the original chart motion,
+/// off with reduced motion). Length carries the value, the fill is the colour
+/// of the role, the icon of the role leads the label and the value label sits
+/// outside the bar. (The class keeps its first name; there is no weave
+/// texture any more.)
+class PicoWovenBar extends StatelessWidget {
   /// Creates the bars.
   const new({required this.items, this.valueFormat, super.key});
 
@@ -43,32 +43,16 @@ class PicoWovenBar extends StatefulWidget {
   final String Function(int value)? valueFormat;
 
   @override
-  State<PicoWovenBar> createState() => _PicoWovenBarState();
-}
-
-class _PicoWovenBarState extends State<PicoWovenBar> {
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final b = Theme.of(context).brightness;
-    final dpr = MediaQuery.devicePixelRatioOf(context);
-    WeaveShaderCache.instance.warmUp(b, dpr).then((_) {
-      if (mounted) setState(() {});
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     final t = PicoKitText.of(context);
-    final b = Theme.of(context).brightness;
-    final dpr = MediaQuery.devicePixelRatioOf(context);
-    final fmt = widget.valueFormat ?? t.number;
+    final fmt = valueFormat ?? t.number;
     final colors = context.picoStates;
+    final animate = !MediaQuery.disableAnimationsOf(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (final item in widget.items)
+        for (final item in items)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6),
             child: Semantics(
@@ -81,10 +65,10 @@ class _PicoWovenBarState extends State<PicoWovenBar> {
                   children: [
                     Row(
                       children: [
-                        PicoMarkView(
-                          mark: item.state.mark,
-                          color: colors.of(item.state),
+                        PicoStateIcon(
+                          state: item.state,
                           size: 12,
+                          badge: false,
                         ),
                         const SizedBox(width: 6),
                         Flexible(
@@ -101,22 +85,26 @@ class _PicoWovenBarState extends State<PicoWovenBar> {
                     Row(
                       children: [
                         Expanded(
-                          child: CustomPaint(
-                            size: const Size.fromHeight(16),
-                            painter: _BarPainter(
-                              fraction: item.value == null || item.max <= 0
+                          child: TweenAnimationBuilder<double>(
+                            tween: Tween(
+                              begin: 0,
+                              end: item.value == null || item.max <= 0
                                   ? 0
                                   : (item.value! / item.max)
                                         .clamp(0, 1)
                                         .toDouble(),
-                              fill: colors.of(item.state),
-                              shader: WeaveShaderCache.instance.shaderIfReady(
-                                item.state,
-                                b,
-                                dpr,
+                            ),
+                            duration: animate
+                                ? const Duration(milliseconds: 700)
+                                : Duration.zero,
+                            curve: Curves.easeInOutCubic,
+                            builder: (context, fraction, _) => CustomPaint(
+                              size: const Size.fromHeight(16),
+                              painter: _BarPainter(
+                                fraction: fraction,
+                                fill: colors.of(item.state),
+                                track: context.colors.background.subtle,
                               ),
-                              track: context.chartSurface.cottonDeep,
-                              edge: context.colors.outline.subtle,
                             ),
                           ),
                         ),
@@ -125,6 +113,7 @@ class _PicoWovenBarState extends State<PicoWovenBar> {
                           item.value == null ? t.noData : fmt(item.value!),
                           style: context.typography.body.small.copyWith(
                             color: context.colors.foreground.main,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -140,49 +129,29 @@ class _PicoWovenBarState extends State<PicoWovenBar> {
 }
 
 class _BarPainter extends CustomPainter {
-  new({
-    required this.fraction,
-    required this.fill,
-    required this.shader,
-    required this.track,
-    required this.edge,
-  });
+  new({required this.fraction, required this.fill, required this.track});
 
   final double fraction;
   final Color fill;
-  final ui.Shader? shader;
   final Color track;
-  final Color edge;
 
   @override
   void paint(Canvas canvas, Size s) {
-    final full = RRect.fromRectAndRadius(
-      Offset.zero & s,
-      const Radius.circular(2),
-    );
-    canvas.drawRRect(full, Paint()..color = track);
-    if (fraction > 0) {
-      final w = (s.width * fraction).clamp(2.0, s.width);
-      final bar = RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, w, s.height),
-        const Radius.circular(2),
-      );
-      final p = Paint()..color = fill;
-      if (shader != null) p.shader = shader;
-      canvas.drawRRect(bar, p);
-    }
+    const radius = Radius.circular(8);
     canvas.drawRRect(
-      full,
-      Paint()
-        ..style = PaintingStyle.stroke
-        ..color = edge,
+      RRect.fromRectAndRadius(Offset.zero & s, radius),
+      Paint()..color = track,
     );
+    if (fraction > 0) {
+      final w = (s.width * fraction).clamp(8.0, s.width);
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(Rect.fromLTWH(0, 0, w, s.height), radius),
+        Paint()..color = fill,
+      );
+    }
   }
 
   @override
   bool shouldRepaint(_BarPainter o) =>
-      o.fraction != fraction ||
-      o.fill != fill ||
-      o.shader != shader ||
-      o.track != track;
+      o.fraction != fraction || o.fill != fill || o.track != track;
 }

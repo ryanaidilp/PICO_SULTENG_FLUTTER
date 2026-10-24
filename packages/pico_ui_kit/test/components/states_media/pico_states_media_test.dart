@@ -301,26 +301,14 @@ void main() {
       expect(n, 2);
     });
 
-    testWidgets('loading with animations on uses Lottie', (tester) async {
+    testWidgets('loading is the plain progress ring, no Lottie', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         app(PicoTheme.light(), const PicoStateView.loading(), noAnim: false),
       );
-      expect(find.byType(LottieBuilder), findsOneWidget);
-    });
-
-    testWidgets('loading with reduced motion is a still SVG, no Lottie', (
-      tester,
-    ) async {
-      await prime(tester, Brightness.light);
-      await tester.pumpWidget(
-        app(PicoTheme.light(), const PicoStateView.loading()),
-      );
-      await tester.runAsync(
-        () => Future<void>.delayed(const Duration(milliseconds: 100)),
-      );
-      await tester.pump();
       expect(find.byType(LottieBuilder), findsNothing);
-      expect(find.byType(SvgPicture), findsOneWidget);
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
     testWidgets('empty and not-found use the default copy', (tester) async {

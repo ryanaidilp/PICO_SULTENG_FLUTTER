@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/components/atoms/brand/pico_illustration.dart';
-import 'package:pico_ui_kit/src/components/atoms/brand/pico_lottie.dart';
 import 'package:pico_ui_kit/src/components/utilities/pico_kit_text.dart';
 import 'package:pico_ui_kit/src/extensions/build_context_extensions.dart';
 
 enum _Kind { loading, empty, error, offline, notFound }
 
 /// A calm, designed state: loading, empty, error, offline or not found.
-/// The copy is factual and uses no red. The loading Lottie is the only
-/// looping animation, and it becomes a still image under reduced motion.
+/// The copy is factual and uses no red. Loading is the plain
+/// progress ring of the first app.
 class PicoStateView extends StatelessWidget {
   const new _(this._kind, this.message, this.onRetry, {super.key});
 
@@ -46,7 +45,11 @@ class PicoStateView extends StatelessWidget {
     final (text, art) = switch (_kind) {
       _Kind.loading => (
         message ?? t.loading,
-        const PicoLottie('pico-loading', width: 120, height: 120),
+        const SizedBox(
+          width: 48,
+          height: 48,
+          child: CircularProgressIndicator(),
+        ),
       ),
       _Kind.empty => (
         message ?? t.empty,

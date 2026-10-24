@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/foundations/colors/pico_brand_palette.dart';
 
 /// Semantic color foundation for the design system, mapped onto the PICO
-/// "Tenun Donggala" brand palette (ADR-0106, DESIGN.md).
+/// palette of the original app (warm grey and the 0B92D5 blue).
 ///
 /// Contrast pairs were computed against the brand paper, surface, cotton and
 /// tint grounds: every text pair is at least 4.5:1 in both themes.
@@ -95,16 +95,16 @@ abstract final class PicoColorFoundation() {
   static const Color overlayDark = Color(0xB3000000);
 
   // Status surfaces.
-  static const Color successBg = PicoBrandPalette.tintLight;
-  static const Color successBgDark = PicoBrandPalette.tintDark;
+  static const Color successBg = Color(0xFFE5FBEC);
+  static const Color successBgDark = Color(0xFF113524);
   static const Color successFg = PicoBrandPalette.recoveredLight;
 
-  static const Color warningBg = PicoBrandPalette.cottonDeepLight;
-  static const Color warningBgDark = PicoBrandPalette.cottonDeepDark;
+  static const Color warningBg = Color(0xFFFFF1CF);
+  static const Color warningBgDark = Color(0xFF3D3010);
   static const Color warningFg = PicoBrandPalette.dyeBarkLight;
 
-  static const Color errorBg = PicoBrandPalette.cottonDeepLight;
-  static const Color errorBgDark = PicoBrandPalette.cottonDeepDark;
+  static const Color errorBg = Color(0xFFFEF3F2);
+  static const Color errorBgDark = Color(0xFF3F1F1C);
   static const Color errorFg = PicoBrandPalette.crimsonLight;
 
   static const Color infoBg = PicoBrandPalette.tintLight;
