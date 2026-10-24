@@ -119,8 +119,9 @@ class _Coverage extends StatelessWidget {
           PicoDataStamp(
             dataDate: latest.date,
             fetchedAt: snap.fetchedAt,
-            fromCache: snap.source == DataSource.cache,
             isStale: snap.isStale,
+            offline: snap.isOffline,
+            refreshFailed: snap.refreshFailed,
           ),
         ],
       );

@@ -290,8 +290,9 @@ class _PetaContentState extends State<PetaContent> {
                   ? kDataEnd
                   : s.snapshot!.data.first.latest.date,
               fetchedAt: s.snapshot!.fetchedAt,
-              fromCache: s.snapshot!.source == DataSource.cache,
               isStale: s.snapshot!.isStale,
+              offline: s.snapshot!.isOffline,
+              refreshFailed: s.snapshot!.refreshFailed,
             ),
           ],
         ),

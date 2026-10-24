@@ -105,7 +105,8 @@ class VaksinBloc extends Bloc<VaksinEvent, VaksinState> {
         data: (locations: ls.data, regencies: names),
         fetchedAt: ls.fetchedAt,
         source: ls.source,
-        isStale: ls.isStale || (r.isLeft),
+        isStale: ls.isStale,
+        refreshFailure: ls.refreshFailure,
       ),
     );
   });

@@ -18,6 +18,7 @@ final class DataSnapshot<T> extends Equatable {
     required this.fetchedAt,
     required this.source,
     this.isStale = false,
+    this.refreshFailure,
   });
 
   /// The data.
@@ -29,11 +30,23 @@ final class DataSnapshot<T> extends Equatable {
   /// Network or cache.
   final DataSource source;
 
-  /// Older than the TTL, or a refresh failed.
+  /// Older than its TTL. Alone this means "saved copy, refresh pending or not
+  /// tried": it is not an error and not "offline".
   final bool isStale;
 
+  /// Why the refresh behind this saved copy failed, or null when no refresh
+  /// failed (a fresh network copy, a copy still inside its TTL, or a stale copy
+  /// whose refresh has not answered yet).
+  final PicoFailureKind? refreshFailure;
+
+  /// The refresh failed because there was no network.
+  bool get isOffline => refreshFailure == PicoFailureKind.network;
+
+  /// The refresh failed for another reason (server error, rate limit).
+  bool get refreshFailed => refreshFailure != null && !isOffline;
+
   @override
-  List<Object?> get props => [data, fetchedAt, source, isStale];
+  List<Object?> get props => [data, fetchedAt, source, isStale, refreshFailure];
 }
 
 /// Why a request failed (C01 error table).

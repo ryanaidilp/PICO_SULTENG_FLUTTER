@@ -221,5 +221,8 @@ DataSnapshot<List<AreaSummary>>? _compose(
         ? DataSource.network
         : DataSource.cache,
     isStale: anyMissing || usable.any((p) => p.$3.isStale),
+    refreshFailure: usable
+        .map((p) => p.$3.refreshFailure)
+        .firstWhere((f) => f != null, orElse: () => null),
   );
 }

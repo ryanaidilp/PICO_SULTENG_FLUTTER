@@ -59,7 +59,8 @@ class HospitalsBloc extends Bloc<HospitalsEvent, HospitalsState> {
         data: (hospitals: hs.data, regencies: names),
         fetchedAt: hs.fetchedAt,
         source: hs.source,
-        isStale: hs.isStale || r.isLeft,
+        isStale: hs.isStale,
+        refreshFailure: hs.refreshFailure,
       ),
     );
   });

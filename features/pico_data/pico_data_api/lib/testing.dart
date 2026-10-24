@@ -14,12 +14,14 @@ Either<PicoFailure, DataSnapshot<T>> fakeSnapshot<T>(
   DateTime? fetchedAt,
   DataSource source = DataSource.network,
   bool isStale = false,
+  PicoFailureKind? refreshFailure,
 }) => Right(
   DataSnapshot(
     data: value,
     fetchedAt: fetchedAt ?? DateTime(2024, 1, 15),
     source: source,
     isStale: isStale,
+    refreshFailure: refreshFailure,
   ),
 );
 

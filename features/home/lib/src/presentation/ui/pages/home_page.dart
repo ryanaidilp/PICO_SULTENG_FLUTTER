@@ -77,8 +77,9 @@ class HomePage extends StatelessWidget {
             PicoDataStamp(
               dataDate: snap.data.date,
               fetchedAt: snap.fetchedAt,
-              fromCache: snap.source == DataSource.cache,
               isStale: snap.isStale,
+              offline: snap.isOffline,
+              refreshFailed: snap.refreshFailed,
             ),
             const SizedBox(height: 16),
             PicoSectionHeader(title: context.t.quickLinks),

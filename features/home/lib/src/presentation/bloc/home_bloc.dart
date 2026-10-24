@@ -57,6 +57,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               fetchedAt: snap.fetchedAt,
               source: snap.source,
               isStale: snap.isStale,
+              refreshFailure: snap.refreshFailure,
             ),
           );
         }),

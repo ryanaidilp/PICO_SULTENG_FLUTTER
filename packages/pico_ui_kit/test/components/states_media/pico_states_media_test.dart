@@ -137,7 +137,6 @@ void main() {
           PicoDataStamp(
             dataDate: DateTime(2024, 1, 14),
             fetchedAt: fetched,
-            fromCache: false,
             now: now,
           ),
         ),
@@ -156,7 +155,6 @@ void main() {
           PicoDataStamp(
             dataDate: DateTime(2024, 1, 14),
             fetchedAt: fetched,
-            fromCache: false,
             now: now,
           ),
           locale: const Locale('en'),
@@ -178,7 +176,8 @@ void main() {
             PicoDataStamp(
               dataDate: DateTime(2024, 1, 14),
               fetchedAt: fetched,
-              fromCache: true,
+              offline: true,
+              isStale: true,
               now: fetched.add(const Duration(days: 2)),
             ),
           ),
@@ -193,6 +192,75 @@ void main() {
       },
     );
 
+    Future<void> stampOf(
+      WidgetTester tester, {
+      bool stale = false,
+      bool offline = false,
+      bool failed = false,
+      Duration age = const Duration(hours: 3),
+    }) => tester.pumpWidget(
+      app(
+        PicoTheme.light(),
+        PicoDataStamp(
+          dataDate: DateTime(2024, 1, 14),
+          fetchedAt: fetched,
+          isStale: stale,
+          offline: offline,
+          refreshFailed: failed,
+          now: fetched.add(age),
+        ),
+      ),
+    );
+
+    testWidgets('a saved copy still fresh by policy is NOT offline', (
+      tester,
+    ) async {
+      // Offline-first: the app did not need the network, so no icon, no
+      // "Tidak terhubung".
+      await stampOf(tester);
+      expect(find.textContaining('Tidak terhubung'), findsNothing);
+      expect(find.byIcon(Icons.cloud_off_outlined), findsNothing);
+      expect(find.byIcon(Icons.error_outline), findsNothing);
+    });
+
+    testWidgets('stale and the refresh has not failed: saved, no alarm', (
+      tester,
+    ) async {
+      await stampOf(tester, stale: true, age: const Duration(days: 8));
+      expect(
+        find.text('Data per 14 Jan 2024 · data tersimpan, 8 hari lalu'),
+        findsOneWidget,
+      );
+      expect(find.byIcon(Icons.cloud_off_outlined), findsNothing);
+    });
+
+    testWidgets('stale and the refresh failed (server): says so, not offline', (
+      tester,
+    ) async {
+      await stampOf(
+        tester,
+        stale: true,
+        failed: true,
+        age: const Duration(days: 8),
+      );
+      expect(
+        find.text(
+          'Data per 14 Jan 2024 · data tersimpan, 8 hari lalu · Gagal memperbarui',
+        ),
+        findsOneWidget,
+      );
+      expect(find.byIcon(Icons.error_outline), findsOneWidget);
+      expect(find.textContaining('Tidak terhubung'), findsNothing);
+    });
+
+    testWidgets('truly offline: cloud-off icon and "Tidak terhubung"', (
+      tester,
+    ) async {
+      await stampOf(tester, stale: true, offline: true);
+      expect(find.textContaining('Tidak terhubung'), findsOneWidget);
+      expect(find.byIcon(Icons.cloud_off_outlined), findsOneWidget);
+    });
+
     testWidgets('is a live region', (tester) async {
       final h = tester.ensureSemantics();
       await tester.pumpWidget(
@@ -201,7 +269,6 @@ void main() {
           PicoDataStamp(
             dataDate: DateTime(2024, 1, 14),
             fetchedAt: fetched,
-            fromCache: false,
             now: now,
           ),
         ),
@@ -432,7 +499,7 @@ void main() {
               PicoDataStamp(
                 dataDate: DateTime(2024, 1, 14),
                 fetchedAt: DateTime(2024, 1, 12),
-                fromCache: true,
+                isStale: true,
                 now: DateTime(2024, 1, 14),
               ),
               const SizedBox(height: 12),

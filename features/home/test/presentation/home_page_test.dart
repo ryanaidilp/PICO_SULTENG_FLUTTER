@@ -62,13 +62,16 @@ FakeCaseRepository repo({
   bool failNational = false,
   PicoFailureKind kind = PicoFailureKind.network,
   CaseSeries? rtSeries,
+  bool stale = true,
+  PicoFailureKind? refreshFailure = PicoFailureKind.network,
 }) => FakeCaseRepository(
   nationalLatest: failNational
       ? fakeFailure(kind)
       : fakeSnapshot(
           nationalDay,
           source: cache ? DataSource.cache : DataSource.network,
-          isStale: cache,
+          isStale: cache && stale,
+          refreshFailure: cache ? refreshFailure : null,
           fetchedAt: DateTime(2024, 1, 12),
         ),
   provinces: fakeSnapshot([
@@ -194,6 +197,48 @@ void main() {
       expect(find.byType(PicoStateView), findsNothing);
     },
   );
+
+  group('the stamp tells the truth in each state', () {
+    Future<void> open(WidgetTester tester, FakeCaseRepository r) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(host(r));
+      await tester.pumpAndSettle();
+    }
+
+    testWidgets('a saved copy fresh by policy is not offline (phone bug)', (
+      tester,
+    ) async {
+      await open(tester, repo(cache: true, stale: false, refreshFailure: null));
+      expect(find.textContaining('diperbarui'), findsOneWidget);
+      expect(find.textContaining('Tidak terhubung'), findsNothing);
+      expect(find.byIcon(Icons.cloud_off_outlined), findsNothing);
+    });
+
+    testWidgets('stale with no failure yet: saved, no alarm', (tester) async {
+      await open(tester, repo(cache: true, refreshFailure: null));
+      expect(find.textContaining('data tersimpan'), findsOneWidget);
+      expect(find.textContaining('Tidak terhubung'), findsNothing);
+      expect(find.textContaining('Gagal memperbarui'), findsNothing);
+    });
+
+    testWidgets('stale and the refresh failed on the server', (tester) async {
+      await open(
+        tester,
+        repo(cache: true, refreshFailure: PicoFailureKind.server),
+      );
+      expect(find.textContaining('Gagal memperbarui'), findsOneWidget);
+      expect(find.textContaining('Tidak terhubung'), findsNothing);
+    });
+
+    testWidgets('fresh from the network: updated, no icon', (tester) async {
+      await open(tester, repo());
+      expect(find.textContaining('diperbarui'), findsOneWidget);
+      expect(find.byIcon(Icons.cloud_off_outlined), findsNothing);
+    });
+  });
 
   testWidgets('offline with no copy is the offline state for the whole page', (
     tester,

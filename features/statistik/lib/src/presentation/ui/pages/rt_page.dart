@@ -132,8 +132,9 @@ class _RtContentState extends State<RtContent> {
             stamp: PicoDataStamp(
               dataDate: snap.data.days.last.date,
               fetchedAt: snap.fetchedAt,
-              fromCache: snap.source == DataSource.cache,
               isStale: snap.isStale,
+              offline: snap.isOffline,
+              refreshFailed: snap.refreshFailed,
             ),
           );
         }

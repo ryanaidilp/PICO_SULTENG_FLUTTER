@@ -138,8 +138,9 @@ class _KabupatenPageState extends State<KabupatenPage> {
                       ? DateTime.now()
                       : snap.data.first.latest.date,
                   fetchedAt: snap.fetchedAt,
-                  fromCache: snap.source == DataSource.cache,
                   isStale: snap.isStale,
+                  offline: snap.isOffline,
+                  refreshFailed: snap.refreshFailed,
                 ),
               ],
             ),

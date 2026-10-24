@@ -172,6 +172,7 @@ class SnapshotSource {
               fetchedAt: cached.fetchedAt,
               source: DataSource.cache,
               isStale: true,
+              refreshFailure: value.kind,
             ),
           );
         } else {

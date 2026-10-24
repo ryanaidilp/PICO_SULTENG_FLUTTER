@@ -60,6 +60,9 @@ class PicoKitText {
   /// Offline label. Always text, never only an icon.
   String get offline => _t('Tidak terhubung', 'Offline');
 
+  /// A refresh failed for a reason other than no network.
+  String get refreshFailed => _t('Gagal memperbarui', 'Refresh failed');
+
   /// Copy confirmation.
   String get copied => _t('Disalin', 'Copied');
 

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:dependencies/network.dart'
+    show DioException, DioExceptionType, RequestOptions;
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pico_data_api/pico_data_api.dart';
