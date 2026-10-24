@@ -8,6 +8,8 @@ import 'package:pengaturan/src/di/pengaturan_container.dart';
 import 'package:pengaturan/src/di/pengaturan_global_module.dart';
 import 'package:pengaturan/src/pengaturan_manifest.dart';
 import 'package:pengaturan/src/pengaturan_sdk.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:pico_data_api/testing.dart';
 
 void main() {
   setUp(FeatureSDKRegistry.instance.clear);
@@ -49,7 +51,9 @@ void main() {
     () async {
       // A root with only the types pengaturan_imports.dart
       // forwards: register one fake per forwarded type.
-      final root = GetIt.asNewInstance();
+      final root = GetIt.asNewInstance()
+        ..registerSingleton<SettingsRepository>(FakeSettingsRepository())
+        ..registerSingleton<LocalDataAdmin>(FakeLocalDataAdmin());
       late GetIt child;
       final container = FeatureContainer(
         'pengaturan',

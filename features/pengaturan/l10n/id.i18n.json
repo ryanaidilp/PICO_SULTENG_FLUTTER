@@ -1,3 +1,22 @@
 {
-  "title": "Pengaturan"
+  "title": "Pengaturan",
+  "language": "Bahasa",
+  "lang_id": "Bahasa Indonesia",
+  "lang_en": "English",
+  "theme": "Tema",
+  "theme_system": "Ikuti sistem",
+  "theme_light": "Terang",
+  "theme_dark": "Gelap",
+  "selected": "dipilih",
+  "saved_data": "Data tersimpan",
+  "saved_size": "Ukuran: $size",
+  "clear": "Hapus data tersimpan",
+  "clear_title": "Hapus data tersimpan?",
+  "clear_body": "Data akan diunduh lagi saat Anda membuka layar. Pilihan bahasa dan tema tetap ada.",
+  "cancel": "Batal",
+  "cleared": "Data tersimpan dihapus.",
+  "save_failed": "Pengaturan tidak tersimpan",
+  "about": "Tentang aplikasi",
+  "version": "Versi $version ($build)",
+  "system_note": "Ukuran teks dan animasi mengikuti pengaturan sistem."
 }

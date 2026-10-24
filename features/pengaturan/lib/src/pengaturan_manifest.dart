@@ -1,4 +1,3 @@
-import 'package:dependencies/auto_route.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:pengaturan/src/router/pengaturan_router.dart';
 import 'package:router_registry/router_registry.dart';
@@ -12,16 +11,6 @@ import 'package:router_registry/router_registry.dart';
 class const PengaturanManifest() extends FeatureManifest {
   @override
   void registerRoutes(RouteRegistry registry) {
-    registry.register([
-      AutoRoute(
-        page: PengaturanShellRoute.page,
-        path: '/pengaturan',
-        children: [
-          AutoRoute(page: PengaturanRoute.page, path: '', initial: true),
-          // TODO(user): Register more child routes for this feature, e.g.
-          //   AutoRoute(page: PengaturanDetailRoute.page, path: 'detail/:id'),
-        ],
-      ),
-    ]);
+    registry.register(PengaturanRouter().routes);
   }
 }
