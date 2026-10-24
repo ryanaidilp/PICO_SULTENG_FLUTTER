@@ -7,6 +7,7 @@ library;
 export 'package:core_infrastructure_api/core_infrastructure_api.dart'
     show Either, Failure, Left, Right;
 
+export 'src/models/archive_facts.dart';
 export 'src/models/area.dart';
 export 'src/models/cases.dart';
 export 'src/models/content.dart';
