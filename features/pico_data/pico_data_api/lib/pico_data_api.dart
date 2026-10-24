@@ -11,6 +11,7 @@ export 'src/models/area.dart';
 export 'src/models/cases.dart';
 export 'src/models/content.dart';
 export 'src/models/directory.dart';
+export 'src/models/rt_method.dart';
 export 'src/models/stats.dart';
 export 'src/repositories/repositories.dart';
 export 'src/repositories/settings.dart';
