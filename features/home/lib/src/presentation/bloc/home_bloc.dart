@@ -65,21 +65,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ),
   );
 
+  /// Beranda never loads a full series: the Rt reading is a small local value
+  /// (C05 offline-first).
   Future<void> _rt(Emitter<HomeState> emit, bool force) => emit.forEach(
-    _cases.watchSeries(const AreaRef.national(), forceRefresh: force),
-    onData: (r) => state.copyWith(
-      rt: _section<LatestRt?>(
-        r.map(
-          (snap) => DataSnapshot(
-            data: _latestRt(snap.data),
-            fetchedAt: snap.fetchedAt,
-            source: snap.source,
-            isStale: snap.isStale,
-          ),
-        ),
-        state.rt,
-      ),
-    ),
+    _cases.watchNationalLatestRt(forceRefresh: force),
+    onData: (r) => state.copyWith(rt: _section<LatestRt?>(r, state.rt)),
   );
 
   Future<void> _banners(Emitter<HomeState> emit, bool force) {
@@ -92,15 +82,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       content.watchBanners(forceRefresh: force),
       onData: (r) => state.copyWith(banners: _section(r, state.banners)),
     );
-  }
-
-  /// The newest day that has a computed Rt, never a zero stand-in.
-  static LatestRt? _latestRt(CaseSeries s) {
-    for (final d in s.days.reversed) {
-      final rt = d.rt;
-      if (rt != null) return (date: d.date, rt: rt);
-    }
-    return null;
   }
 
   /// A failure keeps the previous data if there is any (it cannot happen by

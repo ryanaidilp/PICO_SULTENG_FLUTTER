@@ -49,6 +49,14 @@ CaseSeries series() => CaseSeries.fromDays(
   ],
 );
 
+/// What the repository's small Rt value holds: the newest non-null day.
+LatestRt? latestRtOf(CaseSeries s) {
+  for (final d in s.days.reversed) {
+    if (d.rt != null) return (date: d.date, rt: d.rt!);
+  }
+  return null;
+}
+
 FakeCaseRepository repo({
   bool cache = false,
   bool failNational = false,
@@ -75,8 +83,8 @@ FakeCaseRepository repo({
       latest: day('2024-01-14', pos: 45092),
     ),
   ]),
-  series: {const AreaRef.national(): rtSeries ?? series()},
-);
+  // No series: Beranda must never ask for one (seriesCalls stays 0).
+)..latestRtResult = fakeSnapshot(latestRtOf(rtSeries ?? series()));
 
 Widget host(
   CaseRepository cases, {
@@ -149,9 +157,11 @@ void main() {
     'latest Rt is the newest non-null day, never 0; an all-null series says not computed',
     (tester) async {
       await setup(tester, AppLocale.id);
-      await tester.pumpWidget(host(repo()));
+      final repoUsed = repo();
+      await tester.pumpWidget(host(repoUsed));
       await tester.pumpAndSettle();
       expect(find.text('Rt terakhir 0,92 (9 Jul 2023)'), findsOneWidget);
+      expect(repoUsed.seriesCalls, 0);
       await tester.pumpWidget(
         host(
           repo(

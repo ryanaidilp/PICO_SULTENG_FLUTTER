@@ -5,10 +5,17 @@ import 'package:pico_data_api/src/models/directory.dart';
 import 'package:pico_data_api/src/models/stats.dart';
 import 'package:pico_data_api/src/repositories/snapshot.dart';
 
-/// Case numbers (C02). TTL 24 h.
+/// Case numbers (C02). TTL per resource class: see the C05 policy table.
 abstract interface class CaseRepository {
   /// Latest national day.
   Watch<CaseDay> watchNationalLatest({bool forceRefresh = false});
+
+  /// The newest national Rt reading, or null data when no day has one.
+  ///
+  /// Small and local: it comes from the saved copy or the bundled seed and
+  /// never starts a network request, so Beranda can show it without loading
+  /// the full series (C05 offline-first policy).
+  Watch<LatestRt?> watchNationalLatestRt({bool forceRefresh = false});
 
   /// Full series of an area, ascending by date.
   Watch<CaseSeries> watchSeries(AreaRef area, {bool forceRefresh = false});
@@ -20,7 +27,7 @@ abstract interface class CaseRepository {
   Watch<List<AreaSummary>> watchRegencySummaries({bool forceRefresh = false});
 }
 
-/// Tests, gender and vaccination (C03). TTL 24 h.
+/// Tests, gender and vaccination (C03). TTL: policy table (C05).
 abstract interface class StatsRepository {
   /// Test methods.
   Watch<List<TestType>> watchTestTypes({bool forceRefresh = false});
@@ -38,7 +45,7 @@ abstract interface class StatsRepository {
   });
 }
 
-/// Directories (C03). TTL 6 h.
+/// Directories (C03). TTL: policy table (C05).
 abstract interface class DirectoryRepository {
   /// The 13 kabupaten and kota: code and name. Light, unlike the case series.
   Watch<List<Regency>> watchRegencies({bool forceRefresh = false});
@@ -55,7 +62,7 @@ abstract interface class DirectoryRepository {
   });
 }
 
-/// Content (C04). TTL 6 h.
+/// Content (C04). TTL: policy table (C05).
 abstract interface class ContentRepository {
   /// Banners.
   Watch<List<Banner>> watchBanners({bool forceRefresh = false});

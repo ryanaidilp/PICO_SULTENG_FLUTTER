@@ -221,3 +221,7 @@ final class AreaSummary extends Equatable {
   @override
   List<Object?> get props => [area, name, latest];
 }
+
+/// The newest day that has a computed Rt, with that day's date. Never a zero
+/// stand-in: when no day has an Rt the reading is null.
+typedef LatestRt = ({DateTime date, Rt rt});

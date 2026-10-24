@@ -27,7 +27,6 @@ final class HomeSection<T> extends Equatable {
 }
 
 /// The latest non-null Rt of the national series and its date.
-typedef LatestRt = ({DateTime date, Rt rt});
 
 /// State of Beranda: national latest day, Sulawesi Tengah latest day and the
 /// latest national Rt. Each section loads and fails on its own.

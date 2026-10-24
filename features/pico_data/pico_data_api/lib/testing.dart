@@ -54,8 +54,23 @@ class FakeCaseRepository implements CaseRepository {
   /// Result of [watchRegencySummaries].
   Either<PicoFailure, DataSnapshot<List<AreaSummary>>> regenciesResult;
 
+  /// Result of [watchNationalLatestRt]. Default: no reading.
+  Either<PicoFailure, DataSnapshot<LatestRt?>> latestRtResult = fakeSnapshot(
+    null,
+  );
+
   /// Number of calls with `forceRefresh: true`.
   int forcedRefreshes = 0;
+
+  /// Number of [watchSeries] calls: a page that must not load a full series
+  /// asserts this stays 0.
+  int seriesCalls = 0;
+
+  @override
+  Watch<LatestRt?> watchNationalLatestRt({bool forceRefresh = false}) {
+    if (forceRefresh) forcedRefreshes++;
+    return _once(latestRtResult);
+  }
 
   @override
   Watch<CaseDay> watchNationalLatest({bool forceRefresh = false}) {
@@ -65,6 +80,7 @@ class FakeCaseRepository implements CaseRepository {
 
   @override
   Watch<CaseSeries> watchSeries(AreaRef area, {bool forceRefresh = false}) {
+    seriesCalls++;
     if (forceRefresh) forcedRefreshes++;
     final s = series[area];
     return _once(
