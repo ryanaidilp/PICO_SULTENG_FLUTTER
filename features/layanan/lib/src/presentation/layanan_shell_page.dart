@@ -5,9 +5,11 @@ import 'package:dependencies/state.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:layanan/src/di/layanan_container.dart';
-import 'package:layanan/src/presentation/bloc/layanan_bloc.dart';
-import 'package:layanan/src/presentation/bloc/layanan_event.dart';
+import 'package:layanan/src/l10n/translations.g.dart' as sl;
+import 'package:layanan/src/presentation/bloc/hospitals_bloc.dart';
+import 'package:layanan/src/presentation/bloc/hospitals_event.dart';
 import 'package:locale_core/locale_core.dart';
+import 'package:pico_data_api/pico_data_api.dart';
 
 /// Shell page for the Layanan feature.
 ///
@@ -38,6 +40,7 @@ class _LayananShellPageState() extends State<LayananShellPage> {
   final _isReady = ValueNotifier<bool>(false);
 
   late final FeatureLease _lease;
+  StreamSubscription<PicoLocale>? _localeSub;
 
   /// The last synced locale to avoid redundant loads.
   PicoLocale? _lastSyncedLocale;
@@ -46,6 +49,10 @@ class _LayananShellPageState() extends State<LayananShellPage> {
   void initState() {
     super.initState();
     _lease = layananContainer.acquire();
+    // Follow language changes while the page is open.
+    _localeSub = LocaleSettings.getLocaleStream().listen(
+      (l) => unawaited(_syncLocale(l)),
+    );
     // Build the content only once the container is ready.
     unawaited(
       _lease.ready
@@ -56,6 +63,7 @@ class _LayananShellPageState() extends State<LayananShellPage> {
 
   @override
   void dispose() {
+    unawaited(_localeSub?.cancel());
     _isReady.dispose();
     // The container is torn down after the last lease is released.
     unawaited(_lease.release().catchError(_reportContainerError));
@@ -70,9 +78,12 @@ class _LayananShellPageState() extends State<LayananShellPage> {
     if (_lastSyncedLocale == locale) return;
     _lastSyncedLocale = locale;
 
-    // TODO(user): If this feature uses slang translations, load them here:
-    // final featureLocale = _mapToFeatureLocale(locale);
-    // await LocaleSettings.setLocale(featureLocale);
+    // The feature's own slang follows the app-wide language.
+    final featureLocale = sl.AppLocale.values.firstWhere(
+      (l) => l.languageCode == locale.languageCode,
+      orElse: () => sl.AppLocale.id,
+    );
+    await sl.LocaleSettings.setLocale(featureLocale);
 
     if (mounted) {
       _isReady.value = true;
@@ -95,10 +106,13 @@ class _LayananShellPageState() extends State<LayananShellPage> {
                 // Created once the container is ready; the provider closes
                 // it with this shell. Pass it what it needs from
                 // `_lease.get<T>()`.
-                return BlocProvider(
-                  create: (_) =>
-                      LayananBloc()..add(const LayananEvent.started()),
-                  child: const AutoRouter(),
+                return sl.TranslationProvider(
+                  child: BlocProvider(
+                    create: (_) =>
+                        HospitalsBloc(_lease.get<DirectoryRepository>())
+                          ..add(const HospitalsStarted()),
+                    child: const AutoRouter(),
+                  ),
                 );
               },
             )

@@ -1,4 +1,3 @@
-import 'package:dependencies/auto_route.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:layanan/src/router/layanan_router.dart';
 import 'package:router_registry/router_registry.dart';
@@ -12,16 +11,6 @@ import 'package:router_registry/router_registry.dart';
 class const LayananManifest() extends FeatureManifest {
   @override
   void registerRoutes(RouteRegistry registry) {
-    registry.register([
-      AutoRoute(
-        page: LayananShellRoute.page,
-        path: '/layanan',
-        children: [
-          AutoRoute(page: LayananRoute.page, path: '', initial: true),
-          // TODO(user): Register more child routes for this feature, e.g.
-          //   AutoRoute(page: LayananDetailRoute.page, path: 'detail/:id'),
-        ],
-      ),
-    ]);
+    registry.register(LayananRouter().routes);
   }
 }
