@@ -50,11 +50,39 @@ void main() {
     await tester.pumpAndSettle();
   });
 
-  test(
-    'every route uses a plain fade, not the Material slide with a scrim',
-    () {
+  testWidgets(
+    'every route uses a plain fade: opacity follows the animation, no slide or scrim',
+    (tester) async {
       final type = AppRouter(registryWithFeatures()).defaultRouteType;
       expect(type, isA<CustomRouteType>());
+      final build = (type as CustomRouteType).transitionsBuilder!;
+      final animation = AnimationController(
+        vsync: tester,
+        duration: const Duration(milliseconds: 200),
+      );
+      addTearDown(animation.dispose);
+      animation.value = 0.5;
+      await tester.pumpWidget(
+        Builder(
+          builder: (context) => build(
+            context,
+            animation,
+            kAlwaysDismissedAnimation,
+            const SizedBox(key: Key('page')),
+          ),
+        ),
+      );
+      final fade = tester.widget<FadeTransition>(find.byType(FadeTransition));
+      expect(fade.opacity.value, closeTo(0.5, 0.001));
+      expect(find.byType(SlideTransition), findsNothing);
+      expect(find.byType(ScaleTransition), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byType(FadeTransition),
+          matching: find.byKey(const Key('page')),
+        ),
+        findsOneWidget,
+      );
     },
   );
 
