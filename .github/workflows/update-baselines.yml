@@ -67,7 +67,7 @@ jobs:
       - name: Update size baseline
         run: |
           dart run monorepo_toolkit size-analyzer update-baseline \
-            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --json "$(ls -t "$HOME"/.flutter-devtools/*-code-size-analysis_*.json | head -1)" \
             --output size_baseline/android.json
         working-directory: devtools/monorepo_toolkit
       - name: Update permission baseline
@@ -81,7 +81,7 @@ jobs:
       - name: Update flutter size baseline
         run: |
           dart run monorepo_toolkit size-analyzer update-baseline \
-            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --json "$(ls -t "$HOME"/.flutter-devtools/*-code-size-analysis_*.json | head -1)" \
             --output size_baseline/flutter.json
         working-directory: devtools/monorepo_toolkit
       - name: Commit updated baselines
@@ -140,7 +140,7 @@ jobs:
       - name: Update size baseline
         run: |
           dart run monorepo_toolkit size-analyzer update-baseline \
-            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --json "$(ls -t "$HOME"/.flutter-devtools/*-code-size-analysis_*.json | head -1)" \
             --output size_baseline/ios.json
         working-directory: devtools/monorepo_toolkit
       - name: Update permission baseline

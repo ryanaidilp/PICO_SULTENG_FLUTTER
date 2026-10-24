@@ -108,7 +108,7 @@ jobs:
       - name: Run size-analyzer
         run: |
           dart run monorepo_toolkit size-analyzer analyze \
-            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --json "$(ls -t "$HOME"/.flutter-devtools/*-code-size-analysis_*.json | head -1)" \
             --baseline size_baseline/android.json \
             --platform android
         working-directory: devtools/monorepo_toolkit
@@ -195,7 +195,7 @@ jobs:
       - name: Run size-analyzer
         run: |
           dart run monorepo_toolkit size-analyzer analyze \
-            --json ../../apps/pico/build/flutter_size_*/*-code-size-analysis.json \
+            --json "$(ls -t "$HOME"/.flutter-devtools/*-code-size-analysis_*.json | head -1)" \
             --baseline size_baseline/ios.json \
             --platform ios
         working-directory: devtools/monorepo_toolkit

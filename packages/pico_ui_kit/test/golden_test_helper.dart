@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:meta/meta.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
@@ -350,6 +351,20 @@ abstract final class GoldenTestHelper() {
     }
   }
 
+  /// Loads the static 400, 600 and 700 instances of Source Sans 3 under one
+  /// family. The variable file resolves to its ExtraLight default on Linux,
+  /// which is too faint for the contrast checks.
+  static Future<void> loadStaticSourceSans(String family, String dir) async {
+    final loader = FontLoader(family);
+    for (final w in ['Regular', 'SemiBold', 'Bold']) {
+      final f = File('$dir/static/SourceSans3-$w.ttf');
+      if (f.existsSync()) {
+        loader.addFont(Future.value(ByteData.sublistView(f.readAsBytesSync())));
+      }
+    }
+    await loader.load();
+  }
+
   /// Loads all standard fonts for golden tests.
   ///
   /// Loads Archivo, Source Sans 3 and Material Icons from the test/fonts directory.
@@ -369,15 +384,15 @@ abstract final class GoldenTestHelper() {
 
     // Brand fonts (variable files) under the bare names used by tests.
     await loadFont('Archivo', '${testDir.path}/Archivo.ttf');
-    await loadFont('SourceSans3', '${testDir.path}/SourceSans3.ttf');
+    await loadStaticSourceSans('SourceSans3', testDir.path);
     // The default theme resolves the bundled fonts through the package.
     await loadFont(
       'packages/pico_ui_kit/Archivo',
       '${testDir.path}/Archivo.ttf',
     );
-    await loadFont(
+    await loadStaticSourceSans(
       'packages/pico_ui_kit/SourceSans3',
-      '${testDir.path}/SourceSans3.ttf',
+      testDir.path,
     );
 
     // Load Material Icons

@@ -12,15 +12,17 @@ import 'package:flutter_test/flutter_test.dart';
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  Future<void> load(String family, String file) async {
-    final bytes = File('../../packages/pico_ui_kit/assets/fonts/$file')
-        .readAsBytesSync();
-    final loader = FontLoader(family)
-      ..addFont(Future.value(ByteData.sublistView(bytes)));
-    await loader.load();
+  // Static instances (400, 600, 700) of the variable brand font: Linux
+  // resolves a variable font to its default (ExtraLight) instance, which made
+  // text too faint for the contrast checks on CI.
+  final loader = FontLoader('packages/pico_ui_kit/SourceSans3');
+  for (final w in ['Regular', 'SemiBold', 'Bold']) {
+    final bytes = File(
+      '../../packages/pico_ui_kit/test/fonts/static/SourceSans3-$w.ttf',
+    ).readAsBytesSync();
+    loader.addFont(Future.value(ByteData.sublistView(bytes)));
   }
-
-  await load('packages/pico_ui_kit/SourceSans3', 'SourceSans3.ttf');
+  await loader.load();
 
   await testMain();
 }
