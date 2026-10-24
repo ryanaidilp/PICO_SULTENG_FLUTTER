@@ -15,7 +15,7 @@ import 'package:vaksin/src/presentation/ui/widgets/vaksin_widgets.dart';
 @RoutePage()
 class VaksinPage extends StatelessWidget {
   /// Creates the page.
-  const VaksinPage({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) => BlocBuilder<VaksinBloc, VaksinState>(
@@ -60,7 +60,7 @@ Future<void> _refresh(VaksinBloc bloc) {
 }
 
 class _Coverage extends StatelessWidget {
-  const _Coverage({required this.state});
+  const new({required this.state});
 
   final VaksinState state;
 
@@ -136,7 +136,7 @@ class _Coverage extends StatelessWidget {
 }
 
 class _Locations extends StatelessWidget {
-  const _Locations({required this.state});
+  const new({required this.state});
 
   final VaksinState state;
 
@@ -146,12 +146,13 @@ class _Locations extends StatelessWidget {
     final section = state.locations;
     final snap = section.snapshot;
     if (section.loading) return const PicoStateView.loading();
-    if (snap == null)
+    if (snap == null) {
       return _failure(
         bloc,
         section.failure ??
             const PicoFailure(PicoFailureKind.server, message: 'empty'),
       );
+    }
     return RefreshIndicator.adaptive(
       onRefresh: () => _refresh(bloc),
       child: ListView(

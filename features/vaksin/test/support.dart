@@ -39,16 +39,15 @@ VaccinationDay sultengDay(DateTime date, {int scale = 1}) => VaccinationDay(
   },
 );
 
-VaccinationSeries sultengSeries() =>
-    VaccinationSeries.fromDays(VaccinationScope.sulteng, [
-      sultengDay(DateTime(2021, 4, 4), scale: 1),
-      sultengDay(DateTime(2021, 5, 4), scale: 1),
-    ]);
+VaccinationSeries sultengSeries() => VaccinationSeries.fromDays(
+  VaccinationScope.sulteng,
+  [sultengDay(DateTime(2021, 4, 4)), sultengDay(DateTime(2021, 5, 4))],
+);
 
 VaccinationSeries nationalSeries() =>
     VaccinationSeries.fromDays(VaccinationScope.national, [
       VaccinationDay(
-        date: DateTime(2021, 2, 1),
+        date: DateTime(2021, 2),
         target: 208265720,
         total: doses(1000, 0, 0.01, 0),
         groups: {

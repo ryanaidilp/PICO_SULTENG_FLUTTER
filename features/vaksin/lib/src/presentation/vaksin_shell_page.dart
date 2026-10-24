@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:dependencies/auto_route.dart';
 import 'package:dependencies/state.dart';
 import 'package:feature_sdk/feature_sdk.dart';
-import 'package:vaksin/src/presentation/bloc/vaksin_bloc.dart';
-import 'package:vaksin/src/presentation/bloc/vaksin_event.dart';
 import 'package:flutter/material.dart';
 import 'package:locale_core/locale_core.dart';
 import 'package:pico_data_api/pico_data_api.dart';
-import 'package:vaksin/src/l10n/translations.g.dart' as sl;
 import 'package:vaksin/src/di/vaksin_container.dart';
+import 'package:vaksin/src/l10n/translations.g.dart' as sl;
+import 'package:vaksin/src/presentation/bloc/vaksin_bloc.dart';
+import 'package:vaksin/src/presentation/bloc/vaksin_event.dart';
 
 /// Shell page for the Vaksin feature.
 ///
@@ -112,7 +112,12 @@ class _VaksinShellPageState() extends State<VaksinShellPage> {
                       _lease.get<StatsRepository>(),
                       _lease.get<DirectoryRepository>(),
                     )..add(const VaksinStarted()),
-                    child: const AutoRouter(),
+                    // This route sits above the tab bar, so it brings its own
+                    // Material surface, safe area and title.
+                    child: Scaffold(
+                      appBar: AppBar(title: Text(sl.t.title)),
+                      body: const SafeArea(child: AutoRouter()),
+                    ),
                   ),
                 );
               },

@@ -13,19 +13,19 @@ enum VaksinSegment {
 
 /// Events of the Vaksin bloc.
 abstract class VaksinEvent {
-  const VaksinEvent();
+  const new();
 }
 
 /// First load of the coverage series.
 final class VaksinStarted extends VaksinEvent {
   /// Creates the event.
-  const VaksinStarted();
+  const new();
 }
 
 /// Nasional or Sulawesi Tengah.
 final class VaksinScopeChanged extends VaksinEvent {
   /// Creates the event.
-  const VaksinScopeChanged(this.scope);
+  const new(this.scope);
 
   /// The new scope.
   final VaccinationScope scope;
@@ -34,7 +34,7 @@ final class VaksinScopeChanged extends VaksinEvent {
 /// Cakupan or Lokasi. Locations load on first open.
 final class VaksinSegmentChanged extends VaksinEvent {
   /// Creates the event.
-  const VaksinSegmentChanged(this.segment);
+  const new(this.segment);
 
   /// The new segment.
   final VaksinSegment segment;
@@ -43,7 +43,7 @@ final class VaksinSegmentChanged extends VaksinEvent {
 /// Pull to refresh or retry.
 final class VaksinRefreshed extends VaksinEvent {
   /// Creates the event.
-  const VaksinRefreshed({this.done});
+  const new({this.done});
 
   /// Completes when the open segment has answered.
   final Completer<void>? done;

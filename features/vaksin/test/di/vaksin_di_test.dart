@@ -4,10 +4,10 @@ import 'package:dependencies/di.dart' show GetIt, GetItHelper;
 import 'package:dependencies/state.dart' show BlocBase;
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:vaksin/src/di/vaksin_container.dart';
-import 'package:vaksin/src/di/vaksin_global_module.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_api/testing.dart';
+import 'package:vaksin/src/di/vaksin_container.dart';
+import 'package:vaksin/src/di/vaksin_global_module.dart';
 import 'package:vaksin/src/vaksin_manifest.dart';
 import 'package:vaksin/src/vaksin_sdk.dart';
 

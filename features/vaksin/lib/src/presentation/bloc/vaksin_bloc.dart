@@ -9,7 +9,7 @@ import 'package:vaksin/src/presentation/bloc/vaksin_state.dart';
 /// Each source is a stream by the C05 rule.
 class VaksinBloc extends Bloc<VaksinEvent, VaksinState> {
   /// Creates the bloc.
-  VaksinBloc(this._stats, this._directory) : super(const VaksinState()) {
+  new(this._stats, this._directory) : super(const VaksinState()) {
     on<VaksinStarted>((e, emit) => _watchSeries(state.scope));
     on<VaksinScopeChanged>((e, emit) {
       if (e.scope == state.scope) return;
@@ -23,8 +23,9 @@ class VaksinBloc extends Bloc<VaksinEvent, VaksinState> {
     });
     on<VaksinSegmentChanged>((e, emit) {
       emit(state.copyWith(segment: e.segment));
-      if (e.segment == VaksinSegment.locations && _locSubs.isEmpty)
+      if (e.segment == VaksinSegment.locations && _locSubs.isEmpty) {
         _watchLocations();
+      }
     });
     on<VaksinRefreshed>((e, emit) {
       if (state.segment == VaksinSegment.coverage) {
@@ -134,14 +135,14 @@ class VaksinBloc extends Bloc<VaksinEvent, VaksinState> {
 }
 
 final class _SeriesArrived extends VaksinEvent {
-  const _SeriesArrived(this.scope, this.result);
+  const new(this.scope, this.result);
 
   final VaccinationScope scope;
   final Either<PicoFailure, DataSnapshot<VaccinationSeries>> result;
 }
 
 final class _LocationsArrived extends VaksinEvent {
-  const _LocationsArrived(this.result);
+  const new(this.result);
 
   final Either<PicoFailure, DataSnapshot<LocationsData>> result;
 }

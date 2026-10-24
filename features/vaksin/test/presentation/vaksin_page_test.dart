@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:pico_ui_kit/src/components/atoms/brand/pico_themed_svg.dart';
 import 'package:vaksin/src/l10n/translations.g.dart';
-import 'package:vaksin/src/presentation/bloc/vaksin_event.dart';
 
-import '../support.dart';
 import 'harness.dart';
 
 void main() {

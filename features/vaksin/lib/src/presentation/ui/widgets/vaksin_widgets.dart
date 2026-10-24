@@ -18,7 +18,7 @@ String _percent(PicoKitText k, double v) => '${k.decimal(v)}%';
 /// stepped diamond, each with its label, so they differ without colour.
 class DoseBars extends StatelessWidget {
   /// Creates the bars for [doses] against [target].
-  const DoseBars({required this.doses, required this.target, super.key});
+  const new({required this.doses, required this.target, super.key});
 
   /// Dose numbers.
   final DoseStats doses;
@@ -59,7 +59,7 @@ class DoseBars extends StatelessWidget {
 /// target". A coverage over 100 percent is shown as is, with a note.
 class GroupCoverage extends StatelessWidget {
   /// Creates the list for [groups].
-  const GroupCoverage({required this.groups, super.key});
+  const new({required this.groups, super.key});
 
   /// Stats per group of the latest day.
   final Map<VaccineGroup, GroupStats> groups;
@@ -122,7 +122,7 @@ class GroupCoverage extends StatelessWidget {
 /// Cumulative dose 1 and dose 2 over time.
 class DoseTrend extends StatelessWidget {
   /// Creates the chart for [series].
-  const DoseTrend({required this.series, super.key});
+  const new({required this.series, super.key});
 
   /// The coverage series.
   final VaccinationSeries series;
@@ -154,7 +154,7 @@ class DoseTrend extends StatelessWidget {
 /// notes are hidden, never shown as 0.
 class LocationTile extends StatelessWidget {
   /// Creates the tile.
-  const LocationTile({required this.location, super.key});
+  const new({required this.location, super.key});
 
   /// The location.
   final VaccineLocation location;
@@ -220,7 +220,7 @@ class LocationTile extends StatelessWidget {
 /// Locations grouped by kabupaten.
 class LocationList extends StatelessWidget {
   /// Creates the list.
-  const LocationList({required this.data, super.key});
+  const new({required this.data, super.key});
 
   /// Locations with regency names.
   final ({List<VaccineLocation> locations, List<Regency> regencies}) data;
@@ -228,8 +228,9 @@ class LocationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final groups = groupLocations(data.locations, data.regencies);
-    if (groups.isEmpty)
+    if (groups.isEmpty) {
       return PicoStateView.empty(message: context.t.noLocations);
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

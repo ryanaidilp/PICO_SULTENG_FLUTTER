@@ -5,10 +5,10 @@ import 'package:vaksin/src/presentation/bloc/vaksin_event.dart';
 /// One data source: nothing yet, data with freshness facts, or a failure.
 final class VaksinSection<T> extends Equatable {
   /// Creates a section.
-  const VaksinSection({this.snapshot, this.failure, this.loading = true});
+  const new({this.snapshot, this.failure, this.loading = true});
 
   /// Not loaded yet.
-  const VaksinSection.loading() : this();
+  const new loading() : this();
 
   /// The data.
   final DataSnapshot<T>? snapshot;
@@ -35,7 +35,7 @@ typedef LocationsData = ({
 /// State of the Vaksin page.
 final class VaksinState extends Equatable {
   /// Creates a state.
-  const VaksinState({
+  const new({
     this.scope = VaccinationScope.sulteng,
     this.segment = VaksinSegment.coverage,
     this.series = const VaksinSection<VaccinationSeries>.loading(),
