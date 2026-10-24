@@ -8,7 +8,7 @@ import 'package:pico/router/app_router.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 
-/// The root app widget: theme mode from [SettingsRepository] (C08) and the
+/// The root app widget (TEMPORARY l10n wiring: Archipelago-z879t): theme mode from [SettingsRepository] (C08) and the
 /// language from `locale_core`, both applied at once with no restart.
 class PicoApp extends StatefulWidget {
   /// Creates the app. [settings] defaults to the one in the root container.
