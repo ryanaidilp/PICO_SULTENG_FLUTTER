@@ -333,7 +333,7 @@ class _PicoChartBaseState extends State<PicoChartBase>
       textDirection: TextDirection.ltr,
       textScaler: scaler,
     )..layout()).height;
-    final topPad = widget.yLabel == null ? 8.0 : labelH + 10;
+    final topPad = widget.yLabel == null ? 8.0 : labelH * 2.3;
     return Semantics(
       container: true,
       label: _summary(t),
@@ -633,12 +633,14 @@ class ChartPainter extends CustomPainter {
         centre: true,
       );
     }
-    if (yLabel != null)
-      _text(
-        canvas,
-        yLabel!,
-        Offset(plot.left - 6, plot.top - textStyle.fontSize! * 1.1),
-      );
+    if (yLabel != null) {
+      final h = (TextPainter(
+        text: TextSpan(text: yLabel, style: textStyle),
+        textDirection: TextDirection.ltr,
+        textScaler: textScaler,
+      )..layout()).height;
+      _text(canvas, yLabel!, Offset(plot.left - 6, plot.top - h * 1.4));
+    }
 
     final th = threshold;
     if (th != null) {
