@@ -77,6 +77,9 @@ class SnapshotStore {
     }
   }
 
+  /// Deletes the copy for [key], if any.
+  Future<void> remove(String key) => _delete(_file(key));
+
   /// Bytes used by the store.
   Future<int> totalBytes() async {
     if (!directory.existsSync()) return 0;
