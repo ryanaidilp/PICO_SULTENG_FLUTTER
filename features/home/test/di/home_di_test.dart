@@ -49,7 +49,8 @@ void main() {
       // A root with only the types home_imports.dart
       // forwards: register one fake per forwarded type.
       final root = GetIt.asNewInstance()
-        ..registerSingleton<CaseRepository>(FakeCaseRepository());
+        ..registerSingleton<CaseRepository>(FakeCaseRepository())
+        ..registerSingleton<ContentRepository>(FakeContentRepository());
       late GetIt child;
       final container = FeatureContainer(
         'home',

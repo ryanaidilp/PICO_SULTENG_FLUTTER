@@ -1,5 +1,5 @@
 import 'package:dependencies/state.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Banner;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:home/src/l10n/translations.g.dart';
@@ -79,6 +79,8 @@ FakeCaseRepository repo({
 
 Widget host(
   CaseRepository cases, {
+  ContentRepository? content,
+  ValueChanged<Uri>? onOpenLink,
   Locale locale = const Locale('id'),
   ThemeData? theme,
   double scale = 1,
@@ -99,8 +101,8 @@ Widget host(
     child: Scaffold(
       body: BlocProvider(
         key: UniqueKey(),
-        create: (_) => HomeBloc(cases)..add(const HomeStarted()),
-        child: HomePage(onOpen: onOpen ?? (_) {}),
+        create: (_) => HomeBloc(cases, content)..add(const HomeStarted()),
+        child: HomePage(onOpen: onOpen ?? (_) {}, onOpenLink: onOpenLink),
       ),
     ),
   ),
@@ -295,6 +297,16 @@ void main() {
         await tester.pumpWidget(
           host(
             repo(),
+            content: FakeContentRepository()
+              ..banners = fakeSnapshot([
+                Banner(
+                  id: 1,
+                  title: 'Panduan Isolasi Mandiri',
+                  link: Uri.parse('https://example.org/isoman'),
+                  imageUrl: 'https://banuacoders.com/storage/b1.jpg',
+                ),
+                const Banner(id: 2, title: 'Vaksin untuk semua'),
+              ]),
             theme: dark ? PicoTheme.dark() : PicoTheme.light(),
             scale: scale,
           ),
@@ -313,4 +325,99 @@ void main() {
       }, tags: ['golden']);
     }
   }
+
+  group('banners (T13)', () {
+    Banner banner(int i, {String? link}) => Banner(
+      id: i,
+      title: 'Kabar $i',
+      link: link == null ? null : Uri.parse(link),
+      imageUrl: 'https://banuacoders.com/storage/b$i.jpg',
+    );
+    FakeContentRepository content(List<Banner> b) =>
+        FakeContentRepository()..banners = fakeSnapshot(b);
+
+    testWidgets('3 banners with missing images: designed text cards, label', (
+      tester,
+    ) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final h = tester.ensureSemantics();
+      await tester.pumpWidget(
+        host(
+          repo(),
+          content: content([
+            banner(1, link: 'https://a.example/1'),
+            banner(2),
+            banner(3),
+          ]),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('1 dari 3'), findsOneWidget);
+      expect(find.text('Kabar 1'), findsOneWidget);
+      expect(find.byType(PicoImageMissing), findsWidgets);
+      expect(find.bySemanticsLabel('Kabar 1, banner 1 dari 3'), findsOneWidget);
+      await tester.tap(find.byTooltip('Banner berikutnya'));
+      await tester.pumpAndSettle();
+      expect(find.text('2 dari 3'), findsOneWidget);
+      expect(find.text('Kabar 2'), findsOneWidget);
+      await tester.fling(find.byType(PageView), const Offset(-300, 0), 1000);
+      await tester.pumpAndSettle();
+      expect(find.text('3 dari 3'), findsOneWidget);
+      expect(find.text('Kabar 3'), findsOneWidget);
+      // No auto-advance: time passing never changes the page.
+      await tester.pump(const Duration(seconds: 30));
+      expect(find.text('3 dari 3'), findsOneWidget);
+      expect(find.textContaining('Exception'), findsNothing);
+      expect(tester.takeException(), isNull);
+      h.dispose();
+    });
+
+    testWidgets('tap opens the link outside the app; no link is not a button', (
+      tester,
+    ) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      final opened = <Uri>[];
+      await tester.pumpWidget(
+        host(
+          repo(),
+          content: content([banner(1, link: 'https://a.example/1')]),
+          onOpenLink: opened.add,
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('1 dari 1'), findsNothing); // one banner: no label
+      await tester.tap(find.text('Kabar 1'));
+      expect(opened.single.toString(), 'https://a.example/1');
+    });
+
+    testWidgets('zero banners hide the section', (tester) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(host(repo(), content: content([])));
+      await tester.pumpAndSettle();
+      expect(find.byType(PageView), findsNothing);
+    });
+
+    testWidgets('text scale 2.0: the carousel does not overflow', (
+      tester,
+    ) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 4000);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        host(repo(), scale: 2, content: content([banner(1), banner(2)])),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
+    });
+  });
 }

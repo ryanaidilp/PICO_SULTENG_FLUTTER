@@ -2,24 +2,29 @@ import 'dart:async';
 
 import 'package:dependencies/auto_route.dart';
 import 'package:dependencies/state.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Banner;
 import 'package:home/src/l10n/translations.g.dart';
 import 'package:home/src/presentation/bloc/home_bloc.dart';
 import 'package:home/src/presentation/bloc/home_event.dart';
 import 'package:home/src/presentation/bloc/home_state.dart';
+import 'package:home/src/presentation/ui/widgets/banner_carousel.dart';
 import 'package:home/src/presentation/ui/widgets/home_widgets.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 /// Beranda: archive note, national and Sulawesi Tengah figures, the data
-/// stamp and quick links. Banners (T13) go between the note and Nasional.
+/// stamp and quick links. The banners sit between the note and Nasional.
 @RoutePage()
 class HomePage extends StatelessWidget {
   /// Creates the page. [onOpen] opens a path, replaced in tests.
-  const HomePage({this.onOpen, super.key});
+  const new({this.onOpen, this.onOpenLink, super.key});
 
   /// Opens a C07 path. Defaults to the auto_route `navigatePath`.
   final ValueChanged<String>? onOpen;
+
+  /// Opens a banner link outside the app. Defaults to the system browser.
+  final ValueChanged<Uri>? onOpenLink;
 
   @override
   Widget build(BuildContext context) => BlocBuilder<HomeBloc, HomeState>(
@@ -48,6 +53,17 @@ class HomePage extends StatelessWidget {
           children: [
             ArchiveNote(end: snap.data.date),
             const SizedBox(height: 16),
+            if (state.banners.data?.isNotEmpty ?? false) ...[
+              BannerCarousel(
+                banners: state.banners.data!,
+                onOpen:
+                    onOpenLink ??
+                    (u) => unawaited(
+                      launchUrl(u, mode: LaunchMode.externalApplication),
+                    ),
+              ),
+              const SizedBox(height: 16),
+            ],
             PicoSectionHeader(title: context.t.national),
             const SizedBox(height: 12),
             CaseTiles(day: snap.data),
@@ -76,7 +92,7 @@ class HomePage extends StatelessWidget {
 }
 
 class _Sulteng extends StatelessWidget {
-  const _Sulteng({
+  const new({
     required this.section,
     required this.onOpen,
     required this.onRetry,

@@ -9,8 +9,9 @@ const String kSultengId = '72';
 /// Loads the three sources of Beranda from the case repository. Each source
 /// is a stream by the C05 rule: the saved copy first, then the network.
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  /// Creates the bloc over [cases].
-  HomeBloc(this._cases) : super(const HomeState()) {
+  /// Creates the bloc over the case repository. Without a content repository
+  /// there are no banners.
+  new(this._cases, [this._content]) : super(const HomeState()) {
     on<HomeStarted>((e, emit) => _load(emit, force: false));
     on<HomeRefreshed>((e, emit) async {
       await _load(emit, force: true);
@@ -19,12 +20,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   final CaseRepository _cases;
+  final ContentRepository? _content;
 
   Future<void> _load(Emitter<HomeState> emit, {required bool force}) =>
       Future.wait([
         _national(emit, force),
         _sulteng(emit, force),
         _rt(emit, force),
+        _banners(emit, force),
       ]);
 
   Future<void> _national(Emitter<HomeState> emit, bool force) => emit.forEach(
@@ -78,6 +81,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       ),
     ),
   );
+
+  Future<void> _banners(Emitter<HomeState> emit, bool force) {
+    final content = _content;
+    if (content == null) {
+      emit(state.copyWith(banners: const HomeSection(loading: false)));
+      return Future.value();
+    }
+    return emit.forEach(
+      content.watchBanners(forceRefresh: force),
+      onData: (r) => state.copyWith(banners: _section(r, state.banners)),
+    );
+  }
 
   /// The newest day that has a computed Rt, never a zero stand-in.
   static LatestRt? _latestRt(CaseSeries s) {

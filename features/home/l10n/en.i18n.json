@@ -16,5 +16,10 @@
   "link_taskforce": "Task force",
   "link_isoman": "Self-isolation",
   "link_infographic": "Infographics",
-  "link_tips": "Health tips"
+  "link_tips": "Health tips",
+  "banners": "News",
+  "banner_page": "$n of $total",
+  "banner_label": "$title, banner $n of $total",
+  "banner_prev": "Previous banner",
+  "banner_next": "Next banner"
 }

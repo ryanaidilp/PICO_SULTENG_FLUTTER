@@ -5,9 +5,9 @@ import 'package:dependencies/state.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:home/src/di/home_container.dart';
+import 'package:home/src/l10n/translations.g.dart' as hl;
 import 'package:home/src/presentation/bloc/home_bloc.dart';
 import 'package:home/src/presentation/bloc/home_event.dart';
-import 'package:home/src/l10n/translations.g.dart' as hl;
 import 'package:locale_core/locale_core.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 
@@ -108,9 +108,10 @@ class _HomeShellPageState() extends State<HomeShellPage> {
                 // `_lease.get<T>()`.
                 return hl.TranslationProvider(
                   child: BlocProvider(
-                    create: (_) =>
-                        HomeBloc(_lease.get<CaseRepository>())
-                          ..add(const HomeStarted()),
+                    create: (_) => HomeBloc(
+                      _lease.get<CaseRepository>(),
+                      _lease.get<ContentRepository>(),
+                    )..add(const HomeStarted()),
                     child: const AutoRouter(),
                   ),
                 );

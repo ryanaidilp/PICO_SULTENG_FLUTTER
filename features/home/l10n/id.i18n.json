@@ -16,5 +16,10 @@
   "link_taskforce": "Satgas",
   "link_isoman": "Isoman",
   "link_infographic": "Infografis",
-  "link_tips": "Tips kesehatan"
+  "link_tips": "Tips kesehatan",
+  "banners": "Kabar",
+  "banner_page": "$n dari $total",
+  "banner_label": "$title, banner $n dari $total",
+  "banner_prev": "Banner sebelumnya",
+  "banner_next": "Banner berikutnya"
 }

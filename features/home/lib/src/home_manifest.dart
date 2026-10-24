@@ -1,7 +1,7 @@
 import 'package:dependencies/auto_route.dart';
-import 'package:identifiers/identifiers.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:home/src/router/home_router.dart';
+import 'package:identifiers/identifiers.dart';
 import 'package:router_registry/router_registry.dart';
 
 /// What the Home feature declares before the first

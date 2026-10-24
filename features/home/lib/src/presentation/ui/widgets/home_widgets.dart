@@ -9,7 +9,7 @@ import 'package:pico_ui_kit/pico_ui_kit.dart';
 /// date is the date of the latest national row.
 class ArchiveNote extends StatelessWidget {
   /// Creates the note.
-  const ArchiveNote({required this.end, super.key});
+  const new({required this.end, super.key});
 
   /// Date of the latest national row.
   final DateTime end;
@@ -38,7 +38,7 @@ class ArchiveNote extends StatelessWidget {
 /// The four tiles of one area: cumulative value and the daily change.
 class CaseTiles extends StatelessWidget {
   /// Creates the tiles for [day].
-  const CaseTiles({required this.day, super.key});
+  const new({required this.day, super.key});
 
   /// The latest day of the area.
   final CaseDay day;
@@ -79,7 +79,7 @@ class CaseTiles extends StatelessWidget {
 /// Rt is never shown as 0.
 class LatestRtLine extends StatelessWidget {
   /// Creates the line.
-  const LatestRtLine({required this.rt, required this.onOpen, super.key});
+  const new({required this.rt, required this.onOpen, super.key});
 
   /// Section state of the Rt source.
   final HomeSection<LatestRt?> rt;
@@ -120,7 +120,7 @@ class LatestRtLine extends StatelessWidget {
 
 /// A text link of at least 48 dp.
 class _LinkButton extends StatelessWidget {
-  const _LinkButton({required this.label, required this.onTap});
+  const new({required this.label, required this.onTap});
 
   final String label;
   final VoidCallback onTap;
@@ -139,7 +139,7 @@ class _LinkButton extends StatelessWidget {
 /// "Lihat kabupaten" link under the Sulawesi Tengah tiles.
 class RegencyLink extends StatelessWidget {
   /// Creates the link.
-  const RegencyLink({required this.onOpen, super.key});
+  const new({required this.onOpen, super.key});
 
   /// Opens a path.
   final ValueChanged<String> onOpen;
@@ -174,7 +174,7 @@ List<QuickLinkSpec> quickLinks(Translations t) => [
 /// of at least 56 dp.
 class QuickLinksGrid extends StatelessWidget {
   /// Creates the grid.
-  const QuickLinksGrid({required this.onOpen, super.key});
+  const new({required this.onOpen, super.key});
 
   /// Opens a path.
   final ValueChanged<String> onOpen;
