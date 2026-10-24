@@ -1,0 +1,16 @@
+# Secret scanner configuration (GitGuardian / ggshield).
+# These paths hold public or fake values, not credentials:
+#  - build.gradle.kts: the standard public Android debug signing defaults
+#    (the debug keystore is not a release key; release signing reads
+#    key.properties, which is git-ignored).
+#  - rule_based_telemetry_scrubber_test.dart: a fake JWT-shaped string used to
+#    test log scrubbing.
+#  - .archipelago/**: the generator's own copy of the same test files.
+# Tracked as a generator defect: Archipelago-ihhmg.
+version: 2
+
+secret:
+  ignored_paths:
+    - "apps/pico/android/app/build.gradle.kts"
+    - "shared/consent_api/test/rule_based_telemetry_scrubber_test.dart"
+    - ".archipelago/**"
