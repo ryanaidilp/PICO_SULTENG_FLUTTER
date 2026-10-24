@@ -43,7 +43,9 @@ class const _BootstrapLoadingIndicator() extends StatelessWidget {
           : PicoColorFoundation.bgMain,
       child: Center(
         child: CircularProgressIndicator(
-          color: isDark ? PicoColorToken.primary400 : PicoColorToken.primary600,
+          color: isDark
+              ? PicoBrandPalette.indigoDark
+              : PicoBrandPalette.indigoLight,
         ),
       ),
     );

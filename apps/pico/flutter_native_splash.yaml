@@ -1,12 +1,14 @@
-# Brand splash (DESIGN.md "paper" ground: #F4F1EA light, #0E1430 dark).
+# Splash: the legacy PICO logo on the app's own page colour, so the first frame
+# of the app is the same colour as the splash (no flash). Colours match the UI
+# kit: paper F9F8F6 (light) and 24221F (dark).
 flutter_native_splash:
-  color: "#F4F1EA"
-  color_dark: "#0E1430"
+  color: "#F9F8F6"
+  color_dark: "#24221F"
   image: "splash/splash-mark.png"
   image_dark: "splash/splash-mark.png"
   android_12:
-    color: "#F4F1EA"
-    color_dark: "#0E1430"
+    color: "#F9F8F6"
+    color_dark: "#24221F"
     image: "splash/splash-mark.png"
     image_dark: "splash/splash-mark.png"
   ios: true

@@ -18,6 +18,15 @@ String _norm(String? p) => '/${(p ?? '').replaceAll(RegExp(r'^/+|/+$'), '')}';
 /// and opens above the tab bar. An unknown path redirects to `/beranda`.
 @AutoRouterConfig(replaceInRouteName: 'Page,Route')
 class AppRouter(final RouteRegistry _registry) extends RootStackRouter {
+  /// A plain cross-fade: the default Material transition drew a light
+  /// layer for a few frames in dark mode. Every route uses this one.
+  @override
+  RouteType get defaultRouteType => RouteType.custom(
+    transitionsBuilder: TransitionsBuilders.fadeIn,
+    durationInMilliseconds: 200,
+    reverseDurationInMilliseconds: 160,
+  );
+
   /// Registered routes that are tab roots.
   late final List<AutoRoute> _featureTabRoots = [
     for (final tab in PicoTab.values)

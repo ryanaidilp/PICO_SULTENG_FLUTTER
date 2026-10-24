@@ -103,6 +103,11 @@ class _PicoAppState extends State<PicoApp> {
         supportedLocales: AppLocaleUtils.supportedLocales,
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         routerConfig: _config,
+        // The themed colour sits under every route: no light frame.
+        builder: (context, child) => ColoredBox(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: child,
+        ),
         // Brick-owned: app_debugger's post_gen fills this region.
         // archipelago:app_builder:start
         // archipelago:app_builder:end

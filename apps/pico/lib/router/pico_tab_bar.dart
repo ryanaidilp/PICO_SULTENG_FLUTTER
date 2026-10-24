@@ -3,9 +3,10 @@ import 'package:locale_core/locale_core.dart';
 import 'package:pico/router/pico_tab.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 
-/// Bottom tab bar styled as a selvedge band: indigo ground with a sky warp
-/// block behind the active icon. Icons with one-line labels below. Labels
-/// never use an ellipsis: at large text they shrink to fit (never clip).
+/// Bottom tab bar in the original PICO look: card surface, a hairline on top,
+/// a soft blue pill behind the active icon, the active label in the action
+/// blue. Icons with one-line labels below. Labels never use an ellipsis: at
+/// large text they shrink to fit (never clip).
 class PicoTabBar extends StatelessWidget {
   /// Creates the bar.
   const PicoTabBar({required this.index, required this.onTap, super.key});
@@ -18,22 +19,14 @@ class PicoTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = context.isDarkMode;
-    final band = dark
-        ? context.colors.background.subtle
-        : context.colors.background.inverse;
-    final on = dark
-        ? context.colors.foreground.main
-        : context.colors.foreground.inverse;
-    final activeBlock = dark
-        ? PicoBrandPalette.tintDark
-        : PicoBrandPalette.skyLight;
-    final activeInk = dark
-        ? PicoBrandPalette.indigoDark
-        : PicoBrandPalette.indigoLight;
+    final colors = context.colors;
+    final activeInk = colors.action.primary.active;
+    final inactive = colors.foreground.subtle;
+    final pill = colors.background.strong;
     final t = context.l10n;
     return Material(
-      color: band,
+      color: colors.background.card,
+      shape: Border(top: BorderSide(color: colors.outline.subtle)),
       child: SafeArea(
         top: false,
         child: Row(
@@ -58,18 +51,16 @@ class PicoTabBar extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Container(
-                                width: 56,
-                                height: 28,
+                                width: 64,
+                                height: 32,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
-                                  color: i == index
-                                      ? activeBlock
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(4),
+                                  color: i == index ? pill : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                                 child: PicoBrandIcon(
                                   tab.iconKey,
-                                  color: i == index && !dark ? activeInk : on,
+                                  color: i == index ? activeInk : inactive,
                                 ),
                               ),
                               const SizedBox(height: 4),
@@ -81,7 +72,9 @@ class PicoTabBar extends StatelessWidget {
                                   softWrap: false,
                                   style: context.typography.label.caption
                                       .copyWith(
-                                        color: on,
+                                        color: i == index
+                                            ? activeInk
+                                            : inactive,
                                         fontWeight: i == index
                                             ? FontWeight.w700
                                             : FontWeight.w500,

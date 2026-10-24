@@ -20,7 +20,6 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) async {
     await loader.load();
   }
 
-  await load('packages/pico_ui_kit/Archivo', 'Archivo.ttf');
   await load('packages/pico_ui_kit/SourceSans3', 'SourceSans3.ttf');
 
   await testMain();

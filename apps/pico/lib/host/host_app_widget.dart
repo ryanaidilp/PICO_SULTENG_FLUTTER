@@ -157,10 +157,16 @@ class _HostAppWidgetState() extends State<HostAppWidget> {
         );
       }
 
-      return AnimatedSwitcher(
-        duration: widget.transitionDuration,
-        transitionBuilder: widget.transitionBuilder ?? _defaultTransition,
-        child: child,
+      // Themed colour behind the cross-fade (OS brightness is all that is
+      // known this early) so no light frame shows between boot and app.
+      final dark = MediaQuery.platformBrightnessOf(context) == Brightness.dark;
+      return ColoredBox(
+        color: dark ? PicoBrandPalette.paperDark : PicoBrandPalette.paperLight,
+        child: AnimatedSwitcher(
+          duration: widget.transitionDuration,
+          transitionBuilder: widget.transitionBuilder ?? _defaultTransition,
+          child: child,
+        ),
       );
     },
   );

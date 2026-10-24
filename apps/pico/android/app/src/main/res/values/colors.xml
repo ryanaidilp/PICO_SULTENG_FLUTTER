@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Same as the app background (PicoBrandPalette.paperLight) so no other colour shows behind a page. -->
+    <color name="pico_window_background">#F9F8F6</color>
+</resources>
