@@ -125,6 +125,11 @@ class CaseRepositoryImpl implements CaseRepository {
         case Left(:final value):
           firstFailure ??= value;
       }
+      // Rows appear as they arrive; the last answer is emitted after the loop.
+      if (r != regencies.last && fresh.isNotEmpty) {
+        final partial = compose(fresh, anyMissing: true);
+        if (partial != null) yield Right(partial);
+      }
     }
     final c = compose(fresh, anyMissing: fresh.length < regencies.length);
     yield c != null

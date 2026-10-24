@@ -92,8 +92,14 @@ void main() {
   test('fallback makes 13 series calls in sequence and returns 13 summaries sorted by name', () async {
     final repo = CaseRepositoryImpl(src);
     final events = await repo.watchRegencySummaries().toList();
-    expect(events.length, 1);
-    final s = events.single.right;
+    // Rows arrive one by one: 1, 2, ... 12 partial results, then all 13.
+    expect(
+      [for (final e in events) e.right.data.length],
+      [for (var i = 1; i <= 13; i++) i],
+    );
+    expect(events.take(12).every((e) => e.right.isStale), isTrue);
+    final s = events.last.right;
+    expect(s.isStale, isFalse);
     expect(s.data.length, 13);
     final names = s.data.map((e) => e.name).toList();
     expect(
@@ -145,9 +151,13 @@ void main() {
       final events = await CaseRepositoryImpl(src)
           .watchRegencySummaries()
           .toList();
-      final s = events.single.right;
+      final s = events.last.right;
       expect(s.data.length, 12);
       expect(s.isStale, isTrue);
+      expect(
+        s.data.any((r) => r.area == const AreaRef.regency('7204')),
+        isFalse,
+      );
     },
   );
 
