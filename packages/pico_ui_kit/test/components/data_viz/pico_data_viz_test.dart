@@ -289,6 +289,25 @@ void main() {
       expect(got, bounds);
     });
 
+    testWidgets('the current range is visible as text, also a custom one', (
+      tester,
+    ) async {
+      await tester.pumpWidget(
+        app(
+          PicoTheme.light(),
+          PicoDateRangeBar(
+            range: DateTimeRange(
+              start: DateTime(2021, 3, 1),
+              end: DateTime(2021, 6, 30),
+            ),
+            bounds: bounds,
+            onChanged: (_) {},
+          ),
+        ),
+      );
+      expect(find.text('1 Mar 2021 sampai 30 Jun 2021'), findsOneWidget);
+    });
+
     testWidgets('the matching preset shows as selected', (tester) async {
       await tester.pumpWidget(
         app(
@@ -331,7 +350,7 @@ void main() {
           PicoDateRangeBar(range: bounds, bounds: bounds, onChanged: (_) {}),
         ),
       );
-      await tester.tap(find.byType(IconButton));
+      await tester.tap(find.byType(TextButton));
       await tester.pumpAndSettle();
       expect(find.byType(DateRangePickerDialog), findsOneWidget);
     });

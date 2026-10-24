@@ -67,17 +67,22 @@ class PicoDateRangeBar extends StatelessWidget {
       children: [
         for (final d in presets) chip(t.presetDays(d), _last(d)),
         chip(t.presetAll, all),
-        Semantics(
-          button: true,
-          label: t.customRange,
-          child: IconButton(
-            onPressed: () => _custom(context),
-            tooltip: t.customRange,
-            constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-            icon: PicoBrandIcon(
-              'calendar.range',
-              color: context.colors.foreground.main,
-            ),
+        // The current range as text, so a custom range is visible and the
+        // calendar icon is never alone (label in name, WCAG 2.5.3).
+        TextButton.icon(
+          onPressed: () => _custom(context),
+          style: TextButton.styleFrom(
+            minimumSize: const Size(48, 48),
+            foregroundColor: context.colors.foreground.main,
+          ),
+          icon: PicoBrandIcon(
+            'calendar.range',
+            color: context.colors.foreground.main,
+          ),
+          label: Text(
+            t.range(range.start, range.end),
+            semanticsLabel:
+                '${t.customRange}: ${t.range(range.start, range.end)}',
           ),
         ),
       ],
