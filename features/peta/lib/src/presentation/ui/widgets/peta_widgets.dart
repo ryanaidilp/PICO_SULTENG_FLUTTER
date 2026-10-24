@@ -148,8 +148,12 @@ class PetaMap extends StatelessWidget {
           child: Stack(
             children: [
               Positioned.fill(
+                // Outline taps are for sighted touch only. Each mark and each
+                // list row is the accessible way to pick a kabupaten, so this
+                // surface adds no unlabelled tap action to the semantics tree.
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
+                  excludeFromSemantics: true,
                   onTapUp: (d) {
                     for (final r in regions) {
                       if (regionContains(r, pr, size, d.localPosition)) {
