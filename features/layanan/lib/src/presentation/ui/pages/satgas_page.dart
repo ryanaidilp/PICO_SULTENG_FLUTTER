@@ -85,25 +85,29 @@ class _SatgasPageState extends State<SatgasPage> {
                   onChanged: (v) => setState(() => _query = v),
                 ),
                 const SizedBox(height: 8),
-                Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
-                  children: [
-                    ChoiceChip(
-                      label: Text(t.allRegencies),
-                      selected: _regency == null,
-                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                      onSelected: (_) => setState(() => _regency = null),
-                    ),
-                    for (final g in all)
+                // One scrolling row: 13 chips would otherwise fill the screen.
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
                       ChoiceChip(
-                        label: Text(g.regencyName),
-                        selected: _regency == g.regencyCode,
+                        label: Text(t.allRegencies),
+                        selected: _regency == null,
                         materialTapTargetSize: MaterialTapTargetSize.padded,
-                        onSelected: (_) =>
-                            setState(() => _regency = g.regencyCode),
+                        onSelected: (_) => setState(() => _regency = null),
                       ),
-                  ],
+                      for (final g in all) ...[
+                        const SizedBox(width: 8),
+                        ChoiceChip(
+                          label: Text(g.regencyName),
+                          selected: _regency == g.regencyCode,
+                          materialTapTargetSize: MaterialTapTargetSize.padded,
+                          onSelected: (_) =>
+                              setState(() => _regency = g.regencyCode),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 8),
                 if (all.isEmpty)

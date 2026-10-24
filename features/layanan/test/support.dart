@@ -130,7 +130,6 @@ final donation = Donation(
       kind: ContactKind.telegram,
       label: 'Telegram',
       value: 'evansevansevans',
-      uri: null,
     ),
   ],
 );

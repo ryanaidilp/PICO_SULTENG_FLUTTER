@@ -3,10 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:layanan/src/l10n/translations.g.dart';
 import 'package:layanan/src/presentation/ui/pages/isoman_page.dart';
 import 'package:layanan/src/presentation/ui/pages/satgas_page.dart';
-import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_api/testing.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
-import 'package:pico_ui_kit/src/components/atoms/brand/pico_themed_svg.dart';
 
 import '../support.dart';
 import 'harness.dart';

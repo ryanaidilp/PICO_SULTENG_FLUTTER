@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:layanan/src/l10n/translations.g.dart';
 import 'package:layanan/src/presentation/ui/pages/isoman_page.dart';
 import 'package:layanan/src/presentation/ui/pages/satgas_page.dart';
-import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_api/testing.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 
@@ -72,10 +71,14 @@ void main() {
       big(tester);
       await tester.pumpWidget(hostAll(const SatgasPage(), dir: dir()));
       await tester.pumpAndSettle();
+      await tester.ensureVisible(find.widgetWithText(ChoiceChip, 'Kota Palu'));
       await tester.tap(find.widgetWithText(ChoiceChip, 'Kota Palu'));
       await tester.pumpAndSettle();
       expect(find.text('Pak Budi'), findsOneWidget);
       expect(find.text('Banggai'), findsOneWidget); // only the chip
+      await tester.ensureVisible(
+        find.widgetWithText(ChoiceChip, 'Semua kabupaten'),
+      );
       await tester.tap(find.widgetWithText(ChoiceChip, 'Semua kabupaten'));
       await tester.enterText(find.byType(TextField), 'ANANG');
       await tester.pumpAndSettle();
@@ -89,8 +92,7 @@ void main() {
     testWidgets('offline with no copy shows the offline state', (tester) async {
       await setup(tester, AppLocale.id);
       big(tester);
-      final off = directory()
-        ..taskForces = fakeFailure(PicoFailureKind.network);
+      final off = directory()..taskForces = fakeFailure();
       await tester.pumpWidget(hostAll(const SatgasPage(), dir: off));
       await tester.pumpAndSettle();
       expect(find.byType(PicoStateView), findsOneWidget);
