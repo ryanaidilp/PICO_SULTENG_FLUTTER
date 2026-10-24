@@ -13,6 +13,7 @@ Future<void> open(
   FakeDataUpdateAlerts alerts, {
   Locale locale = const Locale('id'),
   double scale = 1,
+  ThemeData? theme,
 }) async {
   await tester.runAsync(
     () => LocaleSettings.setLocale(
@@ -25,6 +26,7 @@ Future<void> open(
       make(settings, FakeLocalDataAdmin(), alerts: alerts),
       locale: locale,
       scale: scale,
+      theme: theme,
     ),
   );
   await tester.pumpAndSettle();
@@ -195,12 +197,19 @@ void main() {
       FakeDataUpdateAlerts(),
       locale: const Locale('en'),
       scale: 2,
+      theme: PicoTheme.dark(),
     );
     tester.view.physicalSize = const Size(412, 3600);
     await tester.pumpAndSettle();
     expect(find.text('Data update alerts'), findsOneWidget);
     expect(find.text('Open system settings'), findsOneWidget);
     expect(tester.takeException(), isNull);
+    final sem = tester.ensureSemantics();
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    sem.dispose();
     await tester.runAsync(() => LocaleSettings.setLocale(AppLocale.id));
   });
 }
