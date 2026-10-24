@@ -85,12 +85,12 @@ void main() {
   });
   tearDown(() => dir.deleteSync(recursive: true));
 
-  test('the flag stays off until PR #91 is deployed', () {
-    expect(kRegencySummaryEndpoint, isFalse);
+  test('the flag is on since API 2.11.0 (live 2026-10-24)', () {
+    expect(kRegencySummaryEndpoint, isTrue);
   });
 
   test('fallback makes 13 series calls in sequence and returns 13 summaries sorted by name', () async {
-    final repo = CaseRepositoryImpl(src);
+    final repo = CaseRepositoryImpl(src, useSummaryEndpoint: false);
     final events = await repo.watchRegencySummaries().toList();
     // Rows arrive one by one: 1, 2, ... 12 partial results, then all 13.
     expect(
@@ -120,11 +120,15 @@ void main() {
   test(
     'each series also fills the cache for the kabupaten detail page',
     () async {
-      await CaseRepositoryImpl(src).watchRegencySummaries().toList();
+      await CaseRepositoryImpl(
+        src,
+        useSummaryEndpoint: false,
+      ).watchRegencySummaries().toList();
       adapter.calls.clear();
-      final detail = await CaseRepositoryImpl(src)
-          .watchSeries(const AreaRef.regency('7271'))
-          .toList();
+      final detail = await CaseRepositoryImpl(
+        src,
+        useSummaryEndpoint: false,
+      ).watchSeries(const AreaRef.regency('7271')).toList();
       expect(detail.single.right.source, DataSource.cache);
       expect(adapter.calls, isEmpty);
     },
@@ -133,11 +137,15 @@ void main() {
   test(
     'second open: cached summaries come first, no calls while fresh',
     () async {
-      await CaseRepositoryImpl(src).watchRegencySummaries().toList();
+      await CaseRepositoryImpl(
+        src,
+        useSummaryEndpoint: false,
+      ).watchRegencySummaries().toList();
       adapter.calls.clear();
-      final events = await CaseRepositoryImpl(src)
-          .watchRegencySummaries()
-          .toList();
+      final events = await CaseRepositoryImpl(
+        src,
+        useSummaryEndpoint: false,
+      ).watchRegencySummaries().toList();
       expect(events.length, 1);
       expect(events.single.right.source, DataSource.cache);
       expect(adapter.calls, isEmpty);
@@ -148,9 +156,10 @@ void main() {
     'one series failing keeps the others and marks the result stale',
     () async {
       adapter.routes['/regencies/7204/cases'] = const FakeReply(500, 'x');
-      final events = await CaseRepositoryImpl(src)
-          .watchRegencySummaries()
-          .toList();
+      final events = await CaseRepositoryImpl(
+        src,
+        useSummaryEndpoint: false,
+      ).watchRegencySummaries().toList();
       final s = events.last.right;
       expect(s.data.length, 12);
       expect(s.isStale, isTrue);
@@ -163,9 +172,10 @@ void main() {
 
   test('regency list failing with no copy is one Left', () async {
     adapter.routes['/regencies'] = const FakeReply(500, 'x');
-    final events = await CaseRepositoryImpl(src)
-        .watchRegencySummaries()
-        .toList();
+    final events = await CaseRepositoryImpl(
+      src,
+      useSummaryEndpoint: false,
+    ).watchRegencySummaries().toList();
     expect(events.single.left.kind, PicoFailureKind.server);
   });
 
@@ -184,18 +194,89 @@ void main() {
     },
   );
 
-  test('the include_latest_case mapper is ready for the deploy', () {
-    final rows =
-        jsonDecode(fixture('provinces_per_page_2.json'))['data']
-            as List<dynamic>;
-    final summaries = regencySummariesFromLatest([
-      {
-        'id': 7271,
-        'name': 'Kota Palu',
-        'latest_case': (rows.first as Map)['latest_case'],
+  group('one call: GET /regencies?include_latest_case=true&load_all=true', () {
+    const summaryPath = '/regencies';
+    FakeReply live() => FakeReply(
+      200,
+      fixture('regencies_include_latest_case.json'),
+      etag: 'W/"abc"',
+    );
+
+    test('maps the live flat latest_case rows: 13 rows by name, null Rt stays null', () async {
+      adapter.routes['$summaryPath#latest'] = live();
+      final events = await CaseRepositoryImpl(src)
+          .watchRegencySummaries()
+          .toList();
+      expect(adapter.calls, [summaryPath], reason: 'one request, no series');
+      final s = events.single.right;
+      expect(s.data, hasLength(13));
+      final names = s.data.map((e) => e.name).toList();
+      expect(
+        names,
+        [...names]..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase())),
+      );
+      final banggai = s.data.firstWhere((e) => e.name == 'Banggai');
+      expect(banggai.area, const AreaRef.regency('7202'));
+      expect(banggai.latest.date, DateTime(2024, 1, 14));
+      expect(banggai.latest.cumulative.positive, 8335);
+      expect(banggai.latest.daily.active, 0 - 22 - 0);
+      expect(banggai.latest.rt, isNull, reason: 'null Rt is never 0');
+    });
+
+    test('a row without latest_case is skipped, not zero', () {
+      final r = regencySummariesFromLatest([
+        {'id': 7201, 'name': 'A', 'latest_case': null},
+      ]);
+      expect(r, isEmpty);
+    });
+
+    test(
+      'the single call fails with nothing saved: the 13-series loop runs',
+      () async {
+        adapter.routes['$summaryPath#latest'] = const FakeReply(
+          500,
+          '{"status":"error"}',
+        );
+        final events = await CaseRepositoryImpl(src)
+            .watchRegencySummaries()
+            .toList();
+        expect(events.last.right.data, hasLength(13));
+        expect(adapter.calls.first, summaryPath);
+        expect(adapter.calls.where((p) => p.endsWith('/cases')), hasLength(13));
       },
-    ]);
-    expect(summaries.single.area, const AreaRef.regency('7271'));
+    );
+
+    test('the call is rate limited: no 13-request storm', () async {
+      adapter.routes['$summaryPath#latest'] = const FakeReply(
+        429,
+        '{"status":"error"}',
+      );
+      final events = await CaseRepositoryImpl(src)
+          .watchRegencySummaries()
+          .toList();
+      expect(events.single.isLeft, isTrue);
+      expect(adapter.calls.where((p) => p.endsWith('/cases')), isEmpty);
+    });
+
+    test('a saved copy inside the archive TTL: 0 requests', () async {
+      adapter.routes['$summaryPath#latest'] = live();
+      final repo = CaseRepositoryImpl(src);
+      await repo.watchRegencySummaries().toList();
+      adapter.calls.clear();
+      clock = clock.add(const Duration(days: 1));
+      final events = await repo.watchRegencySummaries().toList();
+      expect(events.single.right.source, DataSource.cache);
+      expect(adapter.calls, isEmpty);
+    });
+  });
+
+  test('the include_latest_case mapper reads the flat shape of API 2.11.0', () {
+    final rows =
+        (jsonDecode(fixture('regencies_include_latest_case.json'))
+                as Map<String, dynamic>)['data']
+            as List<dynamic>;
+    final summaries = regencySummariesFromLatest(rows);
+    expect(summaries, hasLength(13));
     expect(
       PicoEndpoints.regencySummaries.key,
       '/regencies?include_latest_case=true&load_all=true',

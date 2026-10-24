@@ -185,3 +185,38 @@ LatestRt? decodeLatestRt(String text) {
     ),
   );
 }
+
+/// One flat regency case row as a [CaseDay] (no previous day at hand). Daily
+/// active is `positive - recovered - deceased`, which equals the difference of
+/// cumulative active between two days.
+CaseDay caseDayFromFlatRegency(Map<String, dynamic> m) {
+  final cumPositive = _int(m['cumulative_positive']);
+  final cumRecovered = _int(m['cumulative_recovered']);
+  final cumDeceased = _int(m['cumulative_deceased']);
+  return CaseDay(
+    date: parseApiDate(m['date'] as String),
+    daily: CaseCounts(
+      positive: _int(m['positive']),
+      recovered: _int(m['recovered']),
+      deceased: _int(m['deceased']),
+      active: _int(m['positive']) - _int(m['recovered']) - _int(m['deceased']),
+    ),
+    cumulative: CaseCounts(
+      positive: cumPositive,
+      recovered: cumRecovered,
+      deceased: cumDeceased,
+      active: cumPositive - cumRecovered - cumDeceased,
+    ),
+    rt: _rt(_dbl(m['rt']), _dbl(m['rt_lower']), _dbl(m['rt_upper'])),
+    monitoring: _monitoring(
+      {
+        'active': m['cumulative_person_under_observation'],
+        'finished': m['cumulative_finished_person_under_observation'],
+      },
+      {
+        'active': m['cumulative_person_under_supervision'],
+        'finished': m['cumulative_finished_person_under_supervision'],
+      },
+    ),
+  );
+}

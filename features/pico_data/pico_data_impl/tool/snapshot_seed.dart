@@ -5,7 +5,8 @@
 // Repeatable: run it again and commit the file when the archive changes. The
 // seed holds only small "latest" resources (about 40 KB): the latest national
 // row, the 34 provinces (latest each), the banners, the latest national Rt and
-// the latest row of the 13 kabupaten. No series.
+// the latest row of the 13 kabupaten (one `include_latest_case` call). No
+// series.
 import 'dart:convert';
 import 'dart:io';
 
@@ -13,8 +14,7 @@ import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_impl/src/api/case_mappers.dart';
 import 'package:pico_data_impl/src/api/dates.dart';
 import 'package:pico_data_impl/src/api/endpoints.dart';
-import 'package:pico_data_impl/src/cache/ttl.dart'
-    show kLatestRtKey, kRegencySummariesKey;
+import 'package:pico_data_impl/src/cache/ttl.dart' show kLatestRtKey;
 
 Future<String> get(HttpClient c, String base, String path) async {
   final req = await c.getUrl(Uri.parse('$base$path'));
@@ -29,40 +29,6 @@ Future<String> get(HttpClient c, String base, String path) async {
 
 Object? dataOf(String body) =>
     (jsonDecode(body) as Map<String, dynamic>)['data'];
-
-Map<String, int> counts(CaseCounts c) => {
-  'positive': c.positive,
-  'recovered': c.recovered,
-  'deceased': c.deceased,
-  'active': c.active,
-};
-
-/// The nested API shape of one day, the one `regencySummariesFromLatest` reads.
-Map<String, Object?> nested(CaseDay d) => {
-  'date': formatApiDate(d.date),
-  'daily': counts(d.daily),
-  'cumulative': {
-    ...counts(d.cumulative),
-    if (d.monitoring != null) ...{
-      'odp': {
-        'active': d.monitoring!.odpActive,
-        'finished': d.monitoring!.odpFinished,
-      },
-      'pdp': {
-        'active': d.monitoring!.pdpActive,
-        'finished': d.monitoring!.pdpFinished,
-      },
-    },
-  },
-  if (d.rt != null)
-    'statistics': {
-      'reproduction_rate': {
-        'value': d.rt!.value,
-        'lower_bound': d.rt!.lower,
-        'upper_bound': d.rt!.upper,
-      },
-    },
-};
 
 Future<void> main(List<String> args) async {
   final base = args.isNotEmpty
@@ -92,19 +58,9 @@ Future<void> main(List<String> args) async {
   );
   entries[kLatestRtKey] = encodeLatestRt(latestRtOf(series));
 
-  final names = PicoEndpoints.regencies.map(
-    dataOf(await get(c, base, PicoEndpoints.regencies.key)),
-  );
-  final rows = <Map<String, Object?>>[];
-  for (final r in names) {
-    final s = PicoEndpoints.regencySeries(
-      r.code,
-    ).map(dataOf(await get(c, base, PicoEndpoints.regencySeries(r.code).key)));
-    final day = s.latest;
-    if (day == null) continue;
-    rows.add({'id': r.code, 'name': r.name, 'latest_case': nested(day)});
-  }
-  entries[kRegencySummariesKey] = jsonEncode(rows);
+  // API 2.11.0: the 13 latest rows in one call.
+  final regKey = PicoEndpoints.regencySummaries.key;
+  entries[regKey] = await get(c, base, regKey);
 
   final seed = {
     'version': 1,

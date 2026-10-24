@@ -161,7 +161,7 @@ void main() {
         '/provinces',
         '/banners?load_all=true',
         kLatestRtKey,
-        kRegencySummariesKey,
+        PicoEndpoints.regencySummaries.key,
       ]) {
         expect(await seed.read(k), isNotNull, reason: k);
       }
@@ -232,7 +232,7 @@ void main() {
     });
   });
 
-  group('conditional requests (flag, off until the API deploys ETags)', () {
+  group('conditional requests (flag on since API 2.11.0)', () {
     test('off: a stale copy is fetched with no If-None-Match', () async {
       await store.write(
         '/national/latest',
@@ -282,8 +282,22 @@ void main() {
       expect((await store.read('/national/latest'))!.etag, 'W/"b"');
     });
 
-    test('the flag is off in the shipped code', () {
-      expect(kConditionalRequests, isFalse);
+    test('a stale copy with no ETag never sends If-None-Match', () async {
+      await store.write(
+        '/national/latest',
+        nationalLatest,
+        clock.subtract(const Duration(days: 30)),
+      );
+      await run(
+        source(withSeed: false),
+        PicoEndpoints.nationalLatest,
+        PicoTtl.latest,
+      );
+      expect(adapter.headers.single.containsKey('If-None-Match'), isFalse);
+    });
+
+    test('the flag is on since API 2.11.0', () {
+      expect(kConditionalRequests, isTrue);
     });
   });
 
@@ -364,8 +378,8 @@ void main() {
         await repo.watchSeries(const AreaRef.national()).toList();
         expect(adapter.calls, ['/national']);
         // The derived value is saved behind the emission.
-      await Future<void>.delayed(const Duration(milliseconds: 100));
-      // The sample has no Rt: the derived value is now "none", never zero.
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+        // The sample has no Rt: the derived value is now "none", never zero.
         final rt = (await repo.watchNationalLatestRt().toList()).single.right;
         expect(rt.data, isNull);
       },
@@ -376,6 +390,7 @@ void main() {
           .watchRegencySummaries()
           .toList();
       expect(events, hasLength(1));
+      expect(events.single.right.source, DataSource.cache);
       expect(events.single.right.data, hasLength(13));
       expect(events.single.right.fetchedAt, seedDate);
       expect(adapter.calls, isEmpty);

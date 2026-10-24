@@ -29,7 +29,12 @@ class RoutedAdapter implements HttpClientAdapter {
     calls.add(options.path);
     headers.add(Map.of(options.headers));
     if (delay > Duration.zero) await Future<void>.delayed(delay);
-    final r = routes[options.path];
+    // `<path>#latest` answers the include_latest_case variant of a path.
+    final r =
+        (options.queryParameters.containsKey('include_latest_case')
+            ? routes['${options.path}#latest']
+            : null) ??
+        routes[options.path];
     if (r is DioException) throw r;
     final reply =
         (r as FakeReply?) ??

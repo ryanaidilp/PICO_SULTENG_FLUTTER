@@ -16,11 +16,11 @@ import 'package:pico_data_impl/src/api/stats_api.dart'
 List<dynamic> _list(Object? d) => d! as List<dynamic>;
 Map<String, dynamic> _map(Object? d) => d! as Map<String, dynamic>;
 
-/// Switch for `GET /regencies?load_all=true&include_latest_case=true` (PR #91
-/// in the API repo). It is merged but not deployed, so it stays off and the
-/// repository fetches the 13 series one by one (C02 fallback). Flip it once the
-/// deploy is live.
-const bool kRegencySummaryEndpoint = false;
+/// Switch for `GET /regencies?load_all=true&include_latest_case=true` (API
+/// 2.11.0, live on production since 2026-10-24). On: one call gives the 13
+/// latest rows. The 13-series loop (C02) stays as an automatic safety net when
+/// that call fails and nothing is saved.
+const bool kRegencySummaryEndpoint = true;
 
 /// Every request the app makes, as [Endpoint]s. Only `all=true` and
 /// `load_all=true` are sent: no sort, no datetimes, no date parameters.
@@ -165,14 +165,18 @@ abstract final class PicoEndpoints {
   );
 }
 
-/// Maps `/regencies?include_latest_case=true` rows: each row has the nested
-/// `latest_case`, like `/provinces`.
+/// Maps `/regencies?load_all=true&include_latest_case=true` rows (API 2.11.0).
+/// `latest_case` is the FLAT regency case row (like `/regencies/{code}/cases`),
+/// not the nested shape of `/provinces`; it is null when the regency has none.
+/// Sorted by name, like the 13-series fallback.
 List<AreaSummary> regencySummariesFromLatest(List<dynamic> rows) => [
   for (final r in rows.cast<Map<String, dynamic>>())
     if (r['latest_case'] is Map<String, dynamic>)
       AreaSummary(
         area: AreaRef.regency('${r['id']}'),
         name: r['name'] as String,
-        latest: caseDayFromNested(r['latest_case'] as Map<String, dynamic>),
+        latest: caseDayFromFlatRegency(
+          r['latest_case'] as Map<String, dynamic>,
+        ),
       ),
-];
+]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));

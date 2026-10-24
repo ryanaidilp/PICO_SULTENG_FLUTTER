@@ -26,14 +26,11 @@ abstract final class PicoTtl {
   static const Duration stats = Duration(days: 30);
 }
 
-/// Switch for conditional requests (`If-None-Match` with the stored `ETag`; a
-/// 304 keeps the copy and only moves its checked-at date). The API ships
-/// ETags with PR #91, merged but not deployed, so this stays off until the
-/// deploy is confirmed (same discipline as `kRegencySummaryEndpoint`).
-const bool kConditionalRequests = false;
+/// Switch for conditional requests (`If-None-Match` with the stored weak
+/// `ETag`, sent back verbatim and only for a stale copy that has one; a 304
+/// keeps the copy and only moves its checked-at date). On since API 2.11.0
+/// (live 2026-10-24: gzip, weak ETag, 304).
+const bool kConditionalRequests = true;
 
 /// Store key of the small national Rt value Beranda reads (never requested).
 const String kLatestRtKey = 'derived:national_latest_rt';
-
-/// Store key of the latest row of each of the 13 kabupaten (seed only, today).
-const String kRegencySummariesKey = 'derived:regency_summaries';

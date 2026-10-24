@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dependencies/di.dart';
 import 'package:pico_data_api/pico_data_api.dart';
@@ -12,9 +11,13 @@ import 'package:pico_data_impl/src/cache/ttl.dart';
 @LazySingleton(as: CaseRepository)
 class CaseRepositoryImpl implements CaseRepository {
   /// Creates the repository.
-  CaseRepositoryImpl(this._source);
+  CaseRepositoryImpl(
+    this._source, {
+    bool useSummaryEndpoint = kRegencySummaryEndpoint,
+  }) : _summaryEndpoint = useSummaryEndpoint;
 
   final SnapshotSource _source;
+  final bool _summaryEndpoint;
 
   @override
   Watch<CaseDay> watchNationalLatest({bool forceRefresh = false}) =>
@@ -80,18 +83,34 @@ class CaseRepositoryImpl implements CaseRepository {
   Watch<List<AreaSummary>> watchRegencySummaries({
     bool forceRefresh = false,
   }) async* {
-    if (kRegencySummaryEndpoint) {
-      yield* _source.watch(
+    if (_summaryEndpoint) {
+      // One call (API 2.11.0): seed or saved copy first, then the network by
+      // the stream rule. Only when it yields nothing at all (the call failed
+      // and there is no copy) does the 13-series loop below run.
+      var gotData = false;
+      PicoFailure? failure;
+      await for (final e in _source.watch(
         PicoEndpoints.regencySummaries,
         ttl: PicoTtl.archiveSeries,
         forceRefresh: forceRefresh,
-      );
-      return;
+      )) {
+        if (e.isRight) {
+          gotData = true;
+          yield e;
+        } else {
+          failure = e.left;
+        }
+      }
+      if (gotData) return;
+      if (failure?.kind == PicoFailureKind.rateLimited) {
+        yield Left(failure!);
+        return;
+      }
     }
-    // Offline first. 1) The 13 series saved from earlier visits, or else
-    // 2) the seed's latest summaries: neither touches the network, and a copy
-    // inside the archive TTL ends the stream. Only a miss (or a pull to
-    // refresh) falls through to the C02 loop below.
+
+    // Offline first for the fallback. 1) The 13 series saved from earlier
+    // visits. Neither this nor a copy inside the archive TTL touches the
+    // network; only a miss (or a pull to refresh) reaches the loop below.
     final savedNames = await _source.peek(
       PicoEndpoints.regencies,
       PicoTtl.directory,
@@ -109,26 +128,6 @@ class CaseRepositoryImpl implements CaseRepository {
         final c = _compose(parts, anyMissing: false);
         if (c != null) yield Right(c);
         if (!forceRefresh && !parts.any((p) => p.$3.isStale)) return;
-      }
-    }
-    final seed = await _source.peekRaw(kRegencySummariesKey);
-    if (seed != null && !forceRefresh) {
-      try {
-        final rows = regencySummariesFromLatest(
-          jsonDecode(seed.body) as List<dynamic>,
-        );
-        final stale = seed.isStale(PicoTtl.archiveSeries, _source.now);
-        yield Right(
-          DataSnapshot(
-            data: rows,
-            fetchedAt: seed.fetchedAt,
-            source: DataSource.cache,
-            isStale: stale,
-          ),
-        );
-        if (!stale) return;
-      } on Object {
-        // A bad seed is the same as none: fall through to the network.
       }
     }
 
