@@ -47,6 +47,7 @@ flutter:
     - assets/icons/mono/
     - assets/icons/duotone/
     - assets/illustrations/
+    - assets/logo/
     - assets/lottie/
     - assets/lottie/static/
     - assets/patterns/

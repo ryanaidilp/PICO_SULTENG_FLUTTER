@@ -1,3 +1,9 @@
 {
-    "app_name": "Pico"
+    "app_name": "PICO Sulteng",
+    "tab_home": "Beranda",
+    "tab_stats": "Statistik",
+    "tab_services": "Layanan",
+    "tab_info": "Info",
+    "settings": "Pengaturan",
+    "coming_soon": "Halaman ini segera hadir."
 }
