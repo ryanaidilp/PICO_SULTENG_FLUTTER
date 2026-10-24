@@ -554,4 +554,35 @@ void main() {
       matchesGoldenFile('goldens/charts_greyscale.png'),
     );
   }, tags: ['golden']);
+
+  group('value header', () {
+    testWidgets(
+      'rests on the last day with data, shows the change, null is not 0',
+      (tester) async {
+        final pts = <(DateTime, num?)>[
+          (DateTime(2024, 1, 11), 100),
+          (DateTime(2024, 1, 12), 130),
+          (DateTime(2024, 1, 13), null),
+        ];
+        await tester.pumpWidget(
+          app(
+            PicoTheme.light(),
+            PicoLineChart(
+              valueHeader: true,
+              showChange: true,
+              range: DateTimeRange(
+                start: DateTime(2024, 1, 11),
+                end: DateTime(2024, 1, 13),
+              ),
+              series: [ChartSeries(state: PicoState.positive, points: pts)],
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(find.text('130'), findsOneWidget);
+        expect(find.text('+30'), findsOneWidget);
+        expect(find.text('0'), findsNothing);
+      },
+    );
+  });
 }

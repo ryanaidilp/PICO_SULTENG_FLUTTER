@@ -50,6 +50,8 @@ class PicoChartBase extends StatefulWidget {
     this.onScrub,
     this.height = 220,
     this.yFloorZero = true,
+    this.valueHeader = false,
+    this.showChange = false,
     super.key,
   });
 
@@ -85,6 +87,12 @@ class PicoChartBase extends StatefulWidget {
 
   /// Keep zero on the axis (false lets a negative minimum extend it).
   final bool yFloorZero;
+
+  /// The value header of the first app (one series, no band).
+  final bool valueHeader;
+
+  /// The change from the day before in the header.
+  final bool showChange;
 
   @override
   State<PicoChartBase> createState() => _PicoChartBaseState();
@@ -235,7 +243,110 @@ class _PicoChartBaseState extends State<PicoChartBase>
     return lo == null || hi == null ? null : (lo.toDouble(), hi.toDouble());
   }
 
+  /// The first app's header: date, the value counting to its new number in
+  /// 500 ms (ease), and the change with an arrow that turns in 300 ms. It
+  /// follows the scrub and rests on the last day with data. A missing value
+  /// stays "no data", never 0.
+  Widget _valueHeader(PicoKitText t) {
+    final s = widget.series.single;
+    final colors = context.picoStates;
+    final move = !MediaQuery.disableAnimationsOf(context);
+    var day = _scrub;
+    if (day == null) {
+      for (final p in _inRange(s)) {
+        if (p.$2 != null && (day == null || p.$1.isAfter(day))) day = p.$1;
+      }
+    }
+    final d = day ?? _end;
+    final v = _valueOn(s, d);
+    final before = _valueOn(s, d.subtract(const Duration(days: 1)));
+    final change = widget.showChange && v != null && before != null
+        ? v - before
+        : null;
+    final dateStyle = context.typography.label.caption.copyWith(
+      color: context.colors.foreground.subtle,
+    );
+    final bigStyle = context.typography.heading.h2.copyWith(
+      color: context.colors.foreground.main,
+    );
+    final changeStyle = context.typography.body.small.copyWith(
+      fontWeight: FontWeight.w600,
+      color: context.colors.foreground.main,
+    );
+    return Semantics(
+      liveRegion: true,
+      container: true,
+      label:
+          '${t.date(d)}, ${t.stateLabel(s.state)} '
+          '${v == null ? t.noData : widget.formatValue(t, v)}'
+          '${change == null ? '' : ', ${change > 0 ? '+' : ''}${widget.formatValue(t, change)}'}',
+      child: ExcludeSemantics(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  PicoMarkView(
+                    mark: s.state.mark,
+                    color: colors.of(s.state),
+                    size: 11,
+                  ),
+                  const SizedBox(width: 6),
+                  Text(t.date(d), style: dateStyle),
+                ],
+              ),
+              if (v == null)
+                Text(t.noData, style: bigStyle)
+              else
+                TweenAnimationBuilder<double>(
+                  tween: Tween<double>(end: v),
+                  duration: move
+                      ? const Duration(milliseconds: 500)
+                      : Duration.zero,
+                  curve: Curves.ease,
+                  builder: (context, value, _) =>
+                      Text(widget.formatValue(t, value), style: bigStyle),
+                ),
+              if (change != null)
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    AnimatedRotation(
+                      turns: change < 0 ? 0.5 : 0,
+                      duration: move
+                          ? const Duration(milliseconds: 300)
+                          : Duration.zero,
+                      child: Icon(
+                        change == 0
+                            ? Icons.remove_rounded
+                            : Icons.arrow_upward_rounded,
+                        size: 16,
+                        color: colors.of(s.state),
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      '${change > 0 ? '+' : ''}${widget.formatValue(t, change)}',
+                      style: changeStyle,
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _readout(PicoKitText t) {
+    if (widget.valueHeader &&
+        widget.series.length == 1 &&
+        widget.band == null) {
+      return _valueHeader(t);
+    }
     final d = _scrub;
     final text = context.typography.label.caption.copyWith(
       color: context.colors.foreground.main,

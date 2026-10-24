@@ -97,7 +97,7 @@ class PicoWovenBar extends StatelessWidget {
                             duration: animate
                                 ? const Duration(milliseconds: 700)
                                 : Duration.zero,
-                            curve: Curves.easeInOutCubic,
+                            curve: Curves.linear,
                             builder: (context, fraction, _) => CustomPaint(
                               size: const Size.fromHeight(16),
                               painter: _BarPainter(

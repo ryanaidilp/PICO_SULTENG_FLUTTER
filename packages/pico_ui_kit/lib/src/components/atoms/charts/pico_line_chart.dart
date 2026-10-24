@@ -19,6 +19,8 @@ class PicoLineChart extends StatelessWidget {
     this.semanticsSummary,
     this.onScrub,
     this.height = 220,
+    this.valueHeader = false,
+    this.showChange = false,
     super.key,
   });
 
@@ -40,6 +42,14 @@ class PicoLineChart extends StatelessWidget {
   /// Plot height.
   final double height;
 
+  /// Shows the old value header above a one-series chart: the date, the value
+  /// counting up in 500 ms, following the scrub.
+  final bool valueHeader;
+
+  /// With [valueHeader]: also the change from the day before (cumulative data
+  /// only, where it is the new cases).
+  final bool showChange;
+
   @override
   Widget build(BuildContext context) => PicoChartBase(
     series: series,
@@ -48,6 +58,8 @@ class PicoLineChart extends StatelessWidget {
     semanticsSummary: semanticsSummary,
     onScrub: onScrub,
     height: height,
+    valueHeader: valueHeader,
+    showChange: showChange,
     formatValue: (t, v) => t.number(v.round()),
   );
 }
