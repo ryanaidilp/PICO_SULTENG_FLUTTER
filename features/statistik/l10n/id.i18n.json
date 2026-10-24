@@ -45,5 +45,19 @@
   "age_25_49": "25-49 tahun",
   "age_50_54": "50-54 tahun",
   "age_55_plus": "55 tahun ke atas",
-  "gender_positive": "Kasus positif"
+  "gender_positive": "Kasus positif",
+  "regency_title": "Kabupaten dan kota",
+  "regency_note": "13 kabupaten dan kota di Sulawesi Tengah, dari data terakhir tiap wilayah.",
+  "sort_label": "Urutkan",
+  "sort_value": "Nilai",
+  "sort_name": "Nama",
+  "regency_loading": "Memuat $n dari $total kabupaten",
+  "regency_failed": "Data $name belum bisa dimuat",
+  "regency_retry": "Coba muat lagi",
+  "see_on_map": "Lihat di peta",
+  "regency_row": "$name, $metric kumulatif $value, $date",
+  "regency_daily": "harian $value",
+  "regency_none": "Belum ada data kabupaten.",
+  "regency_cumulative": "kumulatif",
+  "area_not_found": "Wilayah tidak ditemukan."
 }

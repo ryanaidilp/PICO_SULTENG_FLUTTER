@@ -67,6 +67,14 @@ Widget host(
 Future<void> setup(WidgetTester tester, AppLocale l) =>
     tester.runAsync(() => LocaleSettings.setLocale(l));
 
+class OfflineCases extends CountingCases {
+  OfflineCases(super.s);
+
+  @override
+  Watch<CaseSeries> watchSeries(AreaRef area, {bool forceRefresh = false}) =>
+      Stream.value(fakeFailure(PicoFailureKind.network));
+}
+
 void main() {
   final series = sultengSeries();
 
@@ -185,6 +193,16 @@ void main() {
     );
   });
 
+  testWidgets('a network failure with no copy is the offline state', (
+    tester,
+  ) async {
+    await setup(tester, AppLocale.id);
+    await tester.pumpWidget(host(OfflineCases(series), const AreaQuery()));
+    await tester.pumpAndSettle();
+    expect(find.text('Coba lagi'), findsOneWidget);
+    expect(find.byType(PicoStateView), findsOneWidget);
+  });
+
   testWidgets('offline with no copy is the offline state; english labels', (
     tester,
   ) async {
@@ -196,7 +214,9 @@ void main() {
       ),
     );
     await tester.pumpAndSettle();
-    expect(find.text('Coba lagi'), findsOneWidget);
+    // An area the API does not know is "not found", not a retry.
+    expect(find.text('Wilayah tidak ditemukan.'), findsOneWidget);
+    expect(find.text('Coba lagi'), findsNothing);
     await setup(tester, AppLocale.en);
     tester.view.physicalSize = const Size(412, 3000);
     tester.view.devicePixelRatio = 1;

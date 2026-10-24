@@ -9,6 +9,7 @@ import 'package:pico_data_api/pico_data_api.dart';
 import 'package:statistik/src/l10n/translations.g.dart' as sl;
 import 'package:statistik/src/di/statistik_container.dart';
 import 'package:statistik/src/presentation/bloc/area_bloc.dart';
+import 'package:statistik/src/presentation/bloc/regencies_cubit.dart';
 import 'package:statistik/src/presentation/ui/widgets/profile_widgets.dart';
 import 'package:statistik/src/presentation/ui/widgets/province_picker.dart';
 
@@ -118,6 +119,12 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
                       BlocProvider(
                         create: (_) => ProvincesCubit(
                           _lease.get<CaseRepository>().watchProvinceSummaries,
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (_) => RegenciesCubit(
+                          _lease.get<CaseRepository>(),
+                          _lease.get<DirectoryRepository>(),
                         ),
                       ),
                       BlocProvider(

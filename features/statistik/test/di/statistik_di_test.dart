@@ -53,7 +53,8 @@ void main() {
       // forwards: register one fake per forwarded type.
       final root = GetIt.asNewInstance()
         ..registerSingleton<CaseRepository>(FakeCaseRepository())
-        ..registerSingleton<StatsRepository>(FakeStatsRepository());
+        ..registerSingleton<StatsRepository>(FakeStatsRepository())
+        ..registerSingleton<DirectoryRepository>(FakeDirectoryRepository());
       late GetIt child;
       final container = FeatureContainer(
         'statistik',

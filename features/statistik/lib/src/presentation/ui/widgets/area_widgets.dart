@@ -13,6 +13,42 @@ PicoState stateOf(CaseMetric m) => switch (m) {
   CaseMetric.active => PicoState.active,
 };
 
+/// The four case types as chips with their marks (never colour alone).
+class MetricChips extends StatelessWidget {
+  /// Creates the chips.
+  const MetricChips({required this.metric, required this.onChanged, super.key});
+
+  /// The chosen type.
+  final CaseMetric metric;
+
+  /// A type was chosen.
+  final ValueChanged<CaseMetric> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final k = PicoKitText.of(context);
+    final colors = context.picoStates;
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [
+        for (final m in CaseMetric.values)
+          ChoiceChip(
+            avatar: PicoMarkView(
+              mark: stateOf(m).mark,
+              color: colors.of(stateOf(m)),
+              size: 12,
+            ),
+            label: Text(k.stateLabel(stateOf(m))),
+            selected: metric == m,
+            materialTapTargetSize: MaterialTapTargetSize.padded,
+            onSelected: (_) => onChanged(m),
+          ),
+      ],
+    );
+  }
+}
+
 /// Level, case type, daily or cumulative, compare and date range controls.
 class AreaControls extends StatelessWidget {
   /// Creates the controls.
@@ -51,8 +87,6 @@ class AreaControls extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = context.t;
-    final k = PicoKitText.of(context);
-    final colors = context.picoStates;
     String levelLabel(AreaLevel l) => switch (l) {
       AreaLevel.national => t.levelNational,
       AreaLevel.province => t.levelProvince,
@@ -72,23 +106,9 @@ class AreaControls extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final m in CaseMetric.values)
-              ChoiceChip(
-                avatar: PicoMarkView(
-                  mark: stateOf(m).mark,
-                  color: colors.of(stateOf(m)),
-                  size: 12,
-                ),
-                label: Text(k.stateLabel(stateOf(m))),
-                selected: query.metric == m,
-                materialTapTargetSize: MaterialTapTargetSize.padded,
-                onSelected: (_) => onQuery(query.copyWith(metric: m)),
-              ),
-          ],
+        MetricChips(
+          metric: query.metric,
+          onChanged: (m) => onQuery(query.copyWith(metric: m)),
         ),
         const SizedBox(height: 12),
         PicoSegmented<bool>(

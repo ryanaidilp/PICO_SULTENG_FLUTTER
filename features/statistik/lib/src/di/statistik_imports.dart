@@ -5,5 +5,6 @@ import 'package:pico_data_api/pico_data_api.dart';
 void importStatistikGlobals(GetIt child, GetIt root) {
   child
     ..registerFactory<CaseRepository>(() => root<CaseRepository>())
-    ..registerFactory<StatsRepository>(() => root<StatsRepository>());
+    ..registerFactory<StatsRepository>(() => root<StatsRepository>())
+    ..registerFactory<DirectoryRepository>(() => root<DirectoryRepository>());
 }

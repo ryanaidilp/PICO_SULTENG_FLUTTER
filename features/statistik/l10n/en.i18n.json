@@ -45,5 +45,19 @@
   "age_25_49": "25-49 years",
   "age_50_54": "50-54 years",
   "age_55_plus": "55 years and over",
-  "gender_positive": "Positive cases"
+  "gender_positive": "Positive cases",
+  "regency_title": "Regencies and cities",
+  "regency_note": "The 13 regencies and cities of Central Sulawesi, from the latest data of each.",
+  "sort_label": "Sort",
+  "sort_value": "Value",
+  "sort_name": "Name",
+  "regency_loading": "Loading $n of $total regencies",
+  "regency_failed": "Data for $name could not be loaded",
+  "regency_retry": "Try loading again",
+  "see_on_map": "See on the map",
+  "regency_row": "$name, cumulative $metric $value, $date",
+  "regency_daily": "daily $value",
+  "regency_none": "No regency data yet.",
+  "regency_cumulative": "cumulative",
+  "area_not_found": "Area not found."
 }

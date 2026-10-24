@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:identifiers/identifiers.dart';
 import 'package:statistik/src/presentation/statistik_shell_page.dart';
 import 'package:statistik/src/presentation/ui/pages/area_page.dart';
+import 'package:statistik/src/presentation/ui/pages/kabupaten_page.dart';
 
 part 'statistik_router.gr.dart';
 
@@ -21,6 +22,15 @@ class StatistikRouter() extends RootStackRouter {
           page: AreaRoute.page,
           path: '',
           initial: true,
+          type: RouteType.custom(
+            transitionsBuilder: TransitionsBuilders.noTransition,
+            durationInMilliseconds: 0,
+          ),
+        ),
+        AutoRoute(page: KabupatenRoute.page, path: 'kabupaten'),
+        AutoRoute(
+          page: RegencyAreaRoute.page,
+          path: 'kabupaten/:code',
           type: RouteType.custom(
             transitionsBuilder: TransitionsBuilders.noTransition,
             durationInMilliseconds: 0,

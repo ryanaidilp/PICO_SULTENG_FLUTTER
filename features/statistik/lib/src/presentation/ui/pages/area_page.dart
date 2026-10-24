@@ -78,6 +78,9 @@ class _AreaContentState extends State<AreaContent> {
         final failure = s.failure;
         final view = s.view;
         final snap = s.snapshot;
+        if (failure?.kind == PicoFailureKind.notFound) {
+          return PicoStateView.notFound(message: context.t.areaNotFound);
+        }
         if (failure != null || view == null || snap == null) {
           return failure?.kind == PicoFailureKind.network
               ? PicoStateView.offline(onRetry: retry)
@@ -260,4 +263,52 @@ class ProvinceAreaPage extends StatelessWidget {
       'daily': daily,
     }),
   );
+}
+
+/// `/statistik/kabupaten/{code}`: the area page of one kabupaten or kota. No
+/// ODP/PDP and no gender: the regency data has none.
+@RoutePage()
+class RegencyAreaPage extends StatelessWidget {
+  /// Creates the page for regency [code].
+  const RegencyAreaPage({
+    @PathParam('code') required this.code,
+    @QueryParam('metric') this.metric,
+    @QueryParam('from') this.from,
+    @QueryParam('to') this.to,
+    @QueryParam('daily') this.daily,
+    super.key,
+  });
+
+  /// Regency code, four digits.
+  final String code;
+
+  /// Case type.
+  final String? metric;
+
+  /// First day.
+  final String? from;
+
+  /// Last day.
+  final String? to;
+
+  /// `true|false`.
+  final String? daily;
+
+  @override
+  Widget build(BuildContext context) {
+    // A code that cannot be a regency never reaches the API.
+    if (!RegExp(r'^\d{4}$').hasMatch(code)) {
+      return PicoStateView.notFound(message: context.t.areaNotFound);
+    }
+    return AreaContent(
+      initial: AreaQuery.fromParams({
+        'level': 'regency',
+        'id': code,
+        'metric': metric,
+        'from': from,
+        'to': to,
+        'daily': daily,
+      }),
+    );
+  }
 }
