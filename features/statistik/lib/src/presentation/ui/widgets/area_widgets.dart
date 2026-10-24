@@ -214,6 +214,8 @@ class AreaControls extends StatelessWidget {
           ),
         ),
         PicoDateRangeBar(
+          // The first app's time frames: 30, 90 and 180 days, then all.
+          presets: const [30, 90, 180],
           range: range,
           bounds: bounds,
           onChanged: (r) => onQuery(query.copyWith(from: r.start, to: r.end)),

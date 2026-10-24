@@ -114,7 +114,9 @@ List<Offset> _decimate(List<Offset> pts) {
 /// A "nice" axis: about [count] ticks on 1, 2, 2.5, 5 steps. Returns the
 /// ticks, whose first and last are the axis ends.
 List<double> niceTicks(double min, double maxIn, {int count = 4}) {
-  final max = maxIn <= min ? min + 1 : maxIn;
+  // A flat series (all zero) gets whole-number ticks 0 to 4, not 0 to 1 in
+  // quarters, which read like fractions of a case.
+  final max = maxIn <= min ? min + count : maxIn;
   final raw = (max - min) / count;
   final mag = math.pow(10, (math.log(raw) / math.ln10).floor()).toDouble();
   var step = mag;

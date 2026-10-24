@@ -334,7 +334,7 @@ void main() {
       expect(trimmed.days.last.daily.positive, greaterThan(0));
     });
 
-    for (final chip in ['7 hari', '30 hari', '90 hari']) {
+    for (final chip in ['30 hari', '90 hari', '180 hari']) {
       testWidgets('$chip ends on the last real day and is not all zeros', (
         tester,
       ) async {
