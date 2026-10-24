@@ -11,6 +11,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
 // archipelago:test_prerequisite_imports:start
+import 'package:pico_data_impl/testing.dart';
+
 // archipelago:test_prerequisite_imports:end
 
 /// Installs the platform fakes every installed package needs before
@@ -21,5 +23,8 @@ import 'package:flutter_test/flutter_test.dart';
 Future<void> installCompositionRootPrerequisites() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   // archipelago:test_prerequisites:start
+  /// PicoDataImplModule's @preResolve getters call shared_preferences and
+  /// path_provider (application support directory) during $initGetIt.
+  await PicoDataImplTestPrerequisite().install();
   // archipelago:test_prerequisites:end
 }

@@ -9,8 +9,17 @@ environment:
 resolution: workspace
 
 dependencies:
+  app_config:
+    path: ../../../shared/app_config
   dependencies:
     path: ../../../shared/dependencies
+  flutter_cache_manager: ^3.4.5
+  path_provider: ^2.1.6
+  path_provider_platform_interface: ^2.1.2
+  plugin_platform_interface: ^2.1.8
+  shared_preferences: ^2.5.5
+  test_prereq:
+    path: ../../../utilities/test_prereq
   flutter:
     sdk: flutter
   pico_data_api:
@@ -28,3 +37,8 @@ dev_dependencies:
 archipelago:
   di_modules:
     - class: PicoDataImplPackageModule
+  test_prerequisites:
+    - class: PicoDataImplTestPrerequisite
+      reason: >-
+        PicoDataImplModule's @preResolve getters call shared_preferences and
+        path_provider (application support directory) during $initGetIt.
