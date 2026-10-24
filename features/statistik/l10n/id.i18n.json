@@ -66,6 +66,7 @@
   "area_not_found": "Wilayah tidak ditemukan.",
   "rt_title": "Rt (angka reproduksi efektif)",
   "rt_latest": "Rt $value ($lower sampai $upper) pada $date",
+  "rt_latest_no_bounds": "Rt $value pada $date (batas tidak tersedia)",
   "rt_latest_data_day": "Hari data terakhir: $date. Rt belum dihitung untuk hari itu.",
   "rt_none": "Rt belum dihitung untuk rentang ini.",
   "rt_null_days": "Rt tidak dihitung untuk $count hari dalam rentang ini.",

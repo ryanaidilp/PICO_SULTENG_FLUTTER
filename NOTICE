@@ -1,0 +1,95 @@
+NOTICE: third-party and carried-over assets
+
+PICO Sulteng is released under the MIT licence (see LICENSE). That licence
+covers the source code and the assets written for this repository. This file
+lists every asset that was copied from elsewhere, where it came from, and the
+licence that is known for it. "UNDETERMINED" means the repository holds no
+proof of the licence: the owner must confirm it, or replace the asset, before
+a public or store release.
+
+Provenance was checked on 2026-10-24 against the first PICO app
+(repository PICO_SULTENG_FLUTTER, branch feature/monorepo): file checksums and
+git authorship.
+
+1. Source Sans 3 (font)
+   File: packages/pico_ui_kit/assets/fonts/SourceSans3.ttf
+   Author: Adobe, copyright 2023, Reserved Font Name "Source".
+   Licence: SIL Open Font License 1.1 (https://openfontlicense.org). The font
+   is bundled unchanged. The OFL text must travel with the font if the font
+   is redistributed on its own.
+   Status: known.
+
+2. PICO logo (question-mark cube with the word PICO)
+   Files: packages/pico_ui_kit/assets/logo/pico-logo.svg (byte-identical to
+   packages/pico_ui_kit/assets/images/pico.svg of the first app); the launcher
+   images apps/pico/launcher/*.png, the splash mark apps/pico/splash/
+   splash-mark.png and the generated icons under apps/pico/android and
+   apps/pico/ios are derived from it.
+   Origin: the logo of the PICO app, committed by the project owner
+   (Fajrian Aidil Pratama) in the first app. The SVG is a traced copy of the
+   raster logo.
+   Licence: owner's own mark. All rights reserved by the owner; the MIT
+   licence of the code does not grant a trademark or logo licence.
+   Status: owner-authored per git history. The original design file and the
+   designer, if not the owner, are UNDETERMINED.
+
+3. Illustration covid.png (virus)
+   File: packages/pico_ui_kit/assets/images/covid.png (byte-identical to the
+   first app).
+   Origin: committed by the owner in the first app; the creator is not
+   recorded in the repository.
+   Status: UNDETERMINED. It may come from a stock or illustration site.
+
+4. Seven legacy icons
+   Files: packages/pico_ui_kit/assets/icons/legacy/{bar_chart, cemetery,
+   check, close, hospital_bed_outline, self_isolation, virus}.svg
+   (byte-identical to the first app, packages/pico_ui_kit/assets/icons/).
+   - cemetery.svg carries the header "Uploaded to: SVG Repo,
+     www.svgrepo.com". SVG Repo hosts files under many licences (CC0, MIT,
+     Apache 2.0, CC BY and others), and the licence of this file is not
+     recorded. Status: UNDETERMINED. Replace it, or record the licence of
+     the original SVG Repo entry (CC BY would need an attribution line).
+   - virus.svg and self_isolation.svg are 24 px, 1.5 px stroke Figma exports
+     (ids clip0_...) and bar_chart.svg and hospital_bed_outline.svg are 80 px
+     Figma exports. Whether they are the owner's drawings or taken from an
+     icon library is not recorded. Status: UNDETERMINED.
+   - check.svg and close.svg are generic glyphs. Status: UNDETERMINED.
+
+5. Icon set of the Archipelago template (about 330 SVG icons)
+   Files: packages/pico_asset/assets/icons/** (12 categories, 328 SVG files)
+   and the same files under .archipelago/base/flutter_asset/.
+   Origin: shipped by the Archipelago `flutter_asset` brick (the owner's own
+   generator, repository Archipelago, bricks/flutter_asset). The brick does
+   not record which icon library the set comes from.
+   Status: UNDETERMINED upstream. If the set is a third-party library, its
+   licence applies to these files. This must be settled in the Archipelago
+   repository, once, for every project it generates.
+   Also from the brick: packages/pico_asset/assets/animations/
+   {maintenance,wifi}.json (Lottie) and packages/pico_asset/assets/logos/
+   app_logo*.svg (placeholder logos). Status: UNDETERMINED upstream.
+
+6. Written for this repository (MIT, like the code)
+   packages/pico_ui_kit/assets/icons/mono and duotone (41 + 41 icons),
+   assets/illustrations (8), assets/lottie (6 animations and static
+   frames, generated with python-lottie), assets/logo/pico-wordmark-*.svg,
+   assets/patterns (6 weave patterns, no longer used by the app).
+   Authored in this repository's history by the project owner with the help
+   of AI tools; no third-party file was copied into them.
+
+7. Map of Sulawesi Tengah
+   File: features/peta/assets/geojson/sulteng.json, normalised and simplified
+   from the first app's app/pico/assets/geojson/sulteng.json by
+   features/peta/tool/normalize_geojson.dart.
+   Origin of the boundaries: not recorded in either repository (common
+   sources are BPS, GADM and OpenStreetMap, each with different terms).
+   Status: UNDETERMINED. OpenStreetMap-derived data would need the
+   attribution "© OpenStreetMap contributors" (ODbL).
+
+8. Case data seed
+   File: features/pico_data/pico_data_impl/assets/seed/seed.json
+   Origin: a snapshot of the PICO API (the project's own service).
+   Status: owner's data; the public sources behind the API are listed in the
+   in-app "Tentang dan metodologi" page.
+
+Action list for the owner: confirm items 3, 4, 5 and 7, and decide about the
+logo licence in item 2. Until then, do not ship to a store.

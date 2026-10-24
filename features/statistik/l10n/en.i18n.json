@@ -66,6 +66,7 @@
   "area_not_found": "Area not found.",
   "rt_title": "Rt (effective reproduction number)",
   "rt_latest": "Rt $value ($lower to $upper) on $date",
+  "rt_latest_no_bounds": "Rt $value on $date (bounds not available)",
   "rt_latest_data_day": "Latest data day: $date. Rt is not computed for that day.",
   "rt_none": "Rt is not computed for this range.",
   "rt_null_days": "Rt is not computed for $count days in this range.",

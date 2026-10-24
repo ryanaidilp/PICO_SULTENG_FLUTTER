@@ -14,13 +14,14 @@ CaseCounts _counts(Map<String, dynamic> m) => CaseCounts(
   active: _int(m['active']),
 );
 
-/// A missing or null value is a null Rt, never 0 (C01).
+/// A missing or null value is a null Rt, never 0 (C01). A missing bound stays
+/// null: no zero-width band is invented from the value.
 Rt? _rt(num? value, num? lower, num? upper) {
   if (value == null) return null;
   return Rt(
     value: value.toDouble(),
-    lower: (lower ?? value).toDouble(),
-    upper: (upper ?? value).toDouble(),
+    lower: lower?.toDouble(),
+    upper: upper?.toDouble(),
   );
 }
 
@@ -71,6 +72,7 @@ CaseSeries seriesFromNested(
     area: area,
     areaName: province?['name'] as String? ?? fallbackName,
     days: maps.map(caseDayFromNested),
+    trimIdleTail: area is! NationalArea,
   );
 }
 
@@ -143,6 +145,7 @@ CaseSeries seriesFromRegency(List<dynamic> rows, {required String code}) {
     area: AreaRef.regency(code),
     areaName: name,
     days: days,
+    trimIdleTail: true,
   );
 }
 
@@ -180,8 +183,8 @@ LatestRt? decodeLatestRt(String text) {
     date: parseApiDate(j['date'] as String),
     rt: Rt(
       value: (j['value'] as num).toDouble(),
-      lower: (j['lower'] as num).toDouble(),
-      upper: (j['upper'] as num).toDouble(),
+      lower: (j['lower'] as num?)?.toDouble(),
+      upper: (j['upper'] as num?)?.toDouble(),
     ),
   );
 }

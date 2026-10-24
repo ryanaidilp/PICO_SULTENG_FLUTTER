@@ -136,12 +136,17 @@ class RtBody extends StatelessWidget {
           p(t.rtNone, strong: true)
         else ...[
           p(
-            t.rtLatest(
-              value: k.decimal(latest.rt.value),
-              lower: k.decimal(latest.rt.lower),
-              upper: k.decimal(latest.rt.upper),
-              date: k.date(latest.date),
-            ),
+            latest.rt.lower == null || latest.rt.upper == null
+                ? t.rtLatestNoBounds(
+                    value: k.decimal(latest.rt.value),
+                    date: k.date(latest.date),
+                  )
+                : t.rtLatest(
+                    value: k.decimal(latest.rt.value),
+                    lower: k.decimal(latest.rt.lower!),
+                    upper: k.decimal(latest.rt.upper!),
+                    date: k.date(latest.date),
+                  ),
             strong: true,
           ),
           if (view.latestIsOlderThanData)

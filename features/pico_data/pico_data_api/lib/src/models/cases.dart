@@ -67,11 +67,11 @@ final class Rt extends Equatable {
   /// Point estimate.
   final double value;
 
-  /// Lower bound.
-  final double lower;
+  /// Lower bound, null when the API sent none (never a stand-in value).
+  final double? lower;
 
-  /// Upper bound.
-  final double upper;
+  /// Upper bound, null when the API sent none.
+  final double? upper;
 
   @override
   List<Object?> get props => [value, lower, upper];
@@ -147,14 +147,28 @@ final class CaseSeries extends Equatable {
 
   /// Builds a series from rows in any order. Sorts by date and keeps the last
   /// row seen for a repeated date (the API sends duplicates, C01).
+  ///
+  /// With [trimIdleTail] the rows after the last day with new positive,
+  /// recovered or deceased cases are dropped. The API pads province and
+  /// regency series with zero rows after the last real report (its regency
+  /// query has no activity filter), and a zero there is not a report. The
+  /// series then ends on the last real day and later days are "no data". A
+  /// series with no active day at all is left as it is.
   factory fromDays({
     required AreaRef area,
     required String areaName,
     required Iterable<CaseDay> days,
+    bool trimIdleTail = false,
   }) {
     final byDate = <DateTime, CaseDay>{for (final d in days) d.date: d};
-    final sorted = byDate.values.toList()
+    var sorted = byDate.values.toList()
       ..sort((a, b) => a.date.compareTo(b.date));
+    if (trimIdleTail) {
+      bool active(CaseDay d) =>
+          d.daily.positive > 0 || d.daily.recovered > 0 || d.daily.deceased > 0;
+      final last = sorted.lastIndexWhere(active);
+      if (last >= 0) sorted = sorted.sublist(0, last + 1);
+    }
     return CaseSeries._(
       area: area,
       areaName: areaName,
