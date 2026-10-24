@@ -21,7 +21,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: dart-lang/setup-dart@v1
+      # The toolkit is a workspace member, and the workspace needs the Flutter
+      # SDK to resolve; the Dart SDK alone fails at `pub get`.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
       - name: Install dependencies
         run: dart pub get
         working-directory: devtools/monorepo_toolkit
@@ -36,7 +41,12 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: dart-lang/setup-dart@v1
+      # The toolkit is a workspace member, and the workspace needs the Flutter
+      # SDK to resolve; the Dart SDK alone fails at `pub get`.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
       - name: Install dependencies
         run: dart pub get
         working-directory: devtools/monorepo_toolkit
@@ -120,7 +130,12 @@ jobs:
         with:
           name: android-apk
           path: apps/pico/build/app/outputs/flutter-apk/
-      - uses: dart-lang/setup-dart@v1
+      # The toolkit is a workspace member, and the workspace needs the Flutter
+      # SDK to resolve; the Dart SDK alone fails at `pub get`.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
       - name: Install dependencies
         run: dart pub get
         working-directory: devtools/monorepo_toolkit
@@ -202,7 +217,12 @@ jobs:
         with:
           name: ios-ipa
           path: apps/pico/build/ios/ipa/
-      - uses: dart-lang/setup-dart@v1
+      # The toolkit is a workspace member, and the workspace needs the Flutter
+      # SDK to resolve; the Dart SDK alone fails at `pub get`.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
       - name: Install dependencies
         run: dart pub get
         working-directory: devtools/monorepo_toolkit
