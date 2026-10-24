@@ -363,7 +363,9 @@ void main() {
         final repo = CaseRepositoryImpl(source());
         await repo.watchSeries(const AreaRef.national()).toList();
         expect(adapter.calls, ['/national']);
-        // The sample has no Rt: the derived value is now "none", never zero.
+        // The derived value is saved behind the emission.
+      await Future<void>.delayed(const Duration(milliseconds: 100));
+      // The sample has no Rt: the derived value is now "none", never zero.
         final rt = (await repo.watchNationalLatestRt().toList()).single.right;
         expect(rt.data, isNull);
       },

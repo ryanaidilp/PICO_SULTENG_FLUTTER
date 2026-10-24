@@ -62,9 +62,9 @@ class FakeCaseRepository implements CaseRepository {
   /// Number of calls with `forceRefresh: true`.
   int forcedRefreshes = 0;
 
-  /// Number of [watchSeries] calls: a page that must not load a full series
+  /// Number of [watchSeries] calls (full series requests): a page that must not load a full series
   /// asserts this stays 0.
-  int seriesCalls = 0;
+  int fullSeriesRequests = 0;
 
   @override
   Watch<LatestRt?> watchNationalLatestRt({bool forceRefresh = false}) {
@@ -80,7 +80,7 @@ class FakeCaseRepository implements CaseRepository {
 
   @override
   Watch<CaseSeries> watchSeries(AreaRef area, {bool forceRefresh = false}) {
-    seriesCalls++;
+    fullSeriesRequests++;
     if (forceRefresh) forcedRefreshes++;
     final s = series[area];
     return _once(

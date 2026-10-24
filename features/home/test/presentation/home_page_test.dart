@@ -83,7 +83,7 @@ FakeCaseRepository repo({
       latest: day('2024-01-14', pos: 45092),
     ),
   ]),
-  // No series: Beranda must never ask for one (seriesCalls stays 0).
+  // No series: Beranda must never ask for one (fullSeriesRequests stays 0).
 )..latestRtResult = fakeSnapshot(latestRtOf(rtSeries ?? series()));
 
 Widget host(
@@ -161,7 +161,7 @@ void main() {
       await tester.pumpWidget(host(repoUsed));
       await tester.pumpAndSettle();
       expect(find.text('Rt terakhir 0,92 (9 Jul 2023)'), findsOneWidget);
-      expect(repoUsed.seriesCalls, 0);
+      expect(repoUsed.fullSeriesRequests, 0);
       await tester.pumpWidget(
         host(
           repo(
