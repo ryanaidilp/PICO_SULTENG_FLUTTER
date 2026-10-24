@@ -210,13 +210,12 @@ class const PicoAppBar({
     }
 
     if (showBackButton) {
-      return GestureDetector(
-        onTap: onBackPressed ?? () => Navigator.maybePop(context),
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Icon(Icons.arrow_back, size: 24, color: fgColor),
-        ),
+      // An IconButton: 48 dp target and a spoken label (T29 finding; the old
+      // 40 dp GestureDetector had neither).
+      return IconButton(
+        onPressed: onBackPressed ?? () => Navigator.maybePop(context),
+        tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        icon: Icon(Icons.arrow_back, size: 24, color: fgColor),
       );
     }
 
@@ -387,13 +386,12 @@ class const PicoSliverAppBar({
     }
 
     if (showBackButton) {
-      return GestureDetector(
-        onTap: onBackPressed ?? () => Navigator.maybePop(context),
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Icon(Icons.arrow_back, size: 24, color: fgColor),
-        ),
+      // An IconButton: 48 dp target and a spoken label (T29 finding; the old
+      // 40 dp GestureDetector had neither).
+      return IconButton(
+        onPressed: onBackPressed ?? () => Navigator.maybePop(context),
+        tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+        icon: Icon(Icons.arrow_back, size: 24, color: fgColor),
       );
     }
 
