@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dependencies/di.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_impl/src/api/case_mappers.dart';
 import 'package:pico_data_impl/src/api/endpoints.dart';
@@ -11,9 +12,13 @@ import 'package:pico_data_impl/src/cache/ttl.dart';
 @LazySingleton(as: CaseRepository)
 class CaseRepositoryImpl implements CaseRepository {
   /// Creates the repository.
-  CaseRepositoryImpl(
+  CaseRepositoryImpl(this._source) : _summaryEndpoint = kRegencySummaryEndpoint;
+
+  /// For tests: choose the kabupaten summary path without the const flag.
+  @visibleForTesting
+  CaseRepositoryImpl.withSummaryEndpoint(
     this._source, {
-    bool useSummaryEndpoint = kRegencySummaryEndpoint,
+    required bool useSummaryEndpoint,
   }) : _summaryEndpoint = useSummaryEndpoint;
 
   final SnapshotSource _source;

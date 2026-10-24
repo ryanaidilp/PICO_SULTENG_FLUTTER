@@ -90,7 +90,10 @@ void main() {
   });
 
   test('fallback makes 13 series calls in sequence and returns 13 summaries sorted by name', () async {
-    final repo = CaseRepositoryImpl(src, useSummaryEndpoint: false);
+    final repo = CaseRepositoryImpl.withSummaryEndpoint(
+      src,
+      useSummaryEndpoint: false,
+    );
     final events = await repo.watchRegencySummaries().toList();
     // Rows arrive one by one: 1, 2, ... 12 partial results, then all 13.
     expect(
@@ -120,12 +123,12 @@ void main() {
   test(
     'each series also fills the cache for the kabupaten detail page',
     () async {
-      await CaseRepositoryImpl(
+      await CaseRepositoryImpl.withSummaryEndpoint(
         src,
         useSummaryEndpoint: false,
       ).watchRegencySummaries().toList();
       adapter.calls.clear();
-      final detail = await CaseRepositoryImpl(
+      final detail = await CaseRepositoryImpl.withSummaryEndpoint(
         src,
         useSummaryEndpoint: false,
       ).watchSeries(const AreaRef.regency('7271')).toList();
@@ -137,12 +140,12 @@ void main() {
   test(
     'second open: cached summaries come first, no calls while fresh',
     () async {
-      await CaseRepositoryImpl(
+      await CaseRepositoryImpl.withSummaryEndpoint(
         src,
         useSummaryEndpoint: false,
       ).watchRegencySummaries().toList();
       adapter.calls.clear();
-      final events = await CaseRepositoryImpl(
+      final events = await CaseRepositoryImpl.withSummaryEndpoint(
         src,
         useSummaryEndpoint: false,
       ).watchRegencySummaries().toList();
@@ -156,7 +159,7 @@ void main() {
     'one series failing keeps the others and marks the result stale',
     () async {
       adapter.routes['/regencies/7204/cases'] = const FakeReply(500, 'x');
-      final events = await CaseRepositoryImpl(
+      final events = await CaseRepositoryImpl.withSummaryEndpoint(
         src,
         useSummaryEndpoint: false,
       ).watchRegencySummaries().toList();
@@ -172,7 +175,7 @@ void main() {
 
   test('regency list failing with no copy is one Left', () async {
     adapter.routes['/regencies'] = const FakeReply(500, 'x');
-    final events = await CaseRepositoryImpl(
+    final events = await CaseRepositoryImpl.withSummaryEndpoint(
       src,
       useSummaryEndpoint: false,
     ).watchRegencySummaries().toList();
