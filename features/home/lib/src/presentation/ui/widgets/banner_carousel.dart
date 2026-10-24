@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart' hide Banner;
 import 'package:home/src/l10n/translations.g.dart';
 import 'package:pico_data_api/pico_data_api.dart';
@@ -37,12 +36,13 @@ class _BannerCarouselState extends State<BannerCarousel> {
     if (MediaQuery.disableAnimationsOf(context)) {
       _controller.jumpToPage(i);
     } else {
-      
+      unawaited(
         _controller.animateToPage(
           i,
           duration: const Duration(milliseconds: 250),
           curve: Curves.easeOut,
         ),
+      );
     }
   }
 
