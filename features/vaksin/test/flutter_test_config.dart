@@ -8,7 +8,6 @@ import 'package:flutter_test/flutter_test.dart';
 Future<void> testExecutable(FutureOr<void> Function() testMain) async {
   TestWidgetsFlutterBinding.ensureInitialized();
   for (final (family, file) in [
-    ('packages/pico_ui_kit/Archivo', 'Archivo.ttf'),
     ('packages/pico_ui_kit/SourceSans3', 'SourceSans3.ttf'),
   ]) {
     final bytes = File('../../packages/pico_ui_kit/assets/fonts/$file')

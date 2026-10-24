@@ -95,43 +95,47 @@ class _InformasiShellPageState() extends State<InformasiShellPage> {
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<bool>(
     valueListenable: _isReady,
-    builder: (context, isReady, _) => AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      switchInCurve: Curves.easeOut,
-      switchOutCurve: Curves.easeIn,
-      child: isReady
-          ? Builder(
-              key: const ValueKey('content'),
-              builder: (context) {
-                // Sync locale change without showing loading indicator.
-                _syncLocale(LocaleSettings.currentLocale);
-                // Created once the container is ready; the provider closes
-                // it with this shell. Pass it what it needs from
-                // `_lease.get<T>()`.
-                return sl.TranslationProvider(
-                  child: MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (_) =>
-                            InformasiBloc(const AssetTipSource())
-                              ..add(const TipsStarted()),
-                      ),
-                      // Lazy: asked for only when Tentang is opened.
-                      BlocProvider(
-                        create: (_) => PartnersCubit(
-                          _lease.get<ContentRepository>().watchPartners,
+    builder: (context, isReady, _) => ColoredBox(
+      // The themed background behind the cross-fade: no light frame.
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        child: isReady
+            ? Builder(
+                key: const ValueKey('content'),
+                builder: (context) {
+                  // Sync locale change without showing loading indicator.
+                  _syncLocale(LocaleSettings.currentLocale);
+                  // Created once the container is ready; the provider closes
+                  // it with this shell. Pass it what it needs from
+                  // `_lease.get<T>()`.
+                  return sl.TranslationProvider(
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (_) =>
+                              InformasiBloc(const AssetTipSource())
+                                ..add(const TipsStarted()),
                         ),
-                      ),
-                    ],
-                    child: const AutoRouter(),
-                  ),
-                );
-              },
-            )
-          : const Scaffold(
-              key: ValueKey('loading'),
-              body: Center(child: CircularProgressIndicator()),
-            ),
+                        // Lazy: asked for only when Tentang is opened.
+                        BlocProvider(
+                          create: (_) => PartnersCubit(
+                            _lease.get<ContentRepository>().watchPartners,
+                          ),
+                        ),
+                      ],
+                      child: const AutoRouter(),
+                    ),
+                  );
+                },
+              )
+            : const Scaffold(
+                key: ValueKey('loading'),
+                body: Center(child: CircularProgressIndicator()),
+              ),
+      ),
     ),
   );
 }

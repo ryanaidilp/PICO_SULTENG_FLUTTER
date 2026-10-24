@@ -93,48 +93,52 @@ class _PengaturanShellPageState() extends State<PengaturanShellPage> {
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<bool>(
     valueListenable: _isReady,
-    builder: (context, isReady, _) => AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      switchInCurve: Curves.easeOut,
-      switchOutCurve: Curves.easeIn,
-      child: isReady
-          ? Builder(
-              key: const ValueKey('content'),
-              builder: (context) {
-                // Sync locale change without showing loading indicator.
-                _syncLocale(LocaleSettings.currentLocale);
-                // Created once the container is ready; the provider closes
-                // it with this shell. Pass it what it needs from
-                // `_lease.get<T>()`.
-                return sl.TranslationProvider(
-                  child: BlocProvider(
-                    create: (_) => PengaturanBloc(
-                      _lease.get<SettingsRepository>(),
-                      _lease.get<LocalDataAdmin>(),
-                      _lease.get<DataUpdateAlerts>(),
-                    )..add(const PengaturanStarted()),
-                    // This route sits above the tab bar, so it brings its own
-                    // Material surface, safe area and title.
-                    child: Scaffold(
-                      appBar: AppBar(
-                        // Depends on the provider, so a language change
-                        // rebuilds the title (sl.t alone would not).
-                        title: Builder(
-                          builder: (c) => Text(
-                            sl.TranslationProvider.of(c).translations.title,
+    builder: (context, isReady, _) => ColoredBox(
+      // The themed background behind the cross-fade: no light frame.
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        child: isReady
+            ? Builder(
+                key: const ValueKey('content'),
+                builder: (context) {
+                  // Sync locale change without showing loading indicator.
+                  _syncLocale(LocaleSettings.currentLocale);
+                  // Created once the container is ready; the provider closes
+                  // it with this shell. Pass it what it needs from
+                  // `_lease.get<T>()`.
+                  return sl.TranslationProvider(
+                    child: BlocProvider(
+                      create: (_) => PengaturanBloc(
+                        _lease.get<SettingsRepository>(),
+                        _lease.get<LocalDataAdmin>(),
+                        _lease.get<DataUpdateAlerts>(),
+                      )..add(const PengaturanStarted()),
+                      // This route sits above the tab bar, so it brings its own
+                      // Material surface, safe area and title.
+                      child: Scaffold(
+                        appBar: AppBar(
+                          // Depends on the provider, so a language change
+                          // rebuilds the title (sl.t alone would not).
+                          title: Builder(
+                            builder: (c) => Text(
+                              sl.TranslationProvider.of(c).translations.title,
+                            ),
                           ),
                         ),
+                        body: const SafeArea(child: AutoRouter()),
                       ),
-                      body: const SafeArea(child: AutoRouter()),
                     ),
-                  ),
-                );
-              },
-            )
-          : const Scaffold(
-              key: ValueKey('loading'),
-              body: Center(child: CircularProgressIndicator()),
-            ),
+                  );
+                },
+              )
+            : const Scaffold(
+                key: ValueKey('loading'),
+                body: Center(child: CircularProgressIndicator()),
+              ),
+      ),
     ),
   );
 }
