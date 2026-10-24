@@ -81,7 +81,7 @@ class _KabupatenPageState extends State<KabupatenPage> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                MetricChips(
+                CaseTypeDropdown(
                   metric: _metric,
                   onChanged: (m) => setState(() => _metric = m),
                 ),

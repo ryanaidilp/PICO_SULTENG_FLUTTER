@@ -13,10 +13,15 @@ PicoState stateOf(CaseMetric m) => switch (m) {
   CaseMetric.active => PicoState.active,
 };
 
-/// The four case types as chips with their marks (never colour alone).
-class MetricChips extends StatelessWidget {
-  /// Creates the chips.
-  const MetricChips({required this.metric, required this.onChanged, super.key});
+/// The case type dropdown of the first app, with the state mark before the
+/// label (never colour alone).
+class CaseTypeDropdown extends StatelessWidget {
+  /// Creates the dropdown.
+  const CaseTypeDropdown({
+    required this.metric,
+    required this.onChanged,
+    super.key,
+  });
 
   /// The chosen type.
   final CaseMetric metric;
@@ -28,23 +33,72 @@ class MetricChips extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = PicoKitText.of(context);
     final colors = context.picoStates;
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: [
+    return PicoDropdown<CaseMetric>(
+      semanticLabel: context.t.caseTypeLabel,
+      value: metric,
+      leading: PicoMarkView(
+        mark: stateOf(metric).mark,
+        color: colors.of(stateOf(metric)),
+        size: 12,
+      ),
+      items: [
         for (final m in CaseMetric.values)
-          ChoiceChip(
-            avatar: PicoMarkView(
-              mark: stateOf(m).mark,
-              color: colors.of(stateOf(m)),
-              size: 12,
-            ),
-            label: Text(k.stateLabel(stateOf(m))),
-            selected: metric == m,
-            materialTapTargetSize: MaterialTapTargetSize.padded,
-            onSelected: (_) => onChanged(m),
-          ),
+          PicoDropdownItem(m, k.stateLabel(stateOf(m))),
       ],
+      onChanged: onChanged,
+    );
+  }
+}
+
+/// Picks one calendar year of the data, or the whole range. Years come from
+/// the data bounds; the last year ends on the last day with data.
+class YearDropdown extends StatelessWidget {
+  /// Creates the dropdown.
+  const YearDropdown({
+    required this.range,
+    required this.bounds,
+    required this.onChanged,
+    super.key,
+  });
+
+  /// Effective range.
+  final DateTimeRange range;
+
+  /// Data bounds.
+  final DateTimeRange bounds;
+
+  /// A range was chosen.
+  final ValueChanged<DateTimeRange> onChanged;
+
+  DateTimeRange _yearRange(int y) => DateTimeRange(
+    start: DateTime(y).isBefore(bounds.start) ? bounds.start : DateTime(y),
+    end: DateTime(y, 12, 31).isAfter(bounds.end)
+        ? bounds.end
+        : DateTime(y, 12, 31),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final t = context.t;
+    final years = [
+      for (var y = bounds.end.year; y >= bounds.start.year; y--) y,
+    ];
+    // 0 is all years, -1 a custom range (7, 30 or 90 days, or picked dates).
+    final current = range == bounds
+        ? 0
+        : years.firstWhere((y) => _yearRange(y) == range, orElse: () => -1);
+    return PicoDropdown<int>(
+      semanticLabel: t.yearLabel,
+      value: current,
+      leading: const Icon(Icons.calendar_today_outlined, size: 16),
+      items: [
+        if (current == -1) PicoDropdownItem(-1, t.yearCustom),
+        PicoDropdownItem(0, t.yearAll),
+        for (final y in years) PicoDropdownItem(y, '$y'),
+      ],
+      onChanged: (y) {
+        if (y != -1) onChanged(y == 0 ? bounds : _yearRange(y));
+      },
     );
   }
 }
@@ -126,18 +180,30 @@ class AreaControls extends StatelessWidget {
       children: [
         AreaLevelBar(level: query.level, onLevel: onLevel),
         const SizedBox(height: 12),
-        MetricChips(
-          metric: query.metric,
-          onChanged: (m) => onQuery(query.copyWith(metric: m)),
-        ),
-        const SizedBox(height: 12),
-        PicoSegmented<bool>(
-          values: const [true, false],
-          selected: query.daily,
-          label: (d) => d ? t.daily : t.cumulative,
-          onChanged: (d) => onQuery(query.copyWith(daily: d)),
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            CaseTypeDropdown(
+              metric: query.metric,
+              onChanged: (m) => onQuery(query.copyWith(metric: m)),
+            ),
+            YearDropdown(
+              range: range,
+              bounds: bounds,
+              onChanged: (r) =>
+                  onQuery(query.copyWith(from: r.start, to: r.end)),
+            ),
+          ],
         ),
         const SizedBox(height: 4),
+        SwitchListTile.adaptive(
+          contentPadding: EdgeInsets.zero,
+          title: Text(t.cumulative),
+          value: !query.daily,
+          onChanged: (c) => onQuery(query.copyWith(daily: !c)),
+        ),
         MergeSemantics(
           child: SwitchListTile.adaptive(
             contentPadding: EdgeInsets.zero,

@@ -35,7 +35,9 @@ class ArchiveNote extends StatelessWidget {
   }
 }
 
-/// The four tiles of one area: cumulative value and the daily change.
+/// The figures of one area in the original PICO layout: the positive total as
+/// a blue hero card, then dirawat, sembuh and meninggal as three tiles (a
+/// column at large text sizes).
 class CaseTiles extends StatelessWidget {
   /// Creates the tiles for [day].
   const new({required this.day, super.key});
@@ -46,31 +48,45 @@ class CaseTiles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final large = MediaQuery.textScalerOf(context).scale(14) / 14 >= 1.5;
-    return LayoutBuilder(
-      builder: (context, box) {
-        final w = large ? box.maxWidth : (box.maxWidth - 8) / 2;
-        return Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final (state, metric) in const [
-              (PicoState.positive, CaseMetric.positive),
-              (PicoState.recovered, CaseMetric.recovered),
-              (PicoState.deceased, CaseMetric.deceased),
-              (PicoState.active, CaseMetric.active),
-            ])
-              SizedBox(
-                width: w,
-                child: PicoStatTile(
-                  state: state,
-                  value: day.cumulative.of(metric),
-                  delta: day.daily.of(metric),
-                  date: day.date,
-                ),
-              ),
-          ],
-        );
-      },
+    Widget tile(PicoState state, CaseMetric metric) => PicoStatTile(
+      state: state,
+      value: day.cumulative.of(metric),
+      delta: day.daily.of(metric),
+      date: day.date,
+    );
+    const rest = [
+      (PicoState.active, CaseMetric.active),
+      (PicoState.recovered, CaseMetric.recovered),
+      (PicoState.deceased, CaseMetric.deceased),
+    ];
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        PicoHeroStat(
+          label: context.t.totalPositive,
+          value: day.cumulative.positive,
+          delta: day.daily.positive,
+          date: day.date,
+        ),
+        const SizedBox(height: 12),
+        if (large)
+          for (final (state, metric) in rest) ...[
+            tile(state, metric),
+            const SizedBox(height: 8),
+          ]
+        else
+          IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final (i, (state, metric)) in rest.indexed) ...[
+                  if (i > 0) const SizedBox(width: 8),
+                  Expanded(child: tile(state, metric)),
+                ],
+              ],
+            ),
+          ),
+      ],
     );
   }
 }

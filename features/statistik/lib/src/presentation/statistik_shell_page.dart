@@ -97,66 +97,70 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
   @override
   Widget build(BuildContext context) => ValueListenableBuilder<bool>(
     valueListenable: _isReady,
-    builder: (context, isReady, _) => AnimatedSwitcher(
-      duration: const Duration(milliseconds: 300),
-      switchInCurve: Curves.easeOut,
-      switchOutCurve: Curves.easeIn,
-      child: isReady
-          ? Builder(
-              key: const ValueKey('content'),
-              builder: (context) {
-                // Sync locale change without showing loading indicator.
-                _syncLocale(LocaleSettings.currentLocale);
-                // Created once the container is ready; the provider closes
-                // it with this shell. Pass it what it needs from
-                // `_lease.get<T>()`.
-                return sl.TranslationProvider(
-                  child: MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                        create: (_) => AreaBloc(_lease.get<CaseRepository>()),
-                      ),
-                      // Lazy: asked for only when the picker or the Sulteng
-                      // profile is on screen.
-                      BlocProvider(
-                        create: (_) => RtBloc(_lease.get<CaseRepository>()),
-                      ),
-                      BlocProvider(
-                        create: (_) => ProvincesCubit(
-                          _lease.get<CaseRepository>().watchProvinceSummaries,
+    builder: (context, isReady, _) => ColoredBox(
+      // The themed background behind the cross-fade: no light frame.
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 300),
+        switchInCurve: Curves.easeOut,
+        switchOutCurve: Curves.easeIn,
+        child: isReady
+            ? Builder(
+                key: const ValueKey('content'),
+                builder: (context) {
+                  // Sync locale change without showing loading indicator.
+                  _syncLocale(LocaleSettings.currentLocale);
+                  // Created once the container is ready; the provider closes
+                  // it with this shell. Pass it what it needs from
+                  // `_lease.get<T>()`.
+                  return sl.TranslationProvider(
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (_) => AreaBloc(_lease.get<CaseRepository>()),
                         ),
-                      ),
-                      BlocProvider(
-                        create: (_) => RegenciesCubit(
-                          _lease.get<CaseRepository>(),
-                          _lease.get<DirectoryRepository>(),
+                        // Lazy: asked for only when the picker or the Sulteng
+                        // profile is on screen.
+                        BlocProvider(
+                          create: (_) => RtBloc(_lease.get<CaseRepository>()),
                         ),
-                      ),
-                      BlocProvider(
-                        create: (_) => TestTypesCubit(
-                          _lease.get<StatsRepository>().watchTestTypes,
+                        BlocProvider(
+                          create: (_) => ProvincesCubit(
+                            _lease.get<CaseRepository>().watchProvinceSummaries,
+                          ),
                         ),
-                      ),
-                      BlocProvider(
-                        create: (_) => TestTotalsCubit(
-                          _lease.get<StatsRepository>().watchLatestTests,
+                        BlocProvider(
+                          create: (_) => RegenciesCubit(
+                            _lease.get<CaseRepository>(),
+                            _lease.get<DirectoryRepository>(),
+                          ),
                         ),
-                      ),
-                      BlocProvider(
-                        create: (_) => GenderCubit(
-                          _lease.get<StatsRepository>().watchLatestGender,
+                        BlocProvider(
+                          create: (_) => TestTypesCubit(
+                            _lease.get<StatsRepository>().watchTestTypes,
+                          ),
                         ),
-                      ),
-                    ],
-                    child: const AutoRouter(),
-                  ),
-                );
-              },
-            )
-          : const Scaffold(
-              key: ValueKey('loading'),
-              body: Center(child: CircularProgressIndicator()),
-            ),
+                        BlocProvider(
+                          create: (_) => TestTotalsCubit(
+                            _lease.get<StatsRepository>().watchLatestTests,
+                          ),
+                        ),
+                        BlocProvider(
+                          create: (_) => GenderCubit(
+                            _lease.get<StatsRepository>().watchLatestGender,
+                          ),
+                        ),
+                      ],
+                      child: const AutoRouter(),
+                    ),
+                  );
+                },
+              )
+            : const Scaffold(
+                key: ValueKey('loading'),
+                body: Center(child: CircularProgressIndicator()),
+              ),
+      ),
     ),
   );
 }

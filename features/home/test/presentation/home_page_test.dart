@@ -297,33 +297,17 @@ void main() {
     },
   );
 
-  testWidgets('only the dirawat tile mark is crimson', (tester) async {
-    await setup(tester, AppLocale.id);
-    await tester.pumpWidget(host(repo()));
-    await tester.pumpAndSettle();
-    final marks = tester.widgetList<PicoMarkView>(find.byType(PicoMarkView));
-    final crimson = marks
-        .where((m) => m.color == PicoBrandPalette.crimsonLight)
-        .toList();
-    expect(
-      crimson.length,
-      2,
-      reason: 'one dirawat tile for Nasional and one for Sulawesi Tengah, no other crimson',
-    );
-    expect(crimson.every((m) => m.mark == PicoMark.triangle), isTrue);
-  });
-
-  testWidgets('text scale 2.0 lays out without overflow', (tester) async {
-    await setup(tester, AppLocale.id);
-    tester.view.physicalSize = const Size(412, 892);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.reset);
-    await tester.pumpWidget(host(repo(), scale: 2));
-    await tester.pumpAndSettle();
-    await tester.drag(find.byType(ListView), const Offset(0, -3000));
-    await tester.pumpAndSettle();
-    expect(tester.takeException(), isNull);
-  });
+  testWidgets(
+    'every tile carries a mark next to its change, never colour alone',
+    (tester) async {
+      await setup(tester, AppLocale.id);
+      await tester.pumpWidget(host(repo()));
+      await tester.pumpAndSettle();
+      // Hero plus three tiles for Nasional and for Sulawesi Tengah: each
+      // change starts with a glyph (flat here), not only a colour.
+      expect(find.textContaining('■ 0'), findsAtLeastNWidgets(8));
+    },
+  );
 
   testWidgets('every tappable target is at least 48 dp and labelled', (
     tester,

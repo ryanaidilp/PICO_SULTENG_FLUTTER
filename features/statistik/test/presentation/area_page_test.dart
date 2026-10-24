@@ -131,10 +131,12 @@ void main() {
       final nav = <String>[];
       await tester.pumpWidget(host(repo, const AreaQuery(), navigated: nav));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Sembuh').first);
+      await tester.tap(find.text('Positif').first);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Sembuh').last);
       await tester.pumpAndSettle();
       expect(nav.last, '/statistik?metric=recovered');
-      await tester.tap(find.text('Kumulatif'));
+      await tester.tap(find.byType(Switch).first);
       await tester.pumpAndSettle();
       expect(nav.last, '/statistik?metric=recovered&daily=false');
       await tester.tap(find.text('30 hari'));
@@ -185,7 +187,7 @@ void main() {
       tester.widget<PicoLineChart>(find.byType(PicoLineChart)).series.length,
       1,
     );
-    await tester.tap(find.byType(Switch));
+    await tester.tap(find.byType(Switch).last);
     await tester.pumpAndSettle();
     expect(
       tester.widget<PicoLineChart>(find.byType(PicoLineChart)).series.length,

@@ -21,5 +21,6 @@
   "banner_page": "$n dari $total",
   "banner_label": "$title, banner $n dari $total",
   "banner_prev": "Banner sebelumnya",
-  "banner_next": "Banner berikutnya"
+  "banner_next": "Banner berikutnya",
+  "total_positive": "Total kasus positif"
 }
