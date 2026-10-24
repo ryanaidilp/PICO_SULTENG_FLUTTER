@@ -38,6 +38,12 @@ void main() {
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
+    // Every hub icon is a registered brand icon.
+    final icons = tester.widgetList<PicoBrandIcon>(find.byType(PicoBrandIcon));
+    expect(icons, isNotEmpty);
+    for (final w in icons) {
+      expect(PicoIconRegistry.has(w.iconKey), isTrue, reason: w.iconKey);
+    }
   });
 
   testWidgets('tip: review note, body, external and in-app links', (

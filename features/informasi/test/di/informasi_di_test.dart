@@ -4,6 +4,8 @@ import 'package:dependencies/di.dart' show GetIt, GetItHelper;
 import 'package:dependencies/state.dart' show BlocBase;
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:pico_data_api/testing.dart';
 import 'package:informasi/src/di/informasi_container.dart';
 import 'package:informasi/src/di/informasi_global_module.dart';
 import 'package:informasi/src/informasi_manifest.dart';
@@ -49,7 +51,8 @@ void main() {
     () async {
       // A root with only the types informasi_imports.dart
       // forwards: register one fake per forwarded type.
-      final root = GetIt.asNewInstance();
+      final root = GetIt.asNewInstance()
+        ..registerSingleton<ContentRepository>(FakeContentRepository());
       late GetIt child;
       final container = FeatureContainer(
         'informasi',

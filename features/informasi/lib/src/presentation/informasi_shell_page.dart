@@ -9,6 +9,8 @@ import 'package:informasi/src/domain/tip_source.dart';
 import 'package:informasi/src/l10n/translations.g.dart' as sl;
 import 'package:informasi/src/presentation/bloc/informasi_bloc.dart';
 import 'package:informasi/src/presentation/bloc/informasi_event.dart';
+import 'package:informasi/src/presentation/ui/pages/tentang_page.dart';
+import 'package:pico_data_api/pico_data_api.dart';
 import 'package:locale_core/locale_core.dart';
 
 /// Shell page for the Informasi feature.
@@ -107,10 +109,20 @@ class _InformasiShellPageState() extends State<InformasiShellPage> {
                 // it with this shell. Pass it what it needs from
                 // `_lease.get<T>()`.
                 return sl.TranslationProvider(
-                  child: BlocProvider(
-                    create: (_) =>
-                        InformasiBloc(const AssetTipSource())
-                          ..add(const TipsStarted()),
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) =>
+                            InformasiBloc(const AssetTipSource())
+                              ..add(const TipsStarted()),
+                      ),
+                      // Lazy: asked for only when Tentang is opened.
+                      BlocProvider(
+                        create: (_) => PartnersCubit(
+                          _lease.get<ContentRepository>().watchPartners,
+                        ),
+                      ),
+                    ],
                     child: const AutoRouter(),
                   ),
                 );

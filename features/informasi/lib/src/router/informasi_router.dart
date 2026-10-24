@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:identifiers/identifiers.dart';
 import 'package:informasi/src/presentation/informasi_shell_page.dart';
 import 'package:informasi/src/presentation/ui/pages/informasi_page.dart';
+import 'package:informasi/src/presentation/ui/pages/tentang_page.dart';
 import 'package:informasi/src/presentation/ui/pages/tip_page.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 
@@ -19,6 +20,7 @@ class InformasiRouter() extends RootStackRouter {
       children: [
         AutoRoute(page: InformasiRoute.page, path: '', initial: true),
         AutoRoute(page: TipRoute.page, path: 'tips/:slug'),
+        AutoRoute(page: TentangRoute.page, path: 'tentang'),
       ],
     ),
   ];

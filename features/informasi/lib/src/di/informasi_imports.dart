@@ -1,14 +1,8 @@
 import 'package:dependencies/di.dart';
+import 'package:pico_data_api/pico_data_api.dart';
 
-/// The app-root types the Informasi feature uses.
-///
-/// The only file in this feature that reads [root]. The feature's container
-/// never falls back to the root, so a type that is not forwarded here (and
-/// not registered by the feature itself) cannot be resolved. Each line
-/// forwards one type; the root keeps ownership of the instance:
-/// ```dart
-/// child.registerFactory<HttpClient>(() => root<HttpClient>());
-/// ```
+/// Forwards the root types the Informasi container needs (ports only). The
+/// articles are bundled assets; only the partners come from a port.
 void importInformasiGlobals(GetIt child, GetIt root) {
-  // Nothing to forward: the articles are bundled assets, not root ports.
+  child.registerFactory<ContentRepository>(() => root<ContentRepository>());
 }
