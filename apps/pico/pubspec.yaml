@@ -55,6 +55,8 @@ dependencies:
     path: ../../infrastructure/network_sdk_dio
   pengaturan:
     path: ../../features/pengaturan
+  peta:
+    path: ../../features/peta
   pico_data_api:
     path: ../../features/pico_data/pico_data_api
   pico_data_impl:

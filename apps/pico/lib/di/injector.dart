@@ -12,6 +12,7 @@ import 'package:layanan/layanan.dart';
 import 'package:monitoring_impl/monitoring_impl.dart';
 import 'package:network_sdk_dio/network_sdk_dio.dart';
 import 'package:pengaturan/pengaturan.dart';
+import 'package:peta/peta.dart';
 import 'package:pico_data_impl/pico_data_impl.dart';
 import 'package:statistik/statistik.dart';
 import 'package:vaksin/vaksin.dart';
@@ -34,6 +35,7 @@ final getIt = GetIt.instance;
     ExternalModule(MonitoringImplPackageModule),
     ExternalModule(NetworkSdkDioPackageModule),
     ExternalModule(PengaturanGlobalModule),
+    ExternalModule(PetaGlobalModule),
     ExternalModule(PicoDataImplPackageModule),
     ExternalModule(StatistikGlobalModule),
     ExternalModule(VaksinGlobalModule),

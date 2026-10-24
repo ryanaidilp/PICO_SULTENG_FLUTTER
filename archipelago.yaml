@@ -51,6 +51,7 @@ brick_versions:
   feature_monorepo_skeleton/informasi: 2.2.0
   feature_monorepo_skeleton/layanan: 2.2.0
   feature_monorepo_skeleton/pengaturan: 2.2.0
+  feature_monorepo_skeleton/peta: 2.2.0
   feature_monorepo_skeleton/pico_data: 2.2.0
   feature_monorepo_skeleton/statistik: 2.2.0
   feature_monorepo_skeleton/vaksin: 2.2.0
