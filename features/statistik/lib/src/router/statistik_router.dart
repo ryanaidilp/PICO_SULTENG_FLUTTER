@@ -1,6 +1,8 @@
 import 'package:dependencies/auto_route.dart';
+import 'package:flutter/widgets.dart';
+import 'package:identifiers/identifiers.dart';
 import 'package:statistik/src/presentation/statistik_shell_page.dart';
-import 'package:statistik/src/presentation/ui/pages/statistik_page.dart';
+import 'package:statistik/src/presentation/ui/pages/area_page.dart';
 
 part 'statistik_router.gr.dart';
 
@@ -11,8 +13,28 @@ class StatistikRouter() extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
       page: StatistikShellRoute.page,
-      path: '/statistik',
-      children: [AutoRoute(page: StatistikRoute.page, path: '', initial: true)],
+      path: PicoRoutes.statistikRoot,
+      children: [
+        // No transition: a control change replaces the route with its new
+        // canonical URL and the page must not animate.
+        AutoRoute(
+          page: AreaRoute.page,
+          path: '',
+          initial: true,
+          type: RouteType.custom(
+            transitionsBuilder: TransitionsBuilders.noTransition,
+            durationInMilliseconds: 0,
+          ),
+        ),
+        AutoRoute(
+          page: ProvinceAreaRoute.page,
+          path: 'provinsi/:id',
+          type: RouteType.custom(
+            transitionsBuilder: TransitionsBuilders.noTransition,
+            durationInMilliseconds: 0,
+          ),
+        ),
+      ],
     ),
   ];
 }

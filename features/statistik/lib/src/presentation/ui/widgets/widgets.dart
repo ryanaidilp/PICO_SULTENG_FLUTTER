@@ -1,1 +1,1 @@
-// Export feature widgets here.
+export 'area_widgets.dart';

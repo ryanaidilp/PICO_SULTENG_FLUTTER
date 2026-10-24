@@ -6,6 +6,8 @@ import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:statistik/src/di/statistik_container.dart';
 import 'package:statistik/src/di/statistik_global_module.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:pico_data_api/testing.dart';
 import 'package:statistik/src/statistik_manifest.dart';
 import 'package:statistik/src/statistik_sdk.dart';
 
@@ -49,7 +51,8 @@ void main() {
     () async {
       // A root with only the types statistik_imports.dart
       // forwards: register one fake per forwarded type.
-      final root = GetIt.asNewInstance();
+      final root = GetIt.asNewInstance()
+        ..registerSingleton<CaseRepository>(FakeCaseRepository());
       late GetIt child;
       final container = FeatureContainer(
         'statistik',

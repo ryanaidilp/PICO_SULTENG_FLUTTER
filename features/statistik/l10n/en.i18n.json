@@ -1,3 +1,20 @@
 {
-  "title": "Statistik"
+  "title": "Statistics",
+  "level_national": "National",
+  "level_province": "Province",
+  "level_regency": "Regency",
+  "level_label": "Area level",
+  "metric_label": "Case type",
+  "daily": "Daily",
+  "cumulative": "Cumulative",
+  "compare": "Compare",
+  "compare_hint": "Cumulative data only",
+  "total_in_range": "Total in range",
+  "peak": "Daily peak: $value on $date",
+  "see_rt": "See Rt",
+  "tests": "Tests",
+  "map": "Map",
+  "y_daily": "Daily cases",
+  "y_cumulative": "Cumulative cases",
+  "area_name": "Area: $name"
 }

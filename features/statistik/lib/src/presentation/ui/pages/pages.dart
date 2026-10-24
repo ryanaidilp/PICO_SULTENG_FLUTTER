@@ -1,1 +1,1 @@
-export 'statistik_page.dart';
+export 'area_page.dart';

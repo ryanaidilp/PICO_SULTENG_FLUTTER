@@ -1,3 +1,20 @@
 {
-  "title": "Statistik"
+  "title": "Statistik",
+  "level_national": "Nasional",
+  "level_province": "Provinsi",
+  "level_regency": "Kabupaten",
+  "level_label": "Tingkat wilayah",
+  "metric_label": "Jenis kasus",
+  "daily": "Harian",
+  "cumulative": "Kumulatif",
+  "compare": "Bandingkan",
+  "compare_hint": "Hanya untuk data kumulatif",
+  "total_in_range": "Total dalam rentang",
+  "peak": "Puncak harian: $value pada $date",
+  "see_rt": "Lihat Rt",
+  "tests": "Tes",
+  "map": "Peta",
+  "y_daily": "Kasus harian",
+  "y_cumulative": "Kasus kumulatif",
+  "area_name": "Wilayah: $name"
 }

@@ -1,4 +1,3 @@
-import 'package:dependencies/auto_route.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:router_registry/router_registry.dart';
 import 'package:statistik/src/router/statistik_router.dart';
@@ -12,16 +11,7 @@ import 'package:statistik/src/router/statistik_router.dart';
 class const StatistikManifest() extends FeatureManifest {
   @override
   void registerRoutes(RouteRegistry registry) {
-    registry.register([
-      AutoRoute(
-        page: StatistikShellRoute.page,
-        path: '/statistik',
-        children: [
-          AutoRoute(page: StatistikRoute.page, path: '', initial: true),
-          // TODO(user): Register more child routes for this feature, e.g.
-          //   AutoRoute(page: StatistikDetailRoute.page, path: 'detail/:id'),
-        ],
-      ),
-    ]);
+    // One list for the router config and the host registry.
+    registry.register(StatistikRouter().routes);
   }
 }

@@ -5,9 +5,10 @@ import 'package:dependencies/state.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:locale_core/locale_core.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:statistik/src/l10n/translations.g.dart' as sl;
 import 'package:statistik/src/di/statistik_container.dart';
-import 'package:statistik/src/presentation/bloc/statistik_bloc.dart';
-import 'package:statistik/src/presentation/bloc/statistik_event.dart';
+import 'package:statistik/src/presentation/bloc/area_bloc.dart';
 
 /// Shell page for the Statistik feature.
 ///
@@ -38,6 +39,7 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
   final _isReady = ValueNotifier<bool>(false);
 
   late final FeatureLease _lease;
+  StreamSubscription<PicoLocale>? _localeSub;
 
   /// The last synced locale to avoid redundant loads.
   PicoLocale? _lastSyncedLocale;
@@ -46,6 +48,10 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
   void initState() {
     super.initState();
     _lease = statistikContainer.acquire();
+    // Follow language changes while the page is open.
+    _localeSub = LocaleSettings.getLocaleStream().listen(
+      (l) => unawaited(_syncLocale(l)),
+    );
     // Build the content only once the container is ready.
     unawaited(
       _lease.ready
@@ -56,6 +62,7 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
 
   @override
   void dispose() {
+    unawaited(_localeSub?.cancel());
     _isReady.dispose();
     // The container is torn down after the last lease is released.
     unawaited(_lease.release().catchError(_reportContainerError));
@@ -70,9 +77,12 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
     if (_lastSyncedLocale == locale) return;
     _lastSyncedLocale = locale;
 
-    // TODO(user): If this feature uses slang translations, load them here:
-    // final featureLocale = _mapToFeatureLocale(locale);
-    // await LocaleSettings.setLocale(featureLocale);
+    // The feature's own slang follows the app-wide language.
+    final featureLocale = sl.AppLocale.values.firstWhere(
+      (l) => l.languageCode == locale.languageCode,
+      orElse: () => sl.AppLocale.id,
+    );
+    await sl.LocaleSettings.setLocale(featureLocale);
 
     if (mounted) {
       _isReady.value = true;
@@ -95,10 +105,11 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
                 // Created once the container is ready; the provider closes
                 // it with this shell. Pass it what it needs from
                 // `_lease.get<T>()`.
-                return BlocProvider(
-                  create: (_) =>
-                      StatistikBloc()..add(const StatistikEvent.started()),
-                  child: const AutoRouter(),
+                return sl.TranslationProvider(
+                  child: BlocProvider(
+                    create: (_) => AreaBloc(_lease.get<CaseRepository>()),
+                    child: const AutoRouter(),
+                  ),
                 );
               },
             )
