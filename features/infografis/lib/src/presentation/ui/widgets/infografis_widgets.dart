@@ -15,7 +15,9 @@ class InfographicCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final t = context.t;
     final k = PicoKitText.of(context);
-    final count = t.imagesCount(count: k.number(item.imageUrls.length));
+    final count = item.imageUrls.length == 1
+        ? t.imagesCountOne
+        : t.imagesCount(count: k.number(item.imageUrls.length));
     return Semantics(
       button: true,
       label: '${item.title}, $count',

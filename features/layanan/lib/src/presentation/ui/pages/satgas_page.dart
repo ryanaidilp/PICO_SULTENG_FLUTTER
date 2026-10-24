@@ -126,7 +126,9 @@ class _SatgasPageState extends State<SatgasPage> {
                   for (final g in groups)
                     _Group(
                       group: g,
-                      count: t.membersCount(count: k.number(g.members.length)),
+                      count: g.members.length == 1
+                          ? t.membersCountOne
+                          : t.membersCount(count: k.number(g.members.length)),
                       // A filter or a search shows its result opened.
                       open:
                           _open.contains(g.regencyCode) ||

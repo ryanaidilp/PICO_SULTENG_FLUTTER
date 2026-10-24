@@ -45,6 +45,7 @@ void main() {
         findsOneWidget,
       );
       expect(find.textContaining('Anang'), findsNothing);
+      expect(find.text('1 kontak'), findsOneWidget); // Kota Palu has one
       await tester.tap(find.text('Banggai').last);
       await tester.pumpAndSettle();
       expect(
