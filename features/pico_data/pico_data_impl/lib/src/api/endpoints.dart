@@ -60,7 +60,7 @@ abstract final class PicoEndpoints {
   );
 
   /// `GET /regencies?load_all=true`.
-  static final regencies = Endpoint<List<({String code, String name})>>(
+  static final regencies = Endpoint<List<Regency>>(
     '/regencies',
     (d) => regencyList(_list(d)),
     query: {'load_all': true},

@@ -128,6 +128,15 @@ class FakeStatsRepository implements StatsRepository {
 
 /// Fake [DirectoryRepository].
 class FakeDirectoryRepository implements DirectoryRepository {
+  /// Result of [watchRegencies].
+  Either<PicoFailure, DataSnapshot<List<Regency>>> regencies = fakeSnapshot(
+    const <Regency>[],
+  );
+
+  @override
+  Watch<List<Regency>> watchRegencies({bool forceRefresh = false}) =>
+      _once(regencies);
+
   /// Result of [watchHospitals].
   Either<PicoFailure, DataSnapshot<List<Hospital>>> hospitals = fakeSnapshot(
     const <Hospital>[],

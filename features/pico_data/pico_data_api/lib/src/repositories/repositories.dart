@@ -40,6 +40,9 @@ abstract interface class StatsRepository {
 
 /// Directories (C03). TTL 6 h.
 abstract interface class DirectoryRepository {
+  /// The 13 kabupaten and kota: code and name. Light, unlike the case series.
+  Watch<List<Regency>> watchRegencies({bool forceRefresh = false});
+
   /// Hospitals.
   Watch<List<Hospital>> watchHospitals({bool forceRefresh = false});
 

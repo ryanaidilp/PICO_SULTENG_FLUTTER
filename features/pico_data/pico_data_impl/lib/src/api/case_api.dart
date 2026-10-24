@@ -29,7 +29,7 @@ class CaseApi {
       _client.fetch(PicoEndpoints.provinceSeries(id));
 
   /// `GET /regencies?load_all=true`: codes and names of the 13 kabupaten.
-  Future<Either<PicoFailure, List<({String code, String name})>>> regencies() =>
+  Future<Either<PicoFailure, List<Regency>>> regencies() =>
       _client.fetch(PicoEndpoints.regencies);
 
   /// `GET /regencies/{code}/cases`, all days, ascending by date.

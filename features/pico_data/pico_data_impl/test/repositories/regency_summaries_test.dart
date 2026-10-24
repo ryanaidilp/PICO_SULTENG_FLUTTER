@@ -159,6 +159,21 @@ void main() {
     expect(events.single.left.kind, PicoFailureKind.server);
   });
 
+  test(
+    'the directory repository lists the 13 regencies with one light request',
+    () async {
+      final events = await DirectoryRepositoryImpl(src)
+          .watchRegencies()
+          .toList();
+      expect(events.single.right.data.length, 13);
+      expect(
+        events.single.right.data.first,
+        const Regency(code: '7201', name: 'Banggai Kepulauan'),
+      );
+      expect(adapter.calls, ['/regencies']);
+    },
+  );
+
   test('the include_latest_case mapper is ready for the deploy', () {
     final rows =
         jsonDecode(fixture('provinces_per_page_2.json'))['data']

@@ -144,8 +144,8 @@ CaseSeries seriesFromRegency(List<dynamic> rows, {required String code}) {
   );
 }
 
-/// Regency list rows to `(code, name)` pairs.
-List<({String code, String name})> regencyList(List<dynamic> rows) => [
+/// Regency list rows.
+List<Regency> regencyList(List<dynamic> rows) => [
   for (final r in rows.cast<Map<String, dynamic>>())
-    (code: '${r['id']}', name: r['name'] as String),
+    Regency(code: '${r['id']}', name: r['name'] as String),
 ];

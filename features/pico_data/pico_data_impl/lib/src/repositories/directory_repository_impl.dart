@@ -13,6 +13,14 @@ class DirectoryRepositoryImpl implements DirectoryRepository {
   final SnapshotSource _source;
 
   @override
+  Watch<List<Regency>> watchRegencies({bool forceRefresh = false}) =>
+      _source.watch(
+        PicoEndpoints.regencies,
+        ttl: PicoTtl.content,
+        forceRefresh: forceRefresh,
+      );
+
+  @override
   Watch<List<Hospital>> watchHospitals({bool forceRefresh = false}) =>
       _source.watch(
         PicoEndpoints.hospitals,

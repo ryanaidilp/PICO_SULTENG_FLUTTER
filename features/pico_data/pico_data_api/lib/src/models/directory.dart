@@ -241,3 +241,19 @@ final class VaccineLocation extends Equatable {
     notes,
   ];
 }
+
+/// A kabupaten or kota of Sulawesi Tengah (code and name as the API spells
+/// them). Directory rows carry only the code, so lists group by this name.
+final class Regency extends Equatable {
+  /// Creates a regency.
+  const Regency({required this.code, required this.name});
+
+  /// Code, for example `7271`.
+  final String code;
+
+  /// Name, for example `Kota Palu`.
+  final String name;
+
+  @override
+  List<Object?> get props => [code, name];
+}
