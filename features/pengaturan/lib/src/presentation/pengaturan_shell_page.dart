@@ -115,7 +115,15 @@ class _PengaturanShellPageState() extends State<PengaturanShellPage> {
                     // This route sits above the tab bar, so it brings its own
                     // Material surface, safe area and title.
                     child: Scaffold(
-                      appBar: AppBar(title: Text(sl.t.title)),
+                      appBar: AppBar(
+                        // Depends on the provider, so a language change
+                        // rebuilds the title (sl.t alone would not).
+                        title: Builder(
+                          builder: (c) => Text(
+                            sl.TranslationProvider.of(c).translations.title,
+                          ),
+                        ),
+                      ),
                       body: const SafeArea(child: AutoRouter()),
                     ),
                   ),
