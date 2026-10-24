@@ -30,4 +30,8 @@ abstract final class Env() {
   /// The database connection URL.
   @EnviedField()
   static final String databaseUrl = _Env.databaseUrl;
+
+  /// The OneSignal App ID.
+  @EnviedField()
+  static final String onesignalAppId = _Env.onesignalAppId;
 }

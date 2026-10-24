@@ -29,4 +29,7 @@ abstract final class AppEnv() {
 
   /// The database connection URL for the active flavor.
   static String get databaseUrl => Env.databaseUrl;
+
+  /// The OneSignal App ID for the active flavor.
+  static String get onesignalAppId => Env.onesignalAppId;
 }

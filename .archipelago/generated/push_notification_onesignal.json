@@ -1,0 +1,26 @@
+{
+  "brick": "push_notification_onesignal",
+  "version": "1.4.0",
+  "vars": {
+    "oneSignalAppId": "",
+    "consentPurpose": "marketing",
+    "isForMonorepo": true,
+    "prefix": "Pico",
+    "uiKitPackageName": "pico_ui_kit",
+    "hasConsentPurpose": true,
+    "consentPurposeExpr": "ConsentPurpose.marketing"
+  },
+  "dirs": [
+    "features/push_notification/push_notification_onesignal_impl"
+  ],
+  "files": {
+    "features/push_notification/push_notification_onesignal_impl/analysis_options.yaml": "b84693a3",
+    "features/push_notification/push_notification_onesignal_impl/lib/push_notification_onesignal_impl.dart": "cac94c4e",
+    "features/push_notification/push_notification_onesignal_impl/lib/src/di/injector.dart": "bc794e90",
+    "features/push_notification/push_notification_onesignal_impl/lib/src/di/register_module.dart": "1a43192",
+    "features/push_notification/push_notification_onesignal_impl/lib/src/onesignal_config.dart": "7ca7b526",
+    "features/push_notification/push_notification_onesignal_impl/lib/src/onesignal_push_notification_handler.dart": "869ee11a",
+    "features/push_notification/push_notification_onesignal_impl/pubspec.yaml": "88ee6ad8",
+    "features/push_notification/push_notification_onesignal_impl/test/onesignal_push_notification_handler_test.dart": "7dbdc184"
+  }
+}

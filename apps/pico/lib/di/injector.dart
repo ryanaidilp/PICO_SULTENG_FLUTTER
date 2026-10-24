@@ -14,6 +14,8 @@ import 'package:network_sdk_dio/network_sdk_dio.dart';
 import 'package:pengaturan/pengaturan.dart';
 import 'package:peta/peta.dart';
 import 'package:pico_data_impl/pico_data_impl.dart';
+import 'package:push_notification_impl/push_notification_impl.dart';
+import 'package:push_notification_onesignal_impl/push_notification_onesignal_impl.dart';
 import 'package:statistik/statistik.dart';
 import 'package:vaksin/vaksin.dart';
 
@@ -37,6 +39,8 @@ final getIt = GetIt.instance;
     ExternalModule(PengaturanGlobalModule),
     ExternalModule(PetaGlobalModule),
     ExternalModule(PicoDataImplPackageModule),
+    ExternalModule(PushNotificationOnesignalImplPackageModule),
+    ExternalModule(PushNotificationGlobalModule),
     ExternalModule(StatistikGlobalModule),
     ExternalModule(VaksinGlobalModule),
     // archipelago:feature_modules_before:end

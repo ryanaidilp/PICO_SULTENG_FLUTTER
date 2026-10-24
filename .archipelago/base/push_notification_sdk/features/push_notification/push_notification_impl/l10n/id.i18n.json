@@ -1,0 +1,12 @@
+{
+  "settings": {
+    "title": "Notifikasi",
+    "quietHours": "Jam tenang",
+    "quietHoursSubtitle": "Promosi ditahan selama waktu ini.",
+    "starts": "Mulai",
+    "ends": "Selesai",
+    "marketing": "Promosi",
+    "marketingSubtitle": "Penawaran dan berita. Mengikuti persetujuan pemasaran Anda.",
+    "alwaysSent": "Peringatan keamanan dan pembaruan transaksi selalu dikirim."
+  }
+}

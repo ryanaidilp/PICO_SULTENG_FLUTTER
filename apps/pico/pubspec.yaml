@@ -63,6 +63,12 @@ dependencies:
     path: ../../features/pico_data/pico_data_impl
   pico_ui_kit:
     path: ../../packages/pico_ui_kit
+  push_notification_api:
+    path: ../../features/push_notification/push_notification_api
+  push_notification_impl:
+    path: ../../features/push_notification/push_notification_impl
+  push_notification_onesignal_impl:
+    path: ../../features/push_notification/push_notification_onesignal_impl
   router_registry:
     path: ../../shared/router_registry
 
