@@ -1,0 +1,48 @@
+name: statistik
+description: Statistik feature module.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ">=3.13.0 <4.0.0"
+
+resolution: workspace
+
+dependencies:
+  dependencies:
+    path: ../../shared/dependencies
+  feature_sdk:
+    path: ../../shared/feature_sdk
+  flutter:
+    sdk: flutter
+  freezed_annotation: ^3.1.0
+  locale_core:
+    path: ../../shared/locale_core
+  pico_ui_kit:
+    path: ../../packages/pico_ui_kit
+  router_registry:
+    path: ../../shared/router_registry
+
+dev_dependencies:
+
+
+  auto_route_generator: ^10.5.0
+
+  build_runner: ^2.15.1
+  flutter_test:
+    sdk: flutter
+  freezed: ^4.0.1
+  injectable_generator: ^3.0.2
+  slang_build_runner: ^4.18.0
+  very_good_analysis: ">=10.3.0"
+# Declares the hand-written global module (added to the app injector by
+# ServiceLocatorUpdater in hooks/post_gen.dart) so `monorepo_toolkit
+# generate host-registry` can regenerate the host injector's marker regions
+# without losing this registration. Always emitted: even a UI-only feature
+# (hasBusinessLogic=false) registers its manifest so its routes exist.
+# Add `depends_on: [<package>]` here if you later make this module eagerly
+# read another package's GetIt-registered type at init() time.
+archipelago:
+  di_modules:
+    - class: StatistikGlobalModule
+
