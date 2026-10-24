@@ -1,3 +1,27 @@
 {
-  "title": "Vaksin"
+  "title": "Vaksin",
+  "segment_coverage": "Cakupan",
+  "segment_locations": "Lokasi",
+  "scope_national": "Nasional",
+  "scope_sulteng": "Sulawesi Tengah",
+  "target": "Sasaran: $value orang",
+  "dose1": "Dosis 1",
+  "dose2": "Dosis 2",
+  "bar_label": "$dose: $percent",
+  "groups": "Menurut kelompok",
+  "group_elderly": "Lansia",
+  "group_health_worker": "Tenaga kesehatan",
+  "group_public": "Masyarakat umum",
+  "group_public_officer": "Petugas publik",
+  "group_teenager": "Remaja",
+  "no_target": "Tidak ada target",
+  "trend": "Perkembangan dosis kumulatif",
+  "y_label": "Dosis kumulatif",
+  "no_locations": "Belum ada lokasi vaksinasi.",
+  "dose1_offered": "Dosis 1",
+  "dose2_offered": "Dosis 2",
+  "hours": "Jam: $value",
+  "quota": "Kuota harian: $value",
+  "stock": "Stok tersisa: $value",
+  "exceeds_note": "$dose melebihi target"
 }

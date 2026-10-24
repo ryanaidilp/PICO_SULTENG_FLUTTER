@@ -1,3 +1,27 @@
 {
-  "title": "Vaksin"
+  "title": "Vaccination",
+  "segment_coverage": "Coverage",
+  "segment_locations": "Locations",
+  "scope_national": "National",
+  "scope_sulteng": "Central Sulawesi",
+  "target": "Target: $value people",
+  "dose1": "Dose 1",
+  "dose2": "Dose 2",
+  "bar_label": "$dose: $percent",
+  "groups": "By group",
+  "group_elderly": "Elderly",
+  "group_health_worker": "Health workers",
+  "group_public": "General public",
+  "group_public_officer": "Public officers",
+  "group_teenager": "Teenagers",
+  "no_target": "No target",
+  "trend": "Cumulative doses over time",
+  "y_label": "Cumulative doses",
+  "no_locations": "No vaccination locations yet.",
+  "dose1_offered": "Dose 1",
+  "dose2_offered": "Dose 2",
+  "hours": "Hours: $value",
+  "quota": "Daily quota: $value",
+  "stock": "Stock left: $value",
+  "exceeds_note": "$dose exceeds target"
 }

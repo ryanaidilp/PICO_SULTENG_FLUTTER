@@ -1,4 +1,5 @@
 import 'package:dependencies/auto_route.dart';
+import 'package:identifiers/identifiers.dart';
 import 'package:vaksin/src/presentation/ui/pages/vaksin_page.dart';
 import 'package:vaksin/src/presentation/vaksin_shell_page.dart';
 
@@ -11,7 +12,7 @@ class VaksinRouter() extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
       page: VaksinShellRoute.page,
-      path: '/vaksin',
+      path: PicoRoutes.vaksin,
       children: [AutoRoute(page: VaksinRoute.page, path: '', initial: true)],
     ),
   ];

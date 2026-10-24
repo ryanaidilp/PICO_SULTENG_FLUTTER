@@ -1,1 +1,1 @@
-// Export feature widgets here.
+export 'vaksin_widgets.dart';

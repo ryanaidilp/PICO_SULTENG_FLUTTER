@@ -6,6 +6,8 @@ import 'package:feature_sdk/feature_sdk.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:vaksin/src/di/vaksin_container.dart';
 import 'package:vaksin/src/di/vaksin_global_module.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:pico_data_api/testing.dart';
 import 'package:vaksin/src/vaksin_manifest.dart';
 import 'package:vaksin/src/vaksin_sdk.dart';
 
@@ -46,7 +48,9 @@ void main() {
     () async {
       // A root with only the types vaksin_imports.dart
       // forwards: register one fake per forwarded type.
-      final root = GetIt.asNewInstance();
+      final root = GetIt.asNewInstance()
+        ..registerSingleton<StatsRepository>(FakeStatsRepository())
+        ..registerSingleton<DirectoryRepository>(FakeDirectoryRepository());
       late GetIt child;
       final container = FeatureContainer(
         'vaksin',
