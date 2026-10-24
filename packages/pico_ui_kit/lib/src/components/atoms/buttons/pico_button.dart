@@ -107,9 +107,14 @@ class _PicoButtonState() extends State<PicoButton> {
     if (!_isEnabled) return;
 
     if (widget.enableHapticFeedback) {
-      final canVibrate = await Haptics.canVibrate();
-      if (canVibrate) {
-        await Haptics.vibrate(HapticsType.light);
+      // Haptics are a nicety: a missing plugin (tests, desktop) or a vibrator
+      // error must never swallow the press.
+      try {
+        if (await Haptics.canVibrate()) {
+          await Haptics.vibrate(HapticsType.light);
+        }
+      } on Object {
+        // ignore: the press still goes through
       }
     }
 
