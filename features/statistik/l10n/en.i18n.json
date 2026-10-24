@@ -81,5 +81,19 @@
   "rt_pick_province": "Choose a province",
   "rt_pick_regency": "Choose a regency",
   "rt_regency_title": "Choose a regency or city",
-  "rt_back": "Back"
+  "rt_back": "Back",
+  "tests_title": "COVID-19 tests",
+  "tests_intro": "Test types and the last recorded test totals for Central Sulawesi.",
+  "test_recommended": "Recommended",
+  "test_sample": "Sample: $value",
+  "test_duration": "Time: $value",
+  "test_no_totals": "No test totals yet",
+  "tests_totals_title": "Central Sulawesi test totals",
+  "tests_totals_note": "Latest recorded data (early pandemic)",
+  "tests_positive": "Positive",
+  "tests_negative": "Negative",
+  "tests_process": "In process",
+  "tests_invalid": "Invalid",
+  "tests_none": "No test type data yet.",
+  "tests_totals_none": "No test totals yet."
 }

@@ -12,6 +12,7 @@ import 'package:statistik/src/presentation/bloc/area_bloc.dart';
 import 'package:statistik/src/presentation/bloc/regencies_cubit.dart';
 import 'package:statistik/src/presentation/bloc/rt_bloc.dart';
 import 'package:statistik/src/presentation/ui/widgets/profile_widgets.dart';
+import 'package:statistik/src/presentation/ui/widgets/tests_widgets.dart';
 import 'package:statistik/src/presentation/ui/widgets/province_picker.dart';
 
 /// Shell page for the Statistik feature.
@@ -129,6 +130,16 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
                         create: (_) => RegenciesCubit(
                           _lease.get<CaseRepository>(),
                           _lease.get<DirectoryRepository>(),
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (_) => TestTypesCubit(
+                          _lease.get<StatsRepository>().watchTestTypes,
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (_) => TestTotalsCubit(
+                          _lease.get<StatsRepository>().watchLatestTests,
                         ),
                       ),
                       BlocProvider(

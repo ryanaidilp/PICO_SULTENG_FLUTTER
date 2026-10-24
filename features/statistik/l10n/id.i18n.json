@@ -81,5 +81,19 @@
   "rt_pick_province": "Pilih provinsi",
   "rt_pick_regency": "Pilih kabupaten",
   "rt_regency_title": "Pilih kabupaten atau kota",
-  "rt_back": "Kembali"
+  "rt_back": "Kembali",
+  "tests_title": "Tes COVID-19",
+  "tests_intro": "Jenis tes dan jumlah tes terakhir yang tercatat untuk Sulawesi Tengah.",
+  "test_recommended": "Direkomendasikan",
+  "test_sample": "Sampel: $value",
+  "test_duration": "Waktu: $value",
+  "test_no_totals": "Belum ada data jumlah tes",
+  "tests_totals_title": "Jumlah tes Sulawesi Tengah",
+  "tests_totals_note": "Data terakhir yang tercatat (awal pandemi)",
+  "tests_positive": "Positif",
+  "tests_negative": "Negatif",
+  "tests_process": "Diproses",
+  "tests_invalid": "Tidak valid",
+  "tests_none": "Belum ada data jenis tes.",
+  "tests_totals_none": "Belum ada data jumlah tes."
 }

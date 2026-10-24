@@ -5,6 +5,7 @@ import 'package:statistik/src/presentation/statistik_shell_page.dart';
 import 'package:statistik/src/presentation/ui/pages/area_page.dart';
 import 'package:statistik/src/presentation/ui/pages/kabupaten_page.dart';
 import 'package:statistik/src/presentation/ui/pages/rt_page.dart';
+import 'package:statistik/src/presentation/ui/pages/tests_page.dart';
 
 part 'statistik_router.gr.dart';
 
@@ -30,6 +31,7 @@ class StatistikRouter() extends RootStackRouter {
         ),
         AutoRoute(page: KabupatenRoute.page, path: 'kabupaten'),
         AutoRoute(page: RtRoute.page, path: 'rt'),
+        AutoRoute(page: TestsRoute.page, path: 'tes'),
         AutoRoute(
           page: RegencyAreaRoute.page,
           path: 'kabupaten/:code',
