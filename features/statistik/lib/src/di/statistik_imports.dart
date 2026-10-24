@@ -3,5 +3,7 @@ import 'package:pico_data_api/pico_data_api.dart';
 
 /// Forwards the root types the Statistik container needs (ports only).
 void importStatistikGlobals(GetIt child, GetIt root) {
-  child.registerFactory<CaseRepository>(() => root<CaseRepository>());
+  child
+    ..registerFactory<CaseRepository>(() => root<CaseRepository>())
+    ..registerFactory<StatsRepository>(() => root<StatsRepository>());
 }

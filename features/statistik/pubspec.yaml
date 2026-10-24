@@ -28,13 +28,10 @@ dependencies:
     path: ../../shared/router_registry
 
 dev_dependencies:
+  auto_route_generator: ^10.5.0
+  build_runner: ^2.15.1
   flutter_localizations:
     sdk: flutter
-
-
-  auto_route_generator: ^10.5.0
-
-  build_runner: ^2.15.1
   flutter_test:
     sdk: flutter
   freezed: ^4.0.1

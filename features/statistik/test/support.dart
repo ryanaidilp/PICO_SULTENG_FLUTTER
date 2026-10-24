@@ -27,6 +27,15 @@ CaseSeries sultengSeries({AreaRef area = const AreaRef.province('72')}) {
     days.add(
       CaseDay(
         date: date,
+        // ODP and PDP exist only in the first 120 days; later rows have none.
+        monitoring: i < 120
+            ? const Monitoring(
+                odpActive: 120,
+                odpFinished: 800,
+                pdpActive: 30,
+                pdpFinished: 90,
+              )
+            : null,
         daily: CaseCounts(
           positive: pos,
           recovered: r,
@@ -51,7 +60,7 @@ CaseSeries sultengSeries({AreaRef area = const AreaRef.province('72')}) {
 
 /// Counts `watchSeries` calls per area.
 class CountingCases extends FakeCaseRepository {
-  CountingCases(CaseSeries s)
+  CountingCases(CaseSeries s, {super.provinces})
     : super(
         series: {
           s.area: s,
@@ -71,3 +80,93 @@ class CountingCases extends FakeCaseRepository {
     return super.watchSeries(area, forceRefresh: forceRefresh);
   }
 }
+
+const _provinceNames = {
+  '11': 'Aceh',
+  '12': 'Sumatera Utara',
+  '13': 'Sumatera Barat',
+  '14': 'Riau',
+  '15': 'Jambi',
+  '16': 'Sumatera Selatan',
+  '17': 'Bengkulu',
+  '18': 'Lampung',
+  '19': 'Kepulauan Bangka Belitung',
+  '21': 'Kepulauan Riau',
+  '31': 'DKI Jakarta',
+  '32': 'Jawa Barat',
+  '33': 'Jawa Tengah',
+  '34': 'DI Yogyakarta',
+  '35': 'Jawa Timur',
+  '36': 'Banten',
+  '51': 'Bali',
+  '52': 'Nusa Tenggara Barat',
+  '53': 'Nusa Tenggara Timur',
+  '61': 'Kalimantan Barat',
+  '62': 'Kalimantan Tengah',
+  '63': 'Kalimantan Selatan',
+  '64': 'Kalimantan Timur',
+  '65': 'Kalimantan Utara',
+  '71': 'Sulawesi Utara',
+  '72': 'Sulawesi Tengah',
+  '73': 'Sulawesi Selatan',
+  '74': 'Sulawesi Tenggara',
+  '75': 'Gorontalo',
+  '76': 'Sulawesi Barat',
+  '81': 'Maluku',
+  '82': 'Maluku Utara',
+  '91': 'Papua Barat',
+  '94': 'Papua',
+};
+
+/// The 34 provinces, Aceh first (API order), cumulative positive by code.
+Either<PicoFailure, DataSnapshot<List<AreaSummary>>> provinceSummaries() =>
+    fakeSnapshot([
+      for (final e in _provinceNames.entries)
+        AreaSummary(
+          area: AreaRef.province(e.key),
+          name: e.value,
+          latest: CaseDay(
+            date: DateTime(2024, 1, 14),
+            daily: CaseCounts.zero,
+            cumulative: CaseCounts(
+              positive: 1000 * int.parse(e.key),
+              recovered: 900 * int.parse(e.key),
+              deceased: 30,
+              active: 0,
+            ),
+          ),
+        ),
+    ]);
+
+/// A latest gender snapshot of Sulawesi Tengah (C03 fixture).
+GenderSnapshot genderSnapshot() => const GenderSnapshot(
+  sourceDay: 799,
+  positive: GenderGroup(
+    male: GenderCounts(
+      total: 10199,
+      ageGroups: {
+        '0_14': 263,
+        '15_19': 898,
+        '20_24': 2888,
+        '25_49': 3180,
+        '50_54': 1978,
+        '55_plus': 991,
+      },
+    ),
+    female: GenderCounts(
+      total: 12585,
+      ageGroups: {
+        '0_14': 324,
+        '15_19': 1107,
+        '20_24': 3564,
+        '25_49': 3924,
+        '50_54': 2441,
+        '55_plus': 1223,
+      },
+    ),
+  ),
+  pdp: GenderGroup(
+    male: GenderCounts(total: 178, ageGroups: {'0_14': 16}),
+    female: GenderCounts(total: 112, ageGroups: {'0_14': 9}),
+  ),
+);

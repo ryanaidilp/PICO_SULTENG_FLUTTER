@@ -9,6 +9,9 @@ import 'package:statistik/src/domain/area_query.dart';
 import 'package:statistik/src/l10n/translations.g.dart';
 import 'package:statistik/src/presentation/bloc/area_bloc.dart';
 import 'package:statistik/src/presentation/ui/pages/area_page.dart';
+import 'package:statistik/src/presentation/ui/widgets/profile_widgets.dart';
+import 'package:statistik/src/presentation/ui/widgets/province_picker.dart';
+import 'package:pico_data_api/testing.dart';
 
 import '../support.dart';
 
@@ -20,6 +23,7 @@ Widget host(
   Locale locale = const Locale('id'),
   List<String>? navigated,
   List<String>? opened,
+  FakeStatsRepository? stats,
 }) => MaterialApp(
   debugShowCheckedModeBanner: false,
   theme: theme ?? PicoTheme.light(),
@@ -34,9 +38,22 @@ Widget host(
   ),
   home: TranslationProvider(
     child: Scaffold(
-      body: BlocProvider(
+      body: MultiBlocProvider(
         key: UniqueKey(),
-        create: (_) => AreaBloc(repo),
+        providers: [
+          BlocProvider(create: (_) => AreaBloc(repo)),
+          BlocProvider(
+            create: (_) => ProvincesCubit(repo.watchProvinceSummaries),
+          ),
+          BlocProvider(
+            create: (_) => GenderCubit(
+              (stats ??
+                      (FakeStatsRepository()
+                        ..latestGender = fakeSnapshot(genderSnapshot())))
+                  .watchLatestGender,
+            ),
+          ),
+        ],
         child: AreaContent(
           initial: initial,
           onNavigate: (p) => navigated?.add(p),

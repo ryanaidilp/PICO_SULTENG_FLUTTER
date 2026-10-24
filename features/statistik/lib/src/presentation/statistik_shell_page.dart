@@ -9,6 +9,8 @@ import 'package:pico_data_api/pico_data_api.dart';
 import 'package:statistik/src/l10n/translations.g.dart' as sl;
 import 'package:statistik/src/di/statistik_container.dart';
 import 'package:statistik/src/presentation/bloc/area_bloc.dart';
+import 'package:statistik/src/presentation/ui/widgets/profile_widgets.dart';
+import 'package:statistik/src/presentation/ui/widgets/province_picker.dart';
 
 /// Shell page for the Statistik feature.
 ///
@@ -106,8 +108,24 @@ class _StatistikShellPageState() extends State<StatistikShellPage> {
                 // it with this shell. Pass it what it needs from
                 // `_lease.get<T>()`.
                 return sl.TranslationProvider(
-                  child: BlocProvider(
-                    create: (_) => AreaBloc(_lease.get<CaseRepository>()),
+                  child: MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                        create: (_) => AreaBloc(_lease.get<CaseRepository>()),
+                      ),
+                      // Lazy: asked for only when the picker or the Sulteng
+                      // profile is on screen.
+                      BlocProvider(
+                        create: (_) => ProvincesCubit(
+                          _lease.get<CaseRepository>().watchProvinceSummaries,
+                        ),
+                      ),
+                      BlocProvider(
+                        create: (_) => GenderCubit(
+                          _lease.get<StatsRepository>().watchLatestGender,
+                        ),
+                      ),
+                    ],
                     child: const AutoRouter(),
                   ),
                 );

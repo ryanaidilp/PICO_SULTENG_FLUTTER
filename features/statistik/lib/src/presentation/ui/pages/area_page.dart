@@ -10,7 +10,10 @@ import 'package:statistik/src/domain/area_query.dart';
 import 'package:statistik/src/presentation/bloc/area_bloc.dart';
 import 'package:statistik/src/presentation/bloc/area_event.dart';
 import 'package:statistik/src/presentation/bloc/area_state.dart';
+import 'package:statistik/src/l10n/translations.g.dart';
 import 'package:statistik/src/presentation/ui/widgets/area_widgets.dart';
+import 'package:statistik/src/presentation/ui/widgets/profile_widgets.dart';
+import 'package:statistik/src/presentation/ui/widgets/province_picker.dart';
 
 /// The area page: the tab root `/statistik` (national, or the area in the
 /// query) and, through [ProvinceAreaPage], `/statistik/provinsi/{id}`.
@@ -124,6 +127,23 @@ class _AreaContentState extends State<AreaContent> {
                   color: context.colors.foreground.main,
                 ),
               ),
+              if (s.query.area is ProvinceArea)
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton.icon(
+                    onPressed: () => showProvinceSheet(
+                      context,
+                      selectedId: (s.query.area as ProvinceArea).id,
+                      onPick: (id) =>
+                          change(s.query.copyWith(area: AreaRef.province(id))),
+                    ),
+                    icon: const Icon(Icons.swap_horiz),
+                    label: Text(context.t.provinceChange),
+                    style: TextButton.styleFrom(
+                      minimumSize: const Size(48, 48),
+                    ),
+                  ),
+                ),
               const SizedBox(height: 12),
               AreaChart(view: view, query: s.query, compare: s.compare),
               const SizedBox(height: 16),
@@ -132,6 +152,15 @@ class _AreaContentState extends State<AreaContent> {
               AreaTotals(view: view, metric: s.query.metric),
               const SizedBox(height: 8),
               AreaLinks(query: s.query, onOpen: open),
+              if (s.query.area is ProvinceArea) ...[
+                const SizedBox(height: 16),
+                MonitoringSection(day: view.last),
+              ],
+              if (s.query.area ==
+                  const AreaRef.province(kSultengProvinceId)) ...[
+                const SizedBox(height: 16),
+                const GenderSection(),
+              ],
               const SizedBox(height: 16),
               PicoDataStamp(
                 dataDate: snap.data.days.last.date,
