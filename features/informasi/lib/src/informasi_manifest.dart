@@ -1,5 +1,4 @@
 import 'package:feature_sdk/feature_sdk.dart';
-import 'package:informasi/src/domain/review_markers.dart';
 import 'package:informasi/src/router/informasi_router.dart';
 import 'package:router_registry/router_registry.dart';
 
@@ -12,8 +11,6 @@ import 'package:router_registry/router_registry.dart';
 class const InformasiManifest() extends FeatureManifest {
   @override
   void registerRoutes(RouteRegistry registry) {
-    // A release build with content still "Dalam peninjauan" must not boot.
-    assertNoOpenReviewMarkers();
     registry.register(InformasiRouter().routes);
   }
 }

@@ -14,6 +14,7 @@ import 'package:pico/di/injector.dart';
 import 'package:pico/host/host_app_widget.dart';
 import 'package:pico/host/initializers/initializer.dart';
 import 'package:pico/host/initializers/pre_launch_initializer.dart';
+import 'package:pico/host/release_guard.dart';
 import 'package:pico/host/push/push_tap_router.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
 import 'package:push_notification_api/push_notification_api.dart';
@@ -113,6 +114,13 @@ Future<void> bootstrap({
     // Layers 2 and 3 — set up before DI so errors during init are also
     // captured.
     installGlobalErrorHandlers();
+
+    // A release-content build with open review markers must not start.
+    final blocked = releaseContentProblem();
+    if (blocked != null) {
+      runApp(ReleaseContentBlockedApp(blocked));
+      return;
+    }
 
     // Consent must be installed before anything can resolve AppMonitoring or
     // AnalyticTracker. It is a blocking pre-launch step for that reason: a

@@ -3,8 +3,10 @@
 /// markers of the web Metodologi page (specs/web/REVIEW-MARKERS.md).
 ///
 /// Release builds must not ship with any of them open. A build for release
-/// passes `--dart-define=PICO_RELEASE_CONTENT=true`; the app then fails at
-/// boot (and this package's tests fail) while this list is not empty. Remove a
+/// passes `--dart-define=PICO_RELEASE_CONTENT=true`; the host app then stops at
+/// boot with a message screen (`apps/pico/lib/host/release_guard.dart`; a
+/// manifest check could not do it, because a manifest that throws is only
+/// reported and skipped) and this package's tests fail while this list is not empty. Remove a
 /// marker here only when its text has been replaced with the final outcome.
 const List<String> kOpenReviewMarkers = [
   // Origin and licence of the old boundary files.
