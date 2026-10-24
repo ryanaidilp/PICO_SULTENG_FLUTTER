@@ -1,4 +1,5 @@
 import 'package:dependencies/auto_route.dart';
+import 'package:identifiers/identifiers.dart';
 import 'package:peta/src/presentation/peta_shell_page.dart';
 import 'package:peta/src/presentation/ui/pages/peta_page.dart';
 
@@ -11,7 +12,7 @@ class PetaRouter() extends RootStackRouter {
   List<AutoRoute> get routes => [
     AutoRoute(
       page: PetaShellRoute.page,
-      path: '/peta',
+      path: PicoRoutes.petaRoot,
       children: [AutoRoute(page: PetaRoute.page, path: '', initial: true)],
     ),
   ];

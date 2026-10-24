@@ -1,4 +1,3 @@
-import 'package:dependencies/auto_route.dart';
 import 'package:feature_sdk/feature_sdk.dart';
 import 'package:peta/src/router/peta_router.dart';
 import 'package:router_registry/router_registry.dart';
@@ -12,16 +11,6 @@ import 'package:router_registry/router_registry.dart';
 class const PetaManifest() extends FeatureManifest {
   @override
   void registerRoutes(RouteRegistry registry) {
-    registry.register([
-      AutoRoute(
-        page: PetaShellRoute.page,
-        path: '/peta',
-        children: [
-          AutoRoute(page: PetaRoute.page, path: '', initial: true),
-          // TODO(user): Register more child routes for this feature, e.g.
-          //   AutoRoute(page: PetaDetailRoute.page, path: 'detail/:id'),
-        ],
-      ),
-    ]);
+    registry.register(PetaRouter().routes);
   }
 }

@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:dependencies/auto_route.dart';
 import 'package:dependencies/state.dart';
 import 'package:feature_sdk/feature_sdk.dart';
-import 'package:flutter/material.dart';
-import 'package:locale_core/locale_core.dart';
-import 'package:peta/src/di/peta_container.dart';
 import 'package:peta/src/presentation/bloc/peta_bloc.dart';
 import 'package:peta/src/presentation/bloc/peta_event.dart';
+import 'package:flutter/material.dart';
+import 'package:locale_core/locale_core.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:peta/src/l10n/translations.g.dart' as sl;
+import 'package:peta/src/di/peta_container.dart';
 
 /// Shell page for the Peta feature.
 ///
@@ -38,6 +40,7 @@ class _PetaShellPageState() extends State<PetaShellPage> {
   final _isReady = ValueNotifier<bool>(false);
 
   late final FeatureLease _lease;
+  StreamSubscription<PicoLocale>? _localeSub;
 
   /// The last synced locale to avoid redundant loads.
   PicoLocale? _lastSyncedLocale;
@@ -46,6 +49,10 @@ class _PetaShellPageState() extends State<PetaShellPage> {
   void initState() {
     super.initState();
     _lease = petaContainer.acquire();
+    // Follow language changes while the page is open.
+    _localeSub = LocaleSettings.getLocaleStream().listen(
+      (l) => unawaited(_syncLocale(l)),
+    );
     // Build the content only once the container is ready.
     unawaited(
       _lease.ready
@@ -56,6 +63,7 @@ class _PetaShellPageState() extends State<PetaShellPage> {
 
   @override
   void dispose() {
+    unawaited(_localeSub?.cancel());
     _isReady.dispose();
     // The container is torn down after the last lease is released.
     unawaited(_lease.release().catchError(_reportContainerError));
@@ -70,9 +78,12 @@ class _PetaShellPageState() extends State<PetaShellPage> {
     if (_lastSyncedLocale == locale) return;
     _lastSyncedLocale = locale;
 
-    // TODO(user): If this feature uses slang translations, load them here:
-    // final featureLocale = _mapToFeatureLocale(locale);
-    // await LocaleSettings.setLocale(featureLocale);
+    // The feature's own slang follows the app-wide language.
+    final featureLocale = sl.AppLocale.values.firstWhere(
+      (l) => l.languageCode == locale.languageCode,
+      orElse: () => sl.AppLocale.id,
+    );
+    await sl.LocaleSettings.setLocale(featureLocale);
 
     if (mounted) {
       _isReady.value = true;
@@ -95,9 +106,24 @@ class _PetaShellPageState() extends State<PetaShellPage> {
                 // Created once the container is ready; the provider closes
                 // it with this shell. Pass it what it needs from
                 // `_lease.get<T>()`.
-                return BlocProvider(
-                  create: (_) => PetaBloc()..add(const PetaEvent.started()),
-                  child: const AutoRouter(),
+                return sl.TranslationProvider(
+                  child: BlocProvider(
+                    create: (_) =>
+                        PetaBloc(_lease.get<CaseRepository>())
+                          ..add(const PetaStarted()),
+                    // This route is pushed above the tab bar, so it brings its
+                    // own Material surface, safe area and title.
+                    child: Scaffold(
+                      appBar: AppBar(
+                        title: Builder(
+                          builder: (c) => Text(
+                            sl.TranslationProvider.of(c).translations.title,
+                          ),
+                        ),
+                      ),
+                      body: const SafeArea(child: AutoRouter()),
+                    ),
+                  ),
                 );
               },
             )
