@@ -1,0 +1,20 @@
+{
+  "title": "Beranda",
+  "archive_note": "PICO menyimpan data COVID-19 dari $start sampai $end.",
+  "national": "Nasional",
+  "sulteng": "Sulawesi Tengah",
+  "tile_today": "baru hari itu",
+  "latest_rt": "Rt terakhir $value ($date)",
+  "rt_none": "Rt belum dihitung untuk periode ini.",
+  "see_rt": "Lihat Rt",
+  "see_regencies": "Lihat kabupaten",
+  "quick_links": "Layanan dan data",
+  "link_stats": "Statistik",
+  "link_map": "Peta",
+  "link_vaccine": "Vaksin",
+  "link_hospital": "Rumah sakit",
+  "link_taskforce": "Satgas",
+  "link_isoman": "Isoman",
+  "link_infographic": "Infografis",
+  "link_tips": "Tips kesehatan"
+}

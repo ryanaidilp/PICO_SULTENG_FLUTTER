@@ -27,12 +27,16 @@ dependencies:
     path: ../../shared/dependencies
   feature_sdk:
     path: ../../shared/feature_sdk
-  identifiers:
-    path: ../../shared/identifiers
-
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.4.8
+  home:
+    path: ../../features/home
+  identifiers:
+    path: ../../shared/identifiers
+
+  layanan:
+    path: ../../features/layanan
   locale_core:
     path: ../../shared/locale_core
   # Always generated (post_gen runs monitoring_sdk unconditionally). The host
@@ -54,6 +58,10 @@ dependencies:
   router_registry:
     path: ../../shared/router_registry
 
+  statistik:
+    path: ../../features/statistik
+  vaksin:
+    path: ../../features/vaksin
 dev_dependencies:
 
 

@@ -1,0 +1,316 @@
+import 'package:dependencies/state.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:home/src/l10n/translations.g.dart';
+import 'package:home/src/presentation/bloc/home_bloc.dart';
+import 'package:home/src/presentation/bloc/home_event.dart';
+import 'package:home/src/presentation/ui/pages/home_page.dart';
+import 'package:identifiers/identifiers.dart';
+import 'package:pico_data_api/pico_data_api.dart';
+import 'package:pico_data_api/testing.dart';
+import 'package:pico_ui_kit/pico_ui_kit.dart';
+
+CaseDay day(
+  String iso, {
+  int pos = 6812127,
+  int rec = 6642003,
+  int dec = 161879,
+  int act = 8245,
+  Rt? rt,
+}) => CaseDay(
+  date: DateTime.parse(iso),
+  daily: const CaseCounts(positive: 0, recovered: 0, deceased: 0, active: 0),
+  cumulative: CaseCounts(
+    positive: pos,
+    recovered: rec,
+    deceased: dec,
+    active: act,
+  ),
+  rt: rt,
+);
+
+final nationalDay = day('2024-01-14');
+final sultengDay = day(
+  '2024-01-14',
+  pos: 64718,
+  rec: 63000,
+  dec: 1200,
+  act: 518,
+);
+
+CaseSeries series() => CaseSeries.fromDays(
+  area: const AreaRef.national(),
+  areaName: 'Indonesia',
+  days: [
+    day('2023-07-09', rt: const Rt(value: 0.92, lower: 0.8, upper: 1.04)),
+    nationalDay,
+  ],
+);
+
+FakeCaseRepository repo({
+  bool cache = false,
+  bool failNational = false,
+  PicoFailureKind kind = PicoFailureKind.network,
+  CaseSeries? rtSeries,
+}) => FakeCaseRepository(
+  nationalLatest: failNational
+      ? fakeFailure(kind)
+      : fakeSnapshot(
+          nationalDay,
+          source: cache ? DataSource.cache : DataSource.network,
+          isStale: cache,
+          fetchedAt: DateTime(2024, 1, 12),
+        ),
+  provinces: fakeSnapshot([
+    AreaSummary(
+      area: const AreaRef.province('72'),
+      name: 'Sulawesi Tengah',
+      latest: sultengDay,
+    ),
+    AreaSummary(
+      area: const AreaRef.province('11'),
+      name: 'Aceh',
+      latest: day('2024-01-14', pos: 45092),
+    ),
+  ]),
+  series: {const AreaRef.national(): rtSeries ?? series()},
+);
+
+Widget host(
+  CaseRepository cases, {
+  Locale locale = const Locale('id'),
+  ThemeData? theme,
+  double scale = 1,
+  ValueChanged<String>? onOpen,
+}) => MaterialApp(
+  debugShowCheckedModeBanner: false,
+  theme: theme ?? PicoTheme.light(),
+  locale: locale,
+  localizationsDelegates: GlobalMaterialLocalizations.delegates,
+  supportedLocales: const [Locale('id'), Locale('en')],
+  builder: (c, w) => MediaQuery(
+    data: MediaQuery.of(
+      c,
+    ).copyWith(textScaler: TextScaler.linear(scale), disableAnimations: true),
+    child: w!,
+  ),
+  home: TranslationProvider(
+    child: Scaffold(
+      body: BlocProvider(
+        key: UniqueKey(),
+        create: (_) => HomeBloc(cases)..add(const HomeStarted()),
+        child: HomePage(onOpen: onOpen ?? (_) {}),
+      ),
+    ),
+  ),
+);
+
+Future<void> setup(WidgetTester tester, AppLocale l) async {
+  await tester.runAsync(() => LocaleSettings.setLocale(l));
+}
+
+void main() {
+  testWidgets('national positive tile shows 6.812.127 in id', (tester) async {
+    await setup(tester, AppLocale.id);
+    await tester.pumpWidget(host(repo()));
+    await tester.pumpAndSettle();
+    expect(find.text('6.812.127'), findsOneWidget);
+    expect(find.text('64.718'), findsOneWidget);
+  });
+
+  testWidgets('and 6,812,127 in en', (tester) async {
+    await setup(tester, AppLocale.en);
+    await tester.pumpWidget(host(repo(), locale: const Locale('en')));
+    await tester.pumpAndSettle();
+    expect(find.text('6,812,127'), findsOneWidget);
+    expect(find.text('Central Sulawesi'), findsOneWidget);
+    await setup(tester, AppLocale.id);
+  });
+
+  testWidgets('the archive note ends on the date of the latest national row', (
+    tester,
+  ) async {
+    await setup(tester, AppLocale.id);
+    await tester.pumpWidget(host(repo()));
+    await tester.pumpAndSettle();
+    expect(
+      find.text(
+        'PICO menyimpan data COVID-19 dari 2 Mar 2020 sampai 14 Jan 2024.',
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets(
+    'latest Rt is the newest non-null day, never 0; an all-null series says not computed',
+    (tester) async {
+      await setup(tester, AppLocale.id);
+      await tester.pumpWidget(host(repo()));
+      await tester.pumpAndSettle();
+      expect(find.text('Rt terakhir 0,92 (9 Jul 2023)'), findsOneWidget);
+      await tester.pumpWidget(
+        host(
+          repo(
+            rtSeries: CaseSeries.fromDays(
+              area: const AreaRef.national(),
+              areaName: 'Indonesia',
+              days: [nationalDay],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('Rt belum dihitung untuk periode ini.'), findsOneWidget);
+      expect(find.textContaining('0,00'), findsNothing);
+    },
+  );
+
+  testWidgets(
+    'offline with a saved copy renders everything and the stamp says saved data',
+    (tester) async {
+      await setup(tester, AppLocale.id);
+      tester.view.physicalSize = const Size(412, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(host(repo(cache: true)));
+      await tester.pumpAndSettle();
+      expect(find.text('Nasional'), findsOneWidget);
+      expect(find.textContaining('data tersimpan'), findsOneWidget);
+      expect(find.textContaining('Tidak terhubung'), findsOneWidget);
+      expect(find.byType(PicoStateView), findsNothing);
+    },
+  );
+
+  testWidgets('offline with no copy is the offline state for the whole page', (
+    tester,
+  ) async {
+    await setup(tester, AppLocale.id);
+    await tester.pumpWidget(host(repo(failNational: true)));
+    await tester.pumpAndSettle();
+    expect(find.text('Tidak terhubung'), findsOneWidget);
+    expect(find.text('Coba lagi'), findsOneWidget);
+    expect(find.text('Nasional'), findsNothing);
+  });
+
+  testWidgets('a server failure with no copy is the error state', (
+    tester,
+  ) async {
+    await setup(tester, AppLocale.id);
+    await tester.pumpWidget(
+      host(repo(failNational: true, kind: PicoFailureKind.server)),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Coba lagi'), findsOneWidget);
+    expect(find.text('Tidak terhubung'), findsNothing);
+  });
+
+  testWidgets(
+    'each quick link has a semantic label and opens the right C07 path',
+    (tester) async {
+      await setup(tester, AppLocale.id);
+      final opened = <String>[];
+      final h = tester.ensureSemantics();
+      tester.view.physicalSize = const Size(412, 2400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(host(repo(), onOpen: opened.add));
+      await tester.pumpAndSettle();
+      final expected = {
+        'Statistik': PicoRoutes.statistik(),
+        'Peta': PicoRoutes.peta(),
+        'Vaksin': PicoRoutes.vaksin,
+        'Rumah sakit': PicoRoutes.rumahSakit,
+        'Satgas': PicoRoutes.satgas,
+        'Isoman': PicoRoutes.isoman,
+        'Infografis': PicoRoutes.infografis,
+        'Tips kesehatan': PicoRoutes.info,
+      };
+      for (final e in expected.entries) {
+        expect(find.bySemanticsLabel(e.key), findsOneWidget, reason: e.key);
+        await tester.tap(find.text(e.key));
+        expect(opened.last, e.value, reason: e.key);
+      }
+      await tester.tap(find.text('Lihat Rt'));
+      expect(opened.last, '/statistik/rt?area=national');
+      await tester.tap(find.text('Lihat kabupaten'));
+      expect(opened.last, PicoRoutes.kabupatenList);
+      h.dispose();
+    },
+  );
+
+  testWidgets('only the dirawat tile mark is crimson', (tester) async {
+    await setup(tester, AppLocale.id);
+    await tester.pumpWidget(host(repo()));
+    await tester.pumpAndSettle();
+    final marks = tester.widgetList<PicoMarkView>(find.byType(PicoMarkView));
+    final crimson = marks
+        .where((m) => m.color == PicoBrandPalette.crimsonLight)
+        .toList();
+    expect(
+      crimson.length,
+      2,
+      reason: 'one dirawat tile for Nasional and one for Sulawesi Tengah, no other crimson',
+    );
+    expect(crimson.every((m) => m.mark == PicoMark.triangle), isTrue);
+  });
+
+  testWidgets('text scale 2.0 lays out without overflow', (tester) async {
+    await setup(tester, AppLocale.id);
+    tester.view.physicalSize = const Size(412, 892);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(host(repo(), scale: 2));
+    await tester.pumpAndSettle();
+    await tester.drag(find.byType(ListView), const Offset(0, -3000));
+    await tester.pumpAndSettle();
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('every tappable target is at least 48 dp and labelled', (
+    tester,
+  ) async {
+    await setup(tester, AppLocale.id);
+    final h = tester.ensureSemantics();
+    tester.view.physicalSize = const Size(412, 2400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(host(repo()));
+    await tester.pumpAndSettle();
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(textContrastGuideline));
+    h.dispose();
+  });
+
+  for (final dark in [false, true]) {
+    for (final scale in [1.0, 2.0]) {
+      testWidgets('golden ${dark ? 'dark' : 'light'} x${scale.toInt()}', (
+        tester,
+      ) async {
+        await setup(tester, AppLocale.id);
+        tester.view.physicalSize = Size(412, scale > 1 ? 4200 : 1900);
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.reset);
+        await tester.pumpWidget(
+          host(
+            repo(),
+            theme: dark ? PicoTheme.dark() : PicoTheme.light(),
+            scale: scale,
+          ),
+        );
+        await tester.pumpAndSettle();
+        await tester.runAsync(
+          () => Future<void>.delayed(const Duration(milliseconds: 300)),
+        );
+        await tester.pumpAndSettle();
+        await expectLater(
+          find.byType(MaterialApp),
+          matchesGoldenFile(
+            'goldens/home_${dark ? 'dark' : 'light'}_x${scale.toInt()}.png',
+          ),
+        );
+      }, tags: ['golden']);
+    }
+  }
+}
