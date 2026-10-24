@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dependencies/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -218,27 +220,32 @@ void main() {
   });
 
   group('open review markers', () {
-    testWidgets('the three owner-open items show as "Dalam peninjauan"', (
+    testWidgets('the two owner-open items show as "Dalam peninjauan"', (
       tester,
     ) async {
       await setup(tester, AppLocale.id);
       big(tester, 9000);
       await tester.pumpWidget(host(const TentangPage()));
       await tester.pumpAndSettle();
-      expect(find.text('Dalam peninjauan'), findsNWidgets(3));
+      expect(find.text('Dalam peninjauan'), findsNWidgets(2));
       for (final id in kOpenReviewMarkers) {
         expect(find.byKey(ValueKey('review-$id')), findsOneWidget, reason: id);
       }
-      // The page does not claim open code while the licence is undecided.
-      expect(find.textContaining('Kode situs ini terbuka'), findsNothing);
+      // The code licence is decided: MIT, for the code only.
+      expect(
+        find.textContaining('berlisensi MIT, hak cipta 2026 Banua Coder'),
+        findsOneWidget,
+      );
+      expect(find.textContaining('hanya mencakup kode'), findsOneWidget);
+      expect(find.textContaining('tidak otomatis termasuk'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('review-metodologi-kode')),
+        findsNothing,
+      );
     });
 
-    test('the markers are exactly the three open owner items', () {
-      expect(kOpenReviewMarkers, [
-        'metodologi-kode',
-        'metodologi-peta',
-        'metodologi-budaya',
-      ]);
+    test('the markers are exactly the two open owner items (O-7, O-12)', () {
+      expect(kOpenReviewMarkers, ['metodologi-peta', 'metodologi-budaya']);
     });
 
     test('a release build fails while a marker is open', () {
@@ -259,6 +266,14 @@ void main() {
     });
   });
 
+  test('the repository carries an MIT LICENSE for Banua Coder', () {
+    final f = File('../../LICENSE');
+    expect(f.existsSync(), isTrue);
+    final t = f.readAsStringSync();
+    expect(t, startsWith('MIT License'));
+    expect(t, contains('Copyright (c) 2026 Banua Coder'));
+  });
+
   testWidgets('scale 2.0 and english have no overflow', (tester) async {
     await setup(tester, AppLocale.en);
     big(tester, 16000);
@@ -267,7 +282,12 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('About PICO'), findsOneWidget);
-    expect(find.text('Under review'), findsNWidgets(3));
+    expect(find.text('Under review'), findsNWidgets(2));
+    expect(
+      find.textContaining('MIT licence, copyright 2026 Banua Coder'),
+      findsOneWidget,
+    );
+    expect(find.textContaining('covers the code only'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await setup(tester, AppLocale.id);
   });

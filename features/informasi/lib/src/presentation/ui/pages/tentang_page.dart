@@ -173,10 +173,7 @@ class _TentangPageState extends State<TentangPage> {
           const _Partners(),
           heading('lisensi', t.sLicense),
           Para(t.licenseData),
-          Para(
-            t.licenseCode,
-            trailing: const ReviewMarker(id: 'metodologi-kode'),
-          ),
+          Para(t.licenseCode),
           Para(
             t.licenseMap,
             trailing: const ReviewMarker(id: 'metodologi-peta'),

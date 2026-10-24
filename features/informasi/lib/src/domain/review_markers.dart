@@ -7,8 +7,6 @@
 /// boot (and this package's tests fail) while this list is not empty. Remove a
 /// marker here only when its text has been replaced with the final outcome.
 const List<String> kOpenReviewMarkers = [
-  // The code licence (the repository has no LICENSE file).
-  'metodologi-kode',
   // Origin and licence of the old boundary files.
   'metodologi-peta',
   // Cultural review of the Kaili motifs (pico-jlc.8, O-12).
