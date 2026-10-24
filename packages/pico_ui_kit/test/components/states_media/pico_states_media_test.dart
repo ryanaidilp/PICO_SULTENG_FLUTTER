@@ -334,6 +334,42 @@ void main() {
       expect(find.text('Disalin'), findsOneWidget);
     });
 
+    testWidgets('copyValue and copiedMessage override what is copied', (
+      tester,
+    ) async {
+      String? copied;
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (call) async {
+          if (call.method == 'Clipboard.setData') {
+            copied = (call.arguments as Map)['text'] as String?;
+          }
+          return null;
+        },
+      );
+      addTearDown(
+        () => tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+          SystemChannels.platform,
+          null,
+        ),
+      );
+      await tester.pumpWidget(
+        app(
+          PicoTheme.light(),
+          const PicoCopyField(
+            label: 'No. rekening',
+            value: '7921 0246 85',
+            copyValue: '7921024685',
+            copiedMessage: 'Nomor rekening disalin',
+          ),
+        ),
+      );
+      await tester.tap(find.byType(IconButton));
+      await tester.pump();
+      expect(copied, '7921024685');
+      expect(find.text('Nomor rekening disalin'), findsOneWidget);
+    });
+
     testWidgets('tap target and labelled tap target guidelines pass', (
       tester,
     ) async {

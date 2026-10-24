@@ -26,10 +26,14 @@ Future<bool> _launch(Uri uri) =>
     launchUrl(uri, mode: LaunchMode.externalApplication);
 
 /// Shows "Disalin" and announces it. Used by contact rows and copy fields.
-Future<void> picoCopyToClipboard(BuildContext context, String value) async {
+Future<void> picoCopyToClipboard(
+  BuildContext context,
+  String value, {
+  String? message,
+}) async {
   await Clipboard.setData(ClipboardData(text: value));
   if (!context.mounted) return;
-  final text = PicoKitText.of(context).copied;
+  final text = message ?? PicoKitText.of(context).copied;
   ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(SnackBar(content: Text(text)));

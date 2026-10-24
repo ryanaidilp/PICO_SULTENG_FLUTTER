@@ -8,13 +8,26 @@ import 'package:pico_ui_kit/src/extensions/build_context_extensions.dart';
 /// Copying shows "Disalin" in a snack bar and announces it.
 class PicoCopyField extends StatelessWidget {
   /// Creates the field.
-  const new({required this.label, required this.value, super.key});
+  const new({
+    required this.label,
+    required this.value,
+    this.copyValue,
+    this.copiedMessage,
+    super.key,
+  });
 
   /// What the value is.
   final String label;
 
-  /// The value to copy.
+  /// The value shown.
   final String value;
+
+  /// What goes on the clipboard when it differs from [value] (for example the
+  /// digits of an account number shown with spaces). Defaults to [value].
+  final String? copyValue;
+
+  /// What the snack bar and the announcement say. Defaults to "Disalin".
+  final String? copiedMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +62,11 @@ class PicoCopyField extends StatelessWidget {
         IconButton(
           tooltip: '${t.copy} $label',
           constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-          onPressed: () => picoCopyToClipboard(context, value),
+          onPressed: () => picoCopyToClipboard(
+            context,
+            copyValue ?? value,
+            message: copiedMessage,
+          ),
           icon: PicoBrandIcon(
             'action.copy',
             color: context.colors.foreground.main,
