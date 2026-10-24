@@ -93,10 +93,17 @@ class PicoStatTile extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 6),
-                Text(
-                  figure,
-                  style: (v == null ? text.body.large : text.display.small)
-                      .copyWith(color: context.colors.foreground.main),
+                // One line that scales down instead of breaking a number.
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    figure,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: (v == null ? text.body.large : text.display.small)
+                        .copyWith(color: context.colors.foreground.main),
+                  ),
                 ),
                 if (deltaText != null)
                   Text(
