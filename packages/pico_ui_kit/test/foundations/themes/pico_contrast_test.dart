@@ -71,6 +71,7 @@ void main() {
     test(
       'series that merge for colour-blind vision differ in shape ($mode)',
       () {
+        final merged = <String>[];
         for (final cvd in Cvd.values) {
           for (var i = 0; i < series.length; i++) {
             for (var j = i + 1; j < series.length; j++) {
@@ -85,15 +86,93 @@ void main() {
                 );
               }
               if (d < 10) {
+                merged.add('$mode ${cvd.name} ${a.name}/${b.name}');
                 expect(a.mark, isNot(b.mark));
                 expect(a.line, isNot(b.line));
               }
             }
           }
         }
+        // The one known exception: the legacy amber and red steps share a
+        // lightness, so a deuteranope sees Dirawat and Meninggal as one
+        // colour in the light theme. A new merge is a palette regression.
+        expect(merged, dark ? isEmpty : ['light deutan active/deceased']);
       },
     );
   }
+
+  // The original palette (feature/monorepo pico_colors.dart): the series and
+  // the blues are steps of its families, so a contrast fix cannot drift the
+  // brand silently. Changing one of these is a design decision.
+  test('series and blue tokens are the pinned legacy steps', () {
+    for (final (name, token, hex, legacy) in [
+      (
+        'positive light',
+        PicoBrandPalette.positiveLight,
+        0xFF09689B,
+        'primary 600/700',
+      ),
+      (
+        'recovered light',
+        PicoBrandPalette.recoveredLight,
+        0xFF087443,
+        'success 700',
+      ),
+      (
+        'deceased light',
+        PicoBrandPalette.deceasedLight,
+        0xFFB42318,
+        'error 700',
+      ),
+      // Between warning 700 (B28000, 3.3:1 on paper) and 800 (7A5900): the
+      // nearest amber at 4.5:1 on every ground.
+      (
+        'active light',
+        PicoBrandPalette.activeLight,
+        0xFF8A5A00,
+        'warning 700 to 800',
+      ),
+      ('rt light', PicoBrandPalette.rtLight, 0xFF5E3BC6, 'secondary 700'),
+      (
+        'positive dark',
+        PicoBrandPalette.positiveDark,
+        0xFF40BBF0,
+        'primary 400',
+      ),
+      (
+        'recovered dark',
+        PicoBrandPalette.recoveredDark,
+        0xFF3CCB7F,
+        'success 400',
+      ),
+      ('deceased dark', PicoBrandPalette.deceasedDark, 0xFFF97066, 'error 400'),
+      ('active dark', PicoBrandPalette.activeDark, 0xFFFDC941, 'warning 400'),
+      ('rt dark', PicoBrandPalette.rtDark, 0xFFA197EE, 'secondary 400'),
+      ('logo blue', PicoBrandPalette.primaryLight, 0xFF0B92D5, 'primary 500'),
+      (
+        'blue, text step',
+        PicoBrandPalette.primaryStrongLight,
+        0xFF09689B,
+        'primary 600/700',
+      ),
+      ('blue, deep', PicoBrandPalette.indigoLight, 0xFF0C5880, 'primary 800'),
+      ('blue, tint', PicoBrandPalette.tintLight, 0xFFE1F2FD, 'primary 100'),
+      (
+        'blue, dark theme',
+        PicoBrandPalette.primaryDark,
+        0xFF40BBF0,
+        'primary 400',
+      ),
+      (
+        'blue, dark theme deep',
+        PicoBrandPalette.indigoDark,
+        0xFF82D2F7,
+        'primary 300',
+      ),
+    ]) {
+      expect(token.toARGB32(), hex, reason: '$name ($legacy)');
+    }
+  });
 }
 
 enum Need {

@@ -101,7 +101,7 @@ void main() {
       ),
     );
     expect(e.passed, isFalse);
-    expect(e.reason, contains('painted'));
+    expect(e.reason, contains('frame does not show'));
   });
 
   testWidgets('a gradient ground is measured at its weak end', (tester) async {
@@ -123,6 +123,55 @@ void main() {
       ),
     );
     expect(e.passed, isFalse);
+  });
+
+  testWidgets('ink on a near-ink ground fails', (tester) async {
+    final e = await check(
+      tester,
+      Text(
+        'Data per 14 Jan 2024',
+        style: style.copyWith(color: const Color(0xFF777777)),
+      ),
+      ground: const Color(0xFF7A7A7A),
+    );
+    expect(e.passed, isFalse);
+    expect(e.reason, contains('needs 4.5:1'));
+  });
+
+  testWidgets('a gradient fading towards the ink fails', (tester) async {
+    final e = await check(
+      tester,
+      DecoratedBox(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.white, Color(0xFF24221F)],
+            stops: [0, 0.6, 1],
+          ),
+        ),
+        child: Text(
+          'Kasus positif kumulatif Sulawesi Tengah',
+          style: style.copyWith(color: const Color(0xFF24221F)),
+        ),
+      ),
+    );
+    expect(e.passed, isFalse);
+  });
+
+  testWidgets('a filter that fades the text fails the frame check', (
+    tester,
+  ) async {
+    final e = await check(
+      tester,
+      ColorFiltered(
+        colorFilter: const ColorFilter.mode(Color(0xFFDDDDDD), BlendMode.srcIn),
+        child: Text(
+          'Filtered',
+          style: style.copyWith(fontSize: 16, color: Colors.black),
+        ),
+      ),
+    );
+    expect(e.passed, isFalse);
+    expect(e.reason, contains('frame does not show'));
   });
 
   testWidgets('icons are graphics, not text', (tester) async {

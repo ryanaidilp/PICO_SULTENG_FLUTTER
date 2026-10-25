@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:pico_ui_kit/src/components/atoms/data_viz/pico_state_icon.dart';
 import 'package:pico_ui_kit/src/components/utilities/pico_kit_text.dart';
@@ -145,10 +147,13 @@ class PicoStatTile extends StatelessWidget {
 
 /// The headline figure of a block (original "total confirmed" card): a blue
 /// gradient card with the big white number, the daily change and the virus
-/// picture. The gradient keeps the original two blues, but it only reaches
-/// the light end behind the picture: under the text column it stops at
-/// [textGround], where white text still measures 4.5:1 (it was 2.9:1 at the
-/// light end in light mode and 4.3:1 in dark mode).
+/// picture. The gradient is the original one (dark blue to the logo blue,
+/// left to right) whenever the text ends before [textEnd] of the width,
+/// where white text still measures 4.5:1. When the text reaches further (a
+/// long label, English, a larger text setting), the stretch under the text
+/// stops at [textGround] and the rest of the card still ends on the
+/// original light blue. White on the original light end measures 2.9:1 in
+/// light mode and 4.3:1 in dark mode.
 class PicoHeroStat extends StatelessWidget {
   /// Creates the card.
   const new({
@@ -179,16 +184,45 @@ class PicoHeroStat extends StatelessWidget {
     alpha: 0.85,
   );
 
-  /// The lightest colour under the text, before it meets the page: 30 % of
-  /// the way from the dark end to the light end.
+  /// How far along the gradient white text still passes 4.5:1, with a
+  /// small margin (light mode, the stricter one).
+  static const double textEnd = 0.33;
+
+  /// The lightest colour under the text, before it meets the page.
   static final Color textGround = Color.lerp(
     PicoBrandPalette.primaryStrongLight,
     lightEnd,
-    0.3,
+    textEnd,
   )!;
 
-  static double _split(double width) =>
-      width.isFinite && width > pictureColumn ? 1 - pictureColumn / width : 0.7;
+  static const double _padStart = 16;
+
+  /// Width of the widest text line, as laid out in the column.
+  static double _widest(
+    BuildContext context,
+    double column,
+    List<(String, TextStyle)> lines,
+  ) {
+    final scaler = MediaQuery.textScalerOf(context);
+    var widest = 0.0;
+    for (final (s, style) in lines) {
+      final tp = TextPainter(
+        text: TextSpan(text: s, style: style),
+        textDirection: Directionality.of(context),
+        textScaler: scaler,
+      )..layout(maxWidth: column);
+      widest = math.max(widest, tp.width);
+      tp.dispose();
+    }
+    return widest;
+  }
+
+  static Gradient _gradient(double split) => split <= textEnd
+      ? LinearGradient(colors: [PicoBrandPalette.primaryStrongLight, lightEnd])
+      : LinearGradient(
+          colors: [PicoBrandPalette.primaryStrongLight, textGround, lightEnd],
+          stops: [0, split.clamp(textEnd, 0.95), 1],
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -217,99 +251,98 @@ class PicoHeroStat extends StatelessWidget {
       t.date(date),
     ].join(', ');
     const onHero = Colors.white;
+    final labelStyle = text.label.caption.copyWith(
+      color: onHero,
+      fontWeight: FontWeight.w700,
+      letterSpacing: 0.6,
+    );
+    final figureStyle = text.heading.h1.copyWith(color: onHero);
+    final deltaStyle = text.body.small.copyWith(
+      color: onHero,
+      fontWeight: FontWeight.w700,
+    );
+    final dateStyle = text.label.caption.copyWith(color: onHero);
     return Semantics(
       container: true,
       label: semantic,
       child: ExcludeSemantics(
         child: LayoutBuilder(
-          builder: (context, box) => DecoratedBox(
-            decoration: BoxDecoration(
-              borderRadius: PicoRadiusToken.borderMd,
-              gradient: LinearGradient(
-                colors: [
-                  PicoBrandPalette.primaryStrongLight,
-                  textGround,
-                  lightEnd,
+          builder: (context, box) {
+            final w = box.maxWidth.isFinite ? box.maxWidth : 360.0;
+            final column = math.max(1.0, w - _padStart - pictureColumn);
+            final widest = _widest(context, column, [
+              (label.toUpperCase(), labelStyle),
+              (figure, figureStyle),
+              if (deltaText != null) (deltaText, deltaStyle),
+              (t.date(date), dateStyle),
+            ]);
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                borderRadius: PicoRadiusToken.borderMd,
+                gradient: _gradient((_padStart + widest) / w),
+                boxShadow: [
+                  BoxShadow(
+                    color: PicoBrandPalette.primaryLight.withValues(
+                      alpha: 0.28,
+                    ),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
                 ],
-                // The light end only behind the picture column.
-                stops: [0, _split(box.maxWidth), 1],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: PicoBrandPalette.primaryLight.withValues(alpha: 0.28),
-                  blurRadius: 12,
-                  offset: const Offset(0, 4),
-                ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: PicoRadiusToken.borderMd,
-              child: Stack(
-                children: [
-                  Positioned(
-                    right: -6,
-                    top: 0,
-                    bottom: 0,
-                    child: Opacity(
-                      opacity: 0.9,
-                      child: Image.asset(
-                        'assets/images/covid.png',
-                        package: 'pico_ui_kit',
-                        fit: BoxFit.contain,
-                        width: 76,
+              child: ClipRRect(
+                borderRadius: PicoRadiusToken.borderMd,
+                child: Stack(
+                  children: [
+                    Positioned(
+                      right: -6,
+                      top: 0,
+                      bottom: 0,
+                      child: Opacity(
+                        opacity: 0.9,
+                        child: Image.asset(
+                          'assets/images/covid.png',
+                          package: 'pico_ui_kit',
+                          fit: BoxFit.contain,
+                          width: 76,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      16,
-                      12,
-                      pictureColumn,
-                      12,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          label.toUpperCase(),
-                          style: text.label.caption.copyWith(
-                            color: onHero,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: 0.6,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            figure,
-                            maxLines: 1,
-                            softWrap: false,
-                            style: text.heading.h1.copyWith(color: onHero),
-                          ),
-                        ),
-                        if (deltaText != null)
-                          Text(
-                            deltaText,
-                            style: text.body.small.copyWith(
-                              color: onHero,
-                              fontWeight: FontWeight.w700,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        _padStart,
+                        12,
+                        pictureColumn,
+                        12,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(label.toUpperCase(), style: labelStyle),
+                          const SizedBox(height: 4),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              figure,
+                              maxLines: 1,
+                              softWrap: false,
+                              style: figureStyle,
                             ),
                           ),
-                        const SizedBox(height: 2),
-                        Text(
-                          t.date(date),
-                          style: text.label.caption.copyWith(color: onHero),
-                        ),
-                      ],
+                          if (deltaText != null)
+                            Text(deltaText, style: deltaStyle),
+                          const SizedBox(height: 2),
+                          Text(t.date(date), style: dateStyle),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );

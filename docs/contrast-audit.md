@@ -9,32 +9,56 @@ was not redesigned: only failures and clear defects were changed.
 | | Before | After |
 |---|---|---|
 | Token pairs below their WCAG minimum (of 212 enumerated pairs, light + dark) | 8 | 0 |
-| Rendered text below 4.5:1 / 3:1 in widget tests and on the emulator | 1 (hero label, light) | 0 |
-| Other defects (overlap, missing programmatic label) | 2 | 0 |
+| Rendered text below 4.5:1 / 3:1 (widget tests and emulator) | 1 (hero label, light) | 0 |
+| Other defects (Rt label overlap, missing programmatic label) | 2 | 0 |
 | Contrast test files that pass on Linux at 1x | 4 of 12 (stock guideline, no 2x workaround) | 12 of 12, no workaround |
 
-The 8 token failures were:
+The 8 token failures:
 
 | Pair | Theme | Before | After | Fix |
 |---|---|---|---|---|
-| White hero text on the lightest point under the text column | light | 3.4:1 (column end), 4.1:1 at 150 % text, 4.4:1 at 1x | 4.70:1 | Gradient keeps both blues but reaches `0B92D5` only behind the virus picture |
+| White hero text at the end of its text column | light | 4.43:1 at 1x, 4.0:1 at 150 %, 3.6:1 at 200 % (emulator) | 4.61:1 at 1x, 150 % and 200 % | See "Hero" below |
 | Rt credible band edge on page / card | light | 2.61 / 2.66 | 3.56 / 3.67 | Edge opacity .55 to .70 (`ChartPainter.bandEdgeAlpha`) |
 | Rt credible band edge on page / card | dark | 2.85 / 2.63 | 3.75 / 3.36 | same |
 | `foreground.primary` on page / card / info surface | dark | 2.62 / 2.23 / 1.99 | 7.24 / 6.17 / 5.50 | The dark theme used the light token; now `primaryDark` (`40BBF0`) |
 
 The 2 other defects:
 
-- **Rt = 1 label under the series.** The threshold label was painted before
-  the Rt line, so recent values crossed the text. It is now painted after the
-  series on a small patch of the chart's own ground (`Material` colour).
+- **Rt = 1 label.** It was painted on the rule, before the Rt line, so recent
+  values crossed it. It is now a key above the plot, top right (a dashed
+  sample and "Rt = 1"), so it covers no data and no rule.
 - **Text fields had no programmatic label.** `PicoTextField` drew its label as
-  a separate text above the field; the edit box itself was unnamed (WCAG
-  1.3.1 and 4.1.2). The label now names the field and the loose text is
-  excluded from semantics, so TalkBack says "Cari rumah sakit, edit box".
+  a separate text above an unnamed edit box (WCAG 1.3.1, 4.1.2). The label now
+  names the field and the loose text is excluded, so the semantics tree has
+  exactly one node with the label: the text field ("Cari rumah sakit", then
+  the hint "Nama"). A test walks the tree and asserts this.
 
-![Hero before (200 % text, left) and after (150 % text, right)](contrast-audit/hero-before-after.png)
+### Hero
 
-![Rt = 1 label before (left) and after (right)](contrast-audit/rt-label-before-after.png)
+![Hero at 1x](contrast-audit/hero-1x-before-after.png)
+
+![Hero at 200 % text](contrast-audit/hero-200-before-after.png)
+
+The original gradient (dark blue `09689B` to the logo blue `0B92D5` at 85 %,
+left to right) cannot carry white small text all the way: white measures
+4.5:1 only up to 38 % of the width in light mode (2.9:1 at the light end;
+dark mode 4.3:1 at the end). The label already ends at 38 % at 1x in
+Indonesian and goes further in English and at larger text (53 % at 150 %,
+69 % at 200 %).
+
+The fix keeps the original gradient, direction and both end colours. The card
+measures its own widest text line. When the text ends before 33 % of the
+width, the gradient is exactly the original. When it ends later, the stretch
+under the text runs from the dark end to the 33 % colour, and the rest of the
+card still ends on the original light blue. At 1x this moves the colour at
+the end of the label from the 38 % point to the 33 % point of the gradient
+(a few percent darker there, nothing elsewhere); at 200 % text the column is
+held at the 33 % colour instead of reaching the 69 % colour. Measured on the
+emulator after: 4.61:1 light, 5.27:1 dark, at 1x, 150 % and 200 %.
+
+### Rt chart
+
+![Rt = 1 key](contrast-audit/rt-label-before-after.png)
 
 ## Why the contrast tests failed at 1x on Linux
 
@@ -50,14 +74,13 @@ A probe (12 px Source Sans 3 Regular, `#535352` on white, 7.26:1) gives:
 | Linux arm64 Docker, Flutter 3.47.4 (FreeType) | `#535353` | `#868686` x25 | 3.64:1, fail |
 | Linux, `devicePixelRatio = 2` (the old `hiDpi` workaround) | `#535353` | `#868686` x25 | 3.64:1, fail |
 
-So the full ink is painted on Linux too, but FreeType's softer stems make an
+The full ink is painted on Linux too, but FreeType's softer stems make an
 anti-aliasing step the mode. CI saw 1.4:1 on other strings for the same
 reason. The 2x workaround could not fix this: the stock guideline renders its
 image with `pixelRatio: 1 / devicePixelRatio`, back to logical pixels, so it
 samples the same image. It passed on CI by chance of glyph placement. The
 stock guideline also never checked text inside `ExcludeSemantics`, which is
-how the stat tiles and the hero expose one combined label, so the hero text
-was never measured.
+how the stat tiles and the hero expose one combined label.
 
 **Fix at the root.** `package:pico_ui_kit/testing.dart` adds
 `picoTextContrastGuideline`, now used by all 12 test files (the `hiDpi`
@@ -65,24 +88,41 @@ helper is deleted). For every visible, hit-testable `RenderParagraph`,
 including text under `ExcludeSemantics`, it:
 
 1. reads the colour each text run declares and multiplies in ancestor
-   opacity (exact token math, no glyph sampling);
-2. takes the background from the first and last pixel rows of the text box,
-   at the 5th percentile, so a gradient is measured at its weak end;
-3. checks the frame: the most inked pixel must lie on the line from the
-   background to the declared colour, so a shader or filter that changes the
-   hue fails instead of passing;
+   opacity (exact token math, no guessing of the ink from pixels);
+2. paints the paragraph again, alone, as a mask on the same physical pixels,
+   and takes as background **every** box pixel the glyphs and their
+   anti-aliased edges (one pixel wider) do not touch. Nothing is dropped for
+   being close to the ink colour; the ratio is the 2nd percentile, so a
+   gradient counts at its weak end. No visible background is a failure;
+3. checks the frame: where the mask covers a pixel by 60 % or more, the frame
+   must show the declared colour blended over the local background by that
+   coverage (median within 20/255), so a shader, a colour filter or a wrong
+   declared colour fails;
 4. uses the WCAG large-text rule after the text scaler (24 px, or 18.66 px
    bold).
 
-Icons (private-use glyphs) are graphics and are covered by the token test.
-Its own tests (`test/testing/pico_text_contrast_guideline_test.dart`) cover
-thin 12 px text at 1x, a failing grey, large text, `ExcludeSemantics`,
-opacity, a hue filter, a gradient and icons. All feature contrast tests pass
-on macOS and in a Linux container at 1x. The Beranda test gained an
-"en light x1.5" case, which fails on the old hero (4.09:1) and passes now.
+An earlier version of this guideline (first push of this PR) took the
+background from the box's edge rows and dropped pixels within 1.15:1 of the
+ink. Review found that this hid the worst cases (ink on a near-ink ground,
+gradients fading towards the ink); the mask replaces it.
 
-Known limit: a filter that only fades text towards its background looks like
-anti-aliasing to step 3. Use `Opacity`, which step 1 counts.
+Its tests (`packages/pico_ui_kit/test/testing/pico_text_contrast_guideline_test.dart`)
+cover: thin 12 px text at 7:1 passes at 1x; grey at 2.5:1 fails; large text
+at 3:1 passes; `#777777` on `#7A7A7A` fails; a gradient fading towards the
+ink fails; text under `ExcludeSemantics` is checked; ancestor opacity counts;
+a hue filter and a fading filter fail the frame check; icons are skipped.
+They and all feature contrast tests pass at 1x on macOS and in the Linux
+container. The Beranda test gained an "en light x1.5" case, which fails on
+the old hero (4.04:1) and passes now.
+
+Limits (also in the guideline's dartdoc): only text hit-testable at the
+centre of its box is checked; the background is the text box only; the
+frame check needs at least 3 pixels covered 60 % or more and one colour per
+paragraph; `ShaderMask` and `TextOverflow.fade` are not reproduced by the
+mask, so the frame check is lenient there; `ColorFiltered` is not counted in
+the token step, only by the frame check; paragraphs with `WidgetSpan`s fall
+back to the box's most frequent colour; icon glyphs are left to the token
+test.
 
 ## Method
 
@@ -92,8 +132,10 @@ anti-aliasing to step 3. Use `Opacity`, which step 1 counts.
    scheme roles used by stock widgets, including snack bar and selected
    chips; hero; map labels and marks; outlines; focus; series marks, icons in
    their badges, the Rt band edge and the axis). Translucent colours are
-   composited over their real ground. Run with `PICO_CONTRAST_REPORT=1` to
-   print the table below.
+   composited over their real ground. It also pins the series and blue hex
+   values to their steps of the original palette (`feature/monorepo`
+   `pico_colors.dart`), so a later fix cannot drift the brand silently. Run
+   with `PICO_CONTRAST_REPORT=1` to print the table below.
 2. **Rendered check.** The guideline above, in light and dark, at 1x, 1.5x
    and 2x text, on Beranda, Statistik (province, kabupaten, Rt, tests),
    Peta, Vaksin, Rumah sakit, Satgas, Isoman, Infografis, Info, Tentang,
@@ -115,7 +157,7 @@ anti-aliasing to step 3. Use `Opacity`, which step 1 counts.
 
 | Element | Light | Dark |
 |---|---|---|
-| Hero label, white on gradient at the end of the text column (150 % text) | 4.55:1 or more | 5.3:1 or more |
+| Hero label, white on gradient at the end of the text column | 4.61:1 (1x, 150 %, 200 %) | 5.27:1 |
 | Body text on page | 14.95:1 | 14.07:1 |
 | Tile caption and date (`foreground.subtle` on card) | 7.70:1 | 5.37:1 |
 | Navigation, unselected / selected label | 7.70 / 6.06:1 | 5.37 / 6.17:1 |
@@ -124,8 +166,8 @@ anti-aliasing to step 3. Use `Opacity`, which step 1 counts.
 | Map name on region / on page | 13.84 / 14.95:1 | 10.69 / 14.07:1 |
 | Disabled "Bandingkan" (exempt) | 2.66:1 | 3.55:1 |
 
-Screens: [Beranda light](contrast-audit/home-light.png),
-[Beranda dark, before](contrast-audit/home-dark.png),
+Screens (before this PR): [Beranda light](contrast-audit/home-light.png),
+[Beranda dark](contrast-audit/home-dark.png),
 [Statistik light](contrast-audit/statistik-light.png),
 [Peta dark](contrast-audit/peta-dark.png).
 
@@ -146,15 +188,41 @@ Screens: [Beranda light](contrast-audit/home-light.png),
   (300 ms opacity) are not motion.
 - **Focus.** `outline.focus` is 5.71:1 or more on page and card.
 
+## Goldens
+
+All golden files were regenerated on macOS (CI does not run goldens).
+
+Changed by this PR (they passed on `master`, or the change is ours):
+
+| Golden | Why |
+|---|---|
+| `pico_ui_kit` charts: `charts_light_x1`, `charts_light_x2`, `charts_dark_x1`, `charts_dark_x2`, `charts_3x_scrub` | Rt band edge opacity, Rt = 1 key above the plot |
+| `pico_ui_kit` themes: `semantic_colors_comparison`, `radius_scale`, `spacing_scale`, `typography_overview_comparison` | Dark `foreground.primary` (these show it in the dark half) |
+| `statistik`: `rt_light_x1`, `rt_dark_x2`, `greyscale_rt` | Rt = 1 key and band edge |
+| `home`: `home_light_x1`, `home_light_x2`, `home_dark_x1`, `home_dark_x2` | Hero gradient (these also failed on `master`, see below) |
+
+Already failing on `master` on macOS, **not** changed here (reverted to the
+`master` files): `peta`: `peta_light_x1`, `peta_dark_x2`, `greyscale_peta`;
+`statistik`: `area_light_x2`, `area_dark_x2`, `kabupaten_light_x1`,
+`kabupaten_dark_x2`, `profile_light_x1`, `profile_dark_x2`,
+`greyscale_province`; `vaksin`: `vaksin_light_x2`, `vaksin_dark_x2`. The only
+difference is the "diperbarui N hari lalu" footer: those tests read the wall
+clock, so the goldens go stale every day (1013 on the golden, 1014 today).
+The same applies to the `home` and `rt` goldens above. Freezing the clock in
+those tests is a separate fix.
+
 ## Justified leftovers
 
 - **Deuteranopia, light theme: Dirawat (`8A5A00`) and Meninggal (`B42318`)
-  collapse (delta E 2.2).** Both colours are the text-safe steps of the legacy
-  amber and red, at the same lightness. They are never the only cue: the
-  series use a triangle mark and dashed line versus bars and a doubled line,
-  and every tile and legend has its label. The token test enforces that any
-  pair under delta E 10 for a dichromat differs in mark and line. Changing a
-  hue would change the original look, so it is left as is.
+  merge (delta E 2.2).** Both are steps of the original amber and red
+  families at the same lightness. They are never the only cue: the series
+  use a triangle mark and dashed line versus bars and a doubled line, and
+  every tile and legend has its label. The token test asserts this is the
+  only colour-blind merge in either theme, and that merged pairs differ in
+  mark and line. Changing a hue would change the original look.
+- **`activeLight` `8A5A00`** is not an exact step of the original amber
+  family: warning 700 (`B28000`) is 3.3:1 on paper, so the token sits between
+  700 and 800 (`7A5900`). It is pinned in the test.
 - **Map names are 10 px** (they scale with the text setting). They pass
   contrast (10.7:1 and up), and the same names, values and actions are in the
   Daftar tab and on every mark's label.
@@ -257,7 +325,7 @@ Screens: [Beranda light](contrast-audit/home-light.png),
 | dark | text | foreground.warning on card | #FDC941 | #302E2C | 8.76 | 4.5 |
 | dark | text | foreground.warning on its status surface | #FDC941 | #3D3010 | 8.35 | 4.5 |
 | dark | text | foreground.warning on page | #FDC941 | #24221F | 10.28 | 4.5 |
-| dark | text | hero white text on its lightest ground | #FFFFFF | #0B71A6 | 5.35 | 4.5 |
+| dark | text | hero white text on its lightest ground | #FFFFFF | #0B72A7 | 5.29 | 4.5 |
 | dark | text | hero white text on the dark end | #FFFFFF | #09689B | 6.06 | 4.5 |
 | dark | text | map label on region | #F3F1EE | #0C3A52 | 10.69 | 4.5 |
 | dark | text | map label on selected active region | #F3F1EE | #4F624D | 5.83 | 4.5 |
@@ -363,7 +431,7 @@ Screens: [Beranda light](contrast-audit/home-light.png),
 | light | text | foreground.warning on card | #7A5900 | #FFFFFF | 6.45 | 4.5 |
 | light | text | foreground.warning on its status surface | #7A5900 | #FFF1CF | 5.75 | 4.5 |
 | light | text | foreground.warning on page | #7A5900 | #F9F8F6 | 6.08 | 4.5 |
-| light | text | hero white text on its lightest ground | #FFFFFF | #147BB0 | 4.70 | 4.5 |
+| light | text | hero white text on its lightest ground | #FFFFFF | #167CB2 | 4.59 | 4.5 |
 | light | text | hero white text on the dark end | #FFFFFF | #09689B | 6.06 | 4.5 |
 | light | text | map label on region | #24221F | #E1F2FD | 13.84 | 4.5 |
 | light | text | map label on selected active region | #24221F | #C9C7B6 | 9.34 | 4.5 |
