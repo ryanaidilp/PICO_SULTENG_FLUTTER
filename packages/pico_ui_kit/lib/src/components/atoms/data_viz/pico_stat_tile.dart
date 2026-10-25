@@ -145,7 +145,10 @@ class PicoStatTile extends StatelessWidget {
 
 /// The headline figure of a block (original "total confirmed" card): a blue
 /// gradient card with the big white number, the daily change and the virus
-/// picture. Text is white on the dark end of the gradient (AA).
+/// picture. The gradient keeps the original two blues, but it only reaches
+/// the light end behind the picture: under the text column it stops at
+/// [textGround], where white text still measures 4.5:1 (it was 2.9:1 at the
+/// light end in light mode and 4.3:1 in dark mode).
 class PicoHeroStat extends StatelessWidget {
   /// Creates the card.
   const new({
@@ -167,6 +170,25 @@ class PicoHeroStat extends StatelessWidget {
 
   /// Date of the figure.
   final DateTime date;
+
+  /// Width of the picture column on the right, which the text never enters.
+  static const double pictureColumn = 88;
+
+  /// Light end of the gradient: the logo blue over the page.
+  static final Color lightEnd = PicoBrandPalette.primaryLight.withValues(
+    alpha: 0.85,
+  );
+
+  /// The lightest colour under the text, before it meets the page: 30 % of
+  /// the way from the dark end to the light end.
+  static final Color textGround = Color.lerp(
+    PicoBrandPalette.primaryStrongLight,
+    lightEnd,
+    0.3,
+  )!;
+
+  static double _split(double width) =>
+      width.isFinite && width > pictureColumn ? 1 - pictureColumn / width : 0.7;
 
   @override
   Widget build(BuildContext context) {
@@ -199,83 +221,93 @@ class PicoHeroStat extends StatelessWidget {
       container: true,
       label: semantic,
       child: ExcludeSemantics(
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            borderRadius: PicoRadiusToken.borderMd,
-            gradient: LinearGradient(
-              colors: [
-                PicoBrandPalette.primaryStrongLight,
-                PicoBrandPalette.primaryLight.withValues(alpha: 0.85),
+        child: LayoutBuilder(
+          builder: (context, box) => DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: PicoRadiusToken.borderMd,
+              gradient: LinearGradient(
+                colors: [
+                  PicoBrandPalette.primaryStrongLight,
+                  textGround,
+                  lightEnd,
+                ],
+                // The light end only behind the picture column.
+                stops: [0, _split(box.maxWidth), 1],
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: PicoBrandPalette.primaryLight.withValues(alpha: 0.28),
+                  blurRadius: 12,
+                  offset: const Offset(0, 4),
+                ),
               ],
             ),
-            boxShadow: [
-              BoxShadow(
-                color: PicoBrandPalette.primaryLight.withValues(alpha: 0.28),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: ClipRRect(
-            borderRadius: PicoRadiusToken.borderMd,
-            child: Stack(
-              children: [
-                Positioned(
-                  right: -6,
-                  top: 0,
-                  bottom: 0,
-                  child: Opacity(
-                    opacity: 0.9,
-                    child: Image.asset(
-                      'assets/images/covid.png',
-                      package: 'pico_ui_kit',
-                      fit: BoxFit.contain,
-                      width: 76,
+            child: ClipRRect(
+              borderRadius: PicoRadiusToken.borderMd,
+              child: Stack(
+                children: [
+                  Positioned(
+                    right: -6,
+                    top: 0,
+                    bottom: 0,
+                    child: Opacity(
+                      opacity: 0.9,
+                      child: Image.asset(
+                        'assets/images/covid.png',
+                        package: 'pico_ui_kit',
+                        fit: BoxFit.contain,
+                        width: 76,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 12, 88, 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        label.toUpperCase(),
-                        style: text.label.caption.copyWith(
-                          color: onHero,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 0.6,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          figure,
-                          maxLines: 1,
-                          softWrap: false,
-                          style: text.heading.h1.copyWith(color: onHero),
-                        ),
-                      ),
-                      if (deltaText != null)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      16,
+                      12,
+                      pictureColumn,
+                      12,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
                         Text(
-                          deltaText,
-                          style: text.body.small.copyWith(
+                          label.toUpperCase(),
+                          style: text.label.caption.copyWith(
                             color: onHero,
                             fontWeight: FontWeight.w700,
+                            letterSpacing: 0.6,
                           ),
                         ),
-                      const SizedBox(height: 2),
-                      Text(
-                        t.date(date),
-                        style: text.label.caption.copyWith(color: onHero),
-                      ),
-                    ],
+                        const SizedBox(height: 4),
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            figure,
+                            maxLines: 1,
+                            softWrap: false,
+                            style: text.heading.h1.copyWith(color: onHero),
+                          ),
+                        ),
+                        if (deltaText != null)
+                          Text(
+                            deltaText,
+                            style: text.body.small.copyWith(
+                              color: onHero,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        const SizedBox(height: 2),
+                        Text(
+                          t.date(date),
+                          style: text.label.caption.copyWith(color: onHero),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

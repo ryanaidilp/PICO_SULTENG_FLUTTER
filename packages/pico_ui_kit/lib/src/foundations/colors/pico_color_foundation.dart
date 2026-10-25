@@ -47,6 +47,8 @@ abstract final class PicoColorFoundation() {
   static const Color foregroundWarningDark = PicoBrandPalette.dyeGoldDark;
   static const Color foregroundErrorDark = PicoBrandPalette.crimsonDark;
   static const Color foregroundInfoDark = PicoBrandPalette.primaryDark;
+  // The dark theme used the light step here (2.6:1 on dark paper).
+  static const Color foregroundPrimaryDark = PicoBrandPalette.primaryDark;
 
   // Actions. Filled actions use the inverse foreground as text.
   static const Color actionPrimary = PicoBrandPalette.primaryStrongLight;

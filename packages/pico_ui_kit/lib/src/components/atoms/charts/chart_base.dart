@@ -565,6 +565,9 @@ class _PicoChartBaseState extends State<PicoChartBase>
                 pulse: _pulse,
                 fillBelow: widget.series.length == 1 && widget.band == null,
                 inkColor: context.colors.foreground.main,
+                groundColor:
+                    Material.maybeOf(context)?.color ??
+                    context.colors.background.main,
               );
               return GestureDetector(
                 key: const ValueKey('pico-chart-plot'),
@@ -666,6 +669,7 @@ class ChartPainter extends CustomPainter {
     required this.pulse,
     required this.fillBelow,
     required this.inkColor,
+    this.groundColor,
   }) : super(repaint: Listenable.merge([progress, pulse]));
 
   /// Pixel mapping.
@@ -730,6 +734,14 @@ class ChartPainter extends CustomPainter {
 
   /// Ink colour for the scrub rule.
   final Color inkColor;
+
+  /// Opacity of the Rt band edge. The edge carries the bound, so it keeps
+  /// 3:1 (SC 1.4.11) on page and card in both themes; .55 measured 2.6:1.
+  static const double bandEdgeAlpha = .7;
+
+  /// Colour behind the chart. The threshold label sits on a patch of it, on
+  /// top of the series, so a line crossing "Rt = 1" never cuts the text.
+  final Color? groundColor;
 
   void _text(
     Canvas c,
@@ -802,13 +814,6 @@ class ChartPainter extends CustomPainter {
           ..strokeWidth = 1.5
           ..color = axisColor,
       );
-      if (thresholdLabel != null)
-        _text(
-          canvas,
-          thresholdLabel!,
-          Offset(plot.right - 2, th - textStyle.fontSize! * .8),
-          right: true,
-        );
     }
 
     canvas
@@ -829,7 +834,7 @@ class ChartPainter extends CustomPainter {
       final edge = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1
-        ..color = bandColor.withValues(alpha: .55);
+        ..color = bandColor.withValues(alpha: bandEdgeAlpha);
       for (final p in bands) {
         canvas
           ..drawPath(p, fill)
@@ -840,6 +845,29 @@ class ChartPainter extends CustomPainter {
       _drawLayer(canvas, layer);
     }
     canvas.restore();
+    final label = thresholdLabel;
+    if (th != null && label != null) {
+      final tp = TextPainter(
+        text: TextSpan(text: label, style: textStyle),
+        textDirection: TextDirection.ltr,
+        textScaler: textScaler,
+      )..layout();
+      final at = Offset(
+        plot.right - 2 - tp.width,
+        th - textStyle.fontSize! * .8 - tp.height / 2,
+      );
+      final ground = groundColor;
+      if (ground != null) {
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            (at & tp.size).inflate(2),
+            const Radius.circular(3),
+          ),
+          Paint()..color = ground,
+        );
+      }
+      tp.paint(canvas, at);
+    }
     if (progress.value >= 1) _drawPulse(canvas);
 
     final sd = scrub;

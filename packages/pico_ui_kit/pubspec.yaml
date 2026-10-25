@@ -21,6 +21,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_cache_manager: ^3.4.5
+  # Only lib/testing.dart (the contrast guideline) imports it; app code never does.
+  flutter_test:
+    sdk: flutter
   flutter_svg: ^2.3.0
   haptic_feedback: ^0.6.5
   http: ^1.6.0
@@ -35,8 +38,6 @@ dependencies:
 dev_dependencies:
   alchemist: ^0.14.0
   flutter_localizations:
-    sdk: flutter
-  flutter_test:
     sdk: flutter
   meta: ^1.18.0
 

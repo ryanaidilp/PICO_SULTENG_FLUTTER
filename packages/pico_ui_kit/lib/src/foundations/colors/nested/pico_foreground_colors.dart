@@ -38,7 +38,7 @@ class const PicoForegroundColors({
     warning: PicoColorFoundation.foregroundWarningDark,
     error: PicoColorFoundation.foregroundErrorDark,
     info: PicoColorFoundation.foregroundInfoDark,
-    primary: PicoColorFoundation.foregroundPrimary,
+    primary: PicoColorFoundation.foregroundPrimaryDark,
   );
 
   PicoForegroundColors copyWith({
