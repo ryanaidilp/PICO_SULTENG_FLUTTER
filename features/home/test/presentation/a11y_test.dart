@@ -4,22 +4,26 @@ import 'package:home/src/l10n/translations.g.dart';
 import 'package:pico_data_api/pico_data_api.dart';
 import 'package:pico_data_api/testing.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
+import 'package:pico_ui_kit/testing.dart';
 
 import 'home_page_test.dart' show host, repo, setup;
 
-/// T29: Beranda, the four guideline checks in id light x1 and en dark x2.
+/// T29: Beranda, the four guideline checks in id light x1, en dark x2 and
+/// en light x1.5.
 void main() {
   for (final (l, locale, dark, scale) in [
     (AppLocale.id, const Locale('id'), false, 1.0),
     (AppLocale.en, const Locale('en'), true, 2.0),
+    // The hero's white label on the light end of its gradient.
+    (AppLocale.en, const Locale('en'), false, 1.5),
   ]) {
     testWidgets(
       'guidelines: beranda, ${l.languageCode} ${dark ? 'dark' : 'light'} '
-      'x${scale.toInt()}',
+      'x$scale',
       (tester) async {
         await setup(tester, l);
         final h = tester.ensureSemantics();
-        tester.view.physicalSize = Size(412, scale == 2 ? 9000 : 3000);
+        tester.view.physicalSize = Size(412, scale > 1 ? 9000 : 3000);
         tester.view.devicePixelRatio = 1;
         addTearDown(tester.view.reset);
         await tester.pumpWidget(
@@ -45,24 +49,11 @@ void main() {
         await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
         await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
         await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-        await hiDpi(tester);
-        await expectLater(tester, meetsGuideline(textContrastGuideline));
+        await expectLater(tester, meetsGuideline(picoTextContrastGuideline));
         expect(tester.takeException(), isNull);
         h.dispose();
         await setup(tester, AppLocale.id);
       },
     );
   }
-}
-
-/// Renders at twice the density before the contrast check: at 1x the 12 to
-/// 16 px text of a Linux software raster has no pixel dark enough, so the
-/// guideline measures its anti-aliasing and not its colour (CI failed at 1.4:1
-/// on text that is 7:1). The logical size does not change.
-Future<void> hiDpi(WidgetTester tester) async {
-  final view = tester.view;
-  if (view.devicePixelRatio >= 2) return;
-  view.physicalSize = view.physicalSize * 2;
-  view.devicePixelRatio = 2;
-  await tester.pumpAndSettle();
 }

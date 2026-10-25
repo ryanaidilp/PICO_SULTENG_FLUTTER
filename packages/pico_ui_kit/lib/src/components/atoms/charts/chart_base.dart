@@ -480,7 +480,10 @@ class _PicoChartBaseState extends State<PicoChartBase>
       textDirection: TextDirection.ltr,
       textScaler: scaler,
     )..layout()).height;
-    final topPad = widget.yLabel == null ? 8.0 : labelH * 2.3;
+    // Room above the plot for the y caption and the threshold key.
+    final topPad = widget.yLabel == null && widget.thresholdLabel == null
+        ? 8.0
+        : labelH * 2.3;
     return Semantics(
       container: true,
       label: _summary(t),
@@ -731,6 +734,10 @@ class ChartPainter extends CustomPainter {
   /// Ink colour for the scrub rule.
   final Color inkColor;
 
+  /// Opacity of the Rt band edge. The edge carries the bound, so it keeps
+  /// 3:1 (SC 1.4.11) on page and card in both themes; .55 measured 2.6:1.
+  static const double bandEdgeAlpha = .7;
+
   void _text(
     Canvas c,
     String s,
@@ -802,13 +809,32 @@ class ChartPainter extends CustomPainter {
           ..strokeWidth = 1.5
           ..color = axisColor,
       );
-      if (thresholdLabel != null)
-        _text(
-          canvas,
-          thresholdLabel!,
-          Offset(plot.right - 2, th - textStyle.fontSize! * .8),
-          right: true,
+      // The label is a key above the plot, top right: a short dashed sample
+      // and "Rt = 1". On the rule itself the series crossed it, and a patch
+      // behind it hid data.
+      final label = thresholdLabel;
+      if (label != null) {
+        final tp = TextPainter(
+          text: TextSpan(text: label, style: textStyle),
+          textDirection: TextDirection.ltr,
+          textScaler: textScaler,
+        )..layout();
+        final y = plot.top - tp.height * 1.4;
+        tp.paint(canvas, Offset(plot.right - tp.width, y - tp.height / 2));
+        final x1 = plot.right - tp.width - 6;
+        canvas.drawPath(
+          dashPath(
+            Path()
+              ..moveTo(x1 - 18, y)
+              ..lineTo(x1, y),
+            const [6, 4],
+          ),
+          Paint()
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = 1.5
+            ..color = axisColor,
         );
+      }
     }
 
     canvas
@@ -829,7 +855,7 @@ class ChartPainter extends CustomPainter {
       final edge = Paint()
         ..style = PaintingStyle.stroke
         ..strokeWidth = 1
-        ..color = bandColor.withValues(alpha: .55);
+        ..color = bandColor.withValues(alpha: bandEdgeAlpha);
       for (final p in bands) {
         canvas
           ..drawPath(p, fill)

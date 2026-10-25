@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:peta/src/l10n/translations.g.dart';
 import 'package:peta/src/presentation/ui/widgets/peta_widgets.dart';
 import 'package:pico_ui_kit/pico_ui_kit.dart';
+import 'package:pico_ui_kit/testing.dart';
 
 import 'peta_test.dart' show big, host, repo, setup, settle;
 
@@ -13,8 +14,7 @@ Future<void> guidelines(WidgetTester tester) async {
   await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
   await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
   await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
-  await hiDpi(tester);
-  await expectLater(tester, meetsGuideline(textContrastGuideline));
+  await expectLater(tester, meetsGuideline(picoTextContrastGuideline));
   expect(tester.takeException(), isNull);
 }
 
@@ -93,16 +93,4 @@ void main() {
     expect(marks, 13);
     h.dispose();
   });
-}
-
-/// Renders at twice the density before the contrast check: at 1x the 12 to
-/// 16 px text of a Linux software raster has no pixel dark enough, so the
-/// guideline measures its anti-aliasing and not its colour (CI failed at 1.4:1
-/// on text that is 7:1). The logical size does not change.
-Future<void> hiDpi(WidgetTester tester) async {
-  final view = tester.view;
-  if (view.devicePixelRatio >= 2) return;
-  view.physicalSize = view.physicalSize * 2;
-  view.devicePixelRatio = 2;
-  await tester.pumpAndSettle();
 }
